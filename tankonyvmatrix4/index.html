@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<!-- saved from url=(0091)file:///D:/tankonyv/M%C3%A1trix%20Tangram%20&%20Interakt%C3%ADv%20Kv%C3%ADz%20M%C3%B3d.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix Tangram &amp; Interaktív Kvíz Mód</title>
+    <!-- Tailwind CSS v3 for robust styling -->
+    <script src="./index_files/saved_resource"></script>
+    <style>
+        .wood-bg { background: linear-gradient(135deg, #deb887 0%, #d2b48c 50%, #c19a6b 100%); }
+        .grid-cell { width: 48px; height: 48px; transition: all 0.2s ease; }
+        .grid-cell:hover { background-color: rgba(251, 191, 36, 0.25); }
+        .puzzle-piece { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .puzzle-piece:active { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.left-1{left:0.25rem}.top-0\.5{top:0.125rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-3{margin-top:0.75rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-4{height:1rem}.h-full{height:100%}.max-h-44{max-height:11rem}.max-h-48{max-height:12rem}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-4{width:1rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.cursor-not-allowed{cursor:not-allowed}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-1{gap:0.25rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-amber-800\/50{border-color:rgb(146 64 14 / 0.5)}.border-amber-900{--tw-border-opacity:1;border-color:rgb(120 53 15 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-amber-800\/30{border-color:rgb(146 64 14 / 0.3)}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/20{background-color:rgb(2 44 34 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-white\/70{background-color:rgb(255 255 255 / 0.7)}.bg-emerald-950{--tw-bg-opacity:1;background-color:rgb(2 44 34 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-2\.5{padding:0.625rem}.p-1{padding:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pb-1{padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pr-1{padding-right:0.25rem}.pt-2{padding-top:0.5rem}.pt-1{padding-top:0.25rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[8px\]{font-size:8px}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.accent-emerald-500{accent-color:#10b981}.opacity-40{opacity:0.4}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-amber-400:hover{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.focus\:border-amber-500:focus{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.left-1{left:0.25rem}.top-0\.5{top:0.125rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.flex{display:flex}.grid{display:grid}.h-4{height:1rem}.max-h-44{max-height:11rem}.max-h-48{max-height:12rem}.min-h-screen{min-height:100vh}.w-4{width:1rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-amber-800\/30{border-color:rgb(146 64 14 / 0.3)}.border-amber-800\/50{border-color:rgb(146 64 14 / 0.5)}.border-amber-900{--tw-border-opacity:1;border-color:rgb(120 53 15 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/20{background-color:rgb(2 44 34 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-white\/70{background-color:rgb(255 255 255 / 0.7)}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pb-1{padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pr-1{padding-right:0.25rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[8px\]{font-size:8px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.accent-emerald-500{accent-color:#10b981}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-amber-400:hover{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.focus\:border-amber-500:focus{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-950 min-h-screen text-slate-100 font-sans p-3 sm:p-6">
+
+    <header class="max-w-7xl mx-auto bg-slate-900 border border-slate-800 text-white p-4 rounded-3xl shadow-2xl mb-6 flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🧩</span>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-wide text-amber-400">Mátrix Tangram &amp; Interaktív Kvíz Mód</h1>
+                <p class="text-xs text-slate-400">Biztonságos Drag &amp; Drop, Sablonok, Mátrix Összesítők és Többszörös Választású Kvíz</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+            <select id="template-select" onchange="switchTemplate(this.value)" class="bg-slate-950 border border-slate-700 text-amber-300 font-semibold text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-amber-500">
+                <option value="default">📐 Szabad Mátrix Mód</option>
+                <option value="rocket">🚀 Rakéta Sablon</option>
+                <option value="animal">🐱 Cica Sablon</option>
+                <option value="house">🏠 Ház Sablon</option>
+            </select>
+            <button onclick="placeRandomly()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-2 rounded-xl text-xs shadow transition">
+                🎲 Véletlen Elhelyezés
+            </button>
+            <button onclick="resetPuzzle()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs shadow transition">
+                🔄 Újrakezdés
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- BAL OLDAL: 6X6 MÁTRIX RÁCS & STATISZTIKA -->
+        <section class="lg:col-span-7 space-y-6">
+            <div class="wood-bg border-4 border-amber-900 rounded-3xl p-5 shadow-2xl relative text-slate-900 flex flex-col items-center">
+                <div class="w-full flex justify-between items-center mb-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl shadow">
+                    <span class="text-lg">🎯</span>
+                    <h2 class="text-sm font-black text-emerald-900 uppercase tracking-wider">Mátrix Rács Terület ($6 \times 6$)</h2>
+                    <span class="text-lg">📐</span>
+                </div>
+
+                <div id="puzzle-matrix" class="grid grid-cols-6 gap-2 bg-emerald-950/20 p-4 rounded-2xl border-2 border-amber-800/50 shadow-inner">
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 0)" onclick="cellClicked(0, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 1)" onclick="cellClicked(0, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 2)" onclick="cellClicked(0, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 3)" onclick="cellClicked(0, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 4)" onclick="cellClicked(0, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 0, 5)" onclick="cellClicked(0, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[0][5]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 0)" onclick="cellClicked(1, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 1)" onclick="cellClicked(1, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 2)" onclick="cellClicked(1, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 3)" onclick="cellClicked(1, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 4)" onclick="cellClicked(1, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 1, 5)" onclick="cellClicked(1, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[1][5]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 0)" onclick="cellClicked(2, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 1)" onclick="cellClicked(2, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 2)" onclick="cellClicked(2, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 3)" onclick="cellClicked(2, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 4)" onclick="cellClicked(2, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 2, 5)" onclick="cellClicked(2, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[2][5]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 0)" onclick="cellClicked(3, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 1)" onclick="cellClicked(3, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 2)" onclick="cellClicked(3, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 3)" onclick="cellClicked(3, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 4)" onclick="cellClicked(3, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 3, 5)" onclick="cellClicked(3, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[3][5]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 0)" onclick="cellClicked(4, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 1)" onclick="cellClicked(4, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 2)" onclick="cellClicked(4, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 3)" onclick="cellClicked(4, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 4)" onclick="cellClicked(4, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 4, 5)" onclick="cellClicked(4, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[4][5]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 0)" onclick="cellClicked(5, 0)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][0]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 1)" onclick="cellClicked(5, 1)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][1]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 2)" onclick="cellClicked(5, 2)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][2]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 3)" onclick="cellClicked(5, 3)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][3]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 4)" onclick="cellClicked(5, 4)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][4]</span>
+                            
+                        </div>
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative" ondragover="allowDrop(event)" ondrop="dropToMatrix(event, 5, 5)" onclick="cellClicked(5, 5)">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[5][5]</span>
+                            
+                        </div></div>
+                <p class="text-[11px] text-amber-950 mt-3 font-bold bg-white/80 px-3 py-1 rounded-lg text-center">
+                    💡 Húzz elemeket a rácsra, vagy kattints a cellákra az elhelyezéshez / törléshez!
+                </p>
+            </div>
+
+            <!-- RÉSZLETES ÖSSZESÍTŐK -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl shadow-xl space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-xs font-bold text-amber-400 flex items-center gap-2">
+                        <span>📊</span> Részletes Mátrix Összesítés
+                    </h3>
+                    <span id="grand-total-badge" class="bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full text-xs font-bold font-mono">Összesen: 0 db</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1.5">
+                        <p class="font-bold text-amber-300 border-b border-slate-800 pb-1">Típusonként:</p>
+                        <div id="stats-shapes" class="space-y-1 font-mono text-[11px] text-slate-300"><div class="flex justify-between"><span>Piros Háromszög:</span><span class="text-amber-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sárga Hatszög:</span><span class="text-amber-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Kék Rombusz:</span><span class="text-amber-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Zöld Téglalap:</span><span class="text-amber-400 font-bold">0 db</span></div></div>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1.5">
+                        <p class="font-bold text-emerald-400 border-b border-slate-800 pb-1">Soronként:</p>
+                        <div id="stats-rows" class="space-y-1 font-mono text-[11px] text-slate-300"><div class="flex justify-between"><span>Sor [0]:</span><span class="text-emerald-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sor [1]:</span><span class="text-emerald-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sor [2]:</span><span class="text-emerald-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sor [3]:</span><span class="text-emerald-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sor [4]:</span><span class="text-emerald-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Sor [5]:</span><span class="text-emerald-400 font-bold">0 db</span></div></div>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1.5">
+                        <p class="font-bold text-cyan-400 border-b border-slate-800 pb-1">Oszloponként:</p>
+                        <div id="stats-cols" class="space-y-1 font-mono text-[11px] text-slate-300"><div class="flex justify-between"><span>Oszlop [0]:</span><span class="text-cyan-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Oszlop [1]:</span><span class="text-cyan-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Oszlop [2]:</span><span class="text-cyan-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Oszlop [3]:</span><span class="text-cyan-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Oszlop [4]:</span><span class="text-cyan-400 font-bold">0 db</span></div><div class="flex justify-between"><span>Oszlop [5]:</span><span class="text-cyan-400 font-bold">0 db</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOBB OLDAL: KÉSZLET & VÁLASZTHATÓ KVÍZ -->
+        <section class="lg:col-span-5 space-y-6">
+            
+            <div class="bg-slate-900 text-white p-5 rounded-3xl shadow-xl border border-slate-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <span>📦</span> Készlet Kezelő
+                    </h3>
+                    <span class="text-[10px] text-slate-400 font-mono">Húzd vagy kattints</span>
+                </div>
+                <div id="inventory-grid" class="grid grid-cols-2 gap-2.5 max-h-48 overflow-y-auto pr-1">
+                    <div draggable="true" ondragstart="dragInventoryItem(event, 0)" ondragend="clearDragState(event)" class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex flex-col justify-between gap-1 shadow transition cursor-grab hover:border-amber-400">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 rounded-full bg-red-500 shadow-inner flex-shrink-0"></div>
+                            <span class="text-xs font-semibold truncate">Piros Háromszög</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono border-t border-slate-800/80 pt-1 mt-1">
+                            <span class="text-slate-400">Készleten:</span>
+                            <span class="font-bold text-amber-400">6 / 6 db</span>
+                        </div>
+                    </div>
+                    <div draggable="true" ondragstart="dragInventoryItem(event, 1)" ondragend="clearDragState(event)" class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex flex-col justify-between gap-1 shadow transition cursor-grab hover:border-amber-400">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 shadow-inner flex-shrink-0"></div>
+                            <span class="text-xs font-semibold truncate">Sárga Hatszög</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono border-t border-slate-800/80 pt-1 mt-1">
+                            <span class="text-slate-400">Készleten:</span>
+                            <span class="font-bold text-amber-400">4 / 4 db</span>
+                        </div>
+                    </div>
+                    <div draggable="true" ondragstart="dragInventoryItem(event, 2)" ondragend="clearDragState(event)" class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex flex-col justify-between gap-1 shadow transition cursor-grab hover:border-amber-400">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 rounded-full bg-blue-500 shadow-inner flex-shrink-0"></div>
+                            <span class="text-xs font-semibold truncate">Kék Rombusz</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono border-t border-slate-800/80 pt-1 mt-1">
+                            <span class="text-slate-400">Készleten:</span>
+                            <span class="font-bold text-amber-400">6 / 6 db</span>
+                        </div>
+                    </div>
+                    <div draggable="true" ondragstart="dragInventoryItem(event, 3)" ondragend="clearDragState(event)" class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex flex-col justify-between gap-1 shadow transition cursor-grab hover:border-amber-400">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 rounded-full bg-emerald-500 shadow-inner flex-shrink-0"></div>
+                            <span class="text-xs font-semibold truncate">Zöld Téglalap</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono border-t border-slate-800/80 pt-1 mt-1">
+                            <span class="text-slate-400">Készleten:</span>
+                            <span class="font-bold text-amber-400">4 / 4 db</span>
+                        </div>
+                    </div></div>
+            </div>
+
+            <!-- DIÁK KVÍZ (VÁLASZTHATÓ OPCIÓKKAL ÉS MULTI-SELECT TÁMOGATÁSSAL) -->
+            <div class="bg-slate-900 text-white p-5 rounded-3xl shadow-xl border border-slate-800 space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-xs font-bold text-emerald-400 flex items-center gap-2">
+                        <span>🎓</span> Diák Kvíz Mód
+                    </h3>
+                    <span class="text-[10px] bg-slate-950 text-emerald-300 font-mono px-2 py-0.5 rounded">Többes Választás</span>
+                </div>
+                <p class="text-xs text-slate-300 font-semibold" id="quiz-question">Melyik alakzatból / alakzatokból van a legtöbb a rácsban?</p>
+
+                <!-- KATTINTHATÓ OPCIÓK LISTÁJA -->
+                <div id="quiz-options-container" class="space-y-2 max-h-44 overflow-y-auto pr-1">
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="Piros Háromszög" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">Piros Háromszög (0 db)</span>
+                        </label>
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="Sárga Hatszög" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">Sárga Hatszög (0 db)</span>
+                        </label>
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="Kék Rombusz" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">Kék Rombusz (0 db)</span>
+                        </label>
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="Zöld Téglalap" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">Zöld Téglalap (0 db)</span>
+                        </label></div>
+
+                <div class="flex gap-2 pt-2">
+                    <button onclick="checkStudentAnswer()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-xl text-xs transition shadow">
+                        ✅ Válasz Ellenőrzése
+                    </button>
+                    <button onclick="nextQuizQuestion()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-2 rounded-xl text-xs transition">
+                        Következő ➔
+                    </button>
+                </div>
+                <div id="quiz-feedback" class="text-xs font-mono text-center p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300">Alaphelyzetbe állítva.</div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        const MATRIX_SIZE = 6;
+        let matrixData = Array(MATRIX_SIZE).fill(null).map(() => Array(MATRIX_SIZE).fill(null));
+
+        let inventory = [
+            { id: "p1", name: "Piros Háromszög", color: "bg-red-500", total: 6, available: 6 },
+            { id: "p2", name: "Sárga Hatszög", color: "bg-amber-400 text-slate-950", total: 4, available: 4 },
+            { id: "p3", name: "Kék Rombusz", color: "bg-blue-500", total: 6, available: 6 },
+            { id: "p4", name: "Zöld Téglalap", color: "bg-emerald-500", total: 4, available: 4 }
+        ];
+
+        let currentQuizType = 'max_shape';
+        let selectedInvIndex = null;
+
+        const templates = {
+            default: [],
+            rocket: [[0,2], [0,3], [1,1], [1,2], [1,3], [1,4], [2,2], [2,3], [3,2], [3,3], [4,1], [4,4], [5,0], [5,5]],
+            animal: [[0,1], [0,4], [1,2], [1,3], [2,0], [2,1], [2,2], [2,3], [2,4], [2,5], [3,2], [3,3], [4,1], [4,4]],
+            house: [[0,2], [0,3], [1,1], [1,2], [1,3], [1,4], [2,1], [2,4], [3,1], [3,2], [3,3], [3,4], [4,1], [4,4]]
+        };
+
+        function initApp() {
+            renderMatrixGrid();
+            renderInventory();
+            renderStatistics();
+            generateQuizOptions();
+        }
+
+        function renderMatrixGrid() {
+            const gridEl = document.getElementById('puzzle-matrix');
+            gridEl.innerHTML = '';
+
+            for (let r = 0; r < MATRIX_SIZE; r++) {
+                for (let c = 0; c < MATRIX_SIZE; c++) {
+                    const cellValue = matrixData[r][c];
+                    let cellContent = cellValue ? `<div class="puzzle-piece w-full h-full rounded-xl ${cellValue.color} shadow-md flex items-center justify-center text-[10px] font-bold p-1 text-center truncate">🧩</div>` : '';
+
+                    gridEl.innerHTML += `
+                        <div class="grid-cell bg-white/70 border-2 border-dashed border-amber-800/30 rounded-2xl flex items-center justify-center cursor-pointer relative"
+                             ondragover="allowDrop(event)"
+                             ondrop="dropToMatrix(event, ${r}, ${c})"
+                             onclick="cellClicked(${r}, ${c})">
+                            <span class="absolute top-0.5 left-1 text-[8px] font-mono text-slate-400 pointer-events-none">[${r}][${c}]</span>
+                            ${cellContent}
+                        </div>`;
+                }
+            }
+        }
+
+        function renderInventory() {
+            const invEl = document.getElementById('inventory-grid');
+            invEl.innerHTML = '';
+
+            inventory.forEach((item, index) => {
+                const isDisabled = item.available <= 0;
+                invEl.innerHTML += `
+                    <div draggable="${!isDisabled}" 
+                         ondragstart="dragInventoryItem(event, ${index})"
+                         ondragend="clearDragState(event)"
+                         class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex flex-col justify-between gap-1 shadow transition ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-grab hover:border-amber-400'}">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 rounded-full ${item.color} shadow-inner flex-shrink-0"></div>
+                            <span class="text-xs font-semibold truncate">${item.name}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono border-t border-slate-800/80 pt-1 mt-1">
+                            <span class="text-slate-400">Készleten:</span>
+                            <span class="font-bold ${item.available > 0 ? 'text-amber-400' : 'text-rose-500'}">${item.available} / ${item.total} db</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function renderStatistics() {
+            const statsShapesEl = document.getElementById('stats-shapes');
+            const statsRowsEl = document.getElementById('stats-rows');
+            const statsColsEl = document.getElementById('stats-cols');
+            const grandTotalBadge = document.getElementById('grand-total-badge');
+
+            statsShapesEl.innerHTML = ''; statsRowsEl.innerHTML = ''; statsColsEl.innerHTML = '';
+
+            let shapeCounts = {}; inventory.forEach(i => shapeCounts[i.name] = 0);
+            let rowCounts = Array(MATRIX_SIZE).fill(0);
+            let colCounts = Array(MATRIX_SIZE).fill(0);
+            let grandTotal = 0;
+
+            for (let r = 0; r < MATRIX_SIZE; r++) {
+                for (let c = 0; c < MATRIX_SIZE; c++) {
+                    let cell = matrixData[r][c];
+                    if (cell) {
+                        shapeCounts[cell.name] = (shapeCounts[cell.name] || 0) + 1;
+                        rowCounts[r]++; colCounts[c]++; grandTotal++;
+                    }
+                }
+            }
+
+            for (let [name, count] of Object.entries(shapeCounts)) {
+                statsShapesEl.innerHTML += `<div class="flex justify-between"><span>${name}:</span><span class="text-amber-400 font-bold">${count} db</span></div>`;
+            }
+            for (let r = 0; r < MATRIX_SIZE; r++) {
+                statsRowsEl.innerHTML += `<div class="flex justify-between"><span>Sor [${r}]:</span><span class="text-emerald-400 font-bold">${rowCounts[r]} db</span></div>`;
+            }
+            for (let c = 0; c < MATRIX_SIZE; c++) {
+                statsColsEl.innerHTML += `<div class="flex justify-between"><span>Oszlop [${c}]:</span><span class="text-cyan-400 font-bold">${colCounts[c]} db</span></div>`;
+            }
+            grandTotalBadge.innerText = `Összesen: ${grandTotal} db`;
+        }
+
+        function dragInventoryItem(ev, invIndex) {
+            selectedInvIndex = invIndex;
+            ev.dataTransfer.setData("text/plain", invIndex);
+        }
+
+        function clearDragState(ev) {
+            selectedInvIndex = null;
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function dropToMatrix(ev, r, c) {
+            ev.preventDefault();
+            let invIdx = selectedInvIndex;
+            if (invIdx === null || invIdx === undefined) {
+                const data = ev.dataTransfer.getData("text/plain");
+                if (data !== "") invIdx = parseInt(data);
+            }
+
+            if (invIdx !== null && !isNaN(invIdx) && inventory[invIdx] && inventory[invIdx].available > 0) {
+                placeItemToCell(invIdx, r, c);
+            }
+            selectedInvIndex = null;
+        }
+
+        function cellClicked(r, c) {
+            if (matrixData[r][c]) {
+                removeMatrixItem(r, c);
+            } else {
+                let availableIdx = inventory.findIndex(i => i.available > 0);
+                if (availableIdx !== -1) {
+                    placeItemToCell(availableIdx, r, c);
+                }
+            }
+        }
+
+        function placeItemToCell(invIndex, r, c) {
+            if (matrixData[r][c]) {
+                let oldItem = matrixData[r][c];
+                let origInv = inventory.find(i => i.name === oldItem.name);
+                if (origInv) origInv.available++;
+            }
+            matrixData[r][c] = { name: inventory[invIndex].name, color: inventory[invIndex].color, invIndex: invIndex };
+            inventory[invIndex].available--;
+            renderMatrixGrid();
+            renderInventory();
+            renderStatistics();
+            generateQuizOptions();
+        }
+
+        function removeMatrixItem(r, c) {
+            let item = matrixData[r][c];
+            if (!item) return;
+            let invObj = inventory[item.invIndex];
+            if (invObj) {
+                invObj.available++;
+            } else {
+                let fallback = inventory.find(i => i.name === item.name);
+                if (fallback) fallback.available++;
+            }
+            matrixData[r][c] = null;
+            renderMatrixGrid();
+            renderInventory();
+            renderStatistics();
+            generateQuizOptions();
+        }
+
+        function switchTemplate(templateKey) {
+            matrixData = Array(MATRIX_SIZE).fill(null).map(() => Array(MATRIX_SIZE).fill(null));
+            inventory.forEach(i => i.available = i.total);
+
+            let coords = templates[templateKey] || [];
+            let invCursor = 0;
+
+            coords.forEach(([r, c]) => {
+                if (r < MATRIX_SIZE && c < MATRIX_SIZE) {
+                    while (invCursor < inventory.length && inventory[invCursor].available <= 0) {
+                        invCursor++;
+                    }
+                    if (invCursor < inventory.length) {
+                        let item = inventory[invCursor];
+                        matrixData[r][c] = { name: item.name, color: item.color, invIndex: invCursor };
+                        item.available--;
+                    }
+                }
+            });
+
+            renderMatrixGrid();
+            renderInventory();
+            renderStatistics();
+            generateQuizOptions();
+        }
+
+        function placeRandomly() {
+            let emptyCells = [];
+            for (let r = 0; r < MATRIX_SIZE; r++) {
+                for (let c = 0; c < MATRIX_SIZE; c++) {
+                    if (!matrixData[r][c]) emptyCells.push({r, c});
+                }
+            }
+            emptyCells.sort(() => Math.random() - 0.5);
+            inventory.forEach((item) => {
+                while (item.available > 0 && emptyCells.length > 0) {
+                    let cell = emptyCells.pop();
+                    let invIdx = inventory.findIndex(i => i.name === item.name);
+                    if (invIdx !== -1) {
+                        matrixData[cell.r][cell.c] = { name: item.name, color: item.color, invIndex: invIdx };
+                        item.available--;
+                    }
+                }
+            });
+            renderMatrixGrid();
+            renderInventory();
+            renderStatistics();
+            generateQuizOptions();
+        }
+
+        function resetPuzzle() {
+            matrixData = Array(MATRIX_SIZE).fill(null).map(() => Array(MATRIX_SIZE).fill(null));
+            inventory.forEach(i => i.available = i.total);
+            document.getElementById('template-select').value = "default";
+            initApp();
+            document.getElementById('quiz-feedback').innerText = "Alaphelyzetbe állítva.";
+            document.getElementById('quiz-feedback').className = "text-xs font-mono text-center p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300";
+        }
+
+        function generateQuizOptions() {
+            const promptEl = document.getElementById('quiz-question');
+            const optionsEl = document.getElementById('quiz-options-container');
+            optionsEl.innerHTML = '';
+
+            if (currentQuizType === 'max_shape') {
+                promptEl.innerText = "Melyik alakzatból / alakzatokból van a legtöbb a rácsban?";
+                let shapeCounts = {}; inventory.forEach(i => shapeCounts[i.name] = 0);
+                for (let r = 0; r < MATRIX_SIZE; r++) {
+                    for (let c = 0; c < MATRIX_SIZE; c++) {
+                        let cell = matrixData[r][c];
+                        if (cell) shapeCounts[cell.name]++;
+                    }
+                }
+                inventory.forEach((item) => {
+                    optionsEl.innerHTML += `
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="${item.name}" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">${item.name} (${shapeCounts[item.name]} db)</span>
+                        </label>`;
+                });
+            } else {
+                promptEl.innerText = "Melyik sorokban van a legtöbb elem?";
+                let rowCounts = Array(MATRIX_SIZE).fill(0);
+                for (let r = 0; r < MATRIX_SIZE; r++) {
+                    for (let c = 0; c < MATRIX_SIZE; c++) {
+                        if (matrixData[r][c]) rowCounts[r]++;
+                    }
+                }
+                for (let r = 0; r < MATRIX_SIZE; r++) {
+                    optionsEl.innerHTML += `
+                        <label class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 cursor-pointer hover:border-amber-400">
+                            <input type="checkbox" name="quiz-opt" value="${r}" class="accent-emerald-500 w-4 h-4">
+                            <span class="text-xs text-slate-200">${r}. Sor (${rowCounts[r]} db elem)</span>
+                        </label>`;
+                }
+            }
+        }
+
+        function checkStudentAnswer() {
+            const checkboxes = document.querySelectorAll('input[name="quiz-opt"]:checked');
+            const feedbackEl = document.getElementById('quiz-feedback');
+            let selectedValues = Array.from(checkboxes).map(cb => cb.value);
+
+            if (selectedValues.length === 0) {
+                feedbackEl.innerText = "⚠️ Kérlek jelölj be legalább egy opciót!";
+                feedbackEl.className = "text-xs font-mono text-center p-2 rounded-xl bg-rose-950 border border-rose-800 text-rose-300";
+                return;
+            }
+
+            if (currentQuizType === 'max_shape') {
+                let shapeCounts = {}; inventory.forEach(i => shapeCounts[i.name] = 0);
+                for (let r = 0; r < MATRIX_SIZE; r++) {
+                    for (let c = 0; c < MATRIX_SIZE; c++) {
+                        let cell = matrixData[r][c];
+                        if (cell) shapeCounts[cell.name]++;
+                    }
+                }
+                let maxCount = Math.max(...Object.values(shapeCounts));
+                let correctShapes = Object.keys(shapeCounts).filter(k => shapeCounts[k] === maxCount && maxCount > 0);
+
+                let isCorrect = correctShapes.length === selectedValues.length && correctShapes.every(s => selectedValues.includes(s));
+                if (isCorrect) {
+                    feedbackEl.innerText = "🎉 Helyes válasz! Minden leggyakoribb formát eltaláltál.";
+                    feedbackEl.className = "text-xs font-mono text-center p-2 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-300";
+                } else {
+                    feedbackEl.innerText = `❌ Nem teljesen jó. A helyesek: ${correctShapes.join(', ')}`;
+                    feedbackEl.className = "text-xs font-mono text-center p-2 rounded-xl bg-rose-950 border border-rose-800 text-rose-300";
+                }
+            } else {
+                let rowCounts = Array(MATRIX_SIZE).fill(0);
+                for (let r = 0; r < MATRIX_SIZE; r++) {
+                    for (let c = 0; c < MATRIX_SIZE; c++) {
+                        if (matrixData[r][c]) rowCounts[r]++;
+                    }
+                }
+                let maxCount = Math.max(...rowCounts);
+                let correctRows = [];
+                if (maxCount > 0) {
+                    rowCounts.forEach((cnt, idx) => { if (cnt === maxCount) correctRows.push(idx.toString()); });
+                }
+
+                let isCorrect = correctRows.length === selectedValues.length && correctRows.every(r => selectedValues.includes(r));
+                if (isCorrect) {
+                    feedbackEl.innerText = "🎉 Helyes válasz! Sikerült kiválasztani a legtöbb elemet tartalmazó sort / sorokat.";
+                    feedbackEl.className = "text-xs font-mono text-center p-2 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-300";
+                } else {
+                    feedbackEl.innerText = `❌ Nem jó. A helyes sorok: ${correctRows.map(r => r + '. sor').join(', ')}`;
+                    feedbackEl.className = "text-xs font-mono text-center p-2 rounded-xl bg-rose-950 border border-rose-800 text-rose-300";
+                }
+            }
+        }
+
+        function nextQuizQuestion() {
+            currentQuizType = currentQuizType === 'max_shape' ? 'max_row' : 'max_shape';
+            document.getElementById('quiz-feedback').innerText = "Jelöld be a megfelelő válaszokat fent!";
+            document.getElementById('quiz-feedback').className = "text-xs font-mono text-center p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300";
+            generateQuizOptions();
+        }
+
+        initApp();
+    </script>
+
+</body></html>
