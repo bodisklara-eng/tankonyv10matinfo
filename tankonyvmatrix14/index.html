@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)file:///D:/tankonyv/Bott%C3%B6r%C3%A9s%20Szimul%C3%A1ci%C3%B3%20-%20M%C3%A1trix%20Visszapakkol%C3%A1s.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Bottörés Szimuláció - Mátrix Visszapakkolás</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
+        .container { max-width: 850px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { color: #38bdf8; text-align: center; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; text-align: center; margin-bottom: 30px; }
+
+        /* The Stick (1D Array) */
+        .stick-container { background: #334155; padding: 15px; border-radius: 40px; border: 3px solid #475569; margin-bottom: 40px; }
+        .stick-title { text-align: center; color: #cbd5e1; font-weight: bold; margin-bottom: 10px; }
+        .stick-balls { display: flex; justify-content: center; gap: 8px; position: relative; }
+        
+        /* The Balls */
+        .ball { width: 55px; height: 55px; border-radius: 50%; background: #0284c7; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; border: 3px solid #38bdf8; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        .ball .idx { font-size: 10px; opacity: 0.8; }
+        .ball.break-point { margin-right: 25px; } /* Break indicator */
+        .ball.break-point::after { content: '✂ TÖRÉS'; position: absolute; right: -30px; color: #ef4444; font-size: 9px; font-weight: bold; transform: rotate(-90deg); }
+
+        .ball.active { background: #f59e0b; border-color: #fbbf24; transform: scale(1.2) translateY(-10px); z-index: 10; box-shadow: 0 0 15px #f59e0b; }
+        .ball.placed { background: #10b981; border-color: #34d399; opacity: 0.4; }
+
+        /* Matrix Container */
+        .matrix-board { background: #0f172a; border: 2px dashed #475569; padding: 20px; border-radius: 12px; max-width: 320px; margin: 0 auto 30px auto; }
+        .matrix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .matrix-slot { width: 60px; height: 60px; border: 2px dashed #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #1e293b; font-weight: bold; color: #64748b; font-size: 14px; position: relative; }
+        .matrix-slot .coords { position: absolute; top: -18px; font-size: 9px; color: #64748b; }
+
+        /* Control Panel */
+        .controls { display: flex; justify-content: center; gap: 15px; }
+        button { background: #38bdf8; color: #0f172a; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+        button:hover { background: #7dd3fc; transform: translateY(-2px); }
+        button:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none; }
+
+        /* Popup Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 100; }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-card { background: #1e293b; border: 2px solid #38bdf8; padding: 25px; border-radius: 12px; max-width: 480px; width: 90%; color: #f8fafc; }
+        .modal-card h3 { color: #38bdf8; margin-top: 0; }
+        .math-box { background: #0f172a; padding: 12px; border-radius: 6px; font-family: monospace; border-left: 4px solid #f59e0b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bottörés &amp; Visszapakkolás Szimuláció</h1>
+    <div class="subtitle">Képzeld el, hogy a botot M = 3 golyónként eltörjük, és egymás alá rakjuk!</div>
+
+    <!-- 1D Stick -->
+    <div class="stick-container">
+        <div class="stick-title">Az egyenes bot (1D tömb, hossza k = 6)</div>
+        <div class="stick-balls" id="stick">
+            <div class="ball placed" id="b-0"><span class="idx">i=0</span>4</div>
+            <div class="ball placed" id="b-1"><span class="idx">i=1</span>8</div>
+            <div class="ball break-point placed" id="b-2"><span class="idx">i=2</span>15</div>
+            <div class="ball" id="b-3"><span class="idx">i=3</span>19</div>
+            <div class="ball" id="b-4"><span class="idx">i=4</span>23</div>
+            <div class="ball" id="b-5"><span class="idx">i=5</span>42</div>
+        </div>
+    </div>
+
+    <!-- 2D Matrix -->
+    <div class="matrix-board">
+        <div class="stick-title" style="margin-bottom:20px;">Egymás alá pakolt darabok (2D Mátrix: 2x3)</div>
+        <div class="matrix-grid">
+            <div class="matrix-slot" id="s-0-0" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">4</div>
+            <div class="matrix-slot" id="s-0-1" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">8</div>
+            <div class="matrix-slot" id="s-0-2" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">15</div>
+            <div class="matrix-slot" id="s-1-0" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">19</div>
+            <div class="matrix-slot" id="s-1-1" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">23</div>
+            <div class="matrix-slot" id="s-1-2" style="background: rgb(16, 185, 129); color: white; border-color: rgb(52, 211, 153);">42</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="step()">Következő golyó elhelyezése</button>
+        <button onclick="reset()" style="background:#475569; color:white;">Újraindítás</button>
+    </div>
+</div>
+
+<!-- Modal Popup -->
+<div class="modal" id="modal">
+    <div class="modal-card">
+        <h3 id="mTitle">Golyó #2 (Értéke: 15)</h3>
+        <p id="mDesc">
+            Most a bot <b>2. indexű</b> golyóját fogjuk meg.<br><br>
+            Mivel a botot <b>M = 3 golyónként törjük el</b>:
+            <ul>
+                <li><b>Hányadik letört darabra (sorba) kerül?</b> A golyó előtt <code>2 / 3</code> = <b>0</b> darab már teljesen megtelt sor van. Ez a sorindex ($r$).</li>
+                <li><b>A letört darab hányadik golyója lesz (oszlop)?</b> Az aktuális darabon belül ez a <code>2 % 3</code> = <b>2.</b> golyó. Ez az oszlopindex ($c$).</li>
+            </ul>
+        </p><ul>
+                <li><b>Hányadik letört darabra (sorba) kerül?</b> A golyó előtt <code>5 / 3</code> = <b>1</b> darab már teljesen megtelt sor van. Ez a sorindex ($r$).</li>
+                <li><b>A letört darab hányadik golyója lesz (oszlop)?</b> Az aktuális darabon belül ez a <code>5 % 3</code> = <b>2.</b> golyó. Ez az oszlopindex ($c$).</li>
+            </ul>
+        <p></p>
+        <div class="math-box" id="mMath">
+            Sorindex (r)    = ⌊ 2 / 3 ⌋ = <b>0</b> (Sor száma)<br>
+            Oszlopindex (c) = 2 mod 3  = <b>2</b> (Oszlop száma)<br>
+            ------------------------------------<br>
+            Cél pozíció: Mátrix[0][2]
+        </div>
+        <button onclick="confirmStep()" style="width: 100%;">Golyó helyére illesztése!</button>
+    </div>
+</div>
+
+<script>
+    const data = [4, 8, 15, 19, 23, 42];
+    const M = 3; // Oszlopok száma / Törési méret
+    let currentI = 0;
+
+    function step() {
+        if (currentI >= data.length) return;
+
+        // Válasszuk ki az aktuális golyót a botról
+        const currentBall = document.getElementById(`b-${currentI}`);
+        currentBall.classList.add('active');
+
+        const val = data[currentI];
+        const r = Math.floor(currentI / M);
+        const c = currentI % M;
+
+        // Magyarázat a diáknak
+        document.getElementById('mTitle').innerText = `Golyó #${currentI} (Értéke: ${val})`;
+        document.getElementById('mDesc').innerHTML = `
+            Most a bot <b>${currentI}. indexű</b> golyóját fogjuk meg.<br><br>
+            Mivel a botot <b>M = ${M} golyónként törjük el</b>:
+            <ul>
+                <li><b>Hányadik letört darabra (sorba) kerül?</b> A golyó előtt <code>${currentI} / ${M}</code> = <b>${r}</b> darab már teljesen megtelt sor van. Ez a sorindex ($r$).</li>
+                <li><b>A letört darab hányadik golyója lesz (oszlop)?</b> Az aktuális darabon belül ez a <code>${currentI} % ${M}</code> = <b>${c}.</b> golyó. Ez az oszlopindex ($c$).</li>
+            </ul>
+        `;
+
+        document.getElementById('mMath').innerHTML = `
+            Sorindex (r)    = ⌊ ${currentI} / ${M} ⌋ = <b>${r}</b> (Sor száma)<br>
+            Oszlopindex (c) = ${currentI} mod ${M}  = <b>${c}</b> (Oszlop száma)<br>
+            ------------------------------------<br>
+            Cél pozíció: Mátrix[${r}][${c}]
+        `;
+
+        document.getElementById('modal').classList.add('active');
+    }
+
+    function confirmStep() {
+        document.getElementById('modal').classList.remove('active');
+
+        const r = Math.floor(currentI / M);
+        const c = currentI % M;
+        const val = data[currentI];
+
+        // Frissítsük a golyót a boton (átlépett állapota)
+        const currentBall = document.getElementById(`b-${currentI}`);
+        currentBall.classList.remove('active');
+        currentBall.classList.add('placed');
+
+        // Rakjuk be a mátrix nyílásába
+        const slot = document.getElementById(`s-${r}-${c}`);
+        slot.innerText = val;
+        slot.style.background = '#10b981';
+        slot.style.color = 'white';
+        slot.style.borderColor = '#34d399';
+
+        currentI++;
+
+        if (currentI === data.length) {
+            document.getElementById('nextBtn').disabled = true;
+        }
+    }
+
+    function reset() {
+        currentI = 0;
+        document.getElementById('nextBtn').disabled = false;
+        document.querySelectorAll('.ball').forEach(b => b.className = 'ball' + (b.id === 'b-2' ? ' break-point' : ''));
+        document.querySelectorAll('.matrix-slot').forEach(s => {
+            s.style.background = '#1e293b';
+            s.style.color = '#64748b';
+            s.style.borderColor = '#475569';
+            const coords = s.querySelector('.coords').outerHTML;
+            s.innerHTML = coords + '-';
+        });
+    }
+</script>
+
+
+</body></html>
