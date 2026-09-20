@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///D:/tankonyv/ma/gemini-code-1789551179222.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix Algoritmus Szimuláció</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --panel-bg: #2b2b3b;
+            --text-color: #f8f8f2;
+            --val-1: #4caf50; /* Zöld a 1-esnek (Főátló) */
+            --val-2: #2196f3; /* Kék a 2-esnek (Mellékátló) */
+            --val-3: #ff9800; /* Narancs a 3-asnak (Többi) */
+            --current-cell: #e91e63; /* Rózsaszín a kiemelt cellának */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            background-color: var(--panel-bg);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        label, input, button {
+            font-size: 1rem;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background: #121212;
+            color: #fff;
+            text-align: center;
+        }
+
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Mátrix megjelenítés */
+        .matrix-container {
+            background-color: var(--panel-bg);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 300px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 6px;
+            margin-top: 15px;
+        }
+
+        .cell {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            background-color: #3b3b4f;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .cell.active {
+            border-color: var(--current-cell);
+            transform: scale(1.15);
+            box-shadow: 0 0 12px var(--current-cell);
+            z-index: 10;
+        }
+
+        .cell.val-1 { background-color: var(--val-1); color: #fff; }
+        .cell.val-2 { background-color: var(--val-2); color: #fff; }
+        .cell.val-3 { background-color: var(--val-3); color: #fff; }
+
+        /* Kód Kiemelő Panel */
+        .code-container {
+            background-color: #121212;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            width: 380px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .code-line {
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .code-line.highlight {
+            background-color: #3d3b00;
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        /* Információs Panel */
+        .info-panel {
+            background-color: var(--panel-bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mátrix Feltöltő Algoritmus Szimuláció</h1>
+
+    <div class="controls">
+        <label for="matrix-size">Mátrix mérete (n): </label>
+        <input type="number" id="matrix-size" value="5" min="2" max="10">
+        
+        <button id="start-btn">Indítás / Újra</button>
+        <button id="step-btn">Következő Lépés</button>
+        
+        <label for="speed">Sebesség (ms): </label>
+        <input type="number" id="speed" value="300" min="50" max="2000" step="50">
+        <button id="auto-btn">Automata Lejátszás</button>
+    </div>
+
+    <div class="main-container">
+        <!-- Mátrix vizualizáció -->
+        <div class="matrix-container">
+            <h3>Mátrix (a[i][j])</h3>
+            <div id="grid" class="grid" style="grid-template-columns: repeat(5, 45px);"><div class="cell" id="cell-1-1"></div><div class="cell" id="cell-1-2"></div><div class="cell" id="cell-1-3"></div><div class="cell" id="cell-1-4"></div><div class="cell" id="cell-1-5"></div><div class="cell" id="cell-2-1"></div><div class="cell" id="cell-2-2"></div><div class="cell" id="cell-2-3"></div><div class="cell" id="cell-2-4"></div><div class="cell" id="cell-2-5"></div><div class="cell" id="cell-3-1"></div><div class="cell" id="cell-3-2"></div><div class="cell" id="cell-3-3"></div><div class="cell" id="cell-3-4"></div><div class="cell" id="cell-3-5"></div><div class="cell" id="cell-4-1"></div><div class="cell" id="cell-4-2"></div><div class="cell" id="cell-4-3"></div><div class="cell" id="cell-4-4"></div><div class="cell" id="cell-4-5"></div><div class="cell" id="cell-5-1"></div><div class="cell" id="cell-5-2"></div><div class="cell" id="cell-5-3"></div><div class="cell" id="cell-5-4"></div><div class="cell" id="cell-5-5"></div></div>
+        </div>
+
+        <!-- Kód követés -->
+        <div class="code-container">
+            <div class="code-line" id="line-1">for (i = 1; i &lt;= n; i++)</div>
+            <div class="code-line" id="line-2">&nbsp;&nbsp;for (j = 1; j &lt;= n; j++)</div>
+            <div class="code-line" id="line-3">&nbsp;&nbsp;&nbsp;&nbsp;if (i == j)</div>
+            <div class="code-line" id="line-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[i][j] = 1;</div>
+            <div class="code-line" id="line-5">&nbsp;&nbsp;&nbsp;&nbsp;else if (j == n - i + 1)</div>
+            <div class="code-line" id="line-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[i][j] = 2;</div>
+            <div class="code-line" id="line-7">&nbsp;&nbsp;&nbsp;&nbsp;else</div>
+            <div class="code-line" id="line-8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[i][j] = 3;</div>
+        </div>
+    </div>
+
+    <!-- Jelmagyarázat és státusz -->
+    <div class="info-panel">
+        <div><strong>Aktuális pozíció:</strong> <span id="status-pos">i = 1, j = 1</span></div>
+        <div class="legend">
+            <div class="legend-item"><div class="legend-box" style="background:var(--val-1)"></div> 1 (Főátló)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--val-2)"></div> 2 (Mellékátló)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--val-3)"></div> 3 (Egyéb)</div>
+        </div>
+    </div>
+
+    <script>
+        let n = 5;
+        let i = 1, j = 1;
+        let isRunning = false;
+        let autoInterval = null;
+
+        const gridElement = document.getElementById('grid');
+        const startBtn = document.getElementById('start-btn');
+        const stepBtn = document.getElementById('step-btn');
+        const autoBtn = document.getElementById('auto-btn');
+        const statusPos = document.getElementById('status-pos');
+
+        // Mátrix inicializálása a képernyőn
+        function initGrid() {
+            n = parseInt(document.getElementById('matrix-size').value);
+            gridElement.innerHTML = '';
+            gridElement.style.gridTemplateColumns = `repeat(${n}, 45px)`;
+            
+            for (let r = 1; r <= n; r++) {
+                for (let c = 1; c <= n; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `cell-${r}-${c}`;
+                    cell.textContent = '';
+                    gridElement.appendChild(cell);
+                }
+            }
+            resetSimulation();
+        }
+
+        function resetSimulation() {
+            clearInterval(autoInterval);
+            autoInterval = null;
+            autoBtn.textContent = 'Automata Lejátszás';
+            
+            i = 1;
+            j = 1;
+            isRunning = false;
+            
+            // Cella stílusok törlése
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.className = 'cell';
+                cell.textContent = '';
+            });
+            
+            clearHighlights();
+            statusPos.textContent = `i = 1, j = 1`;
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('highlight'));
+            document.querySelectorAll('.cell').forEach(el => el.classList.remove('active'));
+        }
+
+        function highlightLine(lineNum) {
+            clearHighlights();
+            const line = document.getElementById(`line-${lineNum}`);
+            if (line) line.classList.add('highlight');
+        }
+
+        // Egy algoritmus-lépés végrehajtása
+        function step() {
+            if (i > n) {
+                clearInterval(autoInterval);
+                autoBtn.textContent = 'Automata Lejátszás';
+                statusPos.textContent = "Kész!";
+                clearHighlights();
+                return false;
+            }
+
+            const currentCell = document.getElementById(`cell-${i}-${j}`);
+            
+            // Eltávolítjuk az előző aktív kijelölést
+            document.querySelectorAll('.cell').forEach(c => c.classList.remove('active'));
+            currentCell.classList.add('active');
+
+            statusPos.textContent = `i = ${i}, j = ${j} (n - i + 1 = ${n - i + 1})`;
+
+            // Algoritmus logika ellenőrzése
+            if (i === j) {
+                highlightLine(4);
+                currentCell.textContent = '1';
+                currentCell.classList.add('val-1');
+            } else if (j === (n - i + 1)) {
+                highlightLine(6);
+                currentCell.textContent = '2';
+                currentCell.classList.add('val-2');
+            } else {
+                highlightLine(8);
+                currentCell.textContent = '3';
+                currentCell.classList.add('val-3');
+            }
+
+            // Léptetés a következő cellára
+            j++;
+            if (j > n) {
+                j = 1;
+                i++;
+            }
+
+            return true;
+        }
+
+        // Eseménykezelők
+        startBtn.addEventListener('click', initGrid);
+        
+        stepBtn.addEventListener('click', () => {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                autoBtn.textContent = 'Automata Lejátszás';
+            }
+            step();
+        });
+
+        autoBtn.addEventListener('click', () => {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                autoBtn.textContent = 'Automata Lejátszás';
+            } else {
+                const speed = parseInt(document.getElementById('speed').value);
+                autoBtn.textContent = 'Szünet';
+                autoInterval = setInterval(() => {
+                    const hasMore = step();
+                    if (!hasMore) {
+                        clearInterval(autoInterval);
+                        autoInterval = null;
+                    }
+                }, speed);
+            }
+        });
+
+        // Kezdeti kirajzolás
+        initGrid();
+    </script>
+
+</body></html>
