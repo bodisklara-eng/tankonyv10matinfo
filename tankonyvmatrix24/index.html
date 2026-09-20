@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)file:///D:/tankonyv/C++%20M%C3%A1trix%20Beolvas%C3%A1s%20Szimul%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>C++ Mátrix Beolvasás Szimuláció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .panel {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+        }
+        h2 { color: #38bdf8; font-size: 1.1rem; margin-top: 0; }
+        
+        /* Code highlight */
+        pre {
+            background-color: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .line { padding: 2px 6px; border-radius: 3px; }
+        .active-line { background-color: #0284c7; color: white; font-weight: bold; }
+        .active-while { background-color: #d97706; color: white; font-weight: bold; }
+
+        /* Controls */
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover { background-color: #0369a1; }
+        button:disabled { background-color: #475569; cursor: not-allowed; }
+
+        /* Matrix table */
+        table { border-collapse: collapse; margin-top: 10px; width: 100%; text-align: center; }
+        th, td { border: 1px solid #475569; padding: 10px; font-family: monospace; }
+        th { background-color: #334155; color: #94a3b8; }
+        td.current { background-color: #0284c7; font-weight: bold; }
+        td.valid { background-color: #065f46; color: #a7f3d0; }
+        td.invalid { background-color: #991b1b; color: #fecaca; }
+
+        /* Variable display */
+        .var-box { display: flex; gap: 10px; margin-bottom: 15px; }
+        .var-card {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            padding: 8px;
+            border-radius: 4px;
+            flex: 1;
+            text-align: center;
+        }
+        .var-name { font-size: 0.8rem; color: #94a3b8; }
+        .var-val { font-size: 1.1rem; font-weight: bold; color: #f59e0b; }
+
+        .console {
+            background-color: black;
+            color: #22c55e;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>C++ Matrice Beolvasás Szimulátor</h1>
+<p style="color: #94a3b8;">A program csak a 3-jegyű számokat (100–999) fogadja el a <code>while</code> ciklus miatt.</p>
+
+<div class="container">
+    <!-- BAL OSZLOP: KÓD -->
+    <div class="panel">
+        <h2>Forráskód</h2>
+        <pre><span id="l1" class="line">unsigned int a[100][100], i, j, n;</span>
+<span id="l2" class="line">cin &gt;&gt; n;</span>
+<span id="l3" class="line">for(i = 1; i &lt;= n; i++)</span>
+<span id="l4" class="line">    for(j = 1; j &lt;= n; j++) {</span>
+<span id="l5" class="line">        cin &gt;&gt; a[i][j];</span>
+<span id="l6" class="line">        while(a[i][j] &lt; 100 || a[i][j] &gt; 999)</span>
+<span id="l7" class="line">            cin &gt;&gt; a[i][j];</span>
+<span id="l8" class="line">    }</span>
+<span id="l9" class="line active-line">for(i = 1; i &lt;= n; i++) { ... afișare ... }</span>
+        </pre>
+
+        <div style="margin-top: 15px;">
+            <button id="nextBtn" onclick="nextStep()" disabled="">Következő Lépés ➔</button>
+            <button onclick="resetSim()" style="background-color: #475569;">Újraindítás</button>
+        </div>
+    </div>
+
+    <!-- JOBB OSZLOP: ÁLLAPOT ÉS MÁTRIX -->
+    <div class="panel">
+        <h2>Változók Állapota</h2>
+        <div class="var-box">
+            <div class="var-card"><div class="var-name">n</div><div id="varN" class="var-val">2</div></div>
+            <div class="var-card"><div class="var-name">i</div><div id="varI" class="var-val">1</div></div>
+            <div class="var-card"><div class="var-name">j</div><div id="varJ" class="var-val">2</div></div>
+            <div class="var-card"><div class="var-name">Aktuális Érték</div><div id="varVal" class="var-val">333</div></div>
+        </div>
+
+        <h2>Mátrix Memória [2x2]</h2>
+        <table>
+            <tbody><tr><th>a[i][j]</th><th>j = 1</th><th>j = 2</th></tr>
+            <tr><th>i = 1</th><td id="m11" class="valid">105</td><td id="m12" class="valid">250</td></tr>
+            <tr><th>i = 2</th><td id="m21" class="valid">800</td><td id="m22" class="valid">333</td></tr>
+        </tbody></table>
+
+        <h2>Kimenet / Bemeneti Puffer</h2>
+        <div id="consoleLog" class="console">&gt; Kattints a "Következő Lépés" gombra a szimulációhoz.<br>&gt; Változók deklarálva.<br>&gt; cin &gt;&gt; n (Érték: 2)<br>&gt; Külső ciklus indul: i = 1<br>&gt; Belső ciklus indul: j = 1<br>&gt; cin &gt;&gt; a[1][1] (Beolvasva: 105)<br>&gt; WHILE FELTÉTEL HAMIS (105 érvényes 3-jegyű szám). Elfogaadva!<br>&gt; Belső ciklus indul: j = 2<br>&gt; cin &gt;&gt; a[1][2] (Beolvasva: 45)<br>&gt; WHILE FELTÉTEL IGAZ! (45 NEM 3-jegyű). Újraolvasás szükséges!<br>&gt; cin &gt;&gt; a[1][2] (Beolvasva: 250)<br>&gt; WHILE FELTÉTEL HAMIS (250 érvényes 3-jegyű szám). Elfogaadva!<br>&gt; Belső ciklus indul: j = 1<br>&gt; cin &gt;&gt; a[2][1] (Beolvasva: 800)<br>&gt; WHILE FELTÉTEL HAMIS (800 érvényes 3-jegyű szám). Elfogaadva!<br>&gt; Belső ciklus indul: j = 2<br>&gt; cin &gt;&gt; a[2][2] (Beolvasva: 1000)<br>&gt; WHILE FELTÉTEL IGAZ! (1000 NEM 3-jegyű). Újraolvasás szükséges!<br>&gt; cin &gt;&gt; a[2][2] (Beolvasva: 333)<br>&gt; WHILE FELTÉTEL HAMIS (333 érvényes 3-jegyű szám). Elfogaadva!<br>&gt; A mátrix beolvasása sikeresen befejeződött! Afișare...</div>
+    </div>
+</div>
+
+<script>
+    // Szimulációs bemeneti adatok: n=2, majd értékek (benne hibásak is: 45 és 1000)
+    const inputStream = [2, 105, 45, 250, 800, 1000, 333];
+    let streamIndex = 0;
+
+    let step = 0;
+    let n = 2, i = 1, j = 1;
+    let matrix = [[0,0,0],[0,0,0],[0,0,0]];
+
+    function highlightLine(lineId, isWhile = false) {
+        document.querySelectorAll('.line').forEach(l => l.className = 'line');
+        if (lineId) {
+            document.getElementById(lineId).className = isWhile ? 'line active-while' : 'line active-line';
+        }
+    }
+
+    function log(msg) {
+        document.getElementById('consoleLog').innerHTML += `<br>&gt; ${msg}`;
+    }
+
+    function nextStep() {
+        step++;
+        if (step === 1) {
+            highlightLine('l1');
+            log("Változók deklarálva.");
+        } else if (step === 2) {
+            highlightLine('l2');
+            let val = inputStream[streamIndex++];
+            n = val;
+            document.getElementById('varN').innerText = n;
+            log(`cin >> n (Érték: ${n})`);
+        } else if (step === 3) {
+            highlightLine('l3');
+            document.getElementById('varI').innerText = i;
+            log(`Külső ciklus indul: i = ${i}`);
+        } else if (step === 4) {
+            highlightLine('l4');
+            document.getElementById('varJ').innerText = j;
+            log(`Belső ciklus indul: j = ${j}`);
+        } else if (step === 5) {
+            highlightLine('l5');
+            let val = inputStream[streamIndex++];
+            matrix[i][j] = val;
+            document.getElementById(`m${i}${j}`).innerText = val;
+            document.getElementById(`m${i}${j}`).className = 'current';
+            document.getElementById('varVal').innerText = val;
+            log(`cin >> a[${i}][${j}] (Beolvasva: ${val})`);
+        } else if (step === 6) {
+            highlightLine('l6', true);
+            let val = matrix[i][j];
+            if (val < 100 || val > 999) {
+                log(`WHILE FELTÉTEL IGAZ! (${val} NEM 3-jegyű). Újraolvasás szükséges!`);
+                document.getElementById(`m${i}${j}`).className = 'invalid';
+                step = 4; // Visszaugrás az újabb cin-re
+            } else {
+                log(`WHILE FELTÉTEL HAMIS (${val} érvényes 3-jegyű szám). Elfogaadva!`);
+                document.getElementById(`m${i}${j}`).className = 'valid';
+                
+                // Léptetés a következő elemre
+                j++;
+                if (j > n) {
+                    j = 1;
+                    i++;
+                }
+                if (i <= n) {
+                    step = 3; // Ciklus folytatása
+                } else {
+                    step = 10; // Beolvasás kész
+                }
+            }
+        } else if (step >= 10) {
+            highlightLine('l9');
+            log("A mátrix beolvasása sikeresen befejeződött! Afișare...");
+            document.getElementById('nextBtn').disabled = true;
+        }
+    }
+
+    function resetSim() {
+        location.reload();
+    }
+</script>
+
+
+</body></html>
