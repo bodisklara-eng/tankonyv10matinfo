@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!-- saved from url=(0105)file:///D:/tankonyv/Ritka%20M%C3%A1trixok%20%C3%A9s%20J%C3%A1t%C3%A9kr%C3%A1csok%20-%20Tank%C3%B6nyv.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritka Mátrixok és Játékrácsok - Tankönyv</title>
+
+    <!-- html2pdf.js a PDF generáláshoz -->
+    <script src="./index_files/html2pdf.bundle.min.js.descărcare"></script>
+
+    <style>
+        @page { size: A4 portrait; margin: 0; }
+
+        :root {
+            --primary-color: #00695c;
+            --secondary-color: #00897b;
+            --accent-color: #8e24aa;
+            --bg-page: #f4fbfb;
+            --text-color: #212121;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            background-color: #37474f;
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin-bottom: 25px;
+            background: var(--bg-page);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11pt;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 6px;
+            margin-bottom: 15px;
+        }
+
+        .page-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #666;
+            border-top: 2px solid #b2dfdb;
+            padding-top: 8px;
+        }
+
+        h1 { color: var(--primary-color); font-size: 20pt; margin: 0 0 12px 0; text-align: center; }
+        h2 { color: #004d40; font-size: 14pt; margin: 15px 0 8px 0; border-left: 5px solid var(--primary-color); padding-left: 10px; }
+        p, li { font-size: 11.5pt; line-height: 1.5; margin: 4px 0 8px 0; }
+
+        .link-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+            justify-content: center;
+        }
+
+        .nav-link-btn {
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 10.5pt;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .box-info {
+            background-color: #ffffff;
+            border: 2px solid #80cbc4;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 11pt;
+        }
+
+        /* OLVASHATÓ VIZUÁLIS MÁTRIX TÁBLÁZAT (LaTeX NÉLKÜL) */
+        .math-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 12pt;
+            font-weight: bold;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #b2dfdb;
+            margin: 10px 0;
+        }
+
+        .matrix-bracket {
+            display: inline-flex;
+            align-items: center;
+            border-left: 3px solid #333;
+            border-right: 3px solid #333;
+            border-radius: 6px;
+            padding: 2px 8px;
+        }
+
+        .matrix-table td { padding: 4px 8px; text-align: center; }
+
+        details {
+            background: #e8f5e9;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 11pt;
+        }
+
+        summary { font-weight: bold; color: #2e7d32; cursor: pointer; }
+
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 9.5pt;
+            line-height: 1.4;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .btn-top {
+            position: fixed;
+            top: 15px; right: 15px; z-index: 1000;
+            background-color: #e65100; color: white;
+            border: none; padding: 10px 20px;
+            font-size: 11pt; font-weight: bold;
+            border-radius: 20px; cursor: pointer;
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .btn-top { display: none; }
+            .a4-page { box-shadow: none; margin: 0; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-top" onclick="downloadPDF()">📄 Mentés A4 PDF-ként</button>
+
+    <!-- ==================== 1. OLDAL ==================== -->
+    <div class="a4-page" id="page1">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA</span>
+            <span>1. FEJEZET</span>
+        </div>
+
+        <h1>Ritka Mátrixok a Játékfejlesztésben</h1>
+
+        <!-- LINK GOMBOK -->
+        <div class="link-container">
+            <a href="file:///C:/Users/Utilizator/Downloads/gemini-code-1789836400309.html#puzzle-code" class="nav-link-btn">🧩 Mátrix Puzzle Kódja</a>
+            <a href="https://example.com/meseerdo" target="_blank" class="nav-link-btn">🌲 Meseerdő Modul</a>
+            <a href="https://example.com/repas" target="_blank" class="nav-link-btn">🥕 Répás Kert Modul</a>
+        </div>
+
+        <div class="box-info">
+            <strong>Mi az a Ritka Mátrix (Sparse Matrix)?</strong><br>
+            Amikor a 10x10-es Puzzle rácsban vagy a Meseerdő pályáján játszol, a mezők többsége üres (0 értékű). Az olyan mátrixot, amelyben a cellák túlnyomó része nulla, <strong>ritka mátrixnak</strong> nevezzük.
+        </div>
+
+        <h2>1.1 Hagyományos Tárolás vs. Memóriapazarlás</h2>
+        <p>Egy $1000 \times 1000$-es játéktér 1 000 000 elemet tartalmaz. Ha csak 5 elemet raksz le a rácsra, a többi 999 995 mező feleslegesen foglalja a RAM memóriát!</p>
+
+        <!-- LÁTVÁNYOS MÁTRIX ÁBRÁZOLÁS -->
+        <div class="math-display">
+            <span>Sűrű Játékrács Mátrix = </span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>5</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>0</td><td>8</td><td>0</td></tr>
+                    <tr><td>0</td><td>3</td><td>0</td><td>6</td></tr>
+                    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <details>
+            <summary>❓ Interaktív Kérdés: Mennyi memóriát spórolunk?</summary>
+            <p><strong>Kérdés:</strong> Ha egy 10x10-es rácson csak 4 puzzle elem van lerakva, hány százaléka a mátrixnak üres (0)?</p>
+            <p><strong>Válasz:</strong> A 100 mezőből 96 mező üres, vagyis a mátrix <strong>96%-a felesleges adat</strong>. Ezért van szükségünk intelligens tárolásra!</p>
+        </details>
+
+        <h2>1.2 A CSR (Compressed Sparse Row) Megoldás</h2>
+        <p>A CSR módszer ahelyett, hogy az egész rácsot elmentené, mindössze 3 egyszerű tömbbel jegyzi meg a lerakott elemeket:</p>
+        <ul>
+            <li><strong>data (értékek):</strong> [5, 8, 3, 6] (csak a lerakott elemek)</li>
+            <li><strong>indices (oszlopok):</strong> [0, 2, 1, 3] (melyik oszlopban vannak)</li>
+            <li><strong>indptr (sor-mutatók):</strong> [0, 1, 2, 4, 4] (hol kezdődnek a sorok)</li>
+        </ul>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria Tankönyv</span>
+            <span>1. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 2. OLDAL ==================== -->
+    <div class="a4-page" id="page2">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA</span>
+            <span>2. FEJEZET</span>
+        </div>
+
+        <h1>Programozás és Gyakorlás</h1>
+
+        <h2 id="puzzle-code">2.1 Python SciPy CSR Implementáció</h2>
+        <p>Így alakíthatod át a játékrácsot memóriatakarékos CSR mátrixszá Pythonban:</p>
+
+        <div class="code-block">
+import numpy as np
+from scipy.sparse import csr_matrix
+
+# 1. Játékrács létrehozása (Sűrű mátrix)
+jatekracs = np.array([
+    [5, 0, 0, 0],
+    [0, 0, 8, 0],
+    [0, 3, 0, 6],
+    [0, 0, 0, 0]
+])
+
+# 2. Átalakítás CSR ritka mátrixszá (Memória spórolás!)
+ritka_racs = csr_matrix(jatekracs)
+
+print("A eltárolt elemek:", ritka_racs.data)     # [5 8 3 6]
+print("Oszlop pozíciók:", ritka_racs.indices)  # [0 2 1 3]
+
+# 3. Gyors transzformáció vektorral
+v = np.array([1, 2, 3, 4])
+eredmeny = ritka_racs.dot(v)
+print("Transzformált értékek:", eredmeny)
+        </div>
+
+        <h2>2.2 Gyakorló Feladatok Diákoknak</h2>
+        <ol style="font-size: 11.5pt; line-height: 1.6;">
+            <li>
+                <strong>Répás Kert Számítás:</strong> Számítsd ki az alábbi transzformáció eredményét a nyúl koordinátájára:
+            </li>
+        </ol>
+
+        <!-- KISZÁMOLANDÓ MÁTRIX MŰVELET -->
+        <div class="math-display">
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>3</td><td>0</td></tr>
+                    <tr><td>0</td><td>3</td></tr>
+                </tbody></table>
+            </div>
+            <span>×</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>2</td></tr>
+                    <tr><td>5</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>?</td></tr>
+                    <tr><td>?</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <details open="">
+            <summary>✔️ Megoldás ellenőrzése</summary>
+            <p><strong>Eredmény:</strong> X = (3 × 2) + (0 × 5) = <strong>6</strong>, Y = (0 × 2) + (3 × 5) = <strong>15</strong>. Az új koordináta: (6, 15).</p>
+        </details>
+
+        <!-- KÜLSŐ ÉS BELSŐ LINKEK -->
+        <div class="link-container" style="margin-top: 25px;">
+            <a href="https://example.com/meseerdo" target="_blank" class="nav-link-btn" style="background-color: #2e7d32;">🌲 Megnyitás: Meseerdő Gyakorló</a>
+            <a href="https://example.com/repas" target="_blank" class="nav-link-btn" style="background-color: #ef6c00;">🥕 Megnyitás: Répás Kert Gyakorló</a>
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria Tankönyv</span>
+            <span>2. Oldal</span>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const btn = document.querySelector('.btn-top');
+            btn.style.display = 'none';
+
+            const element = document.body;
+            const opt = {
+                margin:       0,
+                filename:     'Ritka_Matrixok_Es_Jatekracsok.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.style.display = 'block';
+            });
+        }
+    </script>
+
+</body></html>
