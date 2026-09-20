@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)file:///D:/tankonyv/teszt.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Interaktív Kvíz – Összetett adatszerkezetek, rekurzió, algoritmusok, memóriakezelés</title>
+  <script src="./index_files/saved_resource"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .code { font-family: "Fira Code", Consolas, monospace; }
+    .disabled-btn { pointer-events: none; opacity: 0.6; }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-6{margin-bottom:1.5rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mb-1{margin-bottom:0.25rem}.mb-3{margin-bottom:0.75rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.min-h-screen{min-height:100vh}.w-full{width:100%}.max-w-6xl{max-width:72rem}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.p-3{padding:0.75rem}.p-4{padding:1rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.text-left{text-align:left}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105 / var(--tw-bg-opacity, 1))}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-indigo-300 mb-2">
+        Interaktív Kvíz – 10. osztály
+      </h1>
+      <p class="text-slate-300">
+        Téma: Összetett adatszerkezetek Pythonban, rekurzió, fejlett algoritmusok, memóriakezelés és C++ alapismeretek.
+      </p>
+      <p class="mt-2 text-sm text-slate-400">
+        Minden kérdéshez 4 válaszlehetőség tartozik, csak 1 helyes. Válasz után azonnal részletes magyarázatot kapsz.
+      </p>
+      <div class="mt-4 flex items-center gap-4">
+        <div class="px-3 py-2 bg-slate-800 rounded-lg">
+          <span class="text-xs text-slate-400">Helyes válaszok</span>
+          <div class="text-lg font-semibold" id="scoreCorrect">0</div>
+        </div>
+        <div class="px-3 py-2 bg-slate-800 rounded-lg">
+          <span class="text-xs text-slate-400">Megválaszolt kérdések</span>
+          <div class="text-lg font-semibold" id="scoreTotal">0</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="flex flex-wrap gap-2 mb-6">
+      <button class="tab-btn px-3 py-2 rounded-md bg-indigo-600 text-sm" data-chapter="0">
+        1. Fejezet – Összetett adatszerkezetek Pythonban
+      </button>
+      <button class="tab-btn px-3 py-2 rounded-md bg-slate-700 text-sm" data-chapter="1">
+        2. Fejezet – Rekurzió és függvények
+      </button>
+      <button class="tab-btn px-3 py-2 rounded-md bg-slate-700 text-sm" data-chapter="2">
+        3. Fejezet – Fejlett algoritmikus stratégiák
+      </button>
+      <button class="tab-btn px-3 py-2 rounded-md bg-slate-700 text-sm" data-chapter="3">
+        4. Fejezet – Memóriakezelés és C++ alapismeretek
+      </button>
+    </nav>
+
+    <!-- Questions container -->
+    <main id="questionsContainer" class="space-y-4"><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 1: Mi a Python halmaz (set) legfontosabb tulajdonsága?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-0" data-idx="0">Elemek sorrendjét megőrzi</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-0" data-idx="1">Elemek ismétlődhetnek</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-0" data-idx="2">Elemek egyediek, ismétlődés nélkül</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-0" data-idx="3">Csak számokat tartalmazhat</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-0"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A halmaz (set) lényege, hogy minden elem egyedi. Ha ugyanazt az elemet többször hozzáadjuk, csak egyszer szerepel. A sorrend nem garantált, és bármilyen hash-elhető típus lehet benne.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 2: Melyik művelet távolít el egy elemet a halmazból, hiba nélkül, ha az elem esetleg nincs benne?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">s = {1, 2, 3}
+# melyik metódus?</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-1" data-idx="0">s.remove(4)</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-1" data-idx="1">s.discard(4)</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-1" data-idx="2">s.pop(4)</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-1" data-idx="3">del s[4]</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-1"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A remove() hibát dob, ha az elem nincs a halmazban. A discard() viszont csendben nem csinál semmit, ha az elem hiányzik, ezért biztonságosabb ilyen esetben.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 3: Mi történik, ha két halmaz unióját kéred: A | B?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">A = {1, 2}
+B = {2, 3}
+C = A | B</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-2" data-idx="0">C = {1, 2}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-2" data-idx="1">C = {2, 3}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-2" data-idx="2">C = {1, 2, 3}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-2" data-idx="3">C = {1, 3}</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-2"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Az unió (|) minden olyan elemet tartalmaz, ami bármelyik halmazban benne van. Így {1, 2} és {2, 3} uniója {1, 2, 3}.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 4: Melyik Python típus NEM tehető halmazba elemként?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-3" data-idx="0">int</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-3" data-idx="1">str</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-3" data-idx="2">tuple</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-3" data-idx="3">list</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-3"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Halmazba csak hash-elhető, immutábilis típusok kerülhetnek. A list változtatható, ezért nem hash-elhető, így nem lehet halmazelem.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 5: Mi a karakterlánc (str) egyik fontos tulajdonsága Pythonban?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-4" data-idx="0">Mutábilis, elemei módosíthatók indexeléssel</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-4" data-idx="1">Immutábilis, módosításkor új string jön létre</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-4" data-idx="2">Csak ASCII karaktereket tartalmazhat</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-4" data-idx="3">Nem szeletelhető</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-4"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A string immutábilis: ha módosítjuk, valójában új stringet hozunk létre. Indexeléssel nem írhatjuk át egy karakterét közvetlenül.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 6: Mit ad vissza a 'Python'[1:4] szeletelés?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">s = "Python"
+print(s[1:4])</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-5" data-idx="0">"Pyt"</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-5" data-idx="1">"yth"</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-5" data-idx="2">"yto"</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-5" data-idx="3">"ytho"</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-5"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A szeletelés a kezdő indexet (1) beleértve, a végindexet (4) kizárva veszi. Így az 1,2,3 indexű karakterek: 'y', 't', 'h'.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 7: Melyik metódus alakítja nagybetűssé az egész stringet?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">s = "Python"
+# ?</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-6" data-idx="0">s.capitalize()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-6" data-idx="1">s.upper()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-6" data-idx="2">s.title()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-6" data-idx="3">s.lower()</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-6"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Az upper() minden karaktert nagybetűssé alakít. A capitalize() csak az elsőt, a title() minden szó első betűjét.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 8: Mi a szótár (dict) alapvető szerkezete?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-7" data-idx="0">Index–érték párok</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-7" data-idx="1">Kulcs–érték párok</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-7" data-idx="2">Csak értékek listája</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-7" data-idx="3">Csak kulcsok listája</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-7"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A dict kulcs–érték párokat tárol. A kulcs egyedi, az érték tetszőleges típus lehet. A kulcs alapján érjük el az értéket.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 9: Melyik kódrészlet járja be a szótár kulcsait?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">d = {"a": 1, "b": 2}</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-8" data-idx="0">for v in d.values():</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-8" data-idx="1">for k in d.keys():</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-8" data-idx="2">for k, v in d.items():</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-8" data-idx="3">for i in d.range():</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-8"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A keys() a kulcsokat adja, values() az értékeket, items() a kulcs–érték párokat. A range() nem létezik dict-re.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 10: Mi történik, ha egy már létező kulcsot új értékkel adunk meg a dict-ben?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">d = {"a": 1}
+d["a"] = 5</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-9" data-idx="0">Hiba keletkezik</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-9" data-idx="1">Új kulcs jön létre</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-9" data-idx="2">Felülírja a régi értéket</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-9" data-idx="3">Semmi nem történik</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-9"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A dict-ben a kulcs egyedi. Ha ugyanazt a kulcsot új értékkel adjuk meg, a régi értéket felülírjuk.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 11: Mi a 'listák listája' kifejezés jelentése?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-10" data-idx="0">Egy listában csak számok vannak</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-10" data-idx="1">Egy listában más listák elemekként szerepelnek</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-10" data-idx="2">Egy listában csak stringek vannak</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-10" data-idx="3">Egy listában kulcs–érték párok vannak</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-10"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Listák listája: a külső lista elemei maguk is listák. Gyakran mátrix vagy táblázat reprezentálására használjuk.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 12: Melyik kódrészlet hoz létre listák listáját?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto"># ?</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-11" data-idx="0">matrix = [1, 2, 3]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-11" data-idx="1">matrix = [[1, 2], [3, 4]]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-11" data-idx="2">matrix = {1: [2, 3]}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-11" data-idx="3">matrix = ( [1, 2], [3, 4] )</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-11"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A [[1, 2], [3, 4]] egy lista, amelynek elemei szintén listák. Ez tipikus 2D struktúra.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 13: Mi a 'szótárak listája' gyakorlati előnye?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-12" data-idx="0">Nem használható valós adatokra</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-12" data-idx="1">Csak számokat tárol</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-12" data-idx="2">Rugalmasan tárol rekordokat (pl. diákok adatai)</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-12" data-idx="3">Csak kulcsokat tárol</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-12"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Szótárak listája: minden dict egy rekord (pl. egy diák), a lista pedig sok ilyen rekordot tartalmaz. Rugalmas, jól olvasható.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 14: Melyik kódrészlet mutat egy szótárak listáját diákokkal?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto"># ?</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-13" data-idx="0">students = ["Anna", "Béla"]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-13" data-idx="1">students = {"Anna": 5, "Béla": 4}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-13" data-idx="2">students = [{"name": "Anna", "grade": 5}, {"name": "Béla", "grade": 4}]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-13" data-idx="3">students = ({"Anna", "Béla"})</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-13"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Itt minden elem egy dict, amely egy diák adatait tartalmazza. A lista több ilyen rekordot tárol.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 15: Mi történik, ha egy listák listájában egy belső listát módosítunk?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">matrix = [[1, 2], [3, 4]]
+matrix[0][1] = 9</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-14" data-idx="0">Hiba keletkezik</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-14" data-idx="1">Csak a külső lista módosul</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-14" data-idx="2">Az első belső lista második eleme 9 lesz</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-14" data-idx="3">Semmi nem történik</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-14"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A matrix[0] az első belső lista, matrix[0][1] annak második eleme. A módosítás ott történik, így 2 helyett 9 lesz.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 16: Mi a különbség a list és a tuple között Pythonban?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-15" data-idx="0">A list immutábilis, a tuple mutábilis</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-15" data-idx="1">A list mutábilis, a tuple immutábilis</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-15" data-idx="2">Mindkettő immutábilis</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-15" data-idx="3">Mindkettő mutábilis</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-15"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A list módosítható (elemek hozzáadása, törlése), a tuple nem. Ezért a tuple gyakran fix adatszerkezetekre jó.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 17: Melyik kódrészlet hoz létre üres halmazt helyesen?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto"># ?</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-16" data-idx="0">s = {}</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-16" data-idx="1">s = set()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-16" data-idx="2">s = []</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-16" data-idx="3">s = ()</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-16"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">{} üres dict-et hoz létre, nem halmazt. Üres halmazhoz a set() szükséges.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 18: Mit ad vissza a 'Python'.find('th')?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">s = "Python"
+print(s.find("th"))</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-17" data-idx="0">0</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-17" data-idx="1">2</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-17" data-idx="2">3</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-17" data-idx="3">-1</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-17"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A 'th' a 3. indexnél kezdődik (0: P, 1: y, 2: t, 3: h). A find() ezt az indexet adja vissza.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 19: Mi történik, ha egy dict-ben nem létező kulcsot kérünk le: d['x']?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">d = {"a": 1}
+print(d["x"])</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-18" data-idx="0">None-t ad vissza</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-18" data-idx="1">0-t ad vissza</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-18" data-idx="2">KeyError keletkezik</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-18" data-idx="3">Üres stringet ad vissza</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-18"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Nem létező kulcs lekérése KeyError-t dob. Ha el akarjuk kerülni, használhatjuk a get() metódust alapértelmezett értékkel.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 20: Melyik metódus adja vissza a dict kulcs–érték párokat egyszerre?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">d = {"a": 1, "b": 2}</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-19" data-idx="0">d.keys()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-19" data-idx="1">d.values()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-19" data-idx="2">d.items()</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-19" data-idx="3">d.pairs()</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-19"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Az items() minden kulcs–érték párt ad vissza, ami hasznos bejáráskor: for k, v in d.items().</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 21: Mi a slicing általános szintaxisa Pythonban?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-20" data-idx="0">obj[start:end:step]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-20" data-idx="1">obj(start,end,step)</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-20" data-idx="2">obj[start;end;step]</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-20" data-idx="3">obj{start,end,step}</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-20"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A slicing szintaxisa: [start:end:step]. A start és step elhagyható, ilyenkor alapértelmezett értékek lépnek életbe.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 22: Mit jelent, ha egy listát így szeletelünk: a[::-1]?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">a = [1, 2, 3]
+print(a[::-1])</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-21" data-idx="0">Az eredeti listát adja vissza</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-21" data-idx="1">Csak az első elemet adja vissza</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-21" data-idx="2">A listát megfordítja</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-21" data-idx="3">Hibát okoz</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-21"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">A negatív lépés (step) visszafelé halad. A ::-1 a listát megfordítja.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 23: Mi a halmazmetszet (intersection) jele Pythonban?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-22" data-idx="0">|</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-22" data-idx="1">&amp;</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-22" data-idx="2">-</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-22" data-idx="3">^</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-22"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Az &amp; jelöli a metszetet: A &amp; B azokat az elemeket tartalmazza, amelyek mindkét halmazban benne vannak.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 24: Melyik típus alkalmas kulcsnak dict-ben?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-23" data-idx="0">list</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-23" data-idx="1">dict</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-23" data-idx="2">tuple</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-23" data-idx="3">set</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-23"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Kulcsnak hash-elhető, immutábilis típus kell. A tuple ilyen, a list és dict nem.</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 25: Mi történik, ha egy listák listájában új belső listát append-elünk?</h2><pre class="code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto">matrix = [[1, 2]]
+matrix.append([3, 4])</pre><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-24" data-idx="0">Hiba keletkezik</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-24" data-idx="1">A külső lista új eleme egy belső lista lesz</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-24" data-idx="2">Csak a belső lista módosul</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-24" data-idx="3">Semmi nem történik</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-24"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Az append() új elemet ad a külső listához. Itt ez az elem egy új belső lista: [3, 4].</p></div></article><article class="bg-slate-800 rounded-lg p-4 shadow-sm"><h2 class="text-lg font-semibold text-indigo-200 mb-2">Kérdés 26: Mi a Python stringek egyik gyakori felhasználása?</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3"><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-25" data-idx="0">Csak számításokra használjuk</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-25" data-idx="1">Felhasználói bemenet, üzenetek, fájlok tartalma</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-25" data-idx="2">Csak memóriacímek tárolására</button><button class="opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm" data-qid="0-25" data-idx="3">Csak bináris adatokra</button></div><div class="hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm" id="exp-0-25"><div class="font-semibold text-indigo-300 mb-1">Részletes magyarázat:</div><p class="text-slate-200">Stringekkel szöveges adatokat tárolunk: üzenetek, fájlok tartalma, bemenetek. Ez az egyik leggyakrabban használt típus.</p></div></article></main>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        chapter: "1. Összetett adatszerkezetek Pythonban",
+        questions: [
+          {
+            q: "Mi a Python halmaz (set) legfontosabb tulajdonsága?",
+            code: null,
+            options: [
+              "Elemek sorrendjét megőrzi",
+              "Elemek ismétlődhetnek",
+              "Elemek egyediek, ismétlődés nélkül",
+              "Csak számokat tartalmazhat"
+            ],
+            answer: 2,
+            exp: "A halmaz (set) lényege, hogy minden elem egyedi. Ha ugyanazt az elemet többször hozzáadjuk, csak egyszer szerepel. A sorrend nem garantált, és bármilyen hash-elhető típus lehet benne."
+          },
+          {
+            q: "Melyik művelet távolít el egy elemet a halmazból, hiba nélkül, ha az elem esetleg nincs benne?",
+            code: `s = {1, 2, 3}\n# melyik metódus?`,
+            options: [
+              "s.remove(4)",
+              "s.discard(4)",
+              "s.pop(4)",
+              "del s[4]"
+            ],
+            answer: 1,
+            exp: "A remove() hibát dob, ha az elem nincs a halmazban. A discard() viszont csendben nem csinál semmit, ha az elem hiányzik, ezért biztonságosabb ilyen esetben."
+          },
+          {
+            q: "Mi történik, ha két halmaz unióját kéred: A | B?",
+            code: `A = {1, 2}\nB = {2, 3}\nC = A | B`,
+            options: [
+              "C = {1, 2}",
+              "C = {2, 3}",
+              "C = {1, 2, 3}",
+              "C = {1, 3}"
+            ],
+            answer: 2,
+            exp: "Az unió (|) minden olyan elemet tartalmaz, ami bármelyik halmazban benne van. Így {1, 2} és {2, 3} uniója {1, 2, 3}."
+          },
+          {
+            q: "Melyik Python típus NEM tehető halmazba elemként?",
+            code: null,
+            options: [
+              "int",
+              "str",
+              "tuple",
+              "list"
+            ],
+            answer: 3,
+            exp: "Halmazba csak hash-elhető, immutábilis típusok kerülhetnek. A list változtatható, ezért nem hash-elhető, így nem lehet halmazelem."
+          },
+          {
+            q: "Mi a karakterlánc (str) egyik fontos tulajdonsága Pythonban?",
+            code: null,
+            options: [
+              "Mutábilis, elemei módosíthatók indexeléssel",
+              "Immutábilis, módosításkor új string jön létre",
+              "Csak ASCII karaktereket tartalmazhat",
+              "Nem szeletelhető"
+            ],
+            answer: 1,
+            exp: "A string immutábilis: ha módosítjuk, valójában új stringet hozunk létre. Indexeléssel nem írhatjuk át egy karakterét közvetlenül."
+          },
+          {
+            q: "Mit ad vissza a 'Python'[1:4] szeletelés?",
+            code: `s = "Python"\nprint(s[1:4])`,
+            options: [
+              '"Pyt"',
+              '"yth"',
+              '"yto"',
+              '"ytho"'
+            ],
+            answer: 1,
+            exp: "A szeletelés a kezdő indexet (1) beleértve, a végindexet (4) kizárva veszi. Így az 1,2,3 indexű karakterek: 'y', 't', 'h'."
+          },
+          {
+            q: "Melyik metódus alakítja nagybetűssé az egész stringet?",
+            code: `s = "Python"\n# ?`,
+            options: [
+              "s.capitalize()",
+              "s.upper()",
+              "s.title()",
+              "s.lower()"
+            ],
+            answer: 1,
+            exp: "Az upper() minden karaktert nagybetűssé alakít. A capitalize() csak az elsőt, a title() minden szó első betűjét."
+          },
+          {
+            q: "Mi a szótár (dict) alapvető szerkezete?",
+            code: null,
+            options: [
+              "Index–érték párok",
+              "Kulcs–érték párok",
+              "Csak értékek listája",
+              "Csak kulcsok listája"
+            ],
+            answer: 1,
+            exp: "A dict kulcs–érték párokat tárol. A kulcs egyedi, az érték tetszőleges típus lehet. A kulcs alapján érjük el az értéket."
+          },
+          {
+            q: "Melyik kódrészlet járja be a szótár kulcsait?",
+            code: `d = {"a": 1, "b": 2}`,
+            options: [
+              "for v in d.values():",
+              "for k in d.keys():",
+              "for k, v in d.items():",
+              "for i in d.range():"
+            ],
+            answer: 1,
+            exp: "A keys() a kulcsokat adja, values() az értékeket, items() a kulcs–érték párokat. A range() nem létezik dict-re."
+          },
+          {
+            q: "Mi történik, ha egy már létező kulcsot új értékkel adunk meg a dict-ben?",
+            code: `d = {"a": 1}\nd["a"] = 5`,
+            options: [
+              "Hiba keletkezik",
+              "Új kulcs jön létre",
+              "Felülírja a régi értéket",
+              "Semmi nem történik"
+            ],
+            answer: 2,
+            exp: "A dict-ben a kulcs egyedi. Ha ugyanazt a kulcsot új értékkel adjuk meg, a régi értéket felülírjuk."
+          },
+          {
+            q: "Mi a 'listák listája' kifejezés jelentése?",
+            code: null,
+            options: [
+              "Egy listában csak számok vannak",
+              "Egy listában más listák elemekként szerepelnek",
+              "Egy listában csak stringek vannak",
+              "Egy listában kulcs–érték párok vannak"
+            ],
+            answer: 1,
+            exp: "Listák listája: a külső lista elemei maguk is listák. Gyakran mátrix vagy táblázat reprezentálására használjuk."
+          },
+          {
+            q: "Melyik kódrészlet hoz létre listák listáját?",
+            code: `# ?`,
+            options: [
+              "matrix = [1, 2, 3]",
+              "matrix = [[1, 2], [3, 4]]",
+              "matrix = {1: [2, 3]}",
+              "matrix = ( [1, 2], [3, 4] )"
+            ],
+            answer: 1,
+            exp: "A [[1, 2], [3, 4]] egy lista, amelynek elemei szintén listák. Ez tipikus 2D struktúra."
+          },
+          {
+            q: "Mi a 'szótárak listája' gyakorlati előnye?",
+            code: null,
+            options: [
+              "Nem használható valós adatokra",
+              "Csak számokat tárol",
+              "Rugalmasan tárol rekordokat (pl. diákok adatai)",
+              "Csak kulcsokat tárol"
+            ],
+            answer: 2,
+            exp: "Szótárak listája: minden dict egy rekord (pl. egy diák), a lista pedig sok ilyen rekordot tartalmaz. Rugalmas, jól olvasható."
+          },
+          {
+            q: "Melyik kódrészlet mutat egy szótárak listáját diákokkal?",
+            code: `# ?`,
+            options: [
+              `students = ["Anna", "Béla"]`,
+              `students = {"Anna": 5, "Béla": 4}`,
+              `students = [{"name": "Anna", "grade": 5}, {"name": "Béla", "grade": 4}]`,
+              `students = ({"Anna", "Béla"})`
+            ],
+            answer: 2,
+            exp: "Itt minden elem egy dict, amely egy diák adatait tartalmazza. A lista több ilyen rekordot tárol."
+          },
+          {
+            q: "Mi történik, ha egy listák listájában egy belső listát módosítunk?",
+            code: `matrix = [[1, 2], [3, 4]]\nmatrix[0][1] = 9`,
+            options: [
+              "Hiba keletkezik",
+              "Csak a külső lista módosul",
+              "Az első belső lista második eleme 9 lesz",
+              "Semmi nem történik"
+            ],
+            answer: 2,
+            exp: "A matrix[0] az első belső lista, matrix[0][1] annak második eleme. A módosítás ott történik, így 2 helyett 9 lesz."
+          },
+          {
+            q: "Mi a különbség a list és a tuple között Pythonban?",
+            code: null,
+            options: [
+              "A list immutábilis, a tuple mutábilis",
+              "A list mutábilis, a tuple immutábilis",
+              "Mindkettő immutábilis",
+              "Mindkettő mutábilis"
+            ],
+            answer: 1,
+            exp: "A list módosítható (elemek hozzáadása, törlése), a tuple nem. Ezért a tuple gyakran fix adatszerkezetekre jó."
+          },
+          {
+            q: "Melyik kódrészlet hoz létre üres halmazt helyesen?",
+            code: `# ?`,
+            options: [
+              "s = {}",
+              "s = set()",
+              "s = []",
+              "s = ()"
+            ],
+            answer: 1,
+            exp: "{} üres dict-et hoz létre, nem halmazt. Üres halmazhoz a set() szükséges."
+          },
+          {
+            q: "Mit ad vissza a 'Python'.find('th')?",
+            code: `s = "Python"\nprint(s.find("th"))`,
+            options: [
+              "0",
+              "2",
+              "3",
+              "-1"
+            ],
+            answer: 2,
+            exp: "A 'th' a 3. indexnél kezdődik (0: P, 1: y, 2: t, 3: h). A find() ezt az indexet adja vissza."
+          },
+          {
+            q: "Mi történik, ha egy dict-ben nem létező kulcsot kérünk le: d['x']?",
+            code: `d = {"a": 1}\nprint(d["x"])`,
+            options: [
+              "None-t ad vissza",
+              "0-t ad vissza",
+              "KeyError keletkezik",
+              "Üres stringet ad vissza"
+            ],
+            answer: 2,
+            exp: "Nem létező kulcs lekérése KeyError-t dob. Ha el akarjuk kerülni, használhatjuk a get() metódust alapértelmezett értékkel."
+          },
+          {
+            q: "Melyik metódus adja vissza a dict kulcs–érték párokat egyszerre?",
+            code: `d = {"a": 1, "b": 2}`,
+            options: [
+              "d.keys()",
+              "d.values()",
+              "d.items()",
+              "d.pairs()"
+            ],
+            answer: 2,
+            exp: "Az items() minden kulcs–érték párt ad vissza, ami hasznos bejáráskor: for k, v in d.items()."
+          },
+          {
+            q: "Mi a slicing általános szintaxisa Pythonban?",
+            code: null,
+            options: [
+              "obj[start:end:step]",
+              "obj(start,end,step)",
+              "obj[start;end;step]",
+              "obj{start,end,step}"
+            ],
+            answer: 0,
+            exp: "A slicing szintaxisa: [start:end:step]. A start és step elhagyható, ilyenkor alapértelmezett értékek lépnek életbe."
+          },
+          {
+            q: "Mit jelent, ha egy listát így szeletelünk: a[::-1]?",
+            code: `a = [1, 2, 3]\nprint(a[::-1])`,
+            options: [
+              "Az eredeti listát adja vissza",
+              "Csak az első elemet adja vissza",
+              "A listát megfordítja",
+              "Hibát okoz"
+            ],
+            answer: 2,
+            exp: "A negatív lépés (step) visszafelé halad. A ::-1 a listát megfordítja."
+          },
+          {
+            q: "Mi a halmazmetszet (intersection) jele Pythonban?",
+            code: null,
+            options: [
+              "|",
+              "&",
+              "-",
+              "^"
+            ],
+            answer: 1,
+            exp: "Az & jelöli a metszetet: A & B azokat az elemeket tartalmazza, amelyek mindkét halmazban benne vannak."
+          },
+          {
+            q: "Melyik típus alkalmas kulcsnak dict-ben?",
+            code: null,
+            options: [
+              "list",
+              "dict",
+              "tuple",
+              "set"
+            ],
+            answer: 2,
+            exp: "Kulcsnak hash-elhető, immutábilis típus kell. A tuple ilyen, a list és dict nem."
+          },
+          {
+            q: "Mi történik, ha egy listák listájában új belső listát append-elünk?",
+            code: `matrix = [[1, 2]]\nmatrix.append([3, 4])`,
+            options: [
+              "Hiba keletkezik",
+              "A külső lista új eleme egy belső lista lesz",
+              "Csak a belső lista módosul",
+              "Semmi nem történik"
+            ],
+            answer: 1,
+            exp: "Az append() új elemet ad a külső listához. Itt ez az elem egy új belső lista: [3, 4]."
+          },
+          {
+            q: "Mi a Python stringek egyik gyakori felhasználása?",
+            code: null,
+            options: [
+              "Csak számításokra használjuk",
+              "Felhasználói bemenet, üzenetek, fájlok tartalma",
+              "Csak memóriacímek tárolására",
+              "Csak bináris adatokra"
+            ],
+            answer: 1,
+            exp: "Stringekkel szöveges adatokat tárolunk: üzenetek, fájlok tartalma, bemenetek. Ez az egyik leggyakrabban használt típus."
+          }
+        ]
+      },
+      {
+        chapter: "2. Rekurzió és függvények",
+        questions: [
+          {
+            q: "Mi a rekurzió alapvető lényege?",
+            code: null,
+            options: [
+              "A függvény önmagát hívja",
+              "A függvény csak más függvényeket hív",
+              "A függvény végtelen ciklust futtat",
+              "A függvény nem használ paramétereket"
+            ],
+            answer: 0,
+            exp: "Rekurzió esetén a függvény saját magát hívja meg kisebb részproblémára. Fontos, hogy legyen kilépési feltétel."
+          },
+          {
+            q: "Miért fontos az alapfeltétel (kilépési feltétel) rekurzióban?",
+            code: null,
+            options: [
+              "Nélküle gyorsabb a program",
+              "Nélküle a rekurzió végtelen lenne",
+              "Nélküle több memóriát használunk, de működik",
+              "Nélküle a függvény nem hívható"
+            ],
+            answer: 1,
+            exp: "Kilépési feltétel nélkül a függvény mindig újra meghívná magát, sosem állna le, és stack overflow lenne."
+          },
+          {
+            q: "Mi a hívási verem (call stack) szerepe rekurzióban?",
+            code: null,
+            options: [
+              "A változókat tárolja globálisan",
+              "A függvényhívások állapotát tárolja",
+              "Csak a ciklusok lépéseit tárolja",
+              "Csak a fájlneveket tárolja"
+            ],
+            answer: 1,
+            exp: "A call stack minden függvényhívás lokális változóit és visszatérési pontját tárolja. Rekurzióban sok ilyen keret jön létre egymás fölött."
+          },
+          {
+            q: "Mi történik, ha a rekurzív függvény túl sokszor hívja meg magát kilépési feltétel nélkül?",
+            code: null,
+            options: [
+              "A program gyorsabban lefut",
+              "Stack overflow hiba keletkezik",
+              "Automatikusan leáll a rekurzió",
+              "Semmi különös"
+            ],
+            answer: 1,
+            exp: "A hívási verem véges. Ha túl sok rekurzív hívás történik kilépés nélkül, a verem megtelik, és hibát kapunk."
+          },
+          {
+            q: "Mi a faktoriális rekurzív definíciója?",
+            code: null,
+            options: [
+              "n! = n + (n-1)!",
+              "n! = n * (n-1)!",
+              "n! = n - (n-1)!",
+              "n! = (n-1)! / n"
+            ],
+            answer: 1,
+            exp: "A faktoriális definíciója: n! = n * (n-1)!, alapfeltétel: 0! = 1. Ez természetes rekurzív feladat."
+          },
+          {
+            q: "Mi az alapfeltétel a faktoriális rekurzív függvényben?",
+            code: `def fact(n):\n    if n == ?:\n        return 1\n    return n * fact(n-1)`,
+            options: [
+              "n == 1",
+              "n == 0",
+              "n == -1",
+              "n == 2"
+            ],
+            answer: 1,
+            exp: "Gyakori, hogy 0! = 1 az alapfeltétel. Lehet 1 is, de a matematikai definíció szerint 0! = 1."
+          },
+          {
+            q: "Mi a Fibonacci-sorozat rekurzív definíciója?",
+            code: null,
+            options: [
+              "F(n) = F(n-1) + F(n-2), F(0)=0, F(1)=1",
+              "F(n) = F(n-1) - F(n-2)",
+              "F(n) = F(n-1) * F(n-2)",
+              "F(n) = F(n-1) / F(n-2)"
+            ],
+            answer: 0,
+            exp: "A Fibonacci-sorozat: F(n) = F(n-1) + F(n-2), alapértékek: F(0)=0, F(1)=1. Klasszikus rekurzív példa."
+          },
+          {
+            q: "Mi a rekurzív függvény egyik hátránya iteratív megoldáshoz képest?",
+            code: null,
+            options: [
+              "Mindig gyorsabb",
+              "Mindig kevesebb memóriát használ",
+              "Több stack memóriát használhat",
+              "Nem lehet megvalósítani"
+            ],
+            answer: 2,
+            exp: "Rekurzióban minden hívás új stack keretet hoz létre, ami több memóriát használhat, mint egy iteratív ciklus."
+          },
+          {
+            q: "Mi a tail recursion (farokrekurzió) lényege?",
+            code: null,
+            options: [
+              "A rekurzív hívás után nincs további művelet",
+              "A rekurzív hívás előtt nincs művelet",
+              "A rekurzív hívás közben nincs művelet",
+              "Nem használ paramétereket"
+            ],
+            answer: 0,
+            exp: "Tail recursion esetén a függvény utolsó művelete a rekurzív hívás. Egyes nyelvek optimalizálni tudják ezt, Python nem."
+          },
+          {
+            q: "Mi történik a call stack-ben, amikor a rekurzív függvény visszatér?",
+            code: null,
+            options: [
+              "Új keret jön létre",
+              "A legfelső keret eltűnik",
+              "Minden keret megmarad",
+              "A verem törlődik"
+            ],
+            answer: 1,
+            exp: "Visszatéréskor a legutolsó hívás kerete lekerül a veremről, és a vezérlés visszatér az előző híváshoz."
+          },
+          {
+            q: "Miért nehéz néha rekurzív kódot debugolni?",
+            code: null,
+            options: [
+              "Nincs hívási verem",
+              "Sok egymásba ágyazott hívás történik",
+              "Nem lehet print-et használni",
+              "Nem lehet változókat használni"
+            ],
+            answer: 1,
+            exp: "Sok egymásba ágyazott hívás miatt nehéz követni, hol tart a program. A call stack mély lehet."
+          },
+          {
+            q: "Melyik Python kódrészlet rekurzív faktoriális függvényt mutat?",
+            code: `def fact(n):\n    if n == 0:\n        return 1\n    return n * fact(n-1)`,
+            options: [
+              "Iteratív megoldás",
+              "Rekurzív megoldás",
+              "Nem működő kód",
+              "Ciklusos megoldás"
+            ],
+            answer: 1,
+            exp: "A függvény saját magát hívja n-1 paraméterrel, ez rekurzió. Az alapfeltétel n==0."
+          },
+          {
+            q: "Mi a paraméter szerepe rekurzív függvényben?",
+            code: null,
+            options: [
+              "Nem fontos",
+              "A problémát kisebb részre bontja",
+              "Csak dísz",
+              "Csak globális változókat helyettesít"
+            ],
+            answer: 1,
+            exp: "A paraméter jelzi, hogy a probléma melyik részén dolgozunk. Rekurzióban általában csökkentjük vagy módosítjuk."
+          },
+          {
+            q: "Mi történik, ha a rekurzív függvény alapfeltétele sosem teljesül?",
+            code: null,
+            options: [
+              "A függvény egyszer lefut",
+              "A függvény nem indul el",
+              "Végtelen rekurzió, stack overflow",
+              "Automatikusan leáll"
+            ],
+            answer: 2,
+            exp: "Ha az alapfeltétel sosem igaz, a függvény mindig újra meghívja magát, és a verem megtelik."
+          },
+          {
+            q: "Mi a különbség a rekurzív és iteratív megoldás között?",
+            code: null,
+            options: [
+              "Rekurzióban nincs ciklus",
+              "Iterációban nincs függvény",
+              "Rekurzió függvényhívásokkal, iteráció ciklusokkal dolgozik",
+              "Nincs különbség"
+            ],
+            answer: 2,
+            exp: "Rekurzióban a függvény önmagát hívja, iterációban ciklusokkal ismétlünk. Sok probléma mindkét módon megoldható."
+          },
+          {
+            q: "Mi a Python alapértelmezett maximális rekurziós mélysége (nagyságrendileg)?",
+            code: null,
+            options: [
+              "Kb. 10",
+              "Kb. 100",
+              "Kb. 1000",
+              "Kb. 10000"
+            ],
+            answer: 2,
+            exp: "Alapértelmezésben kb. 1000 körüli rekurziós mélység engedélyezett. Ez módosítható, de óvatosan."
+          },
+          {
+            q: "Mi a rekurzív Fibonacci függvény egyik nagy hátránya?",
+            code: null,
+            options: [
+              "Nagyon gyors",
+              "Sok ismétlődő számítást végez",
+              "Nem használ memóriát",
+              "Nem működik"
+            ],
+            answer: 1,
+            exp: "A rekurzív Fibonacci sokszor számolja ki ugyanazt az értéket. Ez exponenciális időigényű lehet."
+          },
+          {
+            q: "Mi segíthet a rekurzív Fibonacci optimalizálásában?",
+            code: null,
+            options: [
+              "Kevesebb paraméter",
+              "Memoizáció (eredmények tárolása)",
+              "Kevesebb alapfeltétel",
+              "Több rekurzív hívás"
+            ],
+            answer: 1,
+            exp: "Memoizációval eltároljuk a már kiszámolt értékeket, így nem számoljuk újra őket."
+          },
+          {
+            q: "Mi a Python függvény definíciójának alap szintaxisa?",
+            code: null,
+            options: [
+              "function name():",
+              "def name():",
+              "func name():",
+              "fn name():"
+            ],
+            answer: 1,
+            exp: "A Pythonban a def kulcsszóval definiálunk függvényt: def name(...):"
+          },
+          {
+            q: "Mi a paraméter és argumentum közti különbség?",
+            code: null,
+            options: [
+              "Nincs különbség",
+              "Paraméter a definícióban, argumentum a híváskor",
+              "Paraméter a híváskor, argumentum a definícióban",
+              "Mindkettő globális változó"
+            ],
+            answer: 1,
+            exp: "Paraméter: a függvény definíciójában szereplő név. Argumentum: a híváskor átadott konkrét érték."
+          },
+          {
+            q: "Mi történik, ha egy rekurzív függvényben több alapfeltétel van?",
+            code: null,
+            options: [
+              "Nem működik",
+              "Lehet több kilépési eset is",
+              "Csak az első számít",
+              "Hiba keletkezik"
+            ],
+            answer: 1,
+            exp: "Lehet több kilépési eset, pl. Fibonacci: F(0) és F(1) külön alapfeltétel."
+          },
+          {
+            q: "Mi a Python return kulcsszó szerepe függvényben?",
+            code: null,
+            options: [
+              "Kilép a függvényből és értéket ad vissza",
+              "Kilép a programból",
+              "Kilép a ciklusból",
+              "Semmit nem csinál"
+            ],
+            answer: 0,
+            exp: "A return kilép a függvényből, és visszaad egy értéket a hívónak. Rekurzióban is fontos."
+          },
+          {
+            q: "Mi történik, ha egy függvényben nincs return?",
+            code: null,
+            options: [
+              "Hiba keletkezik",
+              "Automatikusan 0-t ad vissza",
+              "Automatikusan None-t ad vissza",
+              "Automatikusan üres stringet ad vissza"
+            ],
+            answer: 2,
+            exp: "Ha nincs return, a függvény None-t ad vissza. Ez gyakori hiba, ha elfelejtjük visszaadni az eredményt."
+          },
+          {
+            q: "Mi a rekurzió egyik előnye?",
+            code: null,
+            options: [
+              "Minden problémát gyorsabbá tesz",
+              "Bizonyos problémákra természetesebb, rövidebb kódot ad",
+              "Kevesebb memóriát használ",
+              "Nem kell gondolkodni"
+            ],
+            answer: 1,
+            exp: "Fa struktúrák, oszd meg és uralkodj, kombinatorikai feladatok rekurzióval gyakran természetesebben írhatók le."
+          }
+        ]
+      },
+      {
+        chapter: "3. Fejlett algoritmikus stratégiák",
+        questions: [
+          {
+            q: "Mi a bináris keresés alapfeltétele?",
+            code: null,
+            options: [
+              "A lista rendezetlen",
+              "A lista rendezett",
+              "A lista üres",
+              "A lista csak stringeket tartalmaz"
+            ],
+            answer: 1,
+            exp: "Bináris keresés csak rendezett listán működik helyesen, mert a középső elemhez viszonyítunk."
+          },
+          {
+            q: "Mi a bináris keresés fő előnye lineáris kereséssel szemben?",
+            code: null,
+            options: [
+              "Mindig gyorsabb, O(1)",
+              "Átlagosan O(log n) idő, kevesebb összehasonlítás",
+              "Átlagosan O(n^2) idő",
+              "Nem kell rendezni a listát"
+            ],
+            answer: 1,
+            exp: "Bináris keresés logaritmikus időben találja meg az elemet rendezett listában, míg lineáris keresés O(n)."
+          },
+          {
+            q: "Mi az összefésülés (merge) lényege két rendezett listán?",
+            code: null,
+            options: [
+              "Összekeveri az elemeket véletlenszerűen",
+              "Összefűzi őket rendezetlenül",
+              "Új rendezett listát hoz létre mindkét lista elemeiből",
+              "Csak az első listát használja"
+            ],
+            answer: 2,
+            exp: "Merge: két rendezett listából egy új rendezett listát készítünk, mindkét lista elemeit felhasználva."
+          },
+          {
+            q: "Mi a 'Divide et impera' (oszd meg és uralkodj) stratégia lényege?",
+            code: null,
+            options: [
+              "A problémát egyben kezeljük",
+              "A problémát kisebb részekre bontjuk, azokat megoldjuk, majd összerakjuk",
+              "Csak véletlenszerűen választunk megoldást",
+              "Csak greedy algoritmust használunk"
+            ],
+            answer: 1,
+            exp: "Divide et impera: a nagy problémát kisebb részproblémákra bontjuk, azokat megoldjuk, majd az eredményeket kombináljuk."
+          },
+          {
+            q: "Melyik algoritmus klasszikus példája a 'Divide et impera' stratégiának?",
+            code: null,
+            options: [
+              "Bubble sort",
+              "Insertion sort",
+              "Merge sort",
+              "Linear search"
+            ],
+            answer: 2,
+            exp: "Merge sort a lista felosztásával és összefésülésével dolgozik, tipikus oszd meg és uralkodj algoritmus."
+          },
+          {
+            q: "Mi a greedy (kapzsi) algoritmus lényege?",
+            code: null,
+            options: [
+              "Mindig a globálisan legjobb megoldást választja",
+              "Mindig a lokálisan legjobb döntést hozza",
+              "Mindig véletlenszerű döntést hoz",
+              "Nem hoz döntést"
+            ],
+            answer: 1,
+            exp: "Greedy: minden lépésben a pillanatnyilag legjobb döntést hozza, remélve, hogy ez globálisan is jó lesz."
+          },
+          {
+            q: "Mi a greedy algoritmus egyik korlátja?",
+            code: null,
+            options: [
+              "Mindig optimális",
+              "Nem garantál globálisan optimális megoldást",
+              "Nem működik kis problémákra",
+              "Nem használ memóriát"
+            ],
+            answer: 1,
+            exp: "Greedy algoritmus nem mindig ad globálisan optimális megoldást, csak bizonyos problémákra jó."
+          },
+          {
+            q: "Mi a bináris keresés első lépése?",
+            code: null,
+            options: [
+              "Megnézzük az első elemet",
+              "Megnézzük az utolsó elemet",
+              "Megnézzük a középső elemet",
+              "Megnézzük az összes elemet"
+            ],
+            answer: 2,
+            exp: "Bináris keresésnél a középső elemet hasonlítjuk össze a keresett értékkel, és eldöntjük, melyik félben keresünk tovább."
+          },
+          {
+            q: "Mi történik, ha a bináris keresésben a keresett elem kisebb, mint a középső elem?",
+            code: null,
+            options: [
+              "A jobb felet vizsgáljuk tovább",
+              "A bal felet vizsgáljuk tovább",
+              "Az egész listát újra vizsgáljuk",
+              "Leállunk"
+            ],
+            answer: 1,
+            exp: "Ha a keresett elem kisebb, akkor a bal oldali részben lehet, így azt vizsgáljuk tovább."
+          },
+          {
+            q: "Mi történik, ha a bináris keresésben a keresett elem nagyobb, mint a középső elem?",
+            code: null,
+            options: [
+              "A bal felet vizsgáljuk tovább",
+              "A jobb felet vizsgáljuk tovább",
+              "Az egész listát újra vizsgáljuk",
+              "Leállunk"
+            ],
+            answer: 1,
+            exp: "Ha nagyobb, akkor a jobb oldali részben lehet, így azt vizsgáljuk tovább."
+          },
+          {
+            q: "Mi a merge sort egyik fő lépése?",
+            code: null,
+            options: [
+              "A lista véletlenszerű keverése",
+              "A lista két részre osztása, majd rendezett összefésülés",
+              "Csak a legnagyobb elem kiválasztása",
+              "Csak a legkisebb elem kiválasztása"
+            ],
+            answer: 1,
+            exp: "Merge sort: oszd meg és uralkodj. A lista két részre osztása, majd a rendezett részek összefésülése."
+          },
+          {
+            q: "Mi a greedy algoritmus tipikus felhasználása?",
+            code: null,
+            options: [
+              "Mindig rendezésre",
+              "Mindig keresésre",
+              "Optimális pénzváltás, intervallum kiválasztás, útvonalak",
+              "Csak memóriakezelésre"
+            ],
+            answer: 2,
+            exp: "Greedy algoritmusok gyakori feladatai: pénzváltás, intervallumok kiválasztása, bizonyos útvonalproblémák."
+          },
+          {
+            q: "Mi a 'Divide et impera' stratégia egyik előnye?",
+            code: null,
+            options: [
+              "Mindig lassabb",
+              "Könnyen párhuzamosítható, jól strukturált",
+              "Nem érthető",
+              "Nem használható valós problémákra"
+            ],
+            answer: 1,
+            exp: "A részproblémák párhuzamosan is megoldhatók, és a struktúra jól átlátható."
+          },
+          {
+            q: "Mi a lineáris keresés időbeli komplexitása?",
+            code: null,
+            options: [
+              "O(1)",
+              "O(log n)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            answer: 2,
+            exp: "Lineáris keresésnél végigmegyünk a listán, így O(n) összehasonlítás szükséges."
+          },
+          {
+            q: "Mi a bináris keresés időbeli komplexitása?",
+            code: null,
+            options: [
+              "O(1)",
+              "O(log n)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            answer: 1,
+            exp: "Bináris keresésnél minden lépésben felezzük a keresési tartományt, így O(log n) idő."
+          },
+          {
+            q: "Mi a greedy algoritmus döntési folyamata?",
+            code: null,
+            options: [
+              "Minden lehetséges megoldást végigpróbál",
+              "Mindig a pillanatnyilag legjobb opciót választja",
+              "Mindig a legrosszabb opciót választja",
+              "Nem hoz döntést"
+            ],
+            answer: 1,
+            exp: "Greedy: lokálisan optimális döntést hoz minden lépésben, remélve, hogy globálisan is jó lesz."
+          },
+          {
+            q: "Mi a 'Divide et impera' egyik klasszikus példája keresésre?",
+            code: null,
+            options: [
+              "Lineáris keresés",
+              "Bináris keresés",
+              "Bubble sort",
+              "Insertion sort"
+            ],
+            answer: 1,
+            exp: "Bináris keresés is oszd meg és uralkodj: a keresési tartományt felezzük."
+          },
+          {
+            q: "Mi a greedy algoritmus egyik hibája pénzváltásnál?",
+            code: null,
+            options: [
+              "Mindig optimális",
+              "Bizonyos címleteknél nem ad minimális számú érmét",
+              "Nem működik",
+              "Nem használható"
+            ],
+            answer: 1,
+            exp: "Nem minden pénzrendszerben ad minimális számú érmét, csak bizonyos címletstruktúráknál."
+          },
+          {
+            q: "Mi a rendezett listák összefésülésének egyik lépése?",
+            code: null,
+            options: [
+              "Mindig a nagyobb elemet vesszük először",
+              "Mindig a kisebb elemet vesszük először",
+              "Mindig véletlenszerű elemet veszünk",
+              "Nem hasonlítunk össze elemeket"
+            ],
+            answer: 1,
+            exp: "Összefésüléskor a két lista elejét hasonlítjuk össze, és a kisebb elemet tesszük az új listába."
+          },
+          {
+            q: "Mi a 'Divide et impera' stratégia egyik hátránya?",
+            code: null,
+            options: [
+              "Mindig lassú",
+              "Nehéz megvalósítani bizonyos problémákra",
+              "Nem használható",
+              "Nem érthető"
+            ],
+            answer: 1,
+            exp: "Nem minden probléma bontható jól részproblémákra, és a megvalósítás bonyolult lehet."
+          },
+          {
+            q: "Mi a greedy algoritmus egyik előnye?",
+            code: null,
+            options: [
+              "Egyszerű, gyors döntések",
+              "Mindig optimális",
+              "Mindig lassú",
+              "Nem érthető"
+            ],
+            answer: 0,
+            exp: "Greedy algoritmusok gyakran egyszerűek és gyorsak, ezért praktikusak bizonyos feladatokra."
+          },
+          {
+            q: "Mi a bináris keresés egyik gyakorlati alkalmazása?",
+            code: null,
+            options: [
+              "Rendezett tömbben való keresés",
+              "Rendezés nélküli listában való keresés",
+              "Szöveg formázása",
+              "Memóriakezelés"
+            ],
+            answer: 0,
+            exp: "Rendezett tömbökben, adatbázis indexekben, keresőalgoritmusokban gyakran használjuk."
+          },
+          {
+            q: "Mi a lineáris keresés egyik előnye bináris kereséssel szemben?",
+            code: null,
+            options: [
+              "Gyorsabb",
+              "Nem igényel rendezett listát",
+              "Kevesebb összehasonlítás",
+              "Nem használ memóriát"
+            ],
+            answer: 1,
+            exp: "Lineáris keresés bármilyen listán működik, nem kell rendezni. Kis listáknál egyszerű és elég gyors."
+          }
+        ]
+      },
+      {
+        chapter: "4. Memóriakezelés és C++ alapismeretek",
+        questions: [
+          {
+            q: "Mi a kétdimenziós tömb (mátrix) lényege C++-ban?",
+            code: null,
+            options: [
+              "Csak egy dimenziója van",
+              "Sorok és oszlopok szerint indexelhető",
+              "Nem indexelhető",
+              "Csak stringeket tartalmaz"
+            ],
+            answer: 1,
+            exp: "2D tömb: sor–oszlop struktúra, pl. int a[3][4]; sorok és oszlopok szerint érjük el az elemeket."
+          },
+          {
+            q: "Melyik C++ deklaráció hoz létre 3×4-es int mátrixot?",
+            code: null,
+            options: [
+              "int a[3];",
+              "int a[3][4];",
+              "int a[4][3];",
+              "int a[12];"
+            ],
+            answer: 1,
+            exp: "int a[3][4];: 3 sor, 4 oszlop. A másik sorrend 4×3 lenne."
+          },
+          {
+            q: "Mi történik, ha C++-ban a tömb indexelése kilép a határokból?",
+            code: null,
+            options: [
+              "Biztosan hiba keletkezik",
+              "Undefined behavior, hibás memóriaelérés",
+              "Automatikusan javítja",
+              "Nem történik semmi"
+            ],
+            answer: 1,
+            exp: "Határon túli indexelés undefined behavior, hibás memóriaeléréshez vezethet."
+          },
+          {
+            q: "Mi a memória szerepe program futása közben?",
+            code: null,
+            options: [
+              "Csak a fájlokat tárolja",
+              "Változókat, függvényhívásokat, adatokat tárol",
+              "Csak a képernyőt vezérli",
+              "Csak a hangot vezérli"
+            ],
+            answer: 1,
+            exp: "Memóriában tároljuk a változókat, adatokat, hívási veremet, programkódot. Ez a futás alapja."
+          },
+          {
+            q: "Mi a különbség a stack és heap memória között?",
+            code: null,
+            options: [
+              "Nincs különbség",
+              "Stack lokális változókra, heap dinamikus allokációra",
+              "Heap lokális változókra, stack dinamikus allokációra",
+              "Mindkettő csak globális változókra"
+            ],
+            answer: 1,
+            exp: "Stack: lokális változók, függvényhívások. Heap: dinamikusan foglalt memória (new, malloc)."
+          },
+          {
+            q: "Mi történik, ha C++-ban elfelejtjük felszabadítani a heap memóriát?",
+            code: null,
+            options: [
+              "Semmi",
+              "Memóriaszivárgás (memory leak)",
+              "Automatikusan felszabadul",
+              "Hiba keletkezik azonnal"
+            ],
+            answer: 1,
+            exp: "Ha nem hívjuk meg a delete-et, a memória foglalt marad, memóriaszivárgás történik."
+          },
+          {
+            q: "Mi a Python memóriakezelés egyik jellemzője?",
+            code: null,
+            options: [
+              "Manuálisan kell felszabadítani a memóriát",
+              "Automatikus szemétgyűjtés (garbage collection)",
+              "Nincs memória",
+              "Csak stack-et használ"
+            ],
+            answer: 1,
+            exp: "Python automatikusan felszabadítja a nem használt objektumokat garbage collectorral."
+          },
+          {
+            q: "Mi a C++ pointer lényege?",
+            code: null,
+            options: [
+              "Értéket tárol",
+              "Memóriacímet tárol",
+              "Csak stringet tárol",
+              "Nem használható"
+            ],
+            answer: 1,
+            exp: "Pointer: egy változó, amely egy másik változó memóriacímét tárolja. * és & operátorokkal használjuk."
+          },
+          {
+            q: "Mi a & operátor szerepe C++-ban?",
+            code: null,
+            options: [
+              "Dereferálás",
+              "Címvétel (address-of)",
+              "Összeadás",
+              "Szorzás"
+            ],
+            answer: 1,
+            exp: "&: egy változó memóriacímét adja vissza. Pl. &x a x címe."
+          },
+          {
+            q: "Mi a * operátor szerepe pointer esetén C++-ban?",
+            code: null,
+            options: [
+              "Címvétel",
+              "Dereferálás (érték elérése a címen)",
+              "Összeadás",
+              "Szorzás"
+            ],
+            answer: 1,
+            exp: "*p: a pointer által mutatott cím tartalmát adja vissza. Ez a dereferálás."
+          },
+          {
+            q: "Mi a kétdimenziós tömb bejárásának tipikus módja C++-ban?",
+            code: `for (int i = 0; i < n; i++) {\n  for (int j = 0; j < m; j++) {\n    // a[i][j]\n  }\n}`,
+            options: [
+              "Egy ciklus elég",
+              "Két egymásba ágyazott ciklus",
+              "Három ciklus kell",
+              "Nem lehet bejárni"
+            ],
+            answer: 1,
+            exp: "2D tömböt két egymásba ágyazott ciklussal járunk be: sorok és oszlopok."
+          },
+          {
+            q: "Mi a Python listák memóriakezelésének egyik jellemzője?",
+            code: null,
+            options: [
+              "Fix méretűek",
+              "Dinamikusan növekedhetnek",
+              "Nem növekedhetnek",
+              "Csak stringeket tárolnak"
+            ],
+            answer: 1,
+            exp: "Python listák dinamikusan növekedhetnek, a háttérben a memória újraallokálása történik."
+          },
+          {
+            q: "Mi a C++ tömb egyik hátránya Python listához képest?",
+            code: null,
+            options: [
+              "Nem gyors",
+              "Fix méretű, nehezebb dinamikusan növelni",
+              "Nem indexelhető",
+              "Nem használható"
+            ],
+            answer: 1,
+            exp: "C++ tömb mérete fix, dinamikus növeléshez új tömböt kell foglalni, és átmásolni az elemeket."
+          },
+          {
+            q: "Mi a memóriacím szerepe programozásban?",
+            code: null,
+            options: [
+              "Nem fontos",
+              "Megmutatja, hol tároljuk az adatot a memóriában",
+              "Csak dísz",
+              "Csak C++-ban létezik"
+            ],
+            answer: 1,
+            exp: "Memóriacím: a memória egy helyének azonosítója. Pointerek, referenciaátadás, alacsony szintű műveletek használják."
+          },
+          {
+            q: "Mi a Python változók tárolásának egyik sajátossága?",
+            code: null,
+            options: [
+              "Mindig stack-en vannak",
+              "Objektumokra mutató referenciákat tárolunk",
+              "Csak értékeket tárolunk",
+              "Nem használ memóriát"
+            ],
+            answer: 1,
+            exp: "Pythonban a változók valójában referenciákat tárolnak objektumokra, nem közvetlen értékeket."
+          },
+          {
+            q: "Mi a C++ new operátor szerepe?",
+            code: null,
+            options: [
+              "Stack memóriát foglal",
+              "Heap memóriát foglal",
+              "Felszabadít memóriát",
+              "Nem csinál semmit"
+            ],
+            answer: 1,
+            exp: "new: heap-en foglal memóriát, pl. int* p = new int; később delete p; szükséges."
+          },
+          {
+            q: "Mi a C++ delete operátor szerepe?",
+            code: null,
+            options: [
+              "Stack memóriát foglal",
+              "Heap memóriát felszabadít",
+              "Nem csinál semmit",
+              "Csak stringeket töröl"
+            ],
+            answer: 1,
+            exp: "delete: felszabadítja a new által foglalt heap memóriát. Fontos a memóriaszivárgás elkerüléséhez."
+          },
+          {
+            q: "Mi a Python garbage collector szerepe?",
+            code: null,
+            options: [
+              "Nem létezik",
+              "Automatikusan felszabadítja a nem használt objektumokat",
+              "Csak C++-ban van",
+              "Csak fájlokat töröl"
+            ],
+            answer: 1,
+            exp: "Garbage collector: figyeli, mely objektumokra nincs hivatkozás, és felszabadítja őket."
+          },
+          {
+            q: "Mi a kétdimenziós tömb indexelésének sorrendje C++-ban?",
+            code: null,
+            options: [
+              "a[oszlop][sor]",
+              "a[sor][oszlop]",
+              "a[index]",
+              "a[dimenzió]"
+            ],
+            answer: 1,
+            exp: "Általában a[sor][oszlop] formában indexelünk, pl. a[i][j]."
+          },
+          {
+            q: "Mi történik, ha C++-ban egy pointert dereferálunk, amely nullptr?",
+            code: null,
+            options: [
+              "Semmi",
+              "Undefined behavior, hibás memóriaelérés",
+              "Automatikusan javítja",
+              "Csak 0-t ad vissza"
+            ],
+            answer: 1,
+            exp: "nullptr dereferálása hibás memóriaelérés, program összeomolhat."
+          },
+          {
+            q: "Mi a Python és C++ memóriakezelés közti egyik fő különbség?",
+            code: null,
+            options: [
+              "Pythonban manuális, C++-ban automatikus",
+              "Pythonban automatikus, C++-ban gyakran manuális",
+              "Mindkettő manuális",
+              "Mindkettő automatikus"
+            ],
+            answer: 1,
+            exp: "Python automatikusan felszabadít, C++-ban gyakran nekünk kell delete-et hívni."
+          },
+          {
+            q: "Mi a kétdimenziós tömb gyakorlati felhasználása?",
+            code: null,
+            options: [
+              "Szövegek formázása",
+              "Mátrixok, táblázatok, képek tárolása",
+              "Csak hangok tárolása",
+              "Csak fájlnevek tárolása"
+            ],
+            answer: 1,
+            exp: "2D tömb: mátrix, táblázat, kép pixelek tárolása. Sor–oszlop struktúra."
+          },
+          {
+            q: "Mi a memóriaszivárgás (memory leak) következménye hosszú futású programban?",
+            code: null,
+            options: [
+              "Semmi",
+              "Fokozatosan elfogy a memória",
+              "Gyorsabb lesz a program",
+              "Kevesebb memóriát használ"
+            ],
+            answer: 1,
+            exp: "Ha nem szabadítjuk fel a memóriát, a program egyre több memóriát foglal, végül elfogyhat."
+          },
+          {
+            q: "Mi a stack overflow oka rekurzióban?",
+            code: null,
+            options: [
+              "Túl kevés memória",
+              "Túl mély hívási verem, kilépési feltétel nélkül",
+              "Túl sok heap memória",
+              "Túl kevés változó"
+            ],
+            answer: 1,
+            exp: "Túl sok rekurzív hívás, kilépési feltétel nélkül, a stack megtelik."
+          }
+        ]
+      }
+    ];
+
+    let scoreCorrect = 0;
+    let scoreTotal = 0;
+    const answered = new Set();
+
+    function renderChapter(chIndex) {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+      const chapter = quizData[chIndex];
+
+      chapter.questions.forEach((qObj, qIndex) => {
+        const qId = `${chIndex}-${qIndex}`;
+        const card = document.createElement("article");
+        card.className = "bg-slate-800 rounded-lg p-4 shadow-sm";
+
+        const title = document.createElement("h2");
+        title.className = "text-lg font-semibold text-indigo-200 mb-2";
+        title.textContent = `Kérdés ${qIndex + 1}: ${qObj.q}`;
+        card.appendChild(title);
+
+        if (qObj.code) {
+          const pre = document.createElement("pre");
+          pre.className = "code bg-slate-900 text-slate-100 rounded-md p-3 mb-3 text-sm overflow-x-auto";
+          pre.textContent = qObj.code;
+          card.appendChild(pre);
+        }
+
+        const btnWrap = document.createElement("div");
+        btnWrap.className = "grid grid-cols-1 md:grid-cols-2 gap-2 mb-3";
+
+        qObj.options.forEach((opt, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "opt-btn w-full text-left px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-sm";
+          btn.textContent = opt;
+          btn.dataset.qid = qId;
+          btn.dataset.idx = idx;
+          btnWrap.appendChild(btn);
+        });
+
+        card.appendChild(btnWrap);
+
+        const expDiv = document.createElement("div");
+        expDiv.className = "hidden mt-2 border border-slate-700 rounded-md bg-slate-900 p-3 text-sm";
+        expDiv.id = `exp-${qId}`;
+        const expTitle = document.createElement("div");
+        expTitle.className = "font-semibold text-indigo-300 mb-1";
+        expTitle.textContent = "Részletes magyarázat:";
+        const expText = document.createElement("p");
+        expText.className = "text-slate-200";
+        expText.textContent = qObj.exp;
+        expDiv.appendChild(expTitle);
+        expDiv.appendChild(expText);
+        card.appendChild(expDiv);
+
+        container.appendChild(card);
+      });
+
+      // attach handlers
+      container.querySelectorAll(".opt-btn").forEach(btn => {
+        btn.addEventListener("click", () => handleAnswer(btn, chIndex));
+      });
+    }
+
+    function handleAnswer(btn, chIndex) {
+      const qId = btn.dataset.qid;
+      if (answered.has(qId)) return; // already answered
+
+      const idx = parseInt(btn.dataset.idx, 10);
+      const [chapterIndex, questionIndex] = qId.split("-").map(Number);
+      const qObj = quizData[chapterIndex].questions[questionIndex];
+
+      answered.add(qId);
+      scoreTotal++;
+      document.getElementById("scoreTotal").textContent = scoreTotal;
+
+      const parent = btn.parentElement;
+      parent.querySelectorAll(".opt-btn").forEach(b => {
+        b.classList.add("disabled-btn");
+      });
+
+      if (idx === qObj.answer) {
+        scoreCorrect++;
+        btn.classList.remove("bg-slate-700", "hover:bg-slate-600");
+        btn.classList.add("bg-green-600");
+      } else {
+        btn.classList.remove("bg-slate-700", "hover:bg-slate-600");
+        btn.classList.add("bg-red-600");
+        // highlight correct
+        parent.querySelectorAll(".opt-btn").forEach(b => {
+          if (parseInt(b.dataset.idx, 10) === qObj.answer) {
+            b.classList.remove("bg-slate-700", "hover:bg-slate-600");
+            b.classList.add("bg-green-700");
+          } else if (b !== btn) {
+            b.classList.add("opacity-60");
+          }
+        });
+      }
+
+      document.getElementById("scoreCorrect").textContent = scoreCorrect;
+
+      const expDiv = document.getElementById(`exp-${qId}`);
+      if (expDiv) expDiv.classList.remove("hidden");
+    }
+
+    // Tabs
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const ch = parseInt(btn.dataset.chapter, 10);
+        document.querySelectorAll(".tab-btn").forEach(b => {
+          b.classList.remove("bg-indigo-600");
+          b.classList.add("bg-slate-700");
+        });
+        btn.classList.remove("bg-slate-700");
+        btn.classList.add("bg-indigo-600");
+        renderChapter(ch);
+      });
+    });
+
+    // initial render
+    renderChapter(0);
+  </script>
+
+
+</body></html>
