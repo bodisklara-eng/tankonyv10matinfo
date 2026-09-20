@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///D:/tankonyv/Csillog%C3%B3%20Men%C3%BC%20Linkekkel.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Csillogó Menü Linkekkel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-weight: 400;
+            color: #94a3b8;
+        }
+
+        /* Menü rács */
+        .menu-container {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+            margin-bottom: 40px;
+        }
+
+        /* Egyedi gomb / kártya */
+        .menu-card {
+            position: relative;
+            width: 220px;
+            height: 130px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            box-sizing: border-box;
+            text-decoration: none;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Fényhatás hoverre */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2);
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Háttér sorszám / csillogó effekt */
+        .card-number {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 90px;
+            font-weight: 900;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 1;
+            user-select: none;
+            transition: transform 0.4s ease;
+        }
+
+        .menu-card:hover .card-number {
+            transform: scale(1.05) translateY(-5px);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.4) 0%, rgba(255, 255, 255, 0.05) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gomb felirata */
+        .card-text {
+            position: relative;
+            z-index: 2;
+            font-size: 20px;
+            font-weight: 600;
+            color: #f1f5f9;
+            letter-spacing: 0.5px;
+        }
+
+        /* Vezérlő panel az új gombok felvételéhez */
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        .admin-panel h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            color: #38bdf8;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-panel input {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .admin-panel button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .admin-panel button:hover {
+            background: #7dd3fc;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Csillogó Interaktív Menü</h2>
+
+    <!-- Itt jelennek meg dinamikusan a gombok -->
+    <div class="menu-container" id="menuContainer"><a class="menu-card" href="https://www.google.com/" target="_blank">
+                    <div class="card-number">1</div>
+                    <div class="card-text">Google</div>
+                </a><a class="menu-card" href="https://www.youtube.com/" target="_blank">
+                    <div class="card-number">2</div>
+                    <div class="card-text">YouTube</div>
+                </a><a class="menu-card" href="https://www.wikipedia.org/" target="_blank">
+                    <div class="card-number">3</div>
+                    <div class="card-text">Wikipedia</div>
+                </a><a class="menu-card" href="https://github.com/" target="_blank">
+                    <div class="card-number">4</div>
+                    <div class="card-text">GitHub</div>
+                </a></div>
+
+    <!-- Új gomb hozzáadása űrlap -->
+    <div class="admin-panel">
+        <h3>Új menüpont hozzáadása</h3>
+        <div class="input-group">
+            <input type="text" id="labelInput" placeholder="Felirat (pl. Google)">
+            <input type="text" id="urlInput" placeholder="Link (pl. https://google.com)">
+        </div>
+        <button onclick="addNewButton()">Gomb létrehozása</button>
+    </div>
+
+    <script>
+        // --- ITT ADHATOD MEG ALAPBÓL A CÍMKÉKET ÉS A LINKEKET ---
+        let menuItems = [
+            { label: "Google", url: "https://www.google.com" },
+            { label: "YouTube", url: "https://www.youtube.com" },
+            { label: "Wikipedia", url: "https://www.wikipedia.org" },
+            { label: "GitHub", url: "https://github.com" }
+        ];
+
+        const container = document.getElementById('menuContainer');
+
+        function renderMenu() {
+            container.innerHTML = '';
+            menuItems.forEach((item, index) => {
+                // Létrehozunk egy <a> taget, ami linkként viselkedik
+                const card = document.createElement('a');
+                card.className = 'menu-card';
+                card.href = item.url;
+                card.target = "_blank"; // Új ablakban nyissa meg a linket
+                
+                // Tartalom beállítása (sorszám + felirat)
+                card.innerHTML = `
+                    <div class="card-number">${index + 1}</div>
+                    <div class="card-text">${item.label}</div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function addNewButton() {
+            const labelInput = document.getElementById('labelInput');
+            const urlInput = document.getElementById('urlInput');
+
+            const label = labelInput.value.trim();
+            let url = urlInput.value.trim();
+
+            if (label === "" || url === "") {
+                alert("Kérlek töltsd ki mindkét mezőt!");
+                return;
+            }
+
+            // Ha elfelejti a felhasználó a https:// előtagot, automatikusan hozzáadjuk
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            // Hozzáadjuk a tömbhöz
+            menuItems.push({ label: label, url: url });
+
+            // Mezők ürítése
+            labelInput.value = '';
+            urlInput.value = '';
+
+            // Újrarajzoljuk a menüt
+            renderMenu();
+        }
+
+        // Első betöltéskor megjelenítjük az alap elemeket
+        renderMenu();
+    </script>
+
+</body></html>
