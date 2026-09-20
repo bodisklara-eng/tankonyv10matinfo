@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)file:///D:/tankonyv/gemini-code-1789826134058.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix-Vektor Memória Leképezés Szimuláció</title>
+    <style>
+        :root {
+            --color-purple: #9b59b6;
+            --color-green: #2ecc71;
+            --color-blue: #3498db;
+            --color-highlight: #fffa65;
+            --color-text-dark: #333;
+            --bg-color: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--color-text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .lupilu-header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .lupilu-logo {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: var(--color-purple);
+        }
+
+        .age-badge {
+            background-color: #f1f2f6;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .panel-title {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            color: #7f8c8d;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Vektor Visuals */
+        .vector-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .vector-cell {
+            aspect-ratio: 1/1;
+            border: 1px solid #ddd;
+            transition: transform 0.1s;
+        }
+
+        .vector-cell:hover:not(.empty) {
+            transform: scale(1.1);
+            border-color: #999;
+        }
+
+        .vector-cell.purple { background-color: var(--color-purple); }
+        .vector-cell.green { background-color: var(--color-green); }
+        .vector-cell.blue { background-color: var(--color-blue); }
+
+        .vector-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 5px;
+            padding: 0 5px;
+        }
+
+        /* Matrix Visuals */
+        .matrix-grid {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 4px;
+        }
+
+        .matrix-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        .matrix-cell {
+            aspect-ratio: 1.5/1;
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+
+        .matrix-cell.purple { background-color: var(--color-purple); }
+        .matrix-cell.green { background-color: var(--color-green); }
+        .matrix-cell.blue { background-color: var(--color-blue); }
+
+        /* Highlight effects */
+        .highlighted {
+            animation: pulse 1s infinite alternate;
+            border-color: var(--color-highlight);
+            box-shadow: 0 0 10px var(--color-highlight);
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* Code and Principle */
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .code-block span.keyword { color: var(--color-purple); }
+        .code-block span.var { color: var(--color-blue); }
+        .code-block span.dynamic-var { color: var(--color-highlight); font-weight: bold; }
+
+        .principle-block {
+            background-color: #fcfcfc;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .principle-block strong { color: #333; }
+        .principle-title { font-weight: bold; color: #7f8c8d; margin-bottom: 5px; }
+        #principle-details span { display: block; margin-top: 5px; }
+
+        /* Connection Arrow (Simple) */
+        .connection-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #7f8c8d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: white;
+            font-weight: bold;
+        }
+        
+        #dot-mintaz {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 20px;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="lupilu-header">
+        <div class="lupilu-logo">LUPILU® Információs Panel</div>
+        <div class="age-badge">3+</div>
+    </div>
+
+    <h1>Mátrix-Vektor Memória Leképezés Szimuláció</h1>
+
+    <div class="main-container">
+
+        <!-- Panel 1: FOLYTONOS VEKTOR -->
+        <div class="panel">
+            <div class="panel-title">FOLYTONOS VEKTOR (Memória)</div>
+            <div class="vector-grid" id="vectorGrid">
+                <!-- 12 cells will be generated by JS -->
+            <div class="vector-cell purple" data-v-index="0" data-i="0" data-j="0"></div><div class="vector-cell purple" data-v-index="1" data-i="0" data-j="1"></div><div class="vector-cell purple" data-v-index="2" data-i="0" data-j="2"></div><div class="vector-cell purple" data-v-index="3" data-i="0" data-j="3"></div><div class="vector-cell green" data-v-index="4" data-i="1" data-j="0"></div><div class="vector-cell green" data-v-index="5" data-i="1" data-j="1"></div><div class="vector-cell green" data-v-index="6" data-i="1" data-j="2"></div><div class="vector-cell green" data-v-index="7" data-i="1" data-j="3"></div><div class="vector-cell blue" data-v-index="8" data-i="2" data-j="0"></div><div class="vector-cell blue" data-v-index="9" data-i="2" data-j="1"></div><div class="vector-cell blue" data-v-index="10" data-i="2" data-j="2"></div><div class="vector-cell blue" data-v-index="11" data-i="2" data-j="3"></div></div>
+            <div class="vector-labels">
+                <span>0</span>
+                <span>(Összesen 12 elem)</span>
+                <span>11</span>
+            </div>
+            <div class="principle-block" style="margin-top: 15px;">
+                <div class="principle-title">Magyarázat</div>
+                Az egyforma színű blokkok egy-egy sort reprezentálnak a mátrixból.
+                Kattints egy elemre a vektorban!
+            </div>
+        </div>
+
+        <!-- Panel 2: MATH PRINCIPLE / LEKÉPEZÉS -->
+        <div class="panel">
+            <div class="panel-title">MATH PRINCIPLE &amp; LEKÉPEZÉS</div>
+            <div class="principle-block" id="mathPrinciple">
+                <div class="principle-title">Aktuális Kijelölés</div>
+                <div id="principle-details">
+                    Nincs elem kijelölve.
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <div class="code-block">
+                    <span class="keyword">int</span> <span class="var">element</span> = <span class="var">matrix</span>[<span class="dynamic-var" id="code-i">i</span>][<span class="dynamic-var" id="code-j">j</span>];<br>
+                    ...<br>
+                    <span class="var">memoria_cim</span> = <span class="dynamic-var" id="code-v">v_index</span>;
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 3: AZONOSÍTOTT MÁTRIX -->
+        <div class="panel">
+            <div class="panel-title">AZONOSÍTOTT MÁTRIX (i, j)</div>
+            <div class="matrix-grid" id="matrixGrid">
+                <div class="matrix-row" id="row-0">
+                    <div class="matrix-cell purple" data-i="0" data-j="0"></div>
+                    <div class="matrix-cell purple" data-i="0" data-j="1"></div>
+                    <div class="matrix-cell purple" data-i="0" data-j="2"></div>
+                    <div class="matrix-cell purple" data-i="0" data-j="3"></div>
+                </div>
+                <div class="matrix-row" id="row-1">
+                    <div class="matrix-cell green" data-i="1" data-j="0"></div>
+                    <div class="matrix-cell green" data-i="1" data-j="1"></div>
+                    <div class="matrix-cell green" data-i="1" data-j="2"></div>
+                    <div class="matrix-cell green" data-i="1" data-j="3"></div>
+                </div>
+                <div class="matrix-row" id="row-2">
+                    <div class="matrix-cell blue" data-i="2" data-j="0"></div>
+                    <div class="matrix-cell blue" data-i="2" data-j="1"></div>
+                    <div class="matrix-cell blue" data-i="2" data-j="2"></div>
+                    <div class="matrix-cell blue" data-i="2" data-j="3"></div>
+                </div>
+            </div>
+            <div class="vector-labels">
+                <span>oszlop 0</span>
+                <span>(3x4-es mátrix)</span>
+                <span>oszlop 3</span>
+            </div>
+        </div>
+
+        <!-- Panel 4: ADAT KINYERÉS ÉS CSERE -->
+        <div class="panel">
+            <div class="panel-title">ADAT KINYERÉS ÉS CSERE</div>
+            <div class="code-block">
+                <span class="keyword">while</span> (<span class="var">new_click</span>) {<br>
+                &nbsp;&nbsp;<span class="var">i</span> = <span class="var">new_i</span>;<br>
+                &nbsp;&nbsp;<span class="var">j</span> = <span class="var">new_j</span>;<br>
+                &nbsp;&nbsp;<strong>// Az i és j cseréje szimulálva</strong><br>
+                }<br>
+                a[<span class="dynamic-var" id="code-current-i">current_i</span>][<span class="dynamic-var" id="code-current-j">current_j</span>]
+            </div>
+            <div class="principle-block">
+                <div class="principle-title">Logika</div>
+                Ez a panel mutatja a kódot, ami lefut, amikor új elemre kattintasz. A 'current_i' és 'current_j' értékek frissülnek, szimulálva az indexek cseréjét.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mintaz connection point (purely visual) -->
+    <div class="connection-dot" id="dot-mintaz">MINTAZ</div>
+
+    <script>
+        const vectorGrid = document.getElementById('vectorGrid');
+        const matrixGrid = document.getElementById('matrixGrid');
+        const principleDetails = document.getElementById('principle-details');
+        
+        // Code dynamic variables
+        const codeI = document.getElementById('code-i');
+        const codeJ = document.getElementById('code-j');
+        const codeV = document.getElementById('code-v');
+        const codeCurrentI = document.getElementById('code-current-i');
+        const codeCurrentJ = document.getElementById('code-current-j');
+
+        const matrixRows = 3;
+        const matrixCols = 4;
+        const totalElements = matrixRows * matrixCols;
+
+        // Generate vector cells
+        for (let v_index = 0; v_index < totalElements; v_index++) {
+            const cell = document.createElement('div');
+            cell.className = 'vector-cell';
+            
+            // Assign color based on row mapping (Row-Major Order)
+            // v_index 0-3: purple (row 0), 4-7: green (row 1), 8-11: blue (row 2)
+            const i = Math.floor(v_index / matrixCols);
+            const j = v_index % matrixCols;
+            
+            if (i === 0) cell.classList.add('purple');
+            else if (i === 1) cell.classList.add('green');
+            else if (i === 2) cell.classList.add('blue');
+            
+            cell.dataset.vIndex = v_index;
+            cell.dataset.i = i;
+            cell.dataset.j = j;
+            
+            cell.addEventListener('click', () => highlightElement(cell));
+            vectorGrid.appendChild(cell);
+        }
+
+        function highlightElement(clickedVectorCell) {
+            // 1. Clear previous highlights
+            const previousHighlights = document.querySelectorAll('.highlighted');
+            previousHighlights.forEach(el => el.classList.remove('highlighted'));
+
+            // 2. Get coordinates
+            const vIndex = parseInt(clickedVectorCell.dataset.vIndex);
+            const i = parseInt(clickedVectorCell.dataset.i);
+            const j = parseInt(clickedVectorCell.dataset.j);
+
+            // 3. Highlight in Vector
+            clickedVectorCell.classList.add('highlighted');
+
+            // 4. Highlight in Matrix
+            const targetMatrixCell = matrixGrid.querySelector(`.matrix-cell[data-i="${i}"][data-j="${j}"]`);
+            if (targetMatrixCell) {
+                targetMatrixCell.classList.add('highlighted');
+            }
+
+            // 5. Update Principle Panel
+            principleDetails.innerHTML = `
+                <span><strong>Memória index (Vektor):</strong> ${vIndex}</span>
+                <span><strong>Mátrix index (Row-Major):</strong> [${i}][${j}]</span>
+                <span><strong>Számítás:</strong></span>
+                <span>v_index = i * ${matrixCols} + j = ${i} * ${matrixCols} + ${j} = ${vIndex}</span>
+            `;
+
+            // 6. Update Code Panels
+            updateCodeDynamic(i, j, vIndex);
+        }
+
+        function updateCodeDynamic(i, j, vIndex) {
+            // Fast visual update for code panels
+            codeI.textContent = i;
+            codeJ.textContent = j;
+            codeV.textContent = vIndex;
+            codeCurrentI.textContent = i;
+            codeCurrentJ.textContent = j;
+
+            // Flash effect on dynamic variables
+            const vars = [codeI, codeJ, codeV, codeCurrentI, codeCurrentJ];
+            vars.forEach(v => {
+                v.style.backgroundColor = 'rgba(255, 250, 101, 0.5)';
+                setTimeout(() => v.style.backgroundColor = 'transparent', 200);
+            });
+        }
+
+    </script>
+
+</body></html>
