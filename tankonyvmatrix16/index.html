@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)file:///D:/tankonyv/Informatikai%20M%C3%A1trixgeometria%20Tank%C3%B6nyvji.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatikai Mátrixgeometria Tankönyv</title>
+
+    <!-- html2pdf.js könyvtár az A4 PDF mentéshez -->
+    <script src="./index_files/html2pdf.bundle.min.js.descărcare"></script>
+
+    <style>
+        /* --- A4 NYOMTATÁSI ÉS LAPBEÁLLÍTÁSOK --- */
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        :root {
+            --primary-color: #005a9c;
+            --secondary-color: #00897b;
+            --accent-color: #8e24aa;
+            --purple-box: #f3e5f5;
+            --purple-border: #ab47bc;
+            --blue-box: #e3f2fd;
+            --blue-border: #2196f3;
+            --green-box: #e8f5e9;
+            --green-border: #4caf50;
+            --brown-box: #fff8e1;
+            --brown-border: #ffb300;
+            --bg-page: #ffffff;
+            --text-color: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            background-color: #37474f;
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nyomtatható A4 lap konténer */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 16mm 18mm 18mm 18mm;
+            margin-bottom: 25px;
+            background: var(--bg-page);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* Fejléc és Lábléc */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11pt;
+            font-weight: bold;
+            color: #444;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #666;
+            border-top: 1px solid #ccc;
+            padding-top: 6px;
+        }
+
+        /* OLVASHATÓ BETŰMÉRETEK */
+        h1 { 
+            color: var(--primary-color); 
+            font-size: 19pt; 
+            margin-top: 0; 
+            margin-bottom: 12px; 
+        }
+        
+        h2 { 
+            color: var(--primary-color); 
+            font-size: 13.5pt; 
+            margin-top: 14px; 
+            margin-bottom: 8px; 
+            border-left: 5px solid var(--primary-color); 
+            padding-left: 10px; 
+        }
+
+        p, li { 
+            font-size: 11pt; 
+            line-height: 1.5; 
+            margin-top: 4px; 
+            margin-bottom: 8px; 
+        }
+
+        /* Diagramok és dobozok */
+        .diagram-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #fafafa;
+        }
+
+        .diagram-box {
+            border: 1px solid #888;
+            padding: 10px 16px;
+            text-align: center;
+            background: white;
+            border-radius: 6px;
+            font-size: 10.5pt;
+        }
+
+        /* KOORDINÁTA RENDSZER GRAFIKA DÍSZÍTÉS */
+        .coord-graph {
+            width: 80px;
+            height: 60px;
+            border-left: 2px solid #555;
+            border-bottom: 2px solid #555;
+            position: relative;
+            margin: 6px auto;
+            background: #fff;
+        }
+
+        .coord-rect-blue {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 35px;
+            height: 20px;
+            background-color: #64b5f6;
+            border: 1px solid #1976d2;
+        }
+
+        .coord-point-red {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 7px;
+            height: 7px;
+            background-color: #e53935;
+            border-radius: 50%;
+        }
+
+        .coord-rect-green {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 65px;
+            height: 40px;
+            background-color: #a5d6a7;
+            border: 1.5px solid #2e7d32;
+        }
+
+        .box-purple {
+            background-color: var(--purple-box);
+            border-left: 6px solid var(--purple-border);
+            padding: 10px 14px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 10.5pt;
+        }
+
+        .box-blue {
+            background-color: var(--blue-box);
+            border: 1.5px solid var(--blue-border);
+            padding: 10px 14px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 10.5pt;
+        }
+
+        .box-green {
+            background-color: var(--green-box);
+            border-left: 6px solid var(--green-border);
+            padding: 10px 14px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 10.5pt;
+        }
+
+        .box-sim {
+            border: 2px dashed #8d6e63;
+            background-color: #efebe9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            text-align: center;
+        }
+
+        .math-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 12pt;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin: 10px 0;
+        }
+
+        .matrix-bracket {
+            display: inline-flex;
+            align-items: center;
+            border-left: 2.5px solid #222;
+            border-right: 2.5px solid #222;
+            border-radius: 6px;
+            padding: 2px 8px;
+            margin: 0 4px;
+        }
+
+        .matrix-parenthesis {
+            display: inline-flex;
+            align-items: center;
+            border-left: 2px solid #222;
+            border-right: 2px solid #222;
+            border-radius: 12px;
+            padding: 2px 8px;
+            margin: 0 4px;
+        }
+
+        .matrix-table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .matrix-table td {
+            padding: 3px 8px;
+            font-size: 11pt;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 11pt;
+        }
+
+        .styled-table th {
+            background-color: #005a9c;
+            color: white;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .styled-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .styled-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .nav-link-btn {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 10.5pt;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            padding: 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            white-space: pre;
+        }
+
+        /* POP-UP MODAL STÍLUSOK */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.75);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            width: 92%;
+            max-width: 1150px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px; right: 20px;
+            font-size: 24pt;
+            font-weight: bold;
+            cursor: pointer;
+            color: #444;
+            transition: 0.2s;
+        }
+        .close-btn:hover { color: #d32f2f; }
+
+        .code-comparison-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .code-column {
+            flex: 1;
+            background: #181818;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #333;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .code-column-header {
+            font-size: 12pt;
+            font-weight: bold;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-column-header.cpp-header { color: #64b5f6; border-color: #1976d2; }
+        .code-column-header.py-header { color: #81c784; border-color: #388e3c; }
+
+        .interactive-select {
+            background-color: #2e7d32;
+            color: #ffffff;
+            font-family: 'Consolas', monospace;
+            font-size: 10pt;
+            font-weight: bold;
+            padding: 3px 6px;
+            border: 1px solid #81c784;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .interactive-select.incorrect {
+            background-color: #c62828;
+            border-color: #ef5350;
+        }
+
+        .interactive-select.correct {
+            background-color: #1565c0;
+            border-color: #64b5f6;
+        }
+
+        .sim-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .sim-input-group label {
+            font-size: 10.5pt;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sim-input-group input, .sim-input-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 10.5pt;
+        }
+
+        .btn-top {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background-color: #e65100;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            font-size: 11pt;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .alapelvet-box {
+            background-color: #f2fbf9;
+            border: 1.5px solid #20b2aa;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            font-size: 10.5pt;
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .btn-top { display: none; }
+            .modal { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-top" onclick="downloadPDF()">📄 Letöltés PDF-ként</button>
+
+    <!-- ==================== 1. OLDAL ==================== -->
+    <div class="a4-page" id="page1">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>1. FEJEZET</span>
+        </div>
+
+        <h1>1. Mátrixtranszformációk a Grafikában</h1>
+
+        <div class="box-purple">
+            <strong>Gondolkodtató kérdés:</strong> Amikor egy videojátékban elfordul a karaktered vagy megduplázódik a mérete, a számítógép hogyan hajtja végre másodpercenként 60-szor újra meg újra a képernyőn látható több millió pont új helyét?
+        </div>
+
+        <h2>1.1 A pontok elmozdítása a térben</h2>
+        <p>Képzeljünk el egy pontot a 2D-s koordináta-rendszerben! A pont helyzetét egy oszlopvektorral írjuk le: 
+            v = <span class="matrix-bracket">
+                </span></p><table class="matrix-table" style="display:inline-table;">
+                    <tbody><tr><td>x</td></tr>
+                    <tr><td>y</td></tr>
+                </tbody></table>
+            . Ha ezt a pontot el akarjuk transzformálni (pl. elforgatni vagy átméretezni), egy <strong style="color: #005a9c; border-bottom: 1.5px dashed #005a9c;">transzformációs mátrixot</strong> hívunk segítségül.
+        <p></p>
+
+        <div class="diagram-container">
+            <div class="diagram-box" style="width: 40%;">
+                <strong>Kezdeti állapot (v)</strong>
+                <div class="coord-graph">
+                    <div class="coord-rect-blue">
+                        <div class="coord-point-red"></div>
+                    </div>
+                </div>
+                <span style="font-size: 9.5pt; color: #c62828; font-weight: bold;">v = (2,1)</span>
+            </div>
+            
+            <div style="text-align: center; font-weight: bold; color: #005a9c;">
+                <span style="font-size: 13pt; border-bottom: 1.5px solid #005a9c;">M · v</span><br>
+                <span style="font-size: 18pt;">➔</span>
+            </div>
+
+            <div class="diagram-box" style="width: 40%;">
+                <strong>Transzformált állapot (v')</strong>
+                <div class="coord-graph">
+                    <div class="coord-rect-green">
+                        <div class="coord-point-red"></div>
+                    </div>
+                </div>
+                <span style="font-size: 9.5pt; color: #c62828; font-weight: bold;">v' = (4,2)</span>
+            </div>
+        </div>
+
+        <div class="box-blue">
+            <strong>Definíció – Mátrixtranszformáció:</strong> Egy <i>M</i> mátrixszal való szorzás a <i>v</i> vektort egy új <i>v'</i> vektorba viszi át:
+            <div class="math-display" style="border: none; background: transparent; margin: 8px 0; font-size: 11.5pt;">
+                <span>v' = M · v = </span>
+                <div class="matrix-bracket">
+                    <table class="matrix-table">
+                        <tbody><tr><td>a</td><td>b</td></tr>
+                        <tr><td>c</td><td>d</td></tr>
+                    </tbody></table>
+                </div>
+                <span>·</span>
+                <div class="matrix-bracket">
+                    <table class="matrix-table">
+                        <tbody><tr><td>x</td></tr>
+                        <tr><td>y</td></tr>
+                    </tbody></table>
+                </div>
+                <span>=</span>
+                <div class="matrix-bracket">
+                    <table class="matrix-table">
+                        <tbody><tr><td>a · x + b · y</td></tr>
+                        <tr><td>c · x + d · y</td></tr>
+                    </tbody></table>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-container" style="background: #f0f4c3; border-color: #c0ca33;">
+            <div class="diagram-box">
+                <strong>Általános Transzformáció</strong><br>
+                <div style="width: 40px; height: 40px; border: 2px solid #005a9c; margin: 6px auto; background: white;"></div>
+                <span>v = (x, y)</span>
+            </div>
+            <div style="font-size: 14pt; font-weight: bold; color: #2e7d32;">— M · v ➔</div>
+            <div class="diagram-box">
+                <strong>Nagyított Állapot</strong><br>
+                <div style="width: 60px; height: 50px; border: 2px solid green; background: #e8f5e9; margin: 6px auto;"></div>
+                <span>v' = (x', y')</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="nav-link-btn" onclick="openModal('cppModal')" style="background-color: #1565c0; font-size: 10.5pt; padding: 10px 18px;">💻 Kód-Összehasonlító &amp; Interaktív Python Laboratorium (Pop-up)</button>
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>1. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 2. OLDAL (ÚJONNAN BEILLESZTETT MATEMATIKAI TANANYAG) ==================== -->
+    <div class="a4-page" id="page2">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>2. FEJEZET</span>
+        </div>
+
+        <div class="alapelvet-box">
+            <strong>Alapelviség:</strong> A számítógépes grafikában (pl. Unity, Unreal Engine 3D játék-motorokban), a képfeldolgozásban és az AI-ban a mátrixok dinamikus transzformációk. Egy objektum pontjait (vertexeit) vektorokként tároljuk, melyeket transzformációs mátrixokkal szorzunk meg.
+        </div>
+
+        <h2>1.1 Transzformációk mint Mátrixműveletek</h2>
+        <p>Egy 2D-s v = <span class="matrix-parenthesis"></span></p><table class="matrix-table" style="display:inline-table;"><tbody><tr><td>x</td></tr><tr><td>y</td></tr></tbody></table> vektor eltranszformáltja (v') a következő mátrixszorzással számítható ki:<p></p>
+
+        <div class="math-display">
+            <span>v' = M × v ===&gt; </span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>x'</td></tr>
+                    <tr><td>y'</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>a</td><td>b</td></tr>
+                    <tr><td>c</td><td>d</td></tr>
+                </tbody></table>
+            </div>
+            <span>×</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>x</td></tr>
+                    <tr><td>y</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <h2>Gyakori Transzformációs Mátrixok:</h2>
+        
+        <ul style="list-style-type: disc; padding-left: 20px; line-height: 1.8;">
+            <li>
+                <strong>Skálázás (s<sub>x</sub>, s<sub>y</sub> tényezőkkel):</strong>
+                <div class="matrix-parenthesis" style="vertical-align: middle;">
+                    <table class="matrix-table">
+                        <tbody><tr><td>s<sub>x</sub></td><td>0</td></tr>
+                        <tr><td>0</td><td>s<sub>y</sub></td></tr>
+                    </tbody></table>
+                </div>
+            </li>
+            <li style="margin-top: 8px;">
+                <strong>Forgatás (θ szöggel):</strong>
+                <div class="matrix-parenthesis" style="vertical-align: middle;">
+                    <table class="matrix-table">
+                        <tbody><tr><td>cos(θ)</td><td>-sin(θ)</td></tr>
+                        <tr><td>sin(θ)</td><td>cos(θ)</td></tr>
+                    </tbody></table>
+                </div>
+            </li>
+            <li style="margin-top: 8px;">
+                <strong>Tükrözés az X-tengelyre:</strong>
+                <div class="matrix-parenthesis" style="vertical-align: middle;">
+                    <table class="matrix-table">
+                        <tbody><tr><td>1</td><td>0</td></tr>
+                        <tr><td>0</td><td>-1</td></tr>
+                    </tbody></table>
+                </div>
+            </li>
+        </ul>
+
+        <h2>1.2 Mátrixszorzás mint Transzformációk Láncolása (Kompozíció)</h2>
+        <p>Ha egy objektumot először meg akarunk növelni 2-szeresére, majd el akarjuk forgatni 90°-kal, a két transzformációt egyetlen kompozit mátrixszá egyesíthetjük (M<sub>összetett</sub> = R · S).</p>
+
+        <div class="box-purple">
+            <strong>🚀 Teljesítmény-optimalizáció:</strong><br>
+            Ha egy 3D-s modell 1 000 000 pontból áll, a külön elvégzett skálázás és forgatás 2 000 000 műveletet igényelne. Összetett mátrixszal (M = R · S) a modell pontjaira már csak <strong>1 000 000 műveletet</strong> kell lefuttatni!
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>2. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 3. OLDAL (RITKA MÁTRIXOK) ==================== -->
+    <div class="a4-page" id="page3">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>3. FEJEZET</span>
+        </div>
+
+        <h1>3. Ritka Mátrixok (Sparse Matrices)</h1>
+
+        <div class="box-purple">
+            <strong>Rávezető Kérdés:</strong> Nézd meg az alábbi 8×8-as hálózati mátrixot! Szerinted érdemes-e lefoglani a memóriában helyet az összes nullának, és lefuttatni velük a szorzásokat?
+        </div>
+
+        <div class="diagram-container">
+            <div class="diagram-box" style="width: 45%;">
+                <strong>Hagyományos (Sűrű) Mátrix</strong>
+                <div style="color: red; font-family: monospace; margin: 8px 0; font-size: 10pt; font-weight: bold;">
+                    5 &nbsp; 0 &nbsp; 0 &nbsp; 0<br>0 &nbsp; 0 &nbsp; 8 &nbsp; 0<br>0 &nbsp; 3 &nbsp; 0 &nbsp; 6<br>0 &nbsp; 0 &nbsp; 0 &nbsp; 0
+                </div>
+                <span style="font-size: 9pt; color: #666;">Sok elpazarolt memória (90%+ nulla)</span>
+            </div>
+            <div style="font-size: 16pt; font-weight: bold; color: #005a9c;">➔</div>
+            <div class="diagram-box" style="width: 45%;">
+                <strong>Ritka Mátrix (CSR Tárolás)</strong>
+                <div style="text-align: left; font-size: 9pt; background: #f0f0f0; padding: 8px; margin: 6px 0; font-family: monospace;">
+                    <strong>Data:</strong> [5, 8, 3, 6]<br>
+                    <strong>Column:</strong> [0, 2, 1, 3]<br>
+                    <strong>RowPtr:</strong> [0, 1, 2, 4, 4]
+                </div>
+                <span style="font-size: 9pt; color: green;">Kizárólag a hasznos adatot tárolja</span>
+            </div>
+        </div>
+
+        <div class="box-blue">
+            <strong>Definíció – Ritka Mátrix (Sparse Matrix):</strong> Olyan mátrix, amelyben a <strong>nulla elemek</strong> aránya lényegesen magasabb, mint a nem-nulla elemeké (általában 90–99% közötti).
+        </div>
+
+        <h2>3.1 Miért fontos ez a szoftverfejlesztésben?</h2>
+        <p>Képzeld el a Facebook ismeretségi mátrixát! 3 milliárd felhasználó van. Egy <strong>3 milliárd × 3 milliárd</strong> oszlopos hagyományos tömb elképzelhetetlen mennyiségű memóriát igényelne.</p>
+
+        <h2>3.2 Ellenőrző Kérdések és Feladatok</h2>
+        <ol style="font-size: 11pt; line-height: 1.6;">
+            <li>
+                Egy 1000 × 1000-es mátrixban mindössze 500 darab nem-nulla érték található. Hány százaléka a mátrixnak 0? Ritka mátrixnak tekinthető-e?
+            </li>
+            <li>
+                Hogyan változik meg a 2D-s pontok koordinátája, ha az M = 
+                <span class="matrix-parenthesis">
+                    <table class="matrix-table" style="display:inline-table;">
+                        <tbody><tr><td>2</td><td>0</td></tr>
+                        <tr><td>0</td><td>2</td></tr>
+                    </tbody></table>
+                </span> skálázási mátrixot használjuk?
+            </li>
+        </ol>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>3. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 4. OLDAL (RÁCSOK ÉS JÁTÉKELEMEK) ==================== -->
+    <div class="a4-page" id="page4">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>4. FEJEZET</span>
+        </div>
+
+        <h1>4. Interaktív Rácsok és Játékelemek</h1>
+
+        <div class="box-blue">
+            <strong>Játékmechanika Mátrixi Háttérrel:</strong><br>
+            A számítógépes játékokban a háttérben egy <strong>10x10-es mátrix</strong> tárolja a pálya állapotát (0: üres, 1: akadály, 2: gyűjthető tárgy).
+        </div>
+
+        <h2>4.1 Transzformációk Alkalmazása a Játékrácson</h2>
+        <p>Amikor egy alakzatot elforgatsz 90°-kal a rácson, a koordinátákat az alábbi forgatási mátrixszal szorozzuk meg:</p>
+
+        <div class="math-display">
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>0</td><td>-1</td></tr>
+                    <tr><td>1</td><td>0</td></tr>
+                </tbody></table>
+            </div>
+            <span>·</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>X</td></tr>
+                    <tr><td>Y</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>-Y</td></tr>
+                    <tr><td>X</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <h2>4.2 Rácskezelő Python Példakód</h2>
+        <div class="code-block">
+import numpy as np
+
+# 10x10-es játéktér létrehozása nullákkal
+grid = np.zeros((10, 10), dtype=int)
+
+# Objektum elhelyezése (2x2-es blokk)
+grid[1:3, 1:3] = 1
+
+print("Játékrács részlete:")
+print(grid[0:4, 0:4])
+        </div>
+
+        <h2>4.3 Kapcsolódó Gyakorló Modulok</h2>
+        <p>Kattints az alábbi gombokra a külső feladatok megnyitásához:</p>
+
+        <div style="display: flex; gap: 12px; margin-top: 12px;">
+            <a href="https://example.com/meseerdo" target="_blank" class="nav-link-btn" style="background-color: #2e7d32;">🌲 Meseerdő Modul</a>
+            <a href="https://example.com/repas" target="_blank" class="nav-link-btn" style="background-color: #ef6c00;">🥕 Répás Kert Modul</a>
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>4. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 5. OLDAL (GYAKORLÓ FELADATSOR) ==================== -->
+    <div class="a4-page" id="page5">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>5. FEJEZET</span>
+        </div>
+
+        <h1>5. Összetett Gyakorló Feladatsor</h1>
+
+        <div class="box-purple">
+            <strong>Összefoglaló Feladat:</strong> Hajtsd végre a transzformációkat és ellenőrizd az eredményeket!
+        </div>
+
+        <h2>5.1 Pont Transzformálása Mátrixszorzással</h2>
+        <p>Adott a v = 
+            <span class="matrix-parenthesis">
+                </span></p><table class="matrix-table" style="display:inline-table;">
+                    <tbody><tr><td>2</td></tr>
+                    <tr><td>5</td></tr>
+                </tbody></table>
+             pont. Számítsd ki az új pozícióját a megadott duplázó transzformáció után!
+        <p></p>
+
+        <div class="math-display">
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>2</td><td>0</td></tr>
+                    <tr><td>0</td><td>2</td></tr>
+                </tbody></table>
+            </div>
+            <span>·</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>2</td></tr>
+                    <tr><td>5</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-parenthesis">
+                <table class="matrix-table">
+                    <tbody><tr><td>?</td></tr>
+                    <tr><td>?</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <div class="box-green">
+            <strong>Megoldási lépések:</strong><br>
+            X' = (2 · 2) + (0 · 5) = 4<br>
+            Y' = (0 · 2) + (2 · 5) = 10<br>
+            <strong>Eredmény:</strong> v' = 
+            <span class="matrix-parenthesis">
+                <table class="matrix-table" style="display:inline-table;">
+                    <tbody><tr><td>4</td></tr>
+                    <tr><td>10</td></tr>
+                </tbody></table>
+            </span>
+        </div>
+
+        <h2>5.2 Összefoglaló Kérdések</h2>
+        <ul style="font-size: 11pt; line-height: 1.6;">
+            <li>Miért előnyösebb az összetett mátrix (M<sub>összetett</sub> = R · S) használata sok pont esetén?</li>
+            <li>Milyen memóriakomplexitással bír a CSR mátrixtárolási mód a sűrű mátrixhoz képest?</li>
+        </ul>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>5. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 6. OLDAL (SZIMULÁTOR ÉS ADATSTRUKTÚRÁK) ==================== -->
+    <div class="a4-page" id="page6">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA TANKÖNYV</span>
+            <span>6. FEJEZET</span>
+        </div>
+
+        <h1>6. Szimulátor és Memóriapazarlás</h1>
+
+        <div class="box-sim">
+            <h3 style="margin-top:0; color: #5d4037; font-size: 14pt;">🥕 Vektor &amp; Mátrix Világ Interaktív Szimulátor</h3>
+            <p style="font-size: 11pt; color: #4e342e; margin-bottom: 14px;">
+                Lásd és értsd meg a matematikát akció közben! Állítsd be a vektort, válassz transzformációt és tekintsd meg az eredményt!
+            </p>
+            <button class="nav-link-btn" onclick="openModal('simModal')" style="background-color: #ef6c00; font-size: 11pt; padding: 12px 24px; border-radius: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+                🚀 Interaktív Szimulátor Megnyitása (Pop-up)
+            </button>
+        </div>
+
+        <h2>6.1 A Memória- és Ciklus-pazarlás Problémája</h2>
+        <p>Ha egy <strong>10 000 × 10 000</strong>-es mátrixot sima kétdefiníciós tömbként (Dense Matrix) tárolunk C++ vagy Java nyelven:</p>
+
+        <div class="box-purple">
+            <ul>
+                <li><strong>Memóriaigény:</strong> 100 000 000 elem × 8 byte (double) ≈ <strong>800 MB RAM!</strong></li>
+                <li>Ha a mátrix 99%-a 0, akkor <strong>792 MB memóriát pazarolunk el</strong> a semmi tárolására, és a mátrixszorzás során a CPU-ciklusok 99%-a felesleges <strong>0 · x = 0</strong> számításokra megy el.</li>
+            </ul>
+        </div>
+
+        <h2>6.2 CSR (Compressed Sparse Row) Tárolás</h2>
+        <p>A CSR adatstruktúra a nullákat eldobja, és 3 egydimenziós tömböt tart fenn:</p>
+
+        <div class="code-block" style="background-color: #263238; color: #eceff1;">
+1. V értékek tömb: [ 5, 8, 3, 6 ]   (Csak a nem-nulla értékek)
+2. COL_INDEX tömb: [ 0, 2, 1, 2 ]   (Melyik oszlopban vannak)
+3. ROW_PTR tömb:   [ 0, 2, 3, 4 ]   (Hol kezdődnek az egyes sorok)
+        </div>
+
+        <h2>6.3 Számítási Komplexitás Összehasonlítása</h2>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Típus</th>
+                    <th>Memóriakomplexitás</th>
+                    <th>Szorzási Időkomplexitás</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Hagyományos (Dense)</strong></td>
+                    <td>O(N²)</td>
+                    <td>O(N³)</td>
+                </tr>
+                <tr>
+                    <td><strong>Ritka (CSR Sparse)</strong></td>
+                    <td>O(NNZ) *</td>
+                    <td>O(N + NNZ)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 9pt; color: #555; margin-top: -4px;">* <em>NNZ = Number of Non-Zero elements (A nem-nulla elemek száma).</em></p>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria</span>
+            <span>6. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 1. POP-UP MODAL: C++ & PYTHON CODE ==================== -->
+    <div id="cppModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cppModal')">×</span>
+            <h2 style="margin-top:0; color: #005a9c; border-left: none; padding-left: 0; font-size: 16pt;">
+                💻 Transzformációs Mátrix Implementáció: C++ vs. Interaktív Python
+            </h2>
+            <p style="font-size: 10.5pt; color: #555; margin-bottom: 10px;">
+                Tanulmányozd a pontosan strukturált C++ kódot a bal oldalon, majd egészítsd ki a hiányzó részeket a jobb oldali interaktív Python feladatban!
+            </p>
+
+            <div class="code-comparison-container">
+                <!-- BAL OLDAL: C++ KÓD -->
+                <div class="code-column">
+                    <div class="code-column-header cpp-header">
+                        <span>⚡ C++ Transzformációs Mátrix</span>
+                        <span style="font-size: 9pt; background: #0d47a1; color: white; padding: 2px 8px; border-radius: 4px;">Klasszikus C++11</span>
+                    </div>
+                    <div class="code-block" style="background: transparent; padding: 0; margin: 0; font-size: 10pt;">
+<span style="color: #c586c0;">#include</span> <span style="color: #ce9178;">&lt;iostream&gt;</span>
+<span style="color: #c586c0;">#include</span> <span style="color: #ce9178;">&lt;cmath&gt;</span>
+
+<span style="color: #569cd6;">struct</span> <span style="color: #4ec9b0;">Vector2</span> {
+    <span style="color: #569cd6;">float</span> x, y;
+};
+
+<span style="color: #57a64a;">// 2x2 Mátrix és Vektor szorzása (v' = M * v)</span>
+<span style="color: #4ec9b0;">Vector2</span> <span style="color: #dcdcaa;">transform</span>(<span style="color: #569cd6;">float</span> M[2][2], <span style="color: #4ec9b0;">Vector2</span> v) {
+    <span style="color: #4ec9b0;">Vector2</span> res;
+    res.x = M[0][0] * v.x + M[0][1] * v.y;
+    res.y = M[1][0] * v.x + M[1][1] * v.y;
+    <span style="color: #c586c0;">return</span> res;
+}
+
+<span style="color: #569cd6;">int</span> <span style="color: #dcdcaa;">main</span>() {
+    <span style="color: #4ec9b0;">Vector2</span> v = {<span style="color: #b5cea8;">3.0f</span>, <span style="color: #b5cea8;">4.0f</span>};
+
+    <span style="color: #57a64a;">// 90 fokos forgatási mátrix beállítása</span>
+    <span style="color: #569cd6;">float</span> rad = <span style="color: #b5cea8;">90.0f</span> * M_PI / <span style="color: #b5cea8;">180.0f</span>;
+    <span style="color: #569cd6;">float</span> R[2][2] = {
+        { <span style="color: #dcdcaa;">cos</span>(rad), -<span style="color: #dcdcaa;">sin</span>(rad) },
+        { <span style="color: #dcdcaa;">sin</span>(rad),  <span style="color: #dcdcaa;">cos</span>(rad) }
+    };
+
+    <span style="color: #4ec9b0;">Vector2</span> v_rot = <span style="color: #dcdcaa;">transform</span>(R, v);
+    
+    std::cout &lt;&lt; <span style="color: #ce9178;">"Eredmeny: ("</span> &lt;&lt; v_rot.x 
+              &lt;&lt; <span style="color: #ce9178;">", "</span> &lt;&lt; v_rot.y &lt;&lt; <span style="color: #ce9178;">")\n"</span>;
+    <span style="color: #c586c0;">return</span> <span style="color: #b5cea8;">0</span>;
+}
+                    </div>
+                </div>
+
+                <!-- JOBB OLDAL: PYTHON KÓDEGÉSZÍTŐ -->
+                <div class="code-column">
+                    <div class="code-column-header py-header">
+                        <span>🐍 Python (NumPy) Diák Feladat</span>
+                        <span style="font-size: 9pt; background: #1b5e20; color: white; padding: 2px 8px; border-radius: 4px;">Egészítsd ki!</span>
+                    </div>
+                    <div class="code-block" style="background: transparent; padding: 0; margin: 0; font-size: 10pt; color: #d4d4d4;">
+<span style="color: #c586c0;">import</span> numpy <span style="color: #c586c0;">as</span> np
+
+<span style="color: #57a64a;"># 1. Bemeneti pont (vektor) definíciója</span>
+v = np.array([<span style="color: #b5cea8;">3.0</span>, <span style="color: #b5cea8;">4.0</span>])
+
+<span style="color: #57a64a;"># 2. 90 fokos forgató mátrix R</span>
+theta = np.radians(<span style="color: #b5cea8;">90</span>)
+R = np.array([
+    [np.cos(theta), 
+     <select class="interactive-select" id="py_q1" onchange="checkPythonAnswers()">
+        <option value="wrong1">-np.cos(theta)</option>
+        <option value="correct">-np.sin(theta)</option>
+        <option value="wrong2">np.tan(theta)</option>
+     </select>
+    ],
+    [
+     <select class="interactive-select" id="py_q2" onchange="checkPythonAnswers()">
+        <option value="wrong1">np.cos(theta)</option>
+        <option value="wrong2">-np.sin(theta)</option>
+        <option value="correct">np.sin(theta)</option>
+     </select>
+    , np.cos(theta)]
+])
+
+<span style="color: #57a64a;"># 3. Mátrixtranszformáció elvégzése</span>
+v_rotated = 
+<select class="interactive-select" id="py_q3" onchange="checkPythonAnswers()">
+    <option value="wrong1">R + v</option>
+    <option value="correct">np.dot(R, v)</option>
+    <option value="wrong2">R * v * 2</option>
+</select>
+
+<span style="color: #57a64a;"># 4. Eredmény kiíratása</span>
+print(<span style="color: #ce9178;">"Elforgatott vektor:"</span>, v_rotated)
+                    </div>
+
+                    <div id="feedback_box" style="margin-top: 14px; padding: 10px; background: #263238; border-radius: 6px; font-size: 10pt; color: #ffca28; text-align: center; font-weight: bold;">
+                        Válaszd ki a megfelelő elemeket a gördülőlistákból!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 2. POP-UP MODAL: INTERAKTÍV SZIMULÁTOR ==================== -->
+    <div id="simModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-btn" onclick="closeModal('simModal')">×</span>
+            <h2 style="margin-top:0; color: #e65100; border-left: none; padding-left: 0; font-size: 16pt;">
+                🥕 Vektor &amp; Mátrix Világ Interaktív Szimulátor
+            </h2>
+            <p style="font-size: 10.5pt; color: #555; margin-bottom: 15px;">
+                Változtasd meg a bemeneti vektor komponenseit vagy válassz más transzformációs mátrixot, és az alábbi számítás azonnal frissül!
+            </p>
+
+            <div style="display: flex; gap: 20px; background: #fbe9e7; padding: 20px; border-radius: 8px; border: 1.5px solid #ffcc80;">
+                <div style="flex: 1;">
+                    <h3 style="margin-top: 0; font-size: 12pt; color: #d84315;">1. Vektor Beállítások</h3>
+                    <div class="sim-input-group">
+                        <label for="sim_x">X komponens:</label>
+                        <input type="number" id="sim_x" value="3" oninput="updateSimulation()">
+                    </div>
+                    <div class="sim-input-group">
+                        <label for="sim_y">Y komponens:</label>
+                        <input type="number" id="sim_y" value="1" oninput="updateSimulation()">
+                    </div>
+                </div>
+
+                <div style="flex: 1.2; border-left: 2px solid #ffab91; padding-left: 20px;">
+                    <h3 style="margin-top: 0; font-size: 12pt; color: #d84315;">2. Mátrix Kijelölés</h3>
+                    <div class="sim-input-group">
+                        <label for="sim_matrix">Transzformációs Mátrix (M):</label>
+                        <select id="sim_matrix" onchange="updateSimulation()">
+                            <option value="scale2">1. Skálázás 2x-esére [[2, 0], [0, 2]]</option>
+                            <option value="rot90">2. 90°-os Forgatás [[0, -1], [1, 0]]</option>
+                            <option value="flipX" selected="">3. X Tükrözés [[1, 0], [0, -1]]</option>
+                            <option value="flipY">4. Y Tükrözés [[-1, 0], [0, 1]]</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top: 20px; background-color: #e0f2f1; padding: 12px; border-radius: 6px; border: 1px solid #80cbc4; color: #004d40;">
+                        <strong style="font-size: 11pt;">Eredmény Vektor (v'):</strong>
+                        <div id="sim_result" style="font-size: 16pt; font-weight: bold; margin-top: 6px; color: #00695c;">
+                            [3, -1]
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; background: #fafafa; border: 1px solid #ddd; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 10.5pt; color: #333;" id="sim_math_explanation">
+                v' = [1·(3) + 0·(1), 0·(3) + (-1)·(1)] = [3, -1]
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const btn = document.querySelector('.btn-top');
+            btn.style.display = 'none';
+
+            const element = document.body;
+            const opt = {
+                margin:       0,
+                filename:     'Matrixgeometria_Integralt_Tankonyv.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.style.display = 'block';
+            });
+        }
+
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function checkPythonAnswers() {
+            const q1 = document.getElementById('py_q1');
+            const q2 = document.getElementById('py_q2');
+            const q3 = document.getElementById('py_q3');
+            const feedback = document.getElementById('feedback_box');
+
+            let allCorrect = true;
+
+            if (q1.value === 'correct') { q1.className = 'interactive-select correct'; } 
+            else { q1.className = 'interactive-select incorrect'; allCorrect = false; }
+
+            if (q2.value === 'correct') { q2.className = 'interactive-select correct'; } 
+            else { q2.className = 'interactive-select incorrect'; allCorrect = false; }
+
+            if (q3.value === 'correct') { q3.className = 'interactive-select correct'; } 
+            else { q3.className = 'interactive-select incorrect'; allCorrect = false; }
+
+            if (allCorrect) {
+                feedback.style.backgroundColor = '#1b5e20';
+                feedback.style.color = '#a5d6a7';
+                feedback.innerHTML = '🎉 Helyes! Sikeresen kiegészítetted a Python transzformációs kódot!';
+            } else {
+                feedback.style.backgroundColor = '#b71c1c';
+                feedback.style.color = '#ffcdd2';
+                feedback.innerHTML = '❌ Van még hibás választás. Ellenőrizd a pirossal jelölt gördülőlistákat!';
+            }
+        }
+
+        function updateSimulation() {
+            const x = parseFloat(document.getElementById('sim_x').value) || 0;
+            const y = parseFloat(document.getElementById('sim_y').value) || 0;
+            const matrixType = document.getElementById('sim_matrix').value;
+
+            let m00 = 1, m01 = 0, m10 = 0, m11 = 1;
+
+            if (matrixType === 'scale2') {
+                m00 = 2; m01 = 0; m10 = 0; m11 = 2;
+            } else if (matrixType === 'rot90') {
+                m00 = 0; m01 = -1; m10 = 1; m11 = 0;
+            } else if (matrixType === 'flipX') {
+                m00 = 1; m01 = 0; m10 = 0; m11 = -1;
+            } else if (matrixType === 'flipY') {
+                m00 = -1; m01 = 0; m10 = 0; m11 = 1;
+            }
+
+            const resX = m00 * x + m01 * y;
+            const resY = m10 * x + m11 * y;
+
+            document.getElementById('sim_result').innerHTML = `[${resX}, ${resY}]`;
+            document.getElementById('sim_math_explanation').innerHTML = 
+                `v' = [${m00}·(${x}) + ${m01}·(${y}), ${m10}·(${x}) + ${m11}·(${y})] = [${resX}, ${resY}]`;
+        }
+    </script>
+
+</body></html>
