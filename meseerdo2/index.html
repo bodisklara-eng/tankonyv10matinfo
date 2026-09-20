@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!-- saved from url=(0144)file:///D:/tankonyv/Meseerd%C5%91%20&%20M%C3%A1trix%20Koordin%C3%A1t%C3%A1k%20(S%C3%BAg%C3%B3val%20%C3%A9s%20%C3%9Ajraind%C3%ADt%C3%A1ssal).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meseerdő &amp; Mátrix Koordináták (Súgóval és Újraindítással)</title>
+  <script src="./index_files/pyodide.js.descărcare"></script>
+  <style>
+    * { box-sizing: border-box; font-family: 'Georgia', serif; user-select: none; }
+    body {
+      background: #2d382e;
+      color: #f0e6d2;
+      margin: 0; padding: 15px;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh;
+    }
+    header { text-align: center; margin-bottom: 10px; }
+    h1 { margin: 0; color: #e2c08d; font-size: 1.8rem; text-shadow: 2px 2px 4px #000; }
+    p.subtitle { margin: 5px 0 0; font-size: 0.95rem; color: #a3b899; }
+
+    .control-bar {
+      display: flex; gap: 10px; margin-bottom: 15px; width: 100%; max-width: 1200px; justify-content: flex-end;
+    }
+    .btn-top {
+      background: #4a7c59; color: #fff; border: 1px solid #72a382; padding: 8px 16px;
+      border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-top:hover { background: #5c996e; transform: translateY(-1px); }
+    .btn-reset { background: #8c3a3a; border-color: #b55252; }
+    .btn-reset:hover { background: #a64747; }
+
+    .main-container {
+      display: flex; gap: 20px; width: 100%; max-width: 1200px;
+      background: #1e261f; border: 3px solid #5c4033; border-radius: 16px;
+      padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .forest-card {
+      flex: 1.2; position: relative; background: #263328;
+      border: 2px solid #3a4d3d; border-radius: 12px; overflow: hidden;
+      display: flex; justify-content: center; align-items: center; min-height: 500px;
+    }
+    #forestCanvas { background: #1a241b; cursor: none; width: 100%; height: 100%; }
+
+    .sidebar { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+    .matrix-panel {
+      background: #2b362c; border: 2px solid #485c4a; border-radius: 12px;
+      padding: 12px; text-align: center;
+    }
+    .matrix-title { color: #e2c08d; font-weight: bold; margin-bottom: 8px; font-size: 1.1rem; }
+    
+    .matrix-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+      background: #19211a; padding: 8px; border-radius: 8px; border: 1px solid #3a4d3d;
+    }
+    .m-cell {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-family: monospace; font-size: 0.8rem; background: #243025; color: #8fa891;
+      border-radius: 4px; transition: all 0.2s ease; border: 1px solid #2f3e30;
+    }
+    .m-cell.active {
+      background: #e2c08d; color: #1e261f; font-weight: bold;
+      box-shadow: 0 0 12px #e2c08d; transform: scale(1.1);
+    }
+    .m-cell.transformed { background: #4a7c59; color: #fff; }
+
+    .code-editor {
+      background: #151c16; border: 2px solid #3a4d3d; border-radius: 12px;
+      display: flex; flex-direction: column; overflow: hidden; flex: 1;
+    }
+    .tabs { display: flex; background: #202b21; border-bottom: 1px solid #3a4d3d; }
+    .tab-btn {
+      padding: 8px 16px; background: none; border: none; color: #8fa891;
+      font-weight: bold; cursor: pointer; border-right: 1px solid #3a4d3d;
+    }
+    .tab-btn.active { background: #151c16; color: #e2c08d; border-bottom: 2px solid #e2c08d; }
+
+    .code-container { position: relative; flex: 1; display: flex; flex-direction: column; }
+    pre {
+      margin: 0; padding: 10px; font-family: 'Consolas', monospace; font-size: 0.78rem;
+      color: #a9c7ac; overflow-y: auto; max-height: 160px; white-space: pre-wrap;
+    }
+
+    .btn-run {
+      background: #4a7c59; color: white; border: none; padding: 8px;
+      font-weight: bold; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-run:hover { background: #5c996e; }
+
+    #consoleOutput {
+      background: #0d120e; color: #00ffcc; font-family: monospace; font-size: 0.75rem;
+      padding: 8px; height: 60px; overflow-y: auto; border-top: 1px solid #28382a;
+    }
+
+    .status-bar {
+      width: 100%; max-width: 1200px; margin-top: 15px; background: #1e261f;
+      border: 2px solid #3a4d3d; border-radius: 8px; padding: 10px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #e2c08d; font-size: 1rem;
+    }
+
+    /* SÚGÓ MODAL ABLAK */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: #263328; border: 3px solid #e2c08d; border-radius: 12px;
+      padding: 25px; max-width: 500px; color: #f0e6d2; box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+    .modal-card h2 { color: #e2c08d; margin-top: 0; }
+    .modal-card ul { padding-left: 20px; line-height: 1.6; }
+    .btn-close-modal {
+      background: #e2c08d; color: #1e261f; font-weight: bold; border: none;
+      padding: 8px 20px; border-radius: 6px; cursor: pointer; float: right; margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌲 Interaktív Meseerdő &amp; Mátrix Koordináták</h1>
+    <p class="subtitle">Érintsd meg a pontokat a varázsceruzával az állatok ébresztéséhez és a mátrix vizsgálatához!</p>
+  </header>
+
+  <div class="control-bar">
+    <button class="btn-top" onclick="toggleHelp(true)">❓ Súgó</button>
+    <button class="btn-top btn-reset" onclick="resetGame()">🔄 Újraindítás</button>
+  </div>
+
+  <div class="main-container">
+    <div class="forest-card">
+      <canvas id="forestCanvas" width="550" height="500"></canvas>
+    </div>
+
+    <div class="sidebar">
+      <div class="matrix-panel">
+        <div class="matrix-title">M_forest[6][6] Mátrix Nézet</div>
+        <div class="matrix-grid" id="matrixGrid"><div class="m-cell" id="cell-0-0">0,0</div><div class="m-cell" id="cell-0-1">0,1</div><div class="m-cell" id="cell-0-2">0,2</div><div class="m-cell" id="cell-0-3">0,3</div><div class="m-cell" id="cell-0-4">0,4</div><div class="m-cell" id="cell-0-5">0,5</div><div class="m-cell" id="cell-1-0">1,0</div><div class="m-cell" id="cell-1-1">1,1</div><div class="m-cell" id="cell-1-2">1,2</div><div class="m-cell" id="cell-1-3">1,3</div><div class="m-cell" id="cell-1-4">1,4</div><div class="m-cell" id="cell-1-5">1,5</div><div class="m-cell" id="cell-2-0">2,0</div><div class="m-cell" id="cell-2-1">2,1</div><div class="m-cell" id="cell-2-2">2,2</div><div class="m-cell" id="cell-2-3">2,3</div><div class="m-cell" id="cell-2-4">2,4</div><div class="m-cell" id="cell-2-5">2,5</div><div class="m-cell" id="cell-3-0">3,0</div><div class="m-cell" id="cell-3-1">3,1</div><div class="m-cell" id="cell-3-2">3,2</div><div class="m-cell" id="cell-3-3">3,3</div><div class="m-cell" id="cell-3-4">3,4</div><div class="m-cell" id="cell-3-5">3,5</div><div class="m-cell" id="cell-4-0">4,0</div><div class="m-cell" id="cell-4-1">4,1</div><div class="m-cell" id="cell-4-2">4,2</div><div class="m-cell" id="cell-4-3">4,3</div><div class="m-cell" id="cell-4-4">4,4</div><div class="m-cell" id="cell-4-5">4,5</div><div class="m-cell" id="cell-5-0">5,0</div><div class="m-cell" id="cell-5-1">5,1</div><div class="m-cell" id="cell-5-2">5,2</div><div class="m-cell" id="cell-5-3">5,3</div><div class="m-cell" id="cell-5-4">5,4</div><div class="m-cell" id="cell-5-5">5,5</div></div>
+      </div>
+
+      <div class="code-editor">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('py')">🐍 Python Logic</button>
+          <button class="tab-btn" onclick="switchTab('cpp')">⚡ C++ Logic</button>
+        </div>
+
+        <div class="code-container">
+          <pre id="codeView">class ForestMatrix:<br>    def __init__(self):<br>        self.grid = [<br>            ["Róka", "Üres", "Süni", "Üres", "Bagoly", "Üres"],<br>            ["Üres", "Őzike", "Üres", "Nyuszi", "Üres", "Medve"],<br>            ["Süni", "Üres", "Róka", "Üres", "Őzike", "Üres"],<br>            ["Üres", "Bagoly", "Üres", "Medve", "Üres", "Nyuszi"],<br>            ["Medve", "Üres", "Nyuszi", "Üres", "Róka", "Üres"],<br>            ["Üres", "Róka", "Üres", "Süni", "Üres", "Bagoly"]<br>        ]<br><br>    def touch_point(self, i, j):<br>        animal = self.grid[i][j]<br>        if animal != "Üres":<br>            return f"✨ M_forest[{i}][{j}] -&gt; Átalakulás: {animal.upper()}! ✨"<br>        return f"M_forest[{i}][{j}] -&gt; Csak varázsszikra."<br><br>forest = ForestMatrix()</pre>
+          <button class="btn-run" onclick="executePython()">▶ Python Kód Futtatása (Pyodide Engine)</button>
+          <div id="consoleOutput">&gt; Python betöltési hiba.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div>Mátrix: <strong id="lblMatrix">M_forest</strong></div>
+    <div>Pozíció: <strong id="lblPos">i: 3, j: 2</strong></div>
+    <div>Kijelölt állat: <strong id="lblAnimal">Csendes varázspont</strong></div>
+  </div>
+
+  <!-- SÚGÓ MODAL -->
+  <div class="modal-overlay" id="helpModal" style="display: none;">
+    <div class="modal-card">
+      <h2>🌲 Hogyan működik a Meseerdő?</h2>
+      <ul>
+        <li><strong>Ceruza Mozgatás:</strong> Mozgasd az egeret a vásznon – a varázsceruza követi a kezed.</li>
+        <li><strong>Pont Érintése:</strong> Ha a ceruzával egy fekete pont fölé mész, a jobb oldali <code>M_forest</code> mátrixban azonnal kivilágít a pontos sor- ($i$) és oszlopindex ($j$).</li>
+        <li><strong>Kattintás / Átalakulás:</strong> Kattints a pontra, hogy felébreszd a pont alatt rejtőző meseállatot!</li>
+        <li><strong>Python &amp; C++ Kód:</strong> A jobb alsó ablakban élőben megtekintheted a mátrixkezelő kódot, és a <em>Python Kód Futtatása</em> gombbal ki is próbálhatod.</li>
+        <li><strong>Újraindítás:</strong> A felső 🔄 gombbal az összes állatot visszaváltoztathatod ponttá.</li>
+      </ul>
+      <button class="btn-close-modal" onclick="toggleHelp(false)">Értem, mehet!</button>
+    </div>
+  </div>
+
+  <script>
+    const pyCode = `class ForestMatrix:
+    def __init__(self):
+        self.grid = [
+            ["Róka", "Üres", "Süni", "Üres", "Bagoly", "Üres"],
+            ["Üres", "Őzike", "Üres", "Nyuszi", "Üres", "Medve"],
+            ["Süni", "Üres", "Róka", "Üres", "Őzike", "Üres"],
+            ["Üres", "Bagoly", "Üres", "Medve", "Üres", "Nyuszi"],
+            ["Medve", "Üres", "Nyuszi", "Üres", "Róka", "Üres"],
+            ["Üres", "Róka", "Üres", "Süni", "Üres", "Bagoly"]
+        ]
+
+    def touch_point(self, i, j):
+        animal = self.grid[i][j]
+        if animal != "Üres":
+            return f"✨ M_forest[{i}][{j}] -> Átalakulás: {animal.upper()}! ✨"
+        return f"M_forest[{i}][{j}] -> Csak varázsszikra."
+
+forest = ForestMatrix()`;
+
+    const cppCode = `#include <iostream>
+#include <vector>
+#include <string>
+
+class ForestMatrix {
+public:
+    std::string grid[6][6] = {
+        {"Róka", "Üres", "Süni", "Üres", "Bagoly", "Üres"},
+        {"Üres", "Őzike", "Üres", "Nyuszi", "Üres", "Medve"},
+        {"Süni", "Üres", "Róka", "Üres", "Őzike", "Üres"},
+        {"Üres", "Bagoly", "Üres", "Medve", "Üres", "Nyuszi"},
+        {"Medve", "Üres", "Nyuszi", "Üres", "Róka", "Üres"},
+        {"Üres", "Róka", "Üres", "Süni", "Üres", "Bagoly"}
+    };
+
+    void touchPoint(int i, int j) {
+        std::cout << "M_forest[" << i << "][" << j << "] -> " << grid[i][j] << std::endl;
+    }
+};`;
+
+    let activeTab = 'py';
+    let pyodideInstance = null;
+
+    function switchTab(lang) {
+      activeTab = lang;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      if(lang === 'py') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('codeView').innerText = pyCode;
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('codeView').innerText = cppCode;
+      }
+    }
+    switchTab('py');
+
+    async function initPyodide() {
+      try {
+        pyodideInstance = await loadPyodide();
+        await pyodideInstance.runPythonAsync(pyCode);
+        document.getElementById('consoleOutput').innerText = "> Python (Pyodide) motor készen áll!";
+      } catch(e) {
+        document.getElementById('consoleOutput').innerText = "> Python betöltési hiba.";
+      }
+    }
+    initPyodide();
+
+    async function executePython() {
+      if(!pyodideInstance) {
+        document.getElementById('consoleOutput').innerText = "> A Python motor még töltődik...";
+        return;
+      }
+      const i = selectedPoint ? selectedPoint.i : 0;
+      const j = selectedPoint ? selectedPoint.j : 0;
+      let res = await pyodideInstance.runPythonAsync(`forest.touch_point(${i}, ${j})`);
+      document.getElementById('consoleOutput').innerText = "> " + res;
+    }
+
+    function toggleHelp(show) {
+      document.getElementById('helpModal').style.display = show ? 'flex' : 'none';
+    }
+
+    const canvas = document.getElementById('forestCanvas');
+    const ctx = canvas.getContext('2d');
+    const matrixGridEl = document.getElementById('matrixGrid');
+
+    const gridData = [
+      ["Róka", "Üres", "Süni", "Üres", "Bagoly", "Üres"],
+      ["Üres", "Őzike", "Üres", "Nyuszi", "Üres", "Medve"],
+      ["Süni", "Üres", "Róka", "Üres", "Őzike", "Üres"],
+      ["Üres", "Bagoly", "Üres", "Medve", "Üres", "Nyuszi"],
+      ["Medve", "Üres", "Nyuszi", "Üres", "Róka", "Üres"],
+      ["Üres", "Róka", "Üres", "Süni", "Üres", "Bagoly"]
+    ];
+
+    const animalIcons = {
+      "Róka": "🦊", "Süni": "🦔", "Bagoly": "🦉",
+      "Őzike": "🦌", "Nyuszi": "🐰", "Medve": "🐻"
+    };
+
+    let points = [];
+    let selectedPoint = null;
+    let mouse = { x: -100, y: -100 };
+
+    function initPoints() {
+      points = [];
+      for(let i=0; i<6; i++) {
+        for(let j=0; j<6; j++) {
+          points.push({
+            i: i, j: j,
+            x: 60 + j * 80,
+            y: 60 + i * 75,
+            animal: gridData[i][j],
+            isTransformed: false
+          });
+        }
+      }
+    }
+    initPoints();
+
+    function createMatrixUI() {
+      matrixGridEl.innerHTML = '';
+      for(let i=0; i<6; i++) {
+        for(let j=0; j<6; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'm-cell';
+          cell.id = `cell-${i}-${j}`;
+          cell.innerText = `${i},${j}`;
+          matrixGridEl.appendChild(cell);
+        }
+      }
+    }
+    createMatrixUI();
+
+    function resetGame() {
+      initPoints();
+      document.querySelectorAll('.m-cell').forEach(c => c.classList.remove('transformed', 'active'));
+      document.getElementById('consoleOutput').innerText = "> Meseerdő újraindítva!";
+      document.getElementById('lblAnimal').innerText = "Irányítsd a ceruzát egy pontra!";
+      selectedPoint = null;
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+
+      let hoverFound = false;
+      points.forEach(p => {
+        const dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+        if(dist < 25) {
+          hoverFound = true;
+          selectedPoint = p;
+          updateMatrixHighlight(p.i, p.j);
+          document.getElementById('lblPos').innerText = `i: ${p.i}, j: ${p.j}`;
+          document.getElementById('lblAnimal').innerText = p.animal !== "Üres" ? `${p.animal} ${animalIcons[p.animal] || ''}` : "Csendes varázspont";
+        }
+      });
+
+      if(!hoverFound && selectedPoint) {
+        document.querySelectorAll('.m-cell').forEach(c => c.classList.remove('active'));
+      }
+    });
+
+    canvas.addEventListener('click', () => {
+      if(selectedPoint && selectedPoint.animal !== "Üres") {
+        selectedPoint.isTransformed = true;
+        const cell = document.getElementById(`cell-${selectedPoint.i}-${selectedPoint.j}`);
+        if(cell) cell.classList.add('transformed');
+        playMagicSound();
+      }
+    });
+
+    function updateMatrixHighlight(row, col) {
+      document.querySelectorAll('.m-cell').forEach(c => c.classList.remove('active'));
+      const activeCell = document.getElementById(`cell-${row}-${col}`);
+      if(activeCell) activeCell.classList.add('active');
+    }
+
+    function playMagicSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } catch(e){}
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = 'rgba(74, 124, 89, 0.2)';
+      ctx.lineWidth = 1;
+      for(let x = 60; x <= 460; x += 80) {
+        ctx.beginPath(); ctx.moveTo(x, 40); ctx.lineTo(x, 460); ctx.stroke();
+      }
+      for(let y = 60; y <= 435; y += 75) {
+        ctx.beginPath(); ctx.moveTo(40, y); ctx.lineTo(480, y); ctx.stroke();
+      }
+
+      points.forEach(p => {
+        if(p.isTransformed) {
+          ctx.font = '28px Serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(animalIcons[p.animal] || '✨', p.x, p.y);
+        } else {
+          ctx.fillStyle = (selectedPoint === p) ? '#e2c08d' : '#000';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, (selectedPoint === p) ? 6 : 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          if(selectedPoint === p) {
+            ctx.strokeStyle = '#e2c08d';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 12, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+      });
+
+      // Ceruza rajzolása a kurzorhoz
+      ctx.save();
+      ctx.translate(mouse.x, mouse.y);
+      ctx.rotate(-Math.PI / 4);
+      ctx.fillStyle = '#d2b48c';
+      ctx.fillRect(0, -4, 40, 8);
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.moveTo(0, -4); ctx.lineTo(-10, 0); ctx.lineTo(0, 4); ctx.fill();
+      ctx.fillStyle = '#000';
+      ctx.beginPath(); ctx.moveTo(-6, -2); ctx.lineTo(-10, 0); ctx.lineTo(-6, 2); ctx.fill();
+      ctx.restore();
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+
+</body></html>
