@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<!-- saved from url=(0101)file:///D:/tankonyv/M%C3%A1trix%20Rendez%C3%A9s_%20Vektoros%20vs.%20K%C3%B6zvetlen%20(N%20x%20M).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix Rendezés: Vektoros vs. Közvetlen (N x M)</title>
+    <style>
+        :root {
+            --bg-color: #e2e8f0;
+            --panel-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --text-color: #0f172a;
+            --cell-default: #f1f5f9;
+            --cell-compare: #fef08a; /* Sárga: Összehasonlítás */
+            --cell-swap: #fecaca;    /* Piros: Csere */
+            --cell-sorted: #bbf7d0;  /* Zöld: Helyén van */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+        }
+
+        h1 { text-align: center; color: #0284c7; margin-bottom: 5px; font-size: 1.5rem; }
+        p.subtitle { text-align: center; color: #475569; margin-bottom: 15px; font-size: 0.85rem; }
+
+        /* FÜLEK (TABS) STÍLUSA */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .tab-btn {
+            padding: 10px 20px;
+            font-weight: bold;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: #475569;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background-color: #0284c7;
+            color: #ffffff;
+            border-color: #0284c7;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 15px;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        label { font-weight: bold; font-size: 0.8rem; color: #334155; display: block; margin-top: 6px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 3px;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .dim-inputs { display: flex; gap: 10px; }
+        .controls { display: flex; gap: 8px; margin-top: 10px; }
+
+        button.btn-ctrl {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+        button.btn-ctrl:hover { background-color: #0369a1; }
+
+        .grid-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .matrix-grid, .vector-grid { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+
+        .cell {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: var(--cell-default);
+            color: #334155;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .cell-compare { background-color: var(--cell-compare); border-color: #ca8a04; color: #854d0e; }
+        .cell-swap { background-color: var(--cell-swap); border-color: #dc2626; color: #991b1b; }
+        .cell-sorted { background-color: var(--cell-sorted); border-color: #16a34a; color: #14532d; }
+
+        .console {
+            background-color: #0f172a;
+            color: #38adf8;
+            font-family: 'Consolas', monospace;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            min-height: 90px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #0284c7;
+            padding: 8px 12px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #334155;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Mátrix Rendezési Szimulátor</h1>
+<p class="subtitle">Hasonlítsd össze a Vektoros és a Közvetlen 2D Indexelési módszert!</p>
+
+<!-- TABS (FÜLEK) -->
+<div class="tabs">
+    <button id="tab1" class="tab-btn" onclick="switchTab('vector')">1. Fül: Átmásolás Vektorba + Rendezés</button>
+    <button id="tab2" class="tab-btn active" onclick="switchTab('direct')">2. Fül: Közvetlen (Helyben) Mátrix Rendezés</button>
+</div>
+
+<div class="main-layout">
+    
+    <!-- BAL PANEL: BEÁLLÍTÁSOK -->
+    <div class="panel">
+        <h3 style="margin-top:0; color: #0284c7;">Beállítások</h3>
+        
+        <div class="dim-inputs">
+            <div>
+                <label for="rows">Sorok (N):</label>
+                <input type="number" id="rows" min="1" max="5" value="2" onchange="generateNewMatrix()">
+            </div>
+            <div>
+                <label for="cols">Oszlopok (M):</label>
+                <input type="number" id="cols" min="1" max="5" value="4" onchange="generateNewMatrix()">
+            </div>
+        </div>
+
+        <label for="algoSelect">Rendezési Algoritmus:</label>
+        <select id="algoSelect" onchange="resetSim()">
+            <option value="bubble">Buborékrendezés (Bubble Sort)</option>
+            <option value="selection">Kijelöléses rendezés (Selection Sort)</option>
+        </select>
+
+        <label for="customValues">Mátrix elemei (vesszővel):</label>
+        <textarea id="customValues" rows="2">45, 12, 89, 3, 27, 64, 15, 9</textarea>
+        <button class="btn-ctrl" onclick="applyCustomValues()" style="margin-top:4px; background-color: #475569; width:100%;">Saját elemek alkalmazása</button>
+        <button class="btn-ctrl" onclick="generateNewMatrix()" style="margin-top:4px; background-color: #059669; width:100%;">Új véletlen mátrix</button>
+
+        <div class="controls">
+            <button id="playBtn" class="btn-ctrl" onclick="togglePlay()" style="background-color: rgb(2, 132, 199);">Start ▶</button>
+            <button id="stepBtn" class="btn-ctrl" onclick="step()">Lépés ➔</button>
+            <button class="btn-ctrl" onclick="resetSim()" style="background-color: #64748b;">Újra</button>
+        </div>
+
+        <div id="formulaInfo" class="formula-box">
+            <b>Aktuális Mód:</b> <span id="modeTitle">Közvetlen 2D Indexelés</span><br>
+            <span id="formulaDetail">Leképezés 1D pozícióból (<code>p</code>):<br><b>Sor:</b> <code>r = p / M</code><br><b>Oszlop:</b> <code>c = p % M</code></span>
+        </div>
+    </div>
+
+    <!-- JOBB PANEL: VIZUALIZÁCIÓ -->
+    <div class="panel grid-container">
+        <div id="matrixSection">
+            <h4 style="margin:0 0 5px 0; text-align:center; color:#64748b;">Mátrix (N x M)</h4>
+            <div id="matrixDisplay" class="matrix-grid" style="display: grid; grid-template-columns: repeat(4, 42px);"><div id="m-0-0" class="cell">44</div><div id="m-0-1" class="cell">75</div><div id="m-0-2" class="cell">68</div><div id="m-0-3" class="cell">18</div><div id="m-1-0" class="cell">13</div><div id="m-1-1" class="cell">16</div><div id="m-1-2" class="cell">92</div><div id="m-1-3" class="cell">28</div></div>
+        </div>
+
+        <div id="vectorSection" style="display: none;">
+            <div style="font-size: 1.1rem; color: #0284c7; font-weight: bold; text-align:center; margin: 5px 0;">➔ Vektor (1D) ➔</div>
+            <div id="vectorDisplay" class="vector-grid"><div id="v-0" class="cell">?</div><div id="v-1" class="cell">?</div><div id="v-2" class="cell">?</div><div id="v-3" class="cell">?</div><div id="v-4" class="cell">?</div><div id="v-5" class="cell">?</div><div id="v-6" class="cell">?</div><div id="v-7" class="cell">?</div></div>
+        </div>
+
+        <div id="logBox" class="console">&gt; Szimuláció előkészítve. Nyomd meg a 'Lépés' vagy 'Start' gombot!</div>
+    </div>
+
+</div>
+
+<script>
+    let N = 2, M = 4;
+    let matrixData = [];
+    let vec = [];
+    let currentMode = 'vector'; // 'vector' vagy 'direct'
+    
+    let state = 'INIT';
+    let copyIdx = 0;
+    let i = 0, j = 0, minIdx = 0;
+    let timer = null;
+    let isPlaying = false;
+
+    function log(msg) { document.getElementById('logBox').innerHTML = `> ${msg}`; }
+
+    function switchTab(mode) {
+        currentMode = mode;
+        document.getElementById('tab1').className = mode === 'vector' ? 'tab-btn active' : 'tab-btn';
+        document.getElementById('tab2').className = mode === 'direct' ? 'tab-btn active' : 'tab-btn';
+        
+        const formulaDetail = document.getElementById('formulaDetail');
+        const modeTitle = document.getElementById('modeTitle');
+        const vectorSection = document.getElementById('vectorSection');
+
+        if (mode === 'vector') {
+            modeTitle.innerText = "1D Vektoros másolás";
+            formulaDetail.innerHTML = "Mátrix kimentése 1D tömbbe. Indexelés: simple <code>vec[k]</code>.";
+            vectorSection.style.display = 'block';
+        } else {
+            modeTitle.innerText = "Közvetlen 2D Indexelés";
+            formulaDetail.innerHTML = "Leképezés 1D pozícióból (<code>p</code>):<br><b>Sor:</b> <code>r = p / M</code><br><b>Oszlop:</b> <code>c = p % M</code>";
+            vectorSection.style.display = 'none';
+        }
+        resetSim();
+    }
+
+    function generateNewMatrix() {
+        N = parseInt(document.getElementById('rows').value);
+        M = parseInt(document.getElementById('cols').value);
+        matrixData = [];
+        let vals = [];
+        for (let r = 0; r < N; r++) {
+            let row = [];
+            for (let c = 0; c < M; c++) {
+                let val = Math.floor(Math.random() * 90) + 10;
+                row.push(val);
+                vals.push(val);
+            }
+            matrixData.push(row);
+        }
+        document.getElementById('customValues').value = vals.join(', ');
+        resetSim();
+    }
+
+    function applyCustomValues() {
+        N = parseInt(document.getElementById('rows').value);
+        M = parseInt(document.getElementById('cols').value);
+        let raw = document.getElementById('customValues').value.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+        if (raw.length < N * M) {
+            alert(`Adj meg legalább ${N * M} számot!`);
+            return;
+        }
+        matrixData = [];
+        let idx = 0;
+        for (let r = 0; r < N; r++) {
+            let row = [];
+            for (let c = 0; c < M; c++) {
+                row.push(raw[idx++]);
+            }
+            matrixData.push(row);
+        }
+        resetSim();
+    }
+
+    function renderGrids() {
+        const mDisp = document.getElementById('matrixDisplay');
+        mDisp.style.display = 'grid';
+        mDisp.style.gridTemplateColumns = `repeat(${M}, 42px)`;
+        mDisp.innerHTML = '';
+
+        for (let r = 0; r < N; r++) {
+            for (let c = 0; c < M; c++) {
+                let cell = document.createElement('div');
+                cell.id = `m-${r}-${c}`;
+                cell.className = 'cell';
+                cell.innerText = matrixData[r][c];
+                mDisp.appendChild(cell);
+            }
+        }
+
+        if (currentMode === 'vector') {
+            const vDisp = document.getElementById('vectorDisplay');
+            vDisp.innerHTML = '';
+            for (let k = 0; k < N * M; k++) {
+                let cell = document.createElement('div');
+                cell.id = `v-${k}`;
+                cell.className = 'cell';
+                cell.innerText = (k < vec.length) ? vec[k] : '?';
+                vDisp.appendChild(cell);
+            }
+        }
+    }
+
+    function resetSim() {
+        stopPlay();
+        vec = [];
+        state = 'INIT';
+        copyIdx = 0;
+        i = 0; j = 0; minIdx = 0;
+        document.getElementById('stepBtn').disabled = false;
+        document.getElementById('playBtn').disabled = false;
+        log("Szimuláció előkészítve. Nyomd meg a 'Lépés' vagy 'Start' gombot!");
+        renderGrids();
+    }
+
+    function step() {
+        let algo = document.getElementById('algoSelect').value;
+        let total = N * M;
+
+        // -------------------------------------------------------------
+        // A) MÓD: VEKTORBA MÁSOLÁS ÉS MÁSOLAT RENDEZÉSE
+        // -------------------------------------------------------------
+        if (currentMode === 'vector') {
+            if (state === 'INIT' || state === 'COPYING') {
+                state = 'COPYING';
+                if (copyIdx < total) {
+                    let r = Math.floor(copyIdx / M);
+                    let c = copyIdx % M;
+                    let val = matrixData[r][c];
+                    vec.push(val);
+
+                    document.querySelectorAll('.cell').forEach(el => el.classList.remove('cell-compare'));
+                    document.getElementById(`m-${r}-${c}`).className = 'cell cell-compare';
+                    
+                    renderGrids();
+                    document.getElementById(`v-${copyIdx}`).className = 'cell cell-compare';
+                    
+                    log(`Másolás: [${r}][${c}] ➔ Vektor[${copyIdx}] = ${val}`);
+                    copyIdx++;
+                } else {
+                    state = 'SORTING';
+                    i = 0; j = 0;
+                    document.querySelectorAll('.cell').forEach(el => el.className = 'cell');
+                    log(`Átmásolva! Kezdődik a vektor rendezése.`);
+                }
+                return;
+            }
+
+            if (state === 'SORTING') {
+                document.querySelectorAll('#vectorDisplay .cell').forEach(el => {
+                    if (!el.classList.contains('cell-sorted')) el.className = 'cell';
+                });
+
+                if (algo === 'bubble') {
+                    if (i < total - 1) {
+                        let v1 = document.getElementById(`v-${j}`);
+                        let v2 = document.getElementById(`v-${j+1}`);
+
+                        if (vec[j] > vec[j+1]) {
+                            let tmp = vec[j]; vec[j] = vec[j+1]; vec[j+1] = tmp;
+                            v1.className = 'cell cell-swap'; v2.className = 'cell cell-swap';
+                            log(`[Vektor Buborék] Csere: vec[${j}] ⇄ vec[${j+1}] (${tmp} ⇄ ${vec[j]})`);
+                        } else {
+                            v1.className = 'cell cell-compare'; v2.className = 'cell cell-compare';
+                            log(`[Vektor Buborék] Helyes: vec[${j}] (${vec[j]}) <= vec[${j+1}] (${vec[j+1]})`);
+                        }
+                        v1.innerText = vec[j]; v2.innerText = vec[j+1];
+
+                        j++;
+                        if (j >= total - i - 1) {
+                            document.getElementById(`v-${total - i - 1}`).className = 'cell cell-sorted';
+                            j = 0; i++;
+                        }
+                    } else { finishSort(); }
+                }
+            }
+        } 
+        
+        // -------------------------------------------------------------
+        // B) MÓD: KÖZVETLEN (HELYBEN) MÁTRIX RENDEZÉS INDEXSZÁMÍTÁSSAL
+        // -------------------------------------------------------------
+        else {
+            state = 'SORTING';
+            document.querySelectorAll('#matrixDisplay .cell').forEach(el => {
+                if (!el.classList.contains('cell-sorted')) el.className = 'cell';
+            });
+
+            if (algo === 'bubble') {
+                if (i < total - 1) {
+                    // Indexszámítás 1D sorszámból (j és j+1) 2D Mátrix koordinátákká:
+                    let r1 = Math.floor(j / M), c1 = j % M;
+                    let r2 = Math.floor((j + 1) / M), c2 = (j + 1) % M;
+
+                    let cell1 = document.getElementById(`m-${r1}-${c1}`);
+                    let cell2 = document.getElementById(`m-${r2}-${c2}`);
+
+                    if (matrixData[r1][c1] > matrixData[r2][c2]) {
+                        let tmp = matrixData[r1][c1];
+                        matrixData[r1][c1] = matrixData[r2][c2];
+                        matrixData[r2][c2] = tmp;
+
+                        cell1.className = 'cell cell-swap';
+                        cell2.className = 'cell cell-swap';
+                        cell1.innerText = matrixData[r1][c1];
+                        cell2.innerText = matrixData[r2][c2];
+
+                        log(`[Közvetlen Csere] (j=${j}) ➔ [${r1}][${c1}] ⇄ [${r2}][${c2}] (${tmp} ⇄ ${matrixData[r1][c1]})`);
+                    } else {
+                        cell1.className = 'cell cell-compare';
+                        cell2.className = 'cell cell-compare';
+                        log(`[Közvetlen Vizsgálat] [${r1}][${c1}] (${matrixData[r1][c1]}) <= [${r2}][${c2}] (${matrixData[r2][c2]})`);
+                    }
+
+                    j++;
+                    if (j >= total - i - 1) {
+                        let sortedR = Math.floor((total - i - 1) / M);
+                        let sortedC = (total - i - 1) % M;
+                        document.getElementById(`m-${sortedR}-${sortedC}`).className = 'cell cell-sorted';
+                        j = 0; i++;
+                    }
+                } else { finishSort(); }
+            }
+        }
+    }
+
+    function finishSort() {
+        state = 'DONE';
+        document.querySelectorAll('.cell').forEach(el => el.className = 'cell cell-sorted');
+        log("<b>Rendezés kész! Minden elem a helyére került.</b>");
+        stopPlay();
+        document.getElementById('stepBtn').disabled = true;
+        document.getElementById('playBtn').disabled = true;
+    }
+
+    function togglePlay() {
+        if (isPlaying) { stopPlay(); } 
+        else {
+            isPlaying = true;
+            document.getElementById('playBtn').innerText = "Szünet ❚❚";
+            document.getElementById('playBtn').style.backgroundColor = "#d97706";
+            timer = setInterval(step, 450);
+        }
+    }
+
+    function stopPlay() {
+        isPlaying = false;
+        clearInterval(timer);
+        document.getElementById('playBtn').innerText = "Start ▶";
+        document.getElementById('playBtn').style.backgroundColor = "#0284c7";
+    }
+
+    generateNewMatrix();
+</script>
+
+
+</body></html>
