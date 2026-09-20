@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)file:///D:/tankonyv/ma/borszin.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bőrtónus Mátrix és Divat Stúdió - Színanalízis</title>
+    <script src="./index_files/saved_resource"></script>
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <link href="./index_files/css2" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pastel-pink': '#FFD1DC',
+                        'pastel-lavender': '#E2D4F9',
+                        'pastel-mint': '#C1F0E8',
+                        'pastel-yellow': '#FFF2B2',
+                        'bubblegum': '#FF7BB0',
+                        'cute-purple': '#9B72CF'
+                    },
+                    fontFamily: {
+                        'fredoka': ['Fredoka', 'sans-serif'],
+                        'quicksand': ['Quicksand', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 50%, #E0C3FC 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .sparkle-btn {
+            background: linear-gradient(45deg, #FF7BB0, #FFB6C1);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(255, 123, 176, 0.4);
+        }
+
+        .sparkle-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(255, 123, 176, 0.6);
+        }
+
+        .sparkle-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .cute-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 25px rgba(155, 114, 207, 0.15);
+            border-radius: 2rem;
+        }
+
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 4s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF7BB0;
+            border-radius: 10px;
+        }
+
+        .matrix-cell {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .matrix-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .matrix-cell.selected {
+            border: 3px solid #FF7BB0 !important;
+            transform: scale(1.12);
+            box-shadow: 0 0 15px rgba(255, 123, 176, 0.8);
+            z-index: 20;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.right-3{right:0.75rem}.top-3{top:0.75rem}.z-0{z-index:0}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-4{margin-top:1rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[3\/4\]{aspect-ratio:3/4}.aspect-square{aspect-ratio:1 / 1}.h-3{height:0.75rem}.h-8{height:2rem}.h-full{height:100%}.h-6{height:1.5rem}.max-h-\[260px\]{max-height:260px}.w-8{width:2rem}.w-full{width:100%}.w-6{width:1.5rem}.max-w-7xl{max-width:80rem}.max-w-\[320px\]{max-width:320px}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-\[1\.02\]{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.grid-cols-8{grid-template-columns:repeat(8, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-orange-200{--tw-border-opacity:1;border-color:rgb(254 215 170 / var(--tw-border-opacity, 1))}.border-pink-100{--tw-border-opacity:1;border-color:rgb(252 231 243 / var(--tw-border-opacity, 1))}.border-pink-200{--tw-border-opacity:1;border-color:rgb(251 207 232 / var(--tw-border-opacity, 1))}.border-pink-300{--tw-border-opacity:1;border-color:rgb(249 168 212 / var(--tw-border-opacity, 1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255 / var(--tw-border-opacity, 1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255 / var(--tw-border-opacity, 1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-pink-500{--tw-border-opacity:1;border-color:rgb(236 72 153 / var(--tw-border-opacity, 1))}.border-white\/80{border-color:rgb(255 255 255 / 0.8)}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-50\/60{background-color:rgb(255 251 235 / 0.6)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-blue-50\/60{background-color:rgb(239 246 255 / 0.6)}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-indigo-50\/60{background-color:rgb(238 242 255 / 0.6)}.bg-orange-50\/60{background-color:rgb(255 247 237 / 0.6)}.bg-pink-100{--tw-bg-opacity:1;background-color:rgb(252 231 243 / var(--tw-bg-opacity, 1))}.bg-pink-50{--tw-bg-opacity:1;background-color:rgb(253 242 248 / var(--tw-bg-opacity, 1))}.bg-pink-50\/80{background-color:rgb(253 242 248 / 0.8)}.bg-pink-500{--tw-bg-opacity:1;background-color:rgb(236 72 153 / var(--tw-bg-opacity, 1))}.bg-purple-100\/80{background-color:rgb(243 232 255 / 0.8)}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-purple-50\/60{background-color:rgb(250 245 255 / 0.6)}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-\[radial-gradient\(\#ffb6c1_1px\2c transparent_1px\)\]{background-image:radial-gradient(#ffb6c1 1px,transparent 1px)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-pink-400{--tw-gradient-from:#f472b6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 114 182 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-50\/90{--tw-gradient-from:rgb(253 242 248 / 0.9) var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 242 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-500{--tw-gradient-from:#ec4899 var(--tw-gradient-from-position);--tw-gradient-to:rgb(236 72 153 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-100\/50{--tw-gradient-from:rgb(243 232 255 / 0.5) var(--tw-gradient-from-position);--tw-gradient-to:rgb(243 232 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-pink-50\/40{--tw-gradient-to:rgb(253 242 248 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(253 242 248 / 0.4) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-purple-500{--tw-gradient-to:rgb(168 85 247 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #a855f7 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-indigo-500{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.to-purple-50\/90{--tw-gradient-to:rgb(250 245 255 / 0.9) var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-yellow-50\/60{--tw-gradient-to:rgb(254 252 232 / 0.6) var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-0\.5{padding:0.125rem}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.pr-1{padding-right:0.25rem}.text-left{text-align:left}.text-center{text-align:center}.font-fredoka{font-family:Fredoka, sans-serif}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[9px\]{font-size:9px}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-pink-600{--tw-text-opacity:1;color:rgb(219 39 119 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206 / var(--tw-text-opacity, 1))}.text-purple-700\/80{color:rgb(126 34 206 / 0.8)}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175 / var(--tw-text-opacity, 1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-pink-300\/40{color:rgb(249 168 212 / 0.4)}.opacity-30{opacity:0.3}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-pink-500{--tw-ring-opacity:1;--tw-ring-color:rgb(236 72 153 / var(--tw-ring-opacity, 1))}.drop-shadow-xl{--tw-drop-shadow:drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.duration-200{transition-duration:200ms}.\[background-size\:16px_16px\]{background-size:16px 16px}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-125:hover{--tw-scale-x:1.25;--tw-scale-y:1.25;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-pink-300:hover{--tw-border-opacity:1;border-color:rgb(249 168 212 / var(--tw-border-opacity, 1))}.hover\:bg-purple-600:hover{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-pink-500:hover{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.hover\:text-purple-600:hover{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:p-4{padding:1rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}}@media (min-width: 768px){.md\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}</style></head>
+<body class="p-2 sm:p-4 md:p-6 text-gray-800 relative overflow-x-hidden">
+
+    <div id="particle-container" class="fixed inset-0 pointer-events-none z-0"><i class="fa-solid fa-star floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 77.9271%; top: 30.616%; animation-delay: 2.79194s; animation-duration: 5.42366s;"></i><i class="fa-solid fa-sparkles floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 33.0381%; top: 1.95499%; animation-delay: 3.59972s; animation-duration: 5.43452s;"></i><i class="fa-solid fa-star floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 17.4409%; top: 76.2482%; animation-delay: 2.29662s; animation-duration: 4.76462s;"></i><i class="fa-solid fa-heart floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 28.5254%; top: 56.2592%; animation-delay: 3.23838s; animation-duration: 3.79989s;"></i><i class="fa-solid fa-gem floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 44.0075%; top: 85.2886%; animation-delay: 2.02363s; animation-duration: 3.12739s;"></i><i class="fa-solid fa-gem floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 28.9762%; top: 61.3245%; animation-delay: 1.29226s; animation-duration: 6.0728s;"></i><i class="fa-solid fa-sparkles floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 63.2235%; top: 15.6622%; animation-delay: 0.878837s; animation-duration: 7.88706s;"></i><i class="fa-solid fa-star floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 56.1935%; top: 57.0495%; animation-delay: 1.45429s; animation-duration: 6.81534s;"></i><i class="fa-solid fa-gem floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 34.2465%; top: 38.9776%; animation-delay: 3.77044s; animation-duration: 5.92745s;"></i><i class="fa-solid fa-star floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 92.9965%; top: 96.4349%; animation-delay: 2.76161s; animation-duration: 7.40933s;"></i><i class="fa-solid fa-heart floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 74.9627%; top: 88.3467%; animation-delay: 2.13162s; animation-duration: 7.00749s;"></i><i class="fa-solid fa-heart floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 6.14752%; top: 56.0803%; animation-delay: 2.2945s; animation-duration: 7.35371s;"></i><i class="fa-solid fa-heart floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 28.2189%; top: 41.8024%; animation-delay: 0.591742s; animation-duration: 6.81882s;"></i><i class="fa-solid fa-sparkles floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 27.4386%; top: 64.6109%; animation-delay: 3.15787s; animation-duration: 6.78065s;"></i><i class="fa-solid fa-star floating-heart text-pink-300/40 text-sm sm:text-lg" style="left: 97.759%; top: 30.7299%; animation-delay: 3.41738s; animation-duration: 4.09591s;"></i></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <header class="text-center mb-6">
+            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md px-6 py-2 rounded-full border-2 border-pink-200 shadow-md mb-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-pink-500 text-xl animate-pulse"></i>
+                <h1 class="font-fredoka text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 font-bold">
+                    Bőrtónus Mátrix &amp; Divat Stúdió
+                </h1>
+                <i class="fa-solid fa-heart text-pink-400 text-xl animate-bounce"></i>
+            </div>
+            <p class="text-sm sm:text-base font-semibold text-purple-700/80">Válassz bőrtónust a 3×5-ös mátrixból, és fesd át a ruhákat a saját évszaktípusod színeivel!</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <div class="lg:col-span-4 flex flex-col gap-5">
+                
+                <!-- 3x5 Bőrtónus Mátrix Kártya -->
+                <div class="cute-card p-5">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="font-fredoka text-lg font-bold text-pink-600 flex items-center gap-2">
+                            <i class="fa-solid fa-border-all"></i> 3×5 Bőrtónus Mátrix
+                        </h2>
+                        <span id="matrix-coord-badge" class="text-xs bg-pink-100 text-pink-600 font-bold px-2.5 py-1 rounded-full border border-pink-200">
+                            1. Sor, 1. Oszlop
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-3">Kattints a 3×5-ös rács tetszőleges cellájára a bőrtónus elemzéséhez:</p>
+                    
+                    <!-- 3x5 Mátrix Rács -->
+                    <div class="bg-purple-50/60 p-3 rounded-2xl border-2 border-purple-100 mb-3">
+                        <div id="skin-matrix-grid" class="grid grid-cols-5 gap-2"><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold selected" title="1. Sor, 1. Oszlop: Világos Barackszín (#FFDFC4)" style="background-color: rgb(255, 223, 196);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="1. Sor, 2. Oszlop: Lágy Elefántcsont (#EACBA8)" style="background-color: rgb(234, 203, 168);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="1. Sor, 3. Oszlop: Meleg Méz (#F7E2AB)" style="background-color: rgb(247, 226, 171);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="1. Sor, 4. Oszlop: Arany Homok (#DCB991)" style="background-color: rgb(220, 185, 145);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="1. Sor, 5. Oszlop: Napsütötte Barack (#F0C08A)" style="background-color: rgb(240, 192, 138);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="2. Sor, 1. Oszlop: Természetes Meleg (#E7BC91)" style="background-color: rgb(231, 188, 145);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="2. Sor, 2. Oszlop: Meleg Borostyán (#ECBF83)" style="background-color: rgb(236, 191, 131);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="2. Sor, 3. Oszlop: Közép Napbarnított (#CF9E7C)" style="background-color: rgb(207, 158, 124);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="2. Sor, 4. Oszlop: Olíva Bézs (#AC8B64)" style="background-color: rgb(172, 139, 100);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="2. Sor, 5. Oszlop: Gazdag Bronz (#94613C)" style="background-color: rgb(148, 97, 60);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="3. Sor, 1. Oszlop: Meleg Gesztenye (#B26A49)" style="background-color: rgb(178, 106, 73);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="3. Sor, 2. Oszlop: Mély Réz (#AE703A)" style="background-color: rgb(174, 112, 58);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="3. Sor, 3. Oszlop: Meleg Kornél (#99644D)" style="background-color: rgb(153, 100, 77);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="3. Sor, 4. Oszlop: Mély Eszpresszó (#623A18)" style="background-color: rgb(98, 58, 24);"></button><button class="matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold " title="3. Sor, 5. Oszlop: Gazdag Ében (#3F2818)" style="background-color: rgb(63, 40, 24);"></button></div>
+                    </div>
+
+                    <!-- Mátrix Részletek Doboz -->
+                    <div class="bg-white/90 p-3.5 rounded-2xl border border-pink-200 text-xs shadow-sm space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 font-semibold">HEX Kód:</span>
+                            <span id="meta-hex" class="font-mono font-bold text-gray-800 bg-pink-50 px-2 py-0.5 rounded border border-pink-200">#FFDFC4</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 font-semibold">Tónus Kategória:</span>
+                            <span id="meta-category" class="font-bold text-purple-600">Világos Bőr</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 font-semibold">Alaptónus Profil:</span>
+                            <span id="meta-undertone" class="font-bold text-amber-600">Meleg Barack</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Évszaktípus Választó -->
+                <div class="cute-card p-5">
+                    <h2 class="font-fredoka text-lg font-bold text-purple-600 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-gem"></i> Évszak Paletta
+                    </h2>
+
+                    <!-- Évszakok Rács -->
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <button onclick="selectSeason('Tavasz')" id="season-Tavasz" class="p-2.5 rounded-2xl border-2 border-amber-200 bg-amber-50/60 text-left hover:scale-[1.02] transition-transform">
+                            <div class="text-xs font-bold text-amber-600 flex items-center justify-between">
+                                Tavasz <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <div class="text-[10px] text-gray-500 font-medium">Élénk &amp; Meleg</div>
+                        </button>
+                        <button onclick="selectSeason('Nyár')" id="season-Nyár" class="p-2.5 rounded-2xl border-2 border-blue-200 bg-blue-50/60 text-left hover:scale-[1.02] transition-transform">
+                            <div class="text-xs font-bold text-blue-600 flex items-center justify-between">
+                                Nyár <i class="fa-solid fa-cloud-sun"></i>
+                            </div>
+                            <div class="text-[10px] text-gray-500 font-medium">Lágy &amp; Hűvös</div>
+                        </button>
+                        <button onclick="selectSeason('Ősz')" id="season-Ősz" class="p-2.5 rounded-2xl border-2 border-orange-200 bg-orange-50/60 text-left hover:scale-[1.02] transition-transform">
+                            <div class="text-xs font-bold text-orange-600 flex items-center justify-between">
+                                Ősz <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <div class="text-[10px] text-gray-500 font-medium">Mély &amp; Meleg</div>
+                        </button>
+                        <button onclick="selectSeason('Tél')" id="season-Tél" class="p-2.5 rounded-2xl border-2 border-indigo-200 bg-indigo-50/60 text-left hover:scale-[1.02] transition-transform">
+                            <div class="text-xs font-bold text-indigo-600 flex items-center justify-between">
+                                Tél <i class="fa-solid fa-snowflake"></i>
+                            </div>
+                            <div class="text-[10px] text-gray-500 font-medium">Ragyogó &amp; Hűvös</div>
+                        </button>
+                    </div>
+
+                    <!-- Színskála minták -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-gray-700">Festék Minták:</span>
+                            <span class="text-[10px] text-pink-500 font-semibold animate-pulse">Kattints a ruhadarab átfestéséhez!</span>
+                        </div>
+                        <div id="season-palette-grid" class="flex flex-wrap gap-2"><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(255, 107, 107);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(255, 142, 114);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(255, 192, 105);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(115, 209, 61);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(54, 207, 201);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(255, 156, 110);"></button><button class="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group" style="background-color: rgb(255, 240, 246);"></button></div>
+                    </div>
+                </div>
+
+                <!-- Színharmónia és Stílustanácsadó -->
+                <div class="cute-card p-5 bg-gradient-to-br from-pink-50/90 to-purple-50/90">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-fredoka text-sm font-bold text-pink-600">Színharmónia Egyezés</span>
+                        <span id="harmony-percentage" class="font-fredoka text-lg font-bold text-purple-600">95%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden mb-3 p-0.5 border border-pink-200">
+                        <div id="harmony-bar" class="bg-gradient-to-r from-pink-400 to-purple-500 h-full rounded-full transition-all duration-500" style="width: 95%;"></div>
+                    </div>
+                    <p id="stylist-advice" class="text-xs text-gray-600 leading-relaxed italic bg-white/80 p-3 rounded-xl border border-pink-100">"✨ Tökéletes egyezés! A kiválasztott mátrix bőrtónus harmóniában van a felsőruhád színével!"</p>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col items-center">
+                
+                <div class="cute-card p-4 w-full flex flex-col items-center relative">
+                    
+                    <!-- Nézetválasztó gombok -->
+                    <div class="flex bg-purple-100/80 p-1 rounded-full mb-3 border border-purple-200 w-full">
+                        <button onclick="setViewMode('full')" id="btn-view-full" class="flex-1 py-1.5 text-xs font-bold rounded-full transition-all bg-white text-pink-600 shadow-sm">
+                            <i class="fa-solid fa-person mr-1"></i> Teljes Öltözék
+                        </button>
+                        <button onclick="setViewMode('profile')" id="btn-view-profile" class="flex-1 py-1.5 text-xs font-bold rounded-full transition-all text-gray-600 hover:text-purple-600">
+                            <i class="fa-solid fa-user mr-1"></i> Profil Elemzés
+                        </button>
+                    </div>
+
+                    <!-- Modell vászon -->
+                    <div class="relative w-full max-w-[320px] aspect-[3/4] bg-gradient-to-b from-purple-100/50 via-pink-50/40 to-yellow-50/60 rounded-3xl border-4 border-white shadow-inner flex items-center justify-center p-2 overflow-hidden">
+                        
+                        <div class="absolute inset-0 bg-[radial-gradient(#ffb6c1_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+                        
+                        <!-- SVG Konténer -->
+                        <div id="avatar-svg-container" class="w-full h-full relative z-10 flex items-center justify-center">
+            <svg viewBox="0 0 300 450" class="w-full h-full drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <lineargradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#FFDFC4"></stop>
+                        <stop offset="100%" stop-color="#f0d0b5"></stop>
+                    </lineargradient>
+                </defs>
+
+                <!-- HÁTSÓ HAJ (Szimmetrikus) -->
+                
+                <path d="M 85 80 L 85 280 C 85 300 115 300 115 280 L 115 140 Z" fill="#2B2B2B"></path>
+                <path d="M 215 80 L 215 280 C 215 300 185 300 185 280 L 185 140 Z" fill="#2B2B2B"></path>
+                <path d="M 100 60 C 150 25 200 60 200 140 L 100 140 Z" fill="#2B2B2B"></path>
+                
+
+                <!-- LÁBAK ÉS LÁBFEJEK -->
+                <path d="M 126 280 L 124 380 C 124 390 136 395 136 385 L 138 280 Z" fill="url(#skinGrad)"></path>
+                <path d="M 174 280 L 176 380 C 176 390 164 395 164 385 L 162 280 Z" fill="url(#skinGrad)"></path>
+                
+                <!-- Cipők -->
+                <path d="M 120 375 C 120 395 140 395 138 375 Z" fill="#3D3A45"></path>
+                <path d="M 162 375 C 160 395 180 395 180 375 Z" fill="#3D3A45"></path>
+
+                <!-- KAROK -->
+                <path d="M 112 180 L 90 240 C 85 245 95 248 100 242 L 120 190 Z" fill="url(#skinGrad)"></path>
+                <path d="M 188 180 L 210 240 C 215 245 205 248 200 242 L 180 190 Z" fill="url(#skinGrad)"></path>
+
+                <!-- ALSÓ RUHÁZAT -->
+                
+                <path d="M 110 225 Q 150 220 190 225 L 215 285 Q 150 300 85 285 Z" fill="#3D3A45"></path>
+                <path d="M 130 225 Q 125 260 120 287" stroke="#1f1c27" stroke-width="2" fill="none"></path>
+                <path d="M 150 222 Q 150 260 150 290" stroke="#1f1c27" stroke-width="2" fill="none"></path>
+                <path d="M 170 225 Q 175 260 180 287" stroke="#1f1c27" stroke-width="2" fill="none"></path>
+                
+
+                <!-- FELSŐ RUHÁZAT -->
+                
+                <path d="M 115 170 L 185 170 L 190 230 L 110 230 Z" fill="#FF6B6B"></path>
+                <path d="M 130 170 L 150 190 L 140 170 Z" fill="#FFF"></path>
+                <path d="M 170 170 L 150 190 L 160 170 Z" fill="#FFF"></path>
+                <circle cx="150" cy="200" r="2" fill="#FFF"></circle>
+                <circle cx="150" cy="215" r="2" fill="#FFF"></circle>
+                
+
+                <!-- NYAK -->
+                <rect x="142" y="145" width="16" height="28" rx="7" fill="url(#skinGrad)"></rect>
+
+                <!-- ARC NÉLKÜLI MANKAN FEJ -->
+                <ellipse cx="150" cy="110" rx="42" ry="50" fill="url(#skinGrad)"></ellipse>
+
+                <!-- ELSŐ HAJ (Középen elválasztott, FRUZSU NÉLKÜL) -->
+                
+            <path d="M 150 62 Q 120 66 106 100 Q 115 110 122 88 Q 138 72 150 72 Z" fill="#2B2B2B"></path>
+            <path d="M 150 62 Q 180 66 194 100 Q 185 110 178 88 Q 162 72 150 72 Z" fill="#2B2B2B"></path>
+            <line x1="150" y1="60" x2="150" y2="72" stroke="#0d0d0d" stroke-width="1.5"></line>
+            <path d="M 125 72 Q 135 66 142 71" stroke="#FFF" stroke-width="2" fill="none" opacity="0.3"></path>
+            <path d="M 175 72 Q 165 66 158 71" stroke="#FFF" stroke-width="2" fill="none" opacity="0.3"></path>
+            
+
+                <!-- Fém Fülbevalók -->
+                <circle cx="106" cy="120" r="5" fill="#FFD700"></circle>
+                <circle cx="194" cy="120" r="5" fill="#FFD700"></circle>
+
+            </svg></div>
+                    </div>
+
+                    <!-- Gombok: Pillanatkép és Véletlenszerű -->
+                    <div class="flex gap-2.5 mt-4 w-full justify-center">
+                        <button onclick="playSparkleSound(); captureSnapshot();" class="sparkle-btn px-4 py-2.5 rounded-full text-white font-bold text-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-camera-retro text-base"></i> Fotó Mentése
+                        </button>
+                        <button onclick="randomizeOutfit()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2.5 rounded-full font-bold text-xs flex items-center gap-1.5 shadow-md transition-all">
+                            <i class="fa-solid fa-dice text-base"></i> Véletlenszerű
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col gap-5">
+                
+                <div class="cute-card p-5">
+                    <h2 class="font-fredoka text-lg font-bold text-pink-600 mb-3 flex items-center justify-between">
+                        <span><i class="fa-solid fa-shirt mr-2"></i> Gardrób &amp; Stílusok</span>
+                        <span class="text-xs text-purple-500 font-semibold"><i class="fa-solid fa-palette"></i> Célpont</span>
+                    </h2>
+
+                    <!-- Kategória fülek -->
+                    <div class="grid grid-cols-4 gap-1 mb-4 bg-purple-50 p-1 rounded-xl">
+                        <button onclick="setWardrobeCategory('tops')" id="cat-tops" class="py-1.5 text-xs font-bold rounded-lg bg-pink-500 text-white shadow">Felső</button>
+                        <button onclick="setWardrobeCategory('bottoms')" id="cat-bottoms" class="py-1.5 text-xs font-bold rounded-lg text-gray-600 hover:text-pink-500">Alsó</button>
+                        <button onclick="setWardrobeCategory('hair')" id="cat-hair" class="py-1.5 text-xs font-bold rounded-lg text-gray-600 hover:text-pink-500">Haj</button>
+                        <button onclick="setWardrobeCategory('jewelry')" id="cat-jewelry" class="py-1.5 text-xs font-bold rounded-lg text-gray-600 hover:text-pink-500">Ékszer</button>
+                    </div>
+
+                    <!-- Aktív színezési célpont jelző -->
+                    <div class="mb-3 p-2 bg-pink-50/80 rounded-xl border border-pink-200 flex items-center justify-between text-xs">
+                        <span class="text-gray-600 font-medium">Színezendő Rész:</span>
+                        <span id="active-dye-target" class="font-bold text-pink-600 uppercase bg-white px-2.5 py-0.5 rounded-md border border-pink-200">Felső Ruházat</span>
+                    </div>
+
+                    <!-- Gardrób opciók -->
+                    <div id="wardrobe-options-container" class="grid grid-cols-2 gap-2.5 max-h-[260px] overflow-y-auto pr-1"><button class="p-3 rounded-2xl border-2 text-left flex flex-col justify-between transition-all border-pink-500 bg-pink-50/80 shadow-md scale-[1.02]">
+                    <div class="text-xs font-bold text-pink-600">Gombos Blúz</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-pink-400"></i> Kiválasztás
+                    </div>
+                </button><button class="p-3 rounded-2xl border-2 text-left flex flex-col justify-between transition-all border-gray-200 bg-white hover:border-pink-300">
+                    <div class="text-xs font-bold text-gray-700">Karcsú Crop Top</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-pink-400"></i> Kiválasztás
+                    </div>
+                </button><button class="p-3 rounded-2xl border-2 text-left flex flex-col justify-between transition-all border-gray-200 bg-white hover:border-pink-300">
+                    <div class="text-xs font-bold text-gray-700">Elegáns Zakó</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-pink-400"></i> Kiválasztás
+                    </div>
+                </button><button class="p-3 rounded-2xl border-2 text-left flex flex-col justify-between transition-all border-gray-200 bg-white hover:border-pink-300">
+                    <div class="text-xs font-bold text-gray-700">Minimalista Estélyi</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-pink-400"></i> Kiválasztás
+                    </div>
+                </button></div>
+                </div>
+
+                <!-- Hajszín Paletta -->
+                <div class="cute-card p-4">
+                    <h3 class="font-fredoka text-sm font-bold text-purple-700 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-scissors text-pink-500"></i> Szimmetrikus Hajszín
+                    </h3>
+                    <div class="grid grid-cols-8 gap-1.5" id="hair-color-swatches"><button class="w-6 h-6 rounded-full border-2 border-pink-500 scale-110 shadow hover:scale-110 transition-transform" style="background-color: rgb(43, 43, 43);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(74, 53, 37);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(140, 84, 39);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(212, 155, 75);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(230, 194, 128);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(255, 133, 192);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(155, 114, 207);"></button><button class="w-6 h-6 rounded-full border-2 border-white hover:scale-110 transition-transform" style="background-color: rgb(92, 219, 211);"></button></div>
+                </div>
+
+                <!-- Ékszer Fém Tónus Választó -->
+                <div class="cute-card p-4">
+                    <h3 class="font-fredoka text-sm font-bold text-amber-700 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-ring text-amber-500"></i> Ékszer Fém Árnyalat
+                    </h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="setJewelry('Gold')" id="j-Gold" class="p-2 rounded-xl border-2 border-amber-300 bg-amber-50 text-amber-800 font-bold text-xs flex items-center justify-center gap-1 ring-2 ring-pink-500 shadow-sm">
+                            <i class="fa-solid fa-circle text-amber-400"></i> Arany
+                        </button>
+                        <button onclick="setJewelry('Silver')" id="j-Silver" class="p-2 rounded-xl border-2 border-gray-300 bg-gray-50 text-gray-700 font-bold text-xs flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-circle text-gray-300"></i> Ezüst
+                        </button>
+                        <button onclick="setJewelry('RoseGold')" id="j-RoseGold" class="p-2 rounded-xl border-2 border-rose-300 bg-rose-50 text-rose-800 font-bold text-xs flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-circle text-rose-300"></i> Rozéarany
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="snapshot-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center border-4 border-pink-300 shadow-2xl relative">
+            <button onclick="closeSnapshotModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold">
+                ✕
+            </button>
+            <h3 class="font-fredoka text-xl text-pink-600 font-bold mb-1">✨ Stílus Elmentve! ✨</h3>
+            <p class="text-xs text-gray-500 mb-3">Minimalista Szimmetrikus Modell</p>
+            <div id="snapshot-preview" class="w-full aspect-[3/4] bg-pink-50 rounded-2xl overflow-hidden border-2 border-pink-200 mb-3 flex items-center justify-center">
+            </div>
+            <p class="text-xs text-purple-600 font-semibold mb-4" id="snapshot-details">
+                Mátrix: 1. Sor, 1. Oszlop | Évszak: Tavaszi Elegancia
+            </p>
+            <button onclick="closeSnapshotModal()" class="sparkle-btn w-full py-2.5 text-white font-bold text-sm rounded-full">
+                Bezárás &amp; Folytatás
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 3x5 Bőrtónus Mátrix Adatok (Magyar feliratokkal)
+        const skinMatrix = [
+            // 1. Sor
+            [
+                { hex: "#FFDFC4", row: 1, col: 1, name: "Világos Barackszín", category: "Igen Világos Bőr", undertone: "Meleg Barack", season: "Tavasz" },
+                { hex: "#EACBA8", row: 1, col: 2, name: "Lágy Elefántcsont", category: "Világos Bőr", undertone: "Hűvös Rózsa", season: "Nyár" },
+                { hex: "#F7E2AB", row: 1, col: 3, name: "Meleg Méz", category: "Világos Bőr", undertone: "Meleg Arany", season: "Tavasz" },
+                { hex: "#DCB991", row: 1, col: 4, name: "Arany Homok", category: "Középszerű Bőr", undertone: "Meleg Arany", season: "Ősz" },
+                { hex: "#F0C08A", row: 1, col: 5, name: "Napsütötte Barack", category: "Világos-Közép Bőr", undertone: "Meleg Barack", season: "Tavasz" }
+            ],
+            // 2. Sor
+            [
+                { hex: "#E7BC91", row: 2, col: 1, name: "Természetes Meleg", category: "Közepes Bőrtónus", undertone: "Meleg Neutrális", season: "Ősz" },
+                { hex: "#ECBF83", row: 2, col: 2, name: "Meleg Borostyán", category: "Közepes Bőrtónus", undertone: "Meleg Arany", season: "Ősz" },
+                { hex: "#CF9E7C", row: 2, col: 3, name: "Közép Napbarnított", category: "Közepes Bőrtónus", undertone: "Neutrális Meleg", season: "Ősz" },
+                { hex: "#AC8B64", row: 2, col: 4, name: "Olíva Bézs", category: "Barnított Bőr", undertone: "Hűvös Olíva", season: "Nyár" },
+                { hex: "#94613C", row: 2, col: 5, name: "Gazdag Bronz", category: "Barnított Bőr", undertone: "Meleg Arany", season: "Ősz" }
+            ],
+            // 3. Sor
+            [
+                { hex: "#B26A49", row: 3, col: 1, name: "Meleg Gesztenye", category: "Mély Bőrtónus", undertone: "Meleg Vörös", season: "Ősz" },
+                { hex: "#AE703A", row: 3, col: 2, name: "Mély Réz", category: "Mély Bőrtónus", undertone: "Meleg Bronz", season: "Ősz" },
+                { hex: "#99644D", row: 3, col: 3, name: "Meleg Kornél", category: "Sötét Bőrtónus", undertone: "Meleg Vörös", season: "Ősz" },
+                { hex: "#623A18", row: 3, col: 4, name: "Mély Eszpresszó", category: "Sötét Bőrtónus", undertone: "Hűvös Kék", season: "Tél" },
+                { hex: "#3F2818", row: 3, col: 5, name: "Gazdag Ében", category: "Igen Sötét Bőr", undertone: "Hűvös Kék", season: "Tél" }
+            ]
+        ];
+
+        const seasonalPalettes = {
+            Tavasz: {
+                colors: ["#FF6B6B", "#FF8E72", "#FFC069", "#73D13D", "#36CFC9", "#FF9C6E", "#FFF0F6"],
+                undertone: "Meleg",
+                advice: "A Tavasz paletta élénk, meleg barackos korallal, arany sárgával és mentazöld árnyalatokkal tündököl!"
+            },
+            Nyár: {
+                colors: ["#B37FEB", "#FF85C0", "#5CDBD3", "#85A5FF", "#B5F5EC", "#E8D5C4", "#D3ADF7"],
+                undertone: "Hűvös",
+                advice: "A Nyár típus a lágy levendula, púderezett rózsaszín, hűvös égkék és tört menta tónusokkal érvényesül."
+            },
+            Ősz: {
+                colors: ["#D46B08", "#AD6800", "#748C00", "#9E1000", "#873800", "#D48806", "#612500"],
+                undertone: "Meleg",
+                advice: "Az Ősz típus a mély terrakotta, mustársárga, meleg olíva és fűszeres fahéj tónusokban tündököl."
+            },
+            Tél: {
+                colors: ["#1D39C4", "#722ED1", "#EB2F96", "#002766", "#08979C", "#2F54EB", "#262626"],
+                undertone: "Hűvös",
+                advice: "A Tél évszaktípus a ragyogó drágakő tónusokkal, éles kontrasztokkal és királykékkel mutat a legjobban."
+            }
+        };
+
+        const hairColors = ["#2B2B2B", "#4A3525", "#8C5427", "#D49B4B", "#E6C280", "#FF85C0", "#9B72CF", "#5CDBD3"];
+
+        // Alkalmazás Állapota
+        let appState = {
+            selectedCell: skinMatrix[0][0],
+            season: "Tavasz",
+            viewMode: "full", // 'full' vagy 'profile'
+            
+            category: "tops", // 'tops', 'bottoms', 'hair', 'jewelry'
+            dyeTarget: "top", // 'top', 'bottom', 'hair', 'shoes'
+            
+            hairStyle: "sleek", // 'sleek', 'bun', 'straight', 'bob'
+            hairColor: "#2B2B2B",
+            
+            topStyle: "collared", // 'collared', 'crop', 'blazer', 'gown'
+            topColor: "#FF6B6B",
+            
+            bottomStyle: "skirt", // 'skirt', 'shorts', 'pants', 'none'
+            bottomColor: "#3D3A45",
+            
+            shoeColor: "#3D3A45",
+            jewelryMetal: "Gold" // 'Gold', 'Silver', 'RoseGold'
+        };
+
+        // Hangeffektek (Web Audio API)
+        function playClickSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.08);
+            } catch(e) {}
+        }
+
+        function playSparkleSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.05);
+                    gain.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.05 + 0.2);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + i * 0.05);
+                    osc.stop(ctx.currentTime + i * 0.05 + 0.2);
+                });
+            } catch(e) {}
+        }
+
+        window.onload = function() {
+            initBackgroundParticles();
+            renderSkinMatrix();
+            renderSeasonalPalette();
+            renderHairSwatches();
+            renderWardrobeOptions();
+            updateJewelryUI();
+            updateAvatarSVG();
+            calculateHarmony();
+        };
+
+        function initBackgroundParticles() {
+            const container = document.getElementById('particle-container');
+            const icons = ['fa-heart', 'fa-star', 'fa-sparkles', 'fa-gem'];
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('i');
+                const randomIcon = icons[Math.floor(Math.random()*icons.length)];
+                p.className = `fa-solid ${randomIcon} floating-heart text-pink-300/40 text-sm sm:text-lg`;
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = (Math.random() * 4) + 's';
+                p.style.animationDuration = (3 + Math.random() * 5) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        function renderSkinMatrix() {
+            const grid = document.getElementById('skin-matrix-grid');
+            grid.innerHTML = '';
+
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 5; c++) {
+                    const cellData = skinMatrix[r][c];
+                    const btn = document.createElement('button');
+                    const isSelected = (appState.selectedCell.row === cellData.row && appState.selectedCell.col === cellData.col);
+                    
+                    btn.className = `matrix-cell w-full aspect-square rounded-xl border-2 border-white/80 shadow-sm flex items-center justify-center text-[9px] font-bold ${isSelected ? 'selected' : ''}`;
+                    btn.style.backgroundColor = cellData.hex;
+                    btn.title = `${cellData.row}. Sor, ${cellData.col}. Oszlop: ${cellData.name} (${cellData.hex})`;
+                    
+                    btn.onclick = () => {
+                        playClickSound();
+                        selectMatrixCell(cellData);
+                    };
+                    grid.appendChild(btn);
+                }
+            }
+        }
+
+        function selectMatrixCell(cellData) {
+            appState.selectedCell = cellData;
+            appState.season = cellData.season;
+            
+            // UI elemek frissítése magyarul
+            document.getElementById('matrix-coord-badge').innerText = `${cellData.row}. Sor, ${cellData.col}. Oszlop`;
+            document.getElementById('meta-hex').innerText = cellData.hex;
+            document.getElementById('meta-category').innerText = cellData.category;
+            document.getElementById('meta-undertone').innerText = cellData.undertone;
+
+            renderSkinMatrix();
+            selectSeason(cellData.season, false);
+            updateAvatarSVG();
+            calculateHarmony();
+        }
+
+        function setViewMode(mode) {
+            playClickSound();
+            appState.viewMode = mode;
+            const btnFull = document.getElementById('btn-view-full');
+            const btnProfile = document.getElementById('btn-view-profile');
+
+            if (mode === 'full') {
+                btnFull.className = "flex-1 py-1.5 text-xs font-bold rounded-full transition-all bg-white text-pink-600 shadow-sm";
+                btnProfile.className = "flex-1 py-1.5 text-xs font-bold rounded-full transition-all text-gray-600 hover:text-purple-600";
+            } else {
+                btnProfile.className = "flex-1 py-1.5 text-xs font-bold rounded-full transition-all bg-white text-purple-600 shadow-sm";
+                btnFull.className = "flex-1 py-1.5 text-xs font-bold rounded-full transition-all text-gray-600 hover:text-pink-600";
+            }
+            updateAvatarSVG();
+        }
+
+        function selectSeason(seasonName, triggerSound = true) {
+            if (triggerSound) playClickSound();
+            appState.season = seasonName;
+            ['Tavasz', 'Nyár', 'Ősz', 'Tél'].forEach(s => {
+                const el = document.getElementById(`season-${s}`);
+                if (el) {
+                    if (s === seasonName) {
+                        el.classList.add('ring-2', 'ring-pink-500', 'bg-white', 'shadow-md');
+                    } else {
+                        el.classList.remove('ring-2', 'ring-pink-500', 'bg-white', 'shadow-md');
+                    }
+                }
+            });
+            renderSeasonalPalette();
+            calculateHarmony();
+        }
+
+        function renderSeasonalPalette() {
+            const paletteGrid = document.getElementById('season-palette-grid');
+            paletteGrid.innerHTML = '';
+            const palette = seasonalPalettes[appState.season].colors;
+            
+            palette.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = "w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-125 transition-transform duration-200 relative group";
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    playSparkleSound();
+                    applyDyeColor(color);
+                };
+                paletteGrid.appendChild(btn);
+            });
+        }
+
+        function renderHairSwatches() {
+            const grid = document.getElementById('hair-color-swatches');
+            grid.innerHTML = '';
+            hairColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `w-6 h-6 rounded-full border-2 ${appState.hairColor === color ? 'border-pink-500 scale-110 shadow' : 'border-white'} hover:scale-110 transition-transform`;
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    playClickSound();
+                    appState.hairColor = color;
+                    renderHairSwatches();
+                    updateAvatarSVG();
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function setJewelry(metal) {
+            playClickSound();
+            appState.jewelryMetal = metal;
+            updateJewelryUI();
+            updateAvatarSVG();
+        }
+
+        function updateJewelryUI() {
+            ['Gold', 'Silver', 'RoseGold'].forEach(m => {
+                const el = document.getElementById(`j-${m}`);
+                if (m === appState.jewelryMetal) {
+                    el.classList.add('ring-2', 'ring-pink-500', 'shadow-sm');
+                } else {
+                    el.classList.remove('ring-2', 'ring-pink-500', 'shadow-sm');
+                }
+            });
+        }
+
+        function setWardrobeCategory(cat) {
+            playClickSound();
+            appState.category = cat;
+            ['tops', 'bottoms', 'hair', 'jewelry'].forEach(c => {
+                const el = document.getElementById(`cat-${c}`);
+                if (c === cat) {
+                    el.className = "py-1.5 text-xs font-bold rounded-lg bg-pink-500 text-white shadow";
+                } else {
+                    el.className = "py-1.5 text-xs font-bold rounded-lg text-gray-600 hover:text-pink-500";
+                }
+            });
+
+            if (cat === 'tops') appState.dyeTarget = 'top';
+            if (cat === 'bottoms') appState.dyeTarget = 'bottom';
+            if (cat === 'hair') appState.dyeTarget = 'hair';
+            if (cat === 'jewelry') appState.dyeTarget = 'top';
+            updateDyeTargetLabel();
+
+            renderWardrobeOptions();
+        }
+
+        function updateDyeTargetLabel() {
+            const lbl = document.getElementById('active-dye-target');
+            const targetNames = {
+                'top': 'Felső Ruházat',
+                'bottom': 'Szoknya / Nadrág',
+                'hair': 'Frizura',
+                'shoes': 'Cipő'
+            };
+            lbl.innerText = targetNames[appState.dyeTarget] || 'Ruházat';
+        }
+
+        function renderWardrobeOptions() {
+            const container = document.getElementById('wardrobe-options-container');
+            container.innerHTML = '';
+
+            let items = [];
+            if (appState.category === 'tops') {
+                items = [
+                    { id: 'collared', name: 'Gombos Blúz', type: 'top' },
+                    { id: 'crop', name: 'Karcsú Crop Top', type: 'top' },
+                    { id: 'blazer', name: 'Elegáns Zakó', type: 'top' },
+                    { id: 'gown', name: 'Minimalista Estélyi', type: 'top' }
+                ];
+            } else if (appState.category === 'bottoms') {
+                items = [
+                    { id: 'skirt', name: 'Lenge Szoknya', type: 'bottom' },
+                    { id: 'shorts', name: 'Szabott Rövidnadrág', type: 'bottom' },
+                    { id: 'pants', name: 'Elegáns Nadrág', type: 'bottom' },
+                    { id: 'none', name: 'Nincs Alsó', type: 'bottom' }
+                ];
+            } else if (appState.category === 'hair') {
+                items = [
+                    { id: 'sleek', name: 'Középen Elválasztott', type: 'hair' },
+                    { id: 'bun', name: 'Szimmetrikus Konty', type: 'hair' },
+                    { id: 'straight', name: 'Egyenes Szimmetrikus', type: 'hair' },
+                    { id: 'bob', name: 'Szimmetrikus Bob', type: 'hair' }
+                ];
+            } else if (appState.category === 'jewelry') {
+                items = [
+                    { id: 'Gold', name: 'Sárga Arany', type: 'jewelry' },
+                    { id: 'Silver', name: 'Platina Ezüst', type: 'jewelry' },
+                    { id: 'RoseGold', name: 'Rozéarany', type: 'jewelry' }
+                ];
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('button');
+                let isSelected = false;
+                if (item.type === 'top') isSelected = appState.topStyle === item.id;
+                if (item.type === 'bottom') isSelected = appState.bottomStyle === item.id;
+                if (item.type === 'hair') isSelected = appState.hairStyle === item.id;
+                if (item.type === 'jewelry') isSelected = appState.jewelryMetal === item.id;
+
+                card.className = `p-3 rounded-2xl border-2 text-left flex flex-col justify-between transition-all ${isSelected ? 'border-pink-500 bg-pink-50/80 shadow-md scale-[1.02]' : 'border-gray-200 bg-white hover:border-pink-300'}`;
+                
+                card.onclick = () => {
+                    playClickSound();
+                    if (item.type === 'top') {
+                        appState.topStyle = item.id;
+                        appState.dyeTarget = 'top';
+                    } else if (item.type === 'bottom') {
+                        appState.bottomStyle = item.id;
+                        appState.dyeTarget = 'bottom';
+                    } else if (item.type === 'hair') {
+                        appState.hairStyle = item.id;
+                        appState.dyeTarget = 'hair';
+                    } else if (item.type === 'jewelry') {
+                        appState.jewelryMetal = item.id;
+                        updateJewelryUI();
+                    }
+                    updateDyeTargetLabel();
+                    renderWardrobeOptions();
+                    updateAvatarSVG();
+                };
+
+                card.innerHTML = `
+                    <div class="text-xs font-bold ${isSelected ? 'text-pink-600' : 'text-gray-700'}">${item.name}</div>
+                    <div class="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-pink-400"></i> Kiválasztás
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function applyDyeColor(color) {
+            if (appState.dyeTarget === 'top') appState.topColor = color;
+            else if (appState.dyeTarget === 'bottom') appState.bottomColor = color;
+            else if (appState.dyeTarget === 'hair') appState.hairColor = color;
+            else if (appState.dyeTarget === 'shoes') appState.shoeColor = color;
+            
+            updateAvatarSVG();
+            calculateHarmony();
+        }
+
+        function calculateHarmony() {
+            let score = 85;
+            const currentSeasonData = seasonalPalettes[appState.season];
+            
+            if (currentSeasonData.colors.includes(appState.topColor)) {
+                score += 10;
+            }
+
+            score = Math.min(100, Math.max(65, score));
+
+            document.getElementById('harmony-percentage').innerText = `${score}%`;
+            document.getElementById('harmony-bar').style.width = `${score}%`;
+
+            const adviceEl = document.getElementById('stylist-advice');
+            let adviceText = currentSeasonData.advice;
+            if (score >= 95) {
+                adviceText = `✨ Tökéletes egyezés! A kiválasztott mátrix bőrtónus harmóniában van a felsőruhád színével!`;
+            }
+            adviceEl.innerText = `"${adviceText}"`;
+        }
+
+        function randomizeOutfit() {
+            playSparkleSound();
+            const r = Math.floor(Math.random() * 3);
+            const c = Math.floor(Math.random() * 5);
+            selectMatrixCell(skinMatrix[r][c]);
+
+            const seasons = ['Tavasz', 'Nyár', 'Ősz', 'Tél'];
+            const randomSeason = seasons[Math.floor(Math.random() * seasons.length)];
+            const palette = seasonalPalettes[randomSeason].colors;
+
+            appState.topColor = palette[Math.floor(Math.random() * palette.length)];
+            appState.bottomColor = palette[Math.floor(Math.random() * palette.length)];
+            appState.hairColor = hairColors[Math.floor(Math.random() * hairColors.length)];
+            
+            const tops = ['collared', 'crop', 'blazer', 'gown'];
+            appState.topStyle = tops[Math.floor(Math.random() * tops.length)];
+
+            updateAvatarSVG();
+        }
+
+        function getMetalColor(metal) {
+            if (metal === 'Gold') return '#FFD700';
+            if (metal === 'Silver') return '#E0E0E0';
+            if (metal === 'RoseGold') return '#B76E79';
+            return '#FFD700';
+        }
+
+        function updateAvatarSVG() {
+            const container = document.getElementById('avatar-svg-container');
+            const skin = appState.selectedCell.hex;
+            const hair = appState.hairColor;
+            const topColor = appState.topColor;
+            const bottomColor = appState.bottomColor;
+            const shoeColor = appState.shoeColor;
+            const metal = getMetalColor(appState.jewelryMetal);
+
+            if (appState.viewMode === 'profile') {
+                // PROFIL ELEMZÉSI NÉZET
+                container.innerHTML = `
+                <svg viewBox="0 0 300 450" class="w-full h-full drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="skinGradProf" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="${skin}"/>
+                            <stop offset="100%" stop-color="${adjustColor(skin, -20)}"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Háttér Kör Díszítés -->
+                    <circle cx="150" cy="200" r="130" fill="none" stroke="${topColor}" stroke-width="4" stroke-dasharray="8 6" opacity="0.4"/>
+
+                    <!-- Hátsó Haj Profil -->
+                    <path d="M 120 100 C 60 120 50 280 110 320 Q 90 220 120 100 Z" fill="${hair}"/>
+
+                    <!-- Váll & Nyak Profil -->
+                    <path d="M 140 230 L 140 350 L 230 380 L 220 280 Z" fill="url(#skinGradProf)"/>
+                    
+                    <!-- Felsőruha Minta Profil -->
+                    <path d="M 140 280 L 140 370 L 230 390 L 220 280 Z" fill="${topColor}"/>
+
+                    <!-- Fej / Arc Profil (Arc nélküli sima kontúr) -->
+                    <path d="M 140 100 C 180 100 210 130 205 170 C 200 200 180 230 140 230 C 120 230 115 170 120 130 Z" fill="url(#skinGradProf)"/>
+
+                    <!-- Sima Szimmetrikus Első Haj Profil -->
+                    <path d="M 140 100 C 170 110 180 150 160 190 Q 150 140 140 100 Z" fill="${hair}"/>
+
+                    <!-- Ékszer Fülbevaló -->
+                    <circle cx="130" cy="180" r="7" fill="${metal}"/>
+                    <circle cx="130" cy="180" r="4" fill="#FFF" opacity="0.5"/>
+                </svg>`;
+                return;
+            }
+
+            // TELJES ÖLTÖZÉK NÉZET (Szimmetrikus és arc nélküli)
+            container.innerHTML = `
+            <svg viewBox="0 0 300 450" class="w-full h-full drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="${skin}"/>
+                        <stop offset="100%" stop-color="${adjustColor(skin, -15)}"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- HÁTSÓ HAJ (Szimmetrikus) -->
+                ${renderSymmetricalBackHair(appState.hairStyle, hair)}
+
+                <!-- LÁBAK ÉS LÁBFEJEK -->
+                <path d="M 126 280 L 124 380 C 124 390 136 395 136 385 L 138 280 Z" fill="url(#skinGrad)"/>
+                <path d="M 174 280 L 176 380 C 176 390 164 395 164 385 L 162 280 Z" fill="url(#skinGrad)"/>
+                
+                <!-- Cipők -->
+                <path d="M 120 375 C 120 395 140 395 138 375 Z" fill="${shoeColor}"/>
+                <path d="M 162 375 C 160 395 180 395 180 375 Z" fill="${shoeColor}"/>
+
+                <!-- KAROK -->
+                <path d="M 112 180 L 90 240 C 85 245 95 248 100 242 L 120 190 Z" fill="url(#skinGrad)"/>
+                <path d="M 188 180 L 210 240 C 215 245 205 248 200 242 L 180 190 Z" fill="url(#skinGrad)"/>
+
+                <!-- ALSÓ RUHÁZAT -->
+                ${renderBottomOutfit(appState.bottomStyle, bottomColor)}
+
+                <!-- FELSŐ RUHÁZAT -->
+                ${renderTopOutfit(appState.topStyle, topColor)}
+
+                <!-- NYAK -->
+                <rect x="142" y="145" width="16" height="28" rx="7" fill="url(#skinGrad)"/>
+
+                <!-- ARC NÉLKÜLI MANKAN FEJ -->
+                <ellipse cx="150" cy="110" rx="42" ry="50" fill="url(#skinGrad)"/>
+
+                <!-- ELSŐ HAJ (Középen elválasztott, FRUZSU NÉLKÜL) -->
+                ${renderSymmetricalFrontHair(appState.hairStyle, hair)}
+
+                <!-- Fém Fülbevalók -->
+                <circle cx="106" cy="120" r="5" fill="${metal}"/>
+                <circle cx="194" cy="120" r="5" fill="${metal}"/>
+
+            </svg>`;
+        }
+
+        function renderTopOutfit(style, color) {
+            if (style === 'collared') {
+                return `
+                <path d="M 115 170 L 185 170 L 190 230 L 110 230 Z" fill="${color}"/>
+                <path d="M 130 170 L 150 190 L 140 170 Z" fill="#FFF"/>
+                <path d="M 170 170 L 150 190 L 160 170 Z" fill="#FFF"/>
+                <circle cx="150" cy="200" r="2" fill="#FFF"/>
+                <circle cx="150" cy="215" r="2" fill="#FFF"/>
+                `;
+            } else if (style === 'crop') {
+                return `
+                <path d="M 118 170 L 182 170 L 178 205 L 122 205 Z" fill="${color}"/>
+                <path d="M 135 170 Q 150 185 165 170" fill="none" stroke="#FFF" stroke-width="2"/>
+                `;
+            } else if (style === 'blazer') {
+                return `
+                <path d="M 110 170 L 190 170 L 188 235 L 112 235 Z" fill="${color}"/>
+                <path d="M 135 170 L 150 210 L 165 170 Z" fill="#FFF"/>
+                <path d="M 150 185 L 150 235" stroke="${adjustColor(color, -30)}" stroke-width="2"/>
+                `;
+            } else if (style === 'gown') {
+                return `
+                <path d="M 115 170 L 185 170 L 210 350 L 90 350 Z" fill="${color}"/>
+                <path d="M 115 170 Q 150 200 185 170" fill="#FFF" opacity="0.3"/>
+                `;
+            }
+        }
+
+        function renderBottomOutfit(style, color) {
+            if (style === 'skirt') {
+                return `
+                <path d="M 110 225 Q 150 220 190 225 L 215 285 Q 150 300 85 285 Z" fill="${color}"/>
+                <path d="M 130 225 Q 125 260 120 287" stroke="${adjustColor(color, -30)}" stroke-width="2" fill="none"/>
+                <path d="M 150 222 Q 150 260 150 290" stroke="${adjustColor(color, -30)}" stroke-width="2" fill="none"/>
+                <path d="M 170 225 Q 175 260 180 287" stroke="${adjustColor(color, -30)}" stroke-width="2" fill="none"/>
+                `;
+            } else if (style === 'shorts') {
+                return `
+                <path d="M 118 205 L 182 205 L 185 245 L 152 245 L 150 225 L 148 245 L 115 245 Z" fill="${color}"/>
+                `;
+            } else if (style === 'pants') {
+                return `
+                <path d="M 118 205 L 182 205 L 186 340 L 154 340 L 150 240 L 146 340 L 114 340 Z" fill="${color}"/>
+                `;
+            }
+            return '';
+        }
+
+        function renderSymmetricalBackHair(style, color) {
+            if (style === 'sleek' || style === 'straight') {
+                return `
+                <path d="M 85 80 L 85 280 C 85 300 115 300 115 280 L 115 140 Z" fill="${color}"/>
+                <path d="M 215 80 L 215 280 C 215 300 185 300 185 280 L 185 140 Z" fill="${color}"/>
+                <path d="M 100 60 C 150 25 200 60 200 140 L 100 140 Z" fill="${color}"/>
+                `;
+            } else if (style === 'bun') {
+                return `
+                <circle cx="150" cy="52" r="24" fill="${color}"/>
+                <circle cx="150" cy="52" r="18" stroke="${adjustColor(color, 20)}" stroke-width="2" fill="none"/>
+                `;
+            } else if (style === 'bob') {
+                return `
+                <path d="M 90 70 C 80 120 80 180 110 185 L 120 120 Z" fill="${color}"/>
+                <path d="M 210 70 C 220 120 220 180 190 185 L 180 120 Z" fill="${color}"/>
+                `;
+            }
+        }
+
+        function renderSymmetricalFrontHair(style, color) {
+            return `
+            <path d="M 150 62 Q 120 66 106 100 Q 115 110 122 88 Q 138 72 150 72 Z" fill="${color}"/>
+            <path d="M 150 62 Q 180 66 194 100 Q 185 110 178 88 Q 162 72 150 72 Z" fill="${color}"/>
+            <line x1="150" y1="60" x2="150" y2="72" stroke="${adjustColor(color, -30)}" stroke-width="1.5"/>
+            <path d="M 125 72 Q 135 66 142 71" stroke="#FFF" stroke-width="2" fill="none" opacity="0.3"/>
+            <path d="M 175 72 Q 165 66 158 71" stroke="#FFF" stroke-width="2" fill="none" opacity="0.3"/>
+            `;
+        }
+
+        function adjustColor(col, amt) {
+            let usePound = false;
+            if (col[0] == "#") {
+                col = col.slice(1);
+                usePound = true;
+            }
+            let num = parseInt(col, 16);
+            let r = (num >> 16) + amt;
+            if (r > 255) r = 255; else if (r < 0) r = 0;
+            let b = ((num >> 8) & 0x00FF) + amt;
+            if (b > 255) b = 255; else if (b < 0) b = 0;
+            let g = (num & 0x0000FF) + amt;
+            if (g > 255) g = 255; else if (g < 0) g = 0;
+            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
+        }
+
+        function captureSnapshot() {
+            const container = document.getElementById('avatar-svg-container');
+            const preview = document.getElementById('snapshot-preview');
+            preview.innerHTML = container.innerHTML;
+
+            const c = appState.selectedCell;
+            document.getElementById('snapshot-details').innerText = `Mátrix: ${c.row}. Sor, ${c.col}. Oszlop | Évszak: ${appState.season} Stílus`;
+
+            const modal = document.getElementById('snapshot-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeSnapshotModal() {
+            playClickSound();
+            document.getElementById('snapshot-modal').classList.add('hidden');
+        }
+    </script>
+
+</body></html>
