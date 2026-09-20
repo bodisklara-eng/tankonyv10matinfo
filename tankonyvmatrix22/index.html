@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)file:///D:/tankonyv/C++%20&%20Python%20P%C3%A1rhuzamos%20Szimul%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ &amp; Python Párhuzamos Szimuláció</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --border-color: #334155;
+            --text-color: #f8fafc;
+            
+            /* Értékek színei */
+            --val-0-bg: #1e3a8a; /* Kék: Főátló */
+            --val-0-text: #93c5fd;
+            --val-2-bg: #854d0e; /* Sárga: Mellékátló */
+            --val-2-text: #fef08a;
+            --val-3-bg: #374151; /* Szürke: Egyéb */
+            --val-3-text: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+        }
+
+        h1 { text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.6rem; }
+        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 15px; font-size: 0.9rem; }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+
+        .full-width { grid-column: span 2; }
+
+        /* Kódblokkok egymás mellett */
+        .code-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        pre {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        .code-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #38bdf8;
+            font-size: 0.85rem;
+        }
+
+        /* Kódsorok kiemelése */
+        .line { display: block; padding: 0 4px; border-radius: 2px; }
+        .active-line { background-color: #0284c7; color: white; font-weight: bold; }
+
+        /* Vezérlés */
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #0369a1; }
+        button:disabled { background-color: #475569; cursor: not-allowed; }
+
+        /* Változók állapota */
+        .state-tracker {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .state-card {
+            background-color: #0f172a;
+            padding: 6px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .state-card .label { font-size: 0.75rem; color: #94a3b8; }
+        .state-card .val { font-size: 1.1rem; font-weight: bold; color: #f59e0b; }
+
+        /* Mátrix elemek */
+        .matrix-grid {
+            display: grid;
+            gap: 6px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .cell {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        /* Érték függő színek */
+        .cell-0 { background-color: var(--val-0-bg); color: var(--val-0-text); border-color: #3b82f6; }
+        .cell-2 { background-color: var(--val-2-bg); color: var(--val-2-text); border-color: #eab308; }
+        .cell-3 { background-color: var(--val-3-bg); color: var(--val-3-text); }
+
+        /* Villogó effekt az épp feldolgozott elemre */
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 0px #ef4444; border-color: #ef4444; }
+            50% { transform: scale(1.15); box-shadow: 0 0 12px #ef4444; border-color: #f87171; background-color: #991b1b; }
+            100% { transform: scale(1); box-shadow: 0 0 0px #ef4444; }
+        }
+        .blinking { animation: pulse-glow 0.5s infinite alternate; z-index: 5; }
+
+        .console {
+            background-color: #000;
+            color: #4ade80;
+            font-family: 'Consolas', monospace;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+<h1>C++ &amp; Python Párhuzamos Szimuláció</h1>
+<p class="subtitle">Mátrix feltöltés soronkénti végrehajtással és valós idejű kódkövetéssel (n = 4)</p>
+
+<div class="main-layout">
+    
+    <!-- FELSŐ PANEL: Kódok párhuzamosan -->
+    <div class="panel full-width">
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Kód</div>
+                <pre><span id="cpp-1" class="line">for(i = 1; i &lt;= n; i++) {</span>
+<span id="cpp-2" class="line">    for(j = 1; j &lt;= n; j++) {</span>
+<span id="cpp-3" class="line">        if(i == j) a[i][j] = 0;</span>
+<span id="cpp-4" class="line">        else if(j == n - i + 1) a[i][j] = 2;</span>
+<span id="cpp-5" class="line">        else a[i][j] = 3;</span>
+<span id="cpp-6" class="line">    }</span>
+<span id="cpp-7" class="line active-line">}</span></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Kód</div>
+                <pre><span id="py-1" class="line">for i in range(1, n + 1):</span>
+<span id="py-2" class="line">    for j in range(1, n + 1):</span>
+<span id="py-3" class="line">        if i == j: a[i][j] = 0</span>
+<span id="py-4" class="line">        elif j == n - i + 1: a[i][j] = 2</span>
+<span id="py-5" class="line">        else: a[i][j] = 3</span>
+<span id="py-6" class="line"> </span>
+<span id="py-7" class="line active-line"> </span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALSÓ BAL PANEL: Vezérlés és Log -->
+    <div class="panel">
+        <div class="controls">
+            <button id="playBtn" onclick="togglePlay()" disabled="" style="background-color: rgb(2, 132, 199);">Lejátszás ▶</button>
+            <button id="stepBtn" onclick="step()" disabled="">Lépés ➔</button>
+            <button onclick="resetSim()" style="background-color: #475569;">Újra</button>
+        </div>
+
+        <div class="state-tracker">
+            <div class="state-card"><div class="label">i (sor)</div><div id="varI" class="val">4</div></div>
+            <div class="state-card"><div class="label">j (oszlop)</div><div id="varJ" class="val">4</div></div>
+            <div class="state-card"><div class="label">a[i][j]</div><div id="varVal" class="val">0</div></div>
+        </div>
+
+        <div id="logBox" class="console">&gt; Mátrix sikeresen feltöltve mindkét nyelven!</div>
+    </div>
+
+    <!-- ALSÓ JOBB PANEL: Mátrix Vizualizáció -->
+    <div class="panel" style="display: flex; flex-direction: column; align-items: center;">
+        <div id="matrixGrid" class="matrix-grid" style="grid-template-columns: repeat(4, 45px);"><div id="cell-1-1" class="cell cell-0">0</div><div id="cell-1-2" class="cell cell-3">3</div><div id="cell-1-3" class="cell cell-3">3</div><div id="cell-1-4" class="cell cell-2">2</div><div id="cell-2-1" class="cell cell-3">3</div><div id="cell-2-2" class="cell cell-0">0</div><div id="cell-2-3" class="cell cell-2">2</div><div id="cell-2-4" class="cell cell-3">3</div><div id="cell-3-1" class="cell cell-3">3</div><div id="cell-3-2" class="cell cell-2">2</div><div id="cell-3-3" class="cell cell-0">0</div><div id="cell-3-4" class="cell cell-3">3</div><div id="cell-4-1" class="cell cell-2">2</div><div id="cell-4-2" class="cell cell-3">3</div><div id="cell-4-3" class="cell cell-3">3</div><div id="cell-4-4" class="cell cell-0 blinking">0</div></div>
+    </div>
+
+</div>
+
+<script>
+    const n = 4;
+    let i = 1, j = 1;
+    let timer = null;
+    let isPlaying = false;
+
+    function initGrid() {
+        const grid = document.getElementById('matrixGrid');
+        grid.style.gridTemplateColumns = `repeat(${n}, 45px)`;
+        grid.innerHTML = '';
+
+        for (let r = 1; r <= n; r++) {
+            for (let c = 1; c <= n; c++) {
+                const cell = document.createElement('div');
+                cell.id = `cell-${r}-${c}`;
+                cell.className = 'cell';
+                cell.innerText = '?';
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function highlightLines(cppId, pyId) {
+        document.querySelectorAll('.line').forEach(l => l.classList.remove('active-line'));
+        if (cppId) document.getElementById(cppId).classList.add('active-line');
+        if (pyId) document.getElementById(pyId).classList.add('active-line');
+    }
+
+    function step() {
+        if (i > n) {
+            highlightLines('cpp-7', 'py-7');
+            document.getElementById('logBox').innerText = "> Mátrix sikeresen feltöltve mindkét nyelven!";
+            stopPlay();
+            document.getElementById('stepBtn').disabled = true;
+            document.getElementById('playBtn').disabled = true;
+            return;
+        }
+
+        document.querySelectorAll('.cell').forEach(c => c.classList.remove('blinking'));
+        const cell = document.getElementById(`cell-${i}-${j}`);
+        cell.classList.add('blinking');
+
+        document.getElementById('varI').innerText = i;
+        document.getElementById('varJ').innerText = j;
+
+        let val = 0;
+        let cppLine = '', pyLine = '', msg = '';
+
+        if (i === j) {
+            val = 0;
+            cppLine = 'cpp-3'; pyLine = 'py-3';
+            msg = `Főátló (i == j) -> a[${i}][${j}] = 0`;
+        } else if (j === (n - i + 1)) {
+            val = 2;
+            cppLine = 'cpp-4'; pyLine = 'py-4';
+            msg = `Mellékátló (j == n-i+1) -> a[${i}][${j}] = 2`;
+        } else {
+            val = 3;
+            cppLine = 'cpp-5'; pyLine = 'py-5';
+            msg = `Egyéb mező -> a[${i}][${j}] = 3`;
+        }
+
+        highlightLines(cppLine, pyLine);
+
+        setTimeout(() => {
+            cell.innerText = val;
+            cell.className = `cell cell-${val} blinking`;
+            document.getElementById('varVal').innerText = val;
+            document.getElementById('logBox').innerText = `> ${msg}`;
+        }, 100);
+
+        j++;
+        if (j > n) {
+            j = 1;
+            i++;
+        }
+    }
+
+    function togglePlay() {
+        if (isPlaying) {
+            stopPlay();
+        } else {
+            isPlaying = true;
+            document.getElementById('playBtn').innerText = "Szünet ❚❚";
+            document.getElementById('playBtn').style.backgroundColor = "#d97706";
+            timer = setInterval(step, 600);
+        }
+    }
+
+    function stopPlay() {
+        isPlaying = false;
+        clearInterval(timer);
+        document.getElementById('playBtn').innerText = "Lejátszás ▶";
+        document.getElementById('playBtn').style.backgroundColor = "#0284c7";
+    }
+
+    function resetSim() {
+        stopPlay();
+        i = 1; j = 1;
+        document.getElementById('stepBtn').disabled = false;
+        document.getElementById('playBtn').disabled = false;
+        document.getElementById('varI').innerText = '-';
+        document.getElementById('varJ').innerText = '-';
+        document.getElementById('varVal').innerText = '-';
+        document.getElementById('logBox').innerText = "> Kattints a \"Lépés\" vagy \"Lejátszás\" gombra!";
+        highlightLines(null, null);
+        initGrid();
+    }
+
+    initGrid();
+</script>
+
+
+</body></html>
