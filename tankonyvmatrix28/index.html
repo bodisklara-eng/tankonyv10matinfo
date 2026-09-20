@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)file:///D:/tankonyv/M%C3%A1trix-Vektor%20Rendez%C3%A9si%20Szimul%C3%A1tor.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix-Vektor Rendezési Szimulátor</title>
+    <style>
+        :root {
+            --bg-color: #e2e8f0;
+            --panel-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --text-color: #0f172a;
+            --cell-default: #f1f5f9;
+            --cell-compare: #fef08a; /* Sárga: Összehasonlítás */
+            --cell-swap: #fecaca;    /* Piros: Csere */
+            --cell-sorted: #bbf7d0;  /* Zöld: Helyén van */
+            --cell-first: #bfdbfe;   /* Kék: Legelőször helyére került elem */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+        }
+
+        h1 { text-align: center; color: #0284c7; margin-bottom: 5px; font-size: 1.5rem; }
+        p.subtitle { text-align: center; color: #475569; margin-bottom: 15px; font-size: 0.85rem; }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 15px;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        label { font-weight: bold; font-size: 0.8rem; color: #334155; display: block; margin-top: 6px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 3px;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .dim-inputs { display: flex; gap: 10px; }
+
+        .controls { display: flex; gap: 8px; margin-top: 10px; }
+
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+        button:hover { background-color: #0369a1; }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        .grid-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .matrix-grid, .vector-grid { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+
+        .cell {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: var(--cell-default);
+            color: #334155;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cell-compare { background-color: var(--cell-compare); border-color: #ca8a04; color: #854d0e; }
+        .cell-swap { background-color: var(--cell-swap); border-color: #dc2626; color: #991b1b; }
+        .cell-sorted { background-color: var(--cell-sorted); border-color: #16a34a; color: #14532d; }
+        .cell-first { background-color: var(--cell-first); border-color: #2563eb; color: #1e3a8a; }
+
+        .stats-card {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+
+        .stats-card div { margin-bottom: 4px; }
+        .stats-val { font-weight: bold; color: #0284c7; }
+
+        .console {
+            background-color: #0f172a;
+            color: #38adf8;
+            font-family: 'Consolas', monospace;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            min-height: 90px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<h1>N x M Mátrix Vektorrá Átalakítása &amp; Rendezés Szimuláció</h1>
+<p class="subtitle">Műveletszámlálás, leggyorsabban helyére kerülő elem és $O(b)$ komplexitás elemzés</p>
+
+<div class="main-layout">
+    
+    <!-- BAL PANEL: BEÁLLÍTÁSOK -->
+    <div class="panel">
+        <h3 style="margin-top:0; color: #0284c7;">Beállítások</h3>
+        
+        <div class="dim-inputs">
+            <div>
+                <label for="rows">Sorok (N):</label>
+                <input type="number" id="rows" min="1" max="6" value="2" onchange="generateNewMatrix()">
+            </div>
+            <div>
+                <label for="cols">Oszlopok (M):</label>
+                <input type="number" id="cols" min="1" max="6" value="4" onchange="generateNewMatrix()">
+            </div>
+        </div>
+
+        <label for="algoSelect">Rendezési Algoritmus:</label>
+        <select id="algoSelect" onchange="resetSim()">
+            <option value="bubble">Buborékrendezés (Bubble Sort)</option>
+            <option value="selection">Kijelöléses rendezés (Selection Sort)</option>
+            <option value="insertion">Beszúrásos rendezés (Insertion Sort)</option>
+        </select>
+
+        <label for="customValues">Mátrix elemei (vesszővel):</label>
+        <textarea id="customValues" rows="2">45, 12, 89, 3, 27, 64, 15, 9</textarea>
+        <button onclick="applyCustomValues()" style="margin-top:4px; background-color: #475569;">Saját elemek alkalmazása</button>
+        <button onclick="generateNewMatrix()" style="margin-top:4px; background-color: #059669;">Véletlen adatok</button>
+
+        <div class="controls">
+            <button id="playBtn" onclick="togglePlay()" style="background-color: rgb(2, 132, 199);">Start ▶</button>
+            <button id="stepBtn" onclick="step()">Lépés ➔</button>
+            <button onclick="resetSim()" style="background-color: #64748b;">Újra</button>
+        </div>
+
+        <!-- STATISZTIKÁK -->
+        <div class="stats-card">
+            <div>Összehasonlítások száma: <span id="compCount" class="stats-val">0</span></div>
+            <div>Cserék / Mozgatások: <span id="swapCount" class="stats-val">0</span></div>
+            <div>Leggyorsabban helyére kerülő elem: <span id="firstSorted" class="stats-val">-</span></div>
+            <div>Elméleti max összehasonlítás ($N \cdot M$): <span id="theoreticalComp" class="stats-val">~28 lépés</span></div>
+        </div>
+    </div>
+
+    <!-- JOBB PANEL: VIZUALIZÁCIÓ -->
+    <div class="panel grid-container">
+        <div>
+            <h4 style="margin:0 0 5px 0; text-align:center; color:#64748b;">1. Eredeti Téglalap Mátrix (N x M)</h4>
+            <div id="matrixDisplay" class="matrix-grid" style="display: grid; grid-template-columns: repeat(4, 42px);"><div id="m-0-0" class="cell">87</div><div id="m-0-1" class="cell">88</div><div id="m-0-2" class="cell">78</div><div id="m-0-3" class="cell">14</div><div id="m-1-0" class="cell">57</div><div id="m-1-1" class="cell">72</div><div id="m-1-2" class="cell">87</div><div id="m-1-3" class="cell">36</div></div>
+        </div>
+
+        <div style="font-size: 1.2rem; color: #0284c7; font-weight: bold;">➔ Mátrix sorfolytonos átmásolása Vektorba ➔</div>
+
+        <div>
+            <h4 style="margin:0 0 5px 0; text-align:center; color:#64748b;">2. Vektor (1D, Méret: N * M)</h4>
+            <div id="vectorDisplay" class="vector-grid"><div id="v-0" class="cell">?</div><div id="v-1" class="cell">?</div><div id="v-2" class="cell">?</div><div id="v-3" class="cell">?</div><div id="v-4" class="cell">?</div><div id="v-5" class="cell">?</div><div id="v-6" class="cell">?</div><div id="v-7" class="cell">?</div></div>
+        </div>
+
+        <div id="logBox" class="console">&gt; Újraindítva. Kattints a 'Lépés' gombra a másoláshoz!</div>
+    </div>
+
+</div>
+
+<script>
+    let N = 2, M = 4;
+    let matrixData = [];
+    let vec = [];
+    let state = 'INIT';
+    let copyIdx = 0;
+    
+    // Számlálók
+    let comparisons = 0;
+    let swaps = 0;
+    let firstSortedElem = null;
+
+    // Algoritmus belső mutatói
+    let i = 0, j = 0, minIdx = 0;
+    let keyVal = 0, insJ = 0;
+    let timer = null;
+    let isPlaying = false;
+
+    function log(msg) { document.getElementById('logBox').innerHTML = `> ${msg}`; }
+
+    function updateStats() {
+        document.getElementById('compCount').innerText = comparisons;
+        document.getElementById('swapCount').innerText = swaps;
+        document.getElementById('firstSorted').innerText = firstSortedElem !== null ? firstSortedElem : '-';
+        let K = N * M;
+        document.getElementById('theoreticalComp').innerText = `~${Math.round((K * (K - 1)) / 2)} lépés`;
+    }
+
+    function generateNewMatrix() {
+        N = parseInt(document.getElementById('rows').value);
+        M = parseInt(document.getElementById('cols').value);
+        matrixData = [];
+        let vals = [];
+        for (let r = 0; r < N; r++) {
+            let row = [];
+            for (let c = 0; c < M; c++) {
+                let val = Math.floor(Math.random() * 90) + 10;
+                row.push(val);
+                vals.push(val);
+            }
+            matrixData.push(row);
+        }
+        document.getElementById('customValues').value = vals.join(', ');
+        resetSim();
+    }
+
+    function applyCustomValues() {
+        N = parseInt(document.getElementById('rows').value);
+        M = parseInt(document.getElementById('cols').value);
+        let raw = document.getElementById('customValues').value.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+        if (raw.length < N * M) {
+            alert(`Kérlek adj meg legalább ${N * M} darab számot!`);
+            return;
+        }
+        matrixData = [];
+        let idx = 0;
+        for (let r = 0; r < N; r++) {
+            let row = [];
+            for (let c = 0; c < M; c++) {
+                row.push(raw[idx++]);
+            }
+            matrixData.push(row);
+        }
+        resetSim();
+    }
+
+    function renderGrids() {
+        const mDisp = document.getElementById('matrixDisplay');
+        mDisp.style.display = 'grid';
+        mDisp.style.gridTemplateColumns = `repeat(${M}, 42px)`;
+        mDisp.innerHTML = '';
+
+        for (let r = 0; r < N; r++) {
+            for (let c = 0; c < M; c++) {
+                let cell = document.createElement('div');
+                cell.id = `m-${r}-${c}`;
+                cell.className = 'cell';
+                cell.innerText = matrixData[r][c];
+                mDisp.appendChild(cell);
+            }
+        }
+
+        const vDisp = document.getElementById('vectorDisplay');
+        vDisp.innerHTML = '';
+        for (let k = 0; k < N * M; k++) {
+            let cell = document.createElement('div');
+            cell.id = `v-${k}`;
+            cell.className = 'cell';
+            cell.innerText = (k < vec.length) ? vec[k] : '?';
+            vDisp.appendChild(cell);
+        }
+    }
+
+    function resetSim() {
+        stopPlay();
+        vec = [];
+        state = 'INIT';
+        copyIdx = 0;
+        comparisons = 0;
+        swaps = 0;
+        firstSortedElem = null;
+        i = 0; j = 0; minIdx = 0; keyVal = 0; insJ = 0;
+        document.getElementById('stepBtn').disabled = false;
+        document.getElementById('playBtn').disabled = false;
+        updateStats();
+        log("Újraindítva. Kattints a 'Lépés' gombra a másoláshoz!");
+        renderGrids();
+    }
+
+    function step() {
+        let algo = document.getElementById('algoSelect').value;
+        let total = N * M;
+
+        // 1. ÁTMÁSOLÁSI FÁZIS (MÁTRIX 2D -> VEKTOR 1D)
+        if (state === 'INIT' || state === 'COPYING') {
+            state = 'COPYING';
+            if (copyIdx < total) {
+                let r = Math.floor(copyIdx / M);
+                let c = copyIdx % M;
+                let val = matrixData[r][c];
+                vec.push(val);
+
+                document.querySelectorAll('.cell').forEach(el => el.classList.remove('cell-compare'));
+                document.getElementById(`m-${r}-${c}`).className = 'cell cell-compare';
+                
+                renderGrids();
+                document.getElementById(`v-${copyIdx}`).className = 'cell cell-compare';
+                
+                log(`<b>Másolás:</b> Mátrix [${r}][${c}] = <b>${val}</b> ➔ Vektor index: <b>${copyIdx}</b>`);
+                copyIdx++;
+            } else {
+                state = 'SORTING';
+                i = 0; j = 0; minIdx = 0;
+                document.querySelectorAll('.cell').forEach(el => el.className = 'cell');
+                log(`<b>Átmásolás Kész!</b> Kezdődik a rendezés: <b>${algo.toUpperCase()}</b>`);
+            }
+            return;
+        }
+
+        // 2. RENDEZÉSI FÁZIS
+        if (state === 'SORTING') {
+            document.querySelectorAll('#vectorDisplay .cell').forEach(el => {
+                if (!el.classList.contains('cell-sorted') && !el.classList.contains('cell-first')) {
+                    el.className = 'cell';
+                }
+            });
+
+            // A) BUBORÉKRENDEZÉS
+            if (algo === 'bubble') {
+                if (i < total - 1) {
+                    let v1 = document.getElementById(`v-${j}`);
+                    let v2 = document.getElementById(`v-${j+1}`);
+                    comparisons++;
+
+                    if (vec[j] > vec[j+1]) {
+                        swaps++;
+                        let tmp = vec[j]; vec[j] = vec[j+1]; vec[j+1] = tmp;
+                        v1.className = 'cell cell-swap';
+                        v2.className = 'cell cell-swap';
+                        log(`[Buborék] <b>Összehasonlítva:</b> vec[${j}] (${tmp}) ↔ vec[${j+1}] (${vec[j]}) ➔ <b>CSERE!</b>`);
+                    } else {
+                        v1.className = 'cell cell-compare';
+                        v2.className = 'cell cell-compare';
+                        log(`[Buborék] <b>Összehasonlítva:</b> vec[${j}] (${vec[j]}) ↔ vec[${j+1}] (${vec[j+1]}) ➔ Helyes sorrend.`);
+                    }
+
+                    v1.innerText = vec[j];
+                    v2.innerText = vec[j+1];
+
+                    j++;
+                    if (j >= total - i - 1) {
+                        let sortedPos = total - i - 1;
+                        if (firstSortedElem === null) {
+                            firstSortedElem = `vec[${sortedPos}] = ${vec[sortedPos]} (a vektor LEGVÉGÉN)`;
+                        }
+                        document.getElementById(`v-${sortedPos}`).className = 'cell cell-sorted';
+                        j = 0; i++;
+                    }
+                } else {
+                    finishSort();
+                }
+            } 
+            // B) KIJELÖLÉSES RENDEZÉS
+            else if (algo === 'selection') {
+                if (i < total - 1) {
+                    if (j === 0 || j <= i) j = i + 1;
+
+                    comparisons++;
+                    let current = document.getElementById(`v-${j}`);
+                    let currentMin = document.getElementById(`v-${minIdx}`);
+                    
+                    current.className = 'cell cell-compare';
+                    currentMin.className = 'cell cell-swap';
+
+                    log(`[Kijelölés] <b>Összehasonlítva:</b> vizsgált elem: vec[${j}] (${vec[j]}) ↔ jelenlegi min: vec[${minIdx}] (${vec[minIdx]})`);
+
+                    if (vec[j] < vec[minIdx]) {
+                        minIdx = j;
+                    }
+
+                    j++;
+                    if (j >= total) {
+                        if (minIdx !== i) {
+                            swaps++;
+                            let tmp = vec[i]; vec[i] = vec[minIdx]; vec[minIdx] = tmp;
+                            log(`[Kijelölés] ➔ Minimum behelyezése az <b>i=${i}</b> pozícióba (Csere: ${tmp} ↔ ${vec[i]})`);
+                        }
+                        renderGrids();
+                        
+                        if (firstSortedElem === null) {
+                            firstSortedElem = `vec[0] = ${vec[0]} (a vektor ELEJÉN)`;
+                        }
+                        document.getElementById(`v-${i}`).className = 'cell cell-sorted';
+                        
+                        i++; j = i + 1; minIdx = i;
+                    }
+                } else {
+                    finishSort();
+                }
+            }
+            // C) BESZÚRÁSOS RENDEZÉS
+            else if (algo === 'insertion') {
+                if (i < total) {
+                    keyVal = vec[i];
+                    let k = i - 1;
+                    let localComp = 0;
+
+                    while (k >= 0 && vec[k] > keyVal) {
+                        comparisons++;
+                        swaps++;
+                        localComp++;
+                        vec[k + 1] = vec[k];
+                        k--;
+                    }
+                    if (k >= 0) comparisons++; // Utolsó sikertelen feltételvizsgálat
+                    
+                    vec[k + 1] = keyVal;
+                    renderGrids();
+
+                    for (let s = 0; s <= i; s++) {
+                        document.getElementById(`v-${s}`).className = 'cell cell-sorted';
+                    }
+                    
+                    if (firstSortedElem === null && i === 1) {
+                        firstSortedElem = `vec[0] és vec[1] már egymáshoz képest rendezett!`;
+                    }
+
+                    log(`[Beszúrás] Elem: <b>${keyVal}</b> beillesztve a(z) <b>${k + 1}</b> helyre (${localComp} léptetés után).`);
+                    i++;
+                } else {
+                    finishSort();
+                }
+            }
+            updateStats();
+        }
+    }
+
+    function finishSort() {
+        state = 'DONE';
+        document.querySelectorAll('#vectorDisplay .cell').forEach(el => el.className = 'cell cell-sorted');
+        log("<b>A teljes vektor rendezése befejeződött!</b>");
+        stopPlay();
+        document.getElementById('stepBtn').disabled = true;
+        document.getElementById('playBtn').disabled = true;
+    }
+
+    function togglePlay() {
+        if (isPlaying) {
+            stopPlay();
+            log("<b>SZÜNETELTETVE:</b> Az algoritmus leállítva a lépések elemzéséhez.");
+        } else {
+            isPlaying = true;
+            document.getElementById('playBtn').innerText = "Szünet ❚❚";
+            document.getElementById('playBtn').style.backgroundColor = "#d97706";
+            timer = setInterval(step, 400);
+        }
+    }
+
+    function stopPlay() {
+        isPlaying = false;
+        clearInterval(timer);
+        document.getElementById('playBtn').innerText = "Start ▶";
+        document.getElementById('playBtn').style.backgroundColor = "#0284c7";
+    }
+
+    generateNewMatrix();
+</script>
+
+
+</body></html>
