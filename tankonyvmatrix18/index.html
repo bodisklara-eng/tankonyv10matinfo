@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<!-- saved from url=(0113)file:///D:/tankonyv/Teljes%20M%C3%A1trixgeometria%20%C3%A9s%20J%C3%A1t%C3%A9kelm%C3%A9let%20-%20Mesterkurzus.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teljes Mátrixgeometria és Játékelmélet - Mesterkurzus</title>
+
+    <!-- html2pdf.js könyvtár az A4 PDF mentéshez -->
+    <script src="./index_files/html2pdf.bundle.min.js.descărcare"></script>
+
+    <style>
+        /* --- A4 NYOMTATÁSI BEÁLLÍTÁSOK --- */
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        :root {
+            --primary-color: #00695c;
+            --secondary-color: #00897b;
+            --accent-color: #8e24aa;
+            --bg-page: #f4fbfb;
+            --card-bg: #ffffff;
+            --text-color: #212121;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            background-color: #37474f;
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nyomtatható A4 lap konténer */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin-bottom: 25px;
+            background: var(--bg-page);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* Fejléc és Lábléc */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11pt;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 6px;
+            margin-bottom: 15px;
+        }
+
+        .page-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #666;
+            border-top: 2px solid #b2dfdb;
+            padding-top: 8px;
+        }
+
+        /* NAGY ÉS TISZTA BETŰMÉRETEK A KÉP ALAPJÁN */
+        h1 { 
+            color: var(--primary-color); 
+            font-size: 21pt; 
+            margin-top: 0; 
+            margin-bottom: 12px; 
+            text-align: center;
+        }
+        
+        h2 { 
+            color: #004d40; 
+            font-size: 14.5pt; 
+            margin-top: 15px; 
+            margin-bottom: 8px; 
+            border-left: 5px solid var(--primary-color); 
+            padding-left: 10px; 
+        }
+
+        p, li { 
+            font-size: 11.5pt; 
+            line-height: 1.5; 
+            margin-top: 4px; 
+            margin-bottom: 8px; 
+        }
+
+        /* Navigációs Gombok / Linkek */
+        .link-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+            justify-content: center;
+        }
+
+        .nav-link-btn {
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 10.5pt;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: background-color 0.2s;
+        }
+
+        .nav-link-btn:hover {
+            background-color: #004d40;
+        }
+
+        /* Színes Dobozok */
+        .box-info {
+            background-color: #ffffff;
+            border: 2px solid #80cbc4;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 11pt;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+        }
+
+        .box-question {
+            background-color: #f3e5f5;
+            border-left: 6px solid var(--accent-color);
+            padding: 10px 14px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 11pt;
+        }
+
+        /* OLVASHATÓ HTML/CSS KÉPLETI MEGJELENÍTÉS (LATEX NÉLKÜL) */
+        .math-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 13pt;
+            font-weight: bold;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #b2dfdb;
+            margin: 10px 0;
+        }
+
+        .matrix-bracket {
+            display: inline-flex;
+            align-items: center;
+            border-left: 3px solid #333;
+            border-right: 3px solid #333;
+            border-radius: 8px;
+            padding: 2px 8px;
+            margin: 0 4px;
+        }
+
+        .matrix-table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .matrix-table td {
+            padding: 4px 10px;
+            font-size: 12.5pt;
+        }
+
+        /* INTERAKTÍV KÉRDÉS ELEM */
+        details {
+            background: #e8f5e9;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin: 10px 0;
+            font-size: 11pt;
+        }
+
+        summary {
+            font-weight: bold;
+            color: #2e7d32;
+            cursor: pointer;
+            font-size: 11.5pt;
+        }
+
+        /* KÓDBLOKK STÍLUS */
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9.5pt;
+            line-height: 1.4;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        /* Letöltés Gomb */
+        .btn-top {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background-color: #e65100;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            font-size: 11pt;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-top:hover { background-color: #bf360c; }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .btn-top { display: none; }
+            .a4-page { box-shadow: none; margin: 0; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-top" onclick="downloadPDF()">📄 Teljes Tananyag Mentése PDF-ként</button>
+
+    <!-- ==================== 1. OLDAL ==================== -->
+    <div class="a4-page" id="page1">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA</span>
+            <span>1. FEJEZET</span>
+        </div>
+
+        <h1>1. Az Interaktív Mátrix Rács és Transzformációk</h1>
+
+        <!-- NAVIGÁCIÓS LINKEK -->
+        <div class="link-container">
+            <a href="file:///C:/Users/Utilizator/Downloads/gemini-code-1789836481608.html#puzzle-section" class="nav-link-btn">🧩 Mátrix Puzzle Kódja</a>
+            <a href="https://example.com/meseerdo" target="_blank" class="nav-link-btn" style="background-color: #2e7d32;">🌲 Meseerdő Modul</a>
+            <a href="https://example.com/repas" target="_blank" class="nav-link-btn" style="background-color: #ef6c00;">🥕 Répás Kert Modul</a>
+        </div>
+
+        <div class="box-info">
+            <strong>Kattints egy formára és húzd a mátrix rácsba!</strong><br>
+            A számítógépes játékokban a háttérben egy <strong>10x10-es mátrix</strong> tárolja a rács állapotát. Minden cella egy értéket képvisel (0: üres, 1: foglalt).
+        </div>
+
+        <h2>1.1 Mátrixtranszformációk Vizuális Megjelenítése</h2>
+        <p>A formák forgatását és eltolását nem bonyolult jelekkel, hanem jól olvasható sor-oszlop szorzással számoljuk ki:</p>
+
+        <!-- OLVASHATÓ HTML MÁTRIX KÉPLET -->
+        <div class="math-display">
+            <span>Új koordináta = </span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>a</td><td>b</td></tr>
+                    <tr><td>c</td><td>d</td></tr>
+                </tbody></table>
+            </div>
+            <span>×</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>X</td></tr>
+                    <tr><td>Y</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>(a × X) + (b × Y)</td></tr>
+                    <tr><td>(c × X) + (d × Y)</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <h2>1.2 Alakzat Elforgatása 90° -kal</h2>
+        <p>Ha a puzzle formát elforgatjuk, a koordinátákat az alábbi mátrixszal szorozzuk meg:</p>
+
+        <div class="math-display">
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>0</td><td>-1</td></tr>
+                    <tr><td>1</td><td>0</td></tr>
+                </tbody></table>
+            </div>
+            <span>×</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>X</td></tr>
+                    <tr><td>Y</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>-Y</td></tr>
+                    <tr><td>X</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <details>
+            <summary>❓ Gondolkodtató Kérdés: Duplázó Skálázás</summary>
+            <p><strong>Kérdés:</strong> Mi történik, ha a transzformációs mátrix átlójába 2-es számokat írunk?</p>
+            <p><strong>Válasz:</strong> Minden koordináta a kétszeresére nő, így az alakzat területe a <strong>négyszeresére</strong> változik!</p>
+        </details>
+
+        <h2 id="puzzle-section">1.3 10x10-es Rács Kezelése Pythonban</h2>
+        <div class="code-block">
+# 10x10-es Mátrix rács inicializálása nullákkal (Üres rács)
+racs = [[0 for x in range(10)] for y in range(10)]
+
+# Egy 2x2-es elem elhelyezése a bal felső sarokban (Foglalt = 1)
+racs[0][0] = 1; racs[0][1] = 1
+racs[1][0] = 1; racs[1][1] = 1
+
+print("Első sor állapota:", racs[0])
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria Tankönyv</span>
+            <span>1. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 2. OLDAL ==================== -->
+    <div class="a4-page" id="page2">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA</span>
+            <span>2. FEJEZET</span>
+        </div>
+
+        <h1>2. Ritka Mátrixok (CSR) a Játékfejlesztésben</h1>
+
+        <div class="box-info">
+            <strong>Mi az a Ritka Mátrix (Sparse Matrix)?</strong><br>
+            Amikor a 10x10-es Puzzle-ban, vagy a Meseerdő és Répás kert óriási pályáin játszol, a mezők többsége üres. Az olyan mátrixot, ahol a cellák túlnyomó része 0, <strong>ritka mátrixnak</strong> nevezzük.
+        </div>
+
+        <h2>2.1 Memóriapazarlás Hagyományos Tárolásnál</h2>
+        <p>Egy $1000 \times 1000$-es játéktér 1 000 000 mezőt tartalmaz. Ha ezen csak 5 elem (pl. fa vagy répa) található, a többi 999 995 nulla feleslegesen terheli a számítógép memóriáját.</p>
+
+        <div class="math-display">
+            <span>Sűrű Mátrix = </span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>5</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>0</td><td>8</td><td>0</td></tr>
+                    <tr><td>0</td><td>3</td><td>0</td><td>6</td></tr>
+                    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <h2>2.2 A CSR (Compressed Sparse Row) Megoldás</h2>
+        <p>A CSR módszer mindössze 3 tömb segítségével tárolja el a teljes játékrácsot:</p>
+        <ul>
+            <li><strong>Data (értékek):</strong> [5, 8, 3, 6] – Kizárólag a nem-nulla elemek.</li>
+            <li><strong>Indices (oszlopok):</strong> [0, 2, 1, 3] – Az elemek oszlopindexei.</li>
+            <li><strong>Indptr (sor-mutatók):</strong> [0, 1, 2, 4, 4] – A sorok kezdőpozíciói.</li>
+        </ul>
+
+        <h2>2.3 Python CSR Implementáció</h2>
+        <div class="code-block">
+import numpy as np
+from scipy.sparse import csr_matrix
+
+# Sűrű játékrács létrehozása
+jatekracs = np.array([
+    [5, 0, 0, 0],
+    [0, 0, 8, 0],
+    [0, 3, 0, 6],
+    [0, 0, 0, 0]
+])
+
+# Átalakítás memóriatakarékos CSR mátrixszá
+ritka_racs = csr_matrix(jatekracs)
+print("Eltárolt értékek (data):", ritka_racs.data)
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria Tankönyv</span>
+            <span>2. Oldal</span>
+        </div>
+    </div>
+
+    <!-- ==================== 3. OLDAL ==================== -->
+    <div class="a4-page" id="page3">
+        <div class="page-header">
+            <span>INFORMATIKAI MÁTRIXGEOMETRIA</span>
+            <span>3. FEJEZET</span>
+        </div>
+
+        <h1>3. Diákoknak Szóló Gyakorló Feladatok</h1>
+
+        <div class="box-question">
+            <strong>Gyakorlás a Meseerdő és Répás Kert Modulokhoz:</strong><br>
+            Oldd meg az alábbi feladatokat a kapott mátrixtranszformációs ismeretek alapján!
+        </div>
+
+        <h2>3.1 Feladatsor</h2>
+        <ol style="font-size: 11.5pt; line-height: 1.7;">
+            <li>
+                <strong>Meseerdő Koordináták:</strong> Egy $10 \times 10$-es rácson 3 fa található. Melyik tömbben tárolja a CSR algoritmus a fák oszlop-pozícióit?
+            </li>
+            <li>
+                <strong>Répás Kert Transzformáció:</strong> Számítsd ki a nyúl új pozícióját, ha a (2, 5) pontból a duplázó transzformációval léptetjük tovább:
+            </li>
+        </ol>
+
+        <!-- KISZÁMOLANDÓ KÉPLET -->
+        <div class="math-display">
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>2</td><td>0</td></tr>
+                    <tr><td>0</td><td>2</td></tr>
+                </tbody></table>
+            </div>
+            <span>×</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>2</td></tr>
+                    <tr><td>5</td></tr>
+                </tbody></table>
+            </div>
+            <span>=</span>
+            <div class="matrix-bracket">
+                <table class="matrix-table">
+                    <tbody><tr><td>?</td></tr>
+                    <tr><td>?</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <details>
+            <summary>✔️ Megoldás ellenőrzése</summary>
+            <p><strong>Eredmény:</strong> X = (2 × 2) + (0 × 5) = <strong>4</strong>, Y = (0 × 2) + (2 × 5) = <strong>10</strong>. Az új koordináta: (4, 10).</p>
+        </details>
+
+        <h2>3.2 Kapcsolódó Feladatsorok Elérése</h2>
+        <p>Kattints az alábbi gombokra a külső gyakorlófelületek megnyitásához:</p>
+
+        <div class="link-container" style="margin-top: 20px;">
+            <a href="https://example.com/meseerdo" target="_blank" class="nav-link-btn" style="background-color: #2e7d32; font-size: 12pt; padding: 10px 20px;">🌲 Megnyitás: Meseerdő Feladatok</a>
+            <a href="https://example.com/repas" target="_blank" class="nav-link-btn" style="background-color: #ef6c00; font-size: 12pt; padding: 10px 20px;">🥕 Megnyitás: Répás Kert Feladatok</a>
+        </div>
+
+        <div class="page-footer">
+            <span>Informatikai Mátrixgeometria Tankönyv</span>
+            <span>3. Oldal</span>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const btn = document.querySelector('.btn-top');
+            btn.style.display = 'none';
+
+            const element = document.body;
+            const opt = {
+                margin:       0,
+                filename:     'Teljes_Matrixgeometria_Tananyag.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.style.display = 'block';
+            });
+        }
+    </script>
+
+</body></html>
