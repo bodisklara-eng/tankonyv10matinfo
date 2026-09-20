@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<!-- saved from url=(0102)file:///D:/tankonyv/Var%C3%A1zslatos%20Meseerd%C5%91%20&%20M%C3%A1trix%20Transzform%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varázslatos Meseerdő &amp; Mátrix Transzformáció</title>
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow: hidden;
+            background-color: #0d131a;
+            color: #e2e8f0;
+        }
+
+        .title-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Custom Soft Pencil Texture background look */
+        .paper-bg {
+            background: radial-gradient(circle at center, #232c33 0%, #11171d 100%);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Custom scrollbar for matrix viewer */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(217, 119, 6, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(245, 158, 11, 0.8);
+        }
+
+        .matrix-cell {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .matrix-cell.highlighted {
+            background-color: rgba(245, 158, 11, 0.35);
+            color: #fbbf24;
+            border-color: #f59e0b;
+            transform: scale(1.1);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+            z-index: 10;
+        }
+        .matrix-cell.active-animal {
+            background-color: rgba(16, 185, 129, 0.35);
+            color: #34d399;
+            border-color: #10b981;
+        }
+
+        /* Floating magic glowing dot pulse */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.25); }
+        }
+        .glow-effect {
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        /* Pencil Cursor Custom Style */
+        #pencil-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transform: translate(-10px, -90px) rotate(-15deg);
+            transition: transform 0.05s linear;
+            filter: drop-shadow(4px 10px 8px rgba(0,0,0,0.5));
+        }
+
+        .pencil-drawing {
+            animation: pencilScribble 0.2s ease infinite alternate;
+        }
+
+        @keyframes pencilScribble {
+            0% { transform: translate(-10px, -90px) rotate(-15deg); }
+            100% { transform: translate(-8px, -92px) rotate(-12deg); }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-4{bottom:1rem}.left-1\/2{left:50%}.z-10{z-index:10}.z-20{z-index:20}.my-2{margin-top:0.5rem;margin-bottom:0.5rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.ml-1{margin-left:0.25rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.h-2{height:0.5rem}.h-4{height:1rem}.h-full{height:100%}.h-screen{height:100vh}.w-2{width:0.5rem}.w-4{width:1rem}.w-full{width:100%}.w-screen{width:100vw}.min-w-\[280px\]{min-width:280px}.flex-1{flex:1 1 0%}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}.cursor-none{cursor:none}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/20{border-color:rgb(245 158 11 / 0.2)}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}.border-slate-700\/60{border-color:rgb(51 65 85 / 0.6)}.border-slate-700\/70{border-color:rgb(51 65 85 / 0.7)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-500\/10{background-color:rgb(245 158 11 / 0.1)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/60{background-color:rgb(30 41 59 / 0.6)}.bg-slate-900\/70{background-color:rgb(15 23 42 / 0.7)}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/40{background-color:rgb(2 6 23 / 0.4)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-200{--tw-gradient-from:#fde68a var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 230 138 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-400{--tw-gradient-to:rgb(251 191 36 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fbbf24 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-100{--tw-gradient-to:#fef3c7 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-1\.5{padding:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-3{padding-bottom:0.75rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[9px\]{font-size:9px}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-amber-500\/50:hover{border-color:rgb(245 158 11 / 0.5)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}@media (min-width: 768px){.md\:w-96{width:24rem}.md\:flex-row{flex-direction:row}.md\:border-l{border-left-width:1px}.md\:border-t-0{border-top-width:0px}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-4{bottom:1rem}.left-1\/2{left:50%}.z-10{z-index:10}.z-20{z-index:20}.my-2{margin-top:0.5rem;margin-bottom:0.5rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.ml-1{margin-left:0.25rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.h-2{height:0.5rem}.h-4{height:1rem}.h-full{height:100%}.h-screen{height:100vh}.w-2{width:0.5rem}.w-4{width:1rem}.w-full{width:100%}.w-screen{width:100vw}.min-w-\[280px\]{min-width:280px}.flex-1{flex:1 1 0%}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}.cursor-none{cursor:none}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/20{border-color:rgb(245 158 11 / 0.2)}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}.border-slate-700\/60{border-color:rgb(51 65 85 / 0.6)}.border-slate-700\/70{border-color:rgb(51 65 85 / 0.7)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-500\/10{background-color:rgb(245 158 11 / 0.1)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/60{background-color:rgb(30 41 59 / 0.6)}.bg-slate-900\/70{background-color:rgb(15 23 42 / 0.7)}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/40{background-color:rgb(2 6 23 / 0.4)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-200{--tw-gradient-from:#fde68a var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 230 138 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-400{--tw-gradient-to:rgb(251 191 36 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fbbf24 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-100{--tw-gradient-to:#fef3c7 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1\.5{padding:0.375rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-3{padding-bottom:0.75rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-amber-500\/50:hover{border-color:rgb(245 158 11 / 0.5)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}@media (min-width: 768px){.md\:w-96{width:24rem}.md\:flex-row{flex-direction:row}.md\:border-l{border-left-width:1px}.md\:border-t-0{border-top-width:0px}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}</style></head>
+<body class="h-screen w-screen flex flex-col md:flex-row paper-bg overflow-hidden select-none">
+
+    <!-- Custom Pencil Floating Graphic -->
+    <div id="pencil-cursor" class="" style="transform: translate(364px, 259px) rotate(-15deg);">
+        <svg width="70" height="100" viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pencil Body -->
+            <path d="M25 10 L45 10 L45 65 L25 65 Z" fill="#EAB308" stroke="#713F12" stroke-width="2"></path>
+            <path d="M25 10 L31 10 L31 65 L25 65 Z" fill="#FDE047" opacity="0.6"></path>
+            <!-- Pencil Tip Wood -->
+            <path d="M25 65 L45 65 L35 88 Z" fill="#FDBA74" stroke="#713F12" stroke-width="2"></path>
+            <!-- Graphite Tip -->
+            <path d="M32 81 L38 81 L35 88 Z" fill="#27272A"></path>
+            <!-- Eraser & Metal Ring -->
+            <path d="M25 2 L45 2 L45 10 L25 10 Z" fill="#F43F5E"></path>
+            <path d="M24 7 L46 7 L46 10 L24 10 Z" fill="#94A3B8"></path>
+        </svg>
+    </div>
+
+    <!-- Left / Top Interactive Meseerdő Canvas Area -->
+    <div class="relative flex-1 h-full w-full flex flex-col justify-between p-4 overflow-hidden">
+        
+        <!-- Top Overlay Header -->
+        <div class="z-10 flex justify-between items-center bg-slate-900/70 backdrop-blur-md px-5 py-3 rounded-2xl border border-slate-700/60 shadow-xl">
+            <div>
+                <h1 class="title-font text-xl md:text-2xl font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 bg-clip-text text-transparent">
+                    ✨ Varázslatos Meseerdő
+                </h1>
+                <p class="text-xs text-slate-400">Érintsd meg a fekete/ragyogó ceruzapontokat az állatok felébresztéséhez!</p>
+            </div>
+            
+            <div class="flex gap-2">
+                <button id="btn-reset" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition flex items-center gap-1">
+                    🔄 Erdő Visszaállítása
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Interactive Sketch Canvas -->
+        <div class="relative flex-1 my-2 rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl bg-slate-950/40">
+            <canvas id="forestCanvas" class="absolute inset-0 w-full h-full cursor-none" width="1112" height="567"></canvas>
+            
+            <!-- Canvas Interaction Prompt overlay -->
+            <div id="instruction-badge" class="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none bg-slate-900/80 backdrop-blur px-4 py-2 rounded-full border border-amber-500/30 text-xs text-amber-200 shadow-lg flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                Vidd a ceruzát a pontok fölé &amp; kattints az átalakításhoz!
+            </div>
+        </div>
+
+        <!-- Dynamic Label Bar -->
+        <div class="z-10 bg-slate-900/80 backdrop-blur-md p-3 rounded-xl border border-slate-700/60 flex flex-wrap justify-between items-center gap-3 text-xs md:text-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-slate-400">Aktuális Mátrix:</span>
+                <span id="lbl-matrix-name" class="font-mono font-bold text-amber-400 bg-slate-800 px-2 py-0.5 rounded border border-amber-500/20">M_forest[6x6]</span>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div>
+                    <span class="text-slate-400">Sor Index (i):</span>
+                    <span id="lbl-row-idx" class="font-mono font-bold text-emerald-400 ml-1">4</span>
+                </div>
+                <div>
+                    <span class="text-slate-400">Oszlop Index (j):</span>
+                    <span id="lbl-col-idx" class="font-mono font-bold text-cyan-400 ml-1">4</span>
+                </div>
+                <div>
+                    <span class="text-slate-400">Kiválasztott Lény:</span>
+                    <span id="lbl-creature" class="font-semibold text-amber-300 ml-1">Készen áll az átalakulásra ✨</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar: Interactive Real-time Matrix Viewer -->
+    <div class="w-full md:w-96 bg-slate-900/90 backdrop-blur-lg border-t md:border-t-0 md:border-l border-slate-700/70 p-4 flex flex-col justify-between shadow-2xl z-20">
+        <div>
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800 mb-4">
+                <h2 class="title-font text-lg font-bold text-amber-300 flex items-center gap-2">
+                    📊 Erdő Koordináta Mátrix
+                </h2>
+                <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Élő adatok</span>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                A meseerdő fái közötti ceruzapontok pozícióit az alábbi <b>M_forest</b> mátrix tárolja. Érintsd meg a ceruzával a vászon pontjait a megfelelő sor/oszlop elem villogásához!
+            </p>
+
+            <!-- Matrix Display Grid Container -->
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 shadow-inner overflow-x-auto">
+                <div id="matrix-grid-container" class="grid gap-1.5 min-w-[280px]" style="grid-template-columns: repeat(6, minmax(0px, 1fr));"><div id="matrix-cell-0-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-0-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-0-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🐻</span>
+                </div><div id="matrix-cell-0-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-0-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-0-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(0,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-1-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-1-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🦉</span>
+                </div><div id="matrix-cell-1-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-1-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🦔</span>
+                </div><div id="matrix-cell-1-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-1-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(1,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-2-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(2,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-3-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-3-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🦉</span>
+                </div><div id="matrix-cell-3-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-3-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-3-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-3-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(3,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-4-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-4-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-4-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🐻</span>
+                </div><div id="matrix-cell-4-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 active-animal">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">🦔</span>
+                </div><div id="matrix-cell-4-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50 highlighted">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-4-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(4,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-0" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,0)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-1" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,1)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-2" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,2)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-3" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,3)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-4" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,4)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div><div id="matrix-cell-5-5" class="matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50">
+                    <span class="text-[9px] text-slate-500 font-mono">(5,5)</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">•</span>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- Selected Element Details Box -->
+        <div class="mt-4 p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs">
+            <h3 class="font-semibold text-slate-300 mb-2 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Mátrix Cella Részletek
+            </h3>
+            <div id="matrix-details" class="space-y-1 text-slate-400 font-mono text-[11px]">
+                    <div>M_forest[4][4] = <span class="text-amber-300 font-bold">0 (Ceruzapont)</span></div>
+                    <div>Koordináták (X, Y): <span class="text-slate-200">X: 800, Y: 397</span></div>
+                    <div>Típus / Leírás: <span class="text-emerald-300">Kecses Őzike</span></div>
+                </div>
+        </div>
+
+        <!-- Footer / Credits -->
+        <div class="mt-4 pt-3 border-t border-slate-800/80 text-center text-[11px] text-slate-500">
+            Készült finom ceruzarajz animációval &amp; Mátrix logikával ✨
+        </div>
+    </div>
+
+    <script>
+        // Configuration & Canvas setup
+        const canvas = document.getElementById('forestCanvas');
+        const ctx = canvas.getContext('2d');
+        const pencilCursor = document.getElementById('pencil-cursor');
+
+        // Matrix Config (6x6 Grid of magical forest points)
+        const ROWS = 6;
+        const COLS = 6;
+        const MATRIX_NAME = "M_forest";
+
+        // Animals and magical icons list
+        const ANIMALS = [
+            { name: "Róka", icon: "🦊", color: "#f97316", hint: "Kavicsszemű Rókakölyök" },
+            { name: "Bagoly", icon: "🦉", color: "#fbbf24", hint: "Bölcs Éjjeli Bagoly" },
+            { name: "Medve", icon: "🐻", color: "#b45309", hint: "Álmos Bocs" },
+            { name: "Süni", icon: "🦔", color: "#a16207", hint: "Tüskés Erdei Süni" },
+            { name: "Őzike", icon: "🦌", color: "#d97706", hint: "Kecses Őzike" },
+            { name: "Nyuszi", icon: "🐰", color: "#e2e8f0", hint: "Kíváncsi Mezei Nyúl" }
+        ];
+
+        // Store Matrix Points
+        let matrixPoints = [];
+        let hoveredPoint = null;
+        let activePoint = null;
+        let animationFrameId = null;
+
+        // Mouse/Touch Position
+        let mouseX = -1000;
+        let mouseY = -1000;
+        let isMouseDown = false;
+
+        // Sound Effects generator using Web Audio API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playMagicTone(freq = 440, type = 'sine', duration = 0.3) {
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playTransformSound() {
+            playMagicTone(523.25, 'sine', 0.2); // C5
+            setTimeout(() => playMagicTone(659.25, 'triangle', 0.25), 100); // E5
+            setTimeout(() => playMagicTone(783.99, 'sine', 0.35), 200); // G5
+            setTimeout(() => playMagicTone(1046.50, 'sine', 0.5), 300); // C6
+        }
+
+        function initMatrixPoints() {
+            matrixPoints = [];
+            const width = canvas.width;
+            const height = canvas.height;
+
+            const paddingX = width * 0.15;
+            const paddingY = height * 0.18;
+            const stepX = (width - paddingX * 2) / (COLS - 1);
+            const stepY = (height - paddingY * 2) / (ROWS - 1);
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    // Assign a specific animal deterministically based on grid coordinates
+                    const animalIndex = (r * COLS + c) % ANIMALS.length;
+                    
+                    // Add slight artistic organic jitter to points
+                    const jitterX = (Math.sin(r * 3 + c * 2) * 12);
+                    const jitterY = (Math.cos(r * 2 + c * 4) * 12);
+
+                    matrixPoints.push({
+                        row: r,
+                        col: c,
+                        x: paddingX + c * stepX + jitterX,
+                        y: paddingY + r * stepY + jitterY,
+                        radius: 6,
+                        isTransformed: false,
+                        animal: ANIMALS[animalIndex],
+                        sparkles: [],
+                        pencilLineProgress: 0 // animation for drawing
+                    });
+                }
+            }
+            renderMatrixUI();
+        }
+
+        function renderMatrixUI() {
+            const container = document.getElementById('matrix-grid-container');
+            container.style.gridTemplateColumns = `repeat(${COLS}, minmax(0, 1fr))`;
+            container.innerHTML = '';
+
+            matrixPoints.forEach((pt) => {
+                const cell = document.createElement('div');
+                cell.id = `matrix-cell-${pt.row}-${pt.col}`;
+                cell.className = `matrix-cell flex flex-col items-center justify-center p-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-center cursor-pointer hover:border-amber-500/50`;
+                
+                cell.innerHTML = `
+                    <span class="text-[9px] text-slate-500 font-mono">(${pt.row},${pt.col})</span>
+                    <span class="text-xs font-bold font-mono text-slate-300 cell-val">${pt.isTransformed ? pt.animal.icon : '•'}</span>
+                `;
+
+                cell.addEventListener('mouseenter', () => highlightPointFromMatrix(pt.row, pt.col));
+                cell.addEventListener('mouseleave', clearHighlights);
+                cell.addEventListener('click', () => transformPoint(pt));
+
+                container.appendChild(cell);
+            });
+        }
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            initMatrixPoints();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // Draw delicate sketch forest trees in background
+        function drawPencilForest(ctx, width, height) {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)';
+            ctx.lineWidth = 1.2;
+            ctx.setLineDash([4, 2]);
+
+            // Soft Sketch Backdrop Trees & Hills
+            ctx.beginPath();
+            // Background distant hills
+            ctx.moveTo(0, height * 0.7);
+            ctx.quadraticCurveTo(width * 0.3, height * 0.5, width * 0.6, height * 0.65);
+            ctx.quadraticCurveTo(width * 0.85, height * 0.75, width, height * 0.55);
+            ctx.stroke();
+
+            // Delicate Pencil Tree Outlines
+            const treePositions = [
+                {x: width * 0.08, y: height * 0.85, scale: 0.9},
+                {x: width * 0.22, y: height * 0.92, scale: 1.2},
+                {x: width * 0.50, y: height * 0.88, scale: 0.8},
+                {x: width * 0.78, y: height * 0.95, scale: 1.1},
+                {x: width * 0.92, y: height * 0.82, scale: 0.85}
+            ];
+
+            treePositions.forEach(tree => {
+                drawSketchTree(ctx, tree.x, tree.y, tree.scale);
+            });
+
+            ctx.restore();
+        }
+
+        function drawSketchTree(ctx, x, y, scale) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+
+            // Trunk
+            ctx.beginPath();
+            ctx.moveTo(-10, 0);
+            ctx.lineTo(-6, -80);
+            ctx.lineTo(6, -80);
+            ctx.lineTo(10, 0);
+            ctx.stroke();
+
+            // Foliage layers (soft pencil style)
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                ctx.arc(0, -90 - i * 35, 35 - i * 5, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Draw subtle sketch fairytale backdrop
+            drawPencilForest(ctx, canvas.width, canvas.height);
+
+            // 2. Draw connecting pencil grid lines between points
+            ctx.save();
+            ctx.strokeStyle = 'rgba(217, 119, 6, 0.08)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 4]);
+
+            for (let r = 0; r < ROWS; r++) {
+                ctx.beginPath();
+                for (let c = 0; c < COLS; c++) {
+                    const pt = matrixPoints[r * COLS + c];
+                    if (c === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.stroke();
+            }
+
+            for (let c = 0; c < COLS; c++) {
+                ctx.beginPath();
+                for (let r = 0; r < ROWS; r++) {
+                    const pt = matrixPoints[r * COLS + c];
+                    if (r === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // 3. Render each matrix point or transformed animal
+            let foundHover = null;
+
+            matrixPoints.forEach(pt => {
+                const dist = Math.hypot(mouseX - pt.x, mouseY - pt.y);
+                const isHovered = dist < 25;
+
+                if (isHovered) {
+                    foundHover = pt;
+                }
+
+                // Render Sparkles
+                if (pt.sparkles.length > 0) {
+                    pt.sparkles.forEach((s, idx) => {
+                        s.x += s.vx;
+                        s.y += s.vy;
+                        s.alpha -= 0.02;
+                        ctx.fillStyle = `rgba(251, 191, 36, ${Math.max(0, s.alpha)})`;
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    pt.sparkles = pt.sparkles.filter(s => s.alpha > 0);
+                }
+
+                if (pt.isTransformed) {
+                    // Render transformed fairytale animal icon with glow
+                    ctx.save();
+                    ctx.shadowColor = pt.animal.color;
+                    ctx.shadowBlur = 15;
+                    ctx.font = '28px serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(pt.animal.icon, pt.x, pt.y);
+                    
+                    // Small label below
+                    ctx.font = '10px Quicksand, sans-serif';
+                    ctx.fillStyle = '#fef3c7';
+                    ctx.fillText(pt.animal.name, pt.x, pt.y + 22);
+                    ctx.restore();
+                } else {
+                    // Render Pencil Dot / Glowing Magic Point
+                    ctx.save();
+                    if (isHovered) {
+                        // Pencil halo glow
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 14, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 8, 0, Math.PI * 2);
+                        ctx.fillStyle = '#f59e0b';
+                        ctx.fill();
+                    }
+
+                    // Delicate Pencil Core Point
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, pt.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = '#1e293b'; // Charcoal pencil color
+                    ctx.fill();
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = isHovered ? '#fbbf24' : '#d97706';
+                    ctx.stroke();
+
+                    // Tiny central highlight
+                    ctx.beginPath();
+                    ctx.arc(pt.x - 1.5, pt.y - 1.5, 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#fef08a';
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+            });
+
+            // Update Hover State & Labels
+            if (foundHover !== hoveredPoint) {
+                hoveredPoint = foundHover;
+                if (hoveredPoint) {
+                    highlightPointFromCanvas(hoveredPoint);
+                } else if (!activePoint) {
+                    clearHighlights();
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(render);
+        }
+
+        function highlightPointFromCanvas(pt) {
+            updateLabels(pt.row, pt.col, pt.isTransformed ? pt.animal.name : "Készen áll az átalakulásra ✨");
+            highlightMatrixCell(pt.row, pt.col);
+            playMagicTone(300 + pt.row * 40 + pt.col * 30, 'sine', 0.1);
+        }
+
+        function highlightPointFromMatrix(row, col) {
+            const pt = matrixPoints.find(p => p.row === row && p.col === col);
+            if (pt) {
+                hoveredPoint = pt;
+                updateLabels(row, col, pt.isTransformed ? pt.animal.name : "Kijelölve a mátrixból");
+                highlightMatrixCell(row, col);
+            }
+        }
+
+        function highlightMatrixCell(row, col) {
+            // Remove previous highlights
+            document.querySelectorAll('.matrix-cell').forEach(el => {
+                el.classList.remove('highlighted');
+            });
+
+            const cell = document.getElementById(`matrix-cell-${row}-${col}`);
+            if (cell) {
+                cell.classList.add('highlighted');
+                cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // Update details panel
+            const pt = matrixPoints.find(p => p.row === row && p.col === col);
+            if (pt) {
+                document.getElementById('matrix-details').innerHTML = `
+                    <div>M_forest[${row}][${col}] = <span class="text-amber-300 font-bold">${pt.isTransformed ? pt.animal.icon + ' ' + pt.animal.name : '0 (Ceruzapont)'}</span></div>
+                    <div>Koordináták (X, Y): <span class="text-slate-200">X: ${Math.round(pt.x)}, Y: ${Math.round(pt.y)}</span></div>
+                    <div>Típus / Leírás: <span class="text-emerald-300">${pt.animal.hint}</span></div>
+                `;
+            }
+        }
+
+        function clearHighlights() {
+            if (!activePoint) {
+                document.querySelectorAll('.matrix-cell').forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                updateLabels('-', '-', 'Nincs kijelölve');
+                document.getElementById('matrix-details').innerHTML = `
+                    <div>M_forest[i][j] = <span class="text-slate-200">Kérlek, válassz egy pontot!</span></div>
+                    <div>Koordináták (X, Y): <span class="text-slate-200">-</span></div>
+                    <div>Állapot: <span class="text-slate-200">-</span></div>
+                `;
+            }
+        }
+
+        function updateLabels(row, col, creatureStr) {
+            document.getElementById('lbl-row-idx').textContent = row;
+            document.getElementById('lbl-col-idx').textContent = col;
+            document.getElementById('lbl-creature').textContent = creatureStr;
+        }
+
+        function transformPoint(pt) {
+            if (!pt) return;
+            
+            pt.isTransformed = true;
+            activePoint = pt;
+
+            // Trigger Pencil Animation Effect
+            pencilCursor.classList.add('pencil-drawing');
+            setTimeout(() => pencilCursor.classList.remove('pencil-drawing'), 400);
+
+            // Generate Magic Burst Sparkles
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1 + Math.random() * 4;
+                pt.sparkles.push({
+                    x: pt.x,
+                    y: pt.y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    size: 2 + Math.random() * 3,
+                    alpha: 1.0
+                });
+            }
+
+            playTransformSound();
+
+            // Update Matrix Visual Cell
+            const cell = document.getElementById(`matrix-cell-${pt.row}-${pt.col}`);
+            if (cell) {
+                cell.classList.add('active-animal');
+                const valEl = cell.querySelector('.cell-val');
+                if (valEl) valEl.textContent = pt.animal.icon;
+            }
+
+            highlightPointFromCanvas(pt);
+        }
+
+        function handlePointerMove(e) {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+
+            // Move Pencil Custom Cursor
+            pencilCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) rotate(-15deg)`;
+        }
+
+        window.addEventListener('mousemove', handlePointerMove);
+
+        canvas.addEventListener('click', (e) => {
+            if (hoveredPoint) {
+                transformPoint(hoveredPoint);
+            }
+        });
+
+        // Touch support
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                handlePointerMove(touch);
+            }
+        }, { passive: true });
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                handlePointerMove(touch);
+                if (hoveredPoint) {
+                    transformPoint(hoveredPoint);
+                }
+            }
+        }, { passive: true });
+
+        // Reset Button Handler
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            initMatrixPoints();
+            activePoint = null;
+            hoveredPoint = null;
+            clearHighlights();
+            playMagicTone(250, 'sine', 0.2);
+        });
+
+        window.onload = function() {
+            resizeCanvas();
+            render();
+        };
+    </script>
+
+</body></html>
