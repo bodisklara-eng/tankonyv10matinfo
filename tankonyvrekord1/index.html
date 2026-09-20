@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///D:/tankonyv/ma/gemini-code-1789623986895.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChicTone V3 - Interactive 3D AI Head</title>
+<link href="./index_files/css2" rel="stylesheet">
+<script src="./index_files/three.min.js.descărcare"></script>
+<style>
+:root{--bg:#0b0f19;--card:rgba(22,28,45,.75);--border:rgba(255,255,255,.12);--pink:#ff4e88;--cyan:#00f2fe;--gold:#ffb703;--text:#f8fafc;--sub:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif}
+body{background:#0b0f19;color:var(--text);min-height:100vh;overflow-x:hidden}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,25,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.logo{font-weight:800;font-size:1.4rem;background:linear-gradient(135deg,#fff,var(--pink),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;padding:9px 14px;border-radius:24px;font-weight:600;font-size:.82rem;cursor:pointer;transition:.25s}
+.btn:hover,.btn.active{background:linear-gradient(135deg,var(--pink),#9b51e0);transform:translateY(-1px)}
+main{max-width:1450px;margin:0 auto;padding:18px}
+.glass{background:var(--card);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.4);margin-bottom:16px}
+.grid{display:grid;grid-template-columns:360px 1fr 340px;gap:16px}
+@media(max-width:1250px){.grid{grid-template-columns:1fr}}
+.title{font-size:1.05rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.slider{width:100%;height:7px;border-radius:5px;background:rgba(255,255,255,.1);-webkit-appearance:none;outline:none}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--pink);cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer;transition:.2s;box-shadow:0 4px 8px rgba(0,0,0,.3)}
+.chip:hover{transform:scale(1.1)} .chip.sel{border-color:#fff;transform:scale(1.15)}
+#canvasWrap{width:100%;height:680px;background:radial-gradient(circle at center,#1e2438 0%,#070a13 70%);border-radius:20px;border:1px solid rgba(255,255,255,.14);overflow:hidden;position:relative;cursor:grab}
+#canvasWrap:active{cursor:grabbing}
+#canvasWrap canvas{width:100%!important;height:100%!important;display:block}
+.hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:6px 12px;border-radius:18px;font-size:.75rem;color:var(--cyan);border:1px solid rgba(0,242,254,.3);pointer-events:none;z-index:2}
+.badge{background:rgba(0,242,254,.08);border:1px solid rgba(0,242,254,.3);border-radius:12px;padding:10px;margin-top:10px;font-size:.83rem;line-height:1.5}
+.badge strong{color:var(--cyan)} .gold{color:var(--gold);font-weight:800} .green{color:#4ade80;font-weight:700}
+label.small{display:flex;justify-content:space-between;font-size:.82rem;color:var(--sub);font-weight:600;margin:10px 0 4px 0}
+.avatar-viewport{width:100%;height:520px;background:radial-gradient(circle at center,rgba(255,255,255,.06),rgba(0,0,0,.35));border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✨ ChicTone V3 - 3D AI Head</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn active" onclick="switchTab('studio',this)">👗 Stúdió</button>
+<button class="btn" onclick="switchTab('face',this)">👤 Interaktív 3D Arc</button>
+</div>
+</header>
+<main>
+<section id="studio" class="sec" style="display:block">
+<div class="grid">
+<div class="glass">
+<div class="title">👤 Bőr &amp; Ruha Mátrix</div>
+<label class="small"><span>Bőrtónus Sor</span><span id="skinLabel">1. Fair</span></label>
+<input type="range" class="slider" id="skinSlider" min="0" max="4" value="0" oninput="updSkin(this.value)">
+<label class="small" style="margin-top:14px"><span>Felső (Oszlop)</span></label><div class="chips" id="topChips"><div class="chip" title="#000080 → 1. oszlop" style="background: rgb(0, 0, 128);"></div><div class="chip" title="#800020 → 2. oszlop" style="background: rgb(128, 0, 32);"></div><div class="chip" title="#004225 → 3. oszlop" style="background: rgb(0, 66, 37);"></div><div class="chip" title="#FFFF00 → 4. oszlop" style="background: rgb(255, 255, 0);"></div><div class="chip" title="#4A2E2B → 2. oszlop" style="background: rgb(74, 46, 43);"></div><div class="chip" title="#800000 → 2. oszlop" style="background: rgb(128, 0, 0);"></div><div class="chip" title="#4169E1 → 1. oszlop" style="background: rgb(65, 105, 225);"></div><div class="chip" title="#008080 → 1. oszlop" style="background: rgb(0, 128, 128);"></div><div class="chip" title="#808080 → 3. oszlop" style="background: rgb(128, 128, 128);"></div><div class="chip" title="#000000 → 3. oszlop" style="background: rgb(0, 0, 0);"></div><div class="chip" title="#FF1493 → 2. oszlop" style="background: rgb(255, 20, 147);"></div><div class="chip" title="#87CEEB → 4. oszlop" style="background: rgb(135, 206, 235);"></div><div class="chip" title="#FFB703 → 4. oszlop" style="background: rgb(255, 183, 3);"></div><div class="chip" title="#e5e5e5 → 4. oszlop" style="background: rgb(229, 229, 229);"></div><div class="chip" title="#ffffff → 4. oszlop" style="background: rgb(255, 255, 255);"></div></div>
+<label class="small"><span>Kabát</span></label><div class="chips" id="jacketChips"><div class="chip" title="#000080 → 1. oszlop" style="background: rgb(0, 0, 128);"></div><div class="chip" title="#800020 → 2. oszlop" style="background: rgb(128, 0, 32);"></div><div class="chip" title="#004225 → 3. oszlop" style="background: rgb(0, 66, 37);"></div><div class="chip" title="#FFFF00 → 4. oszlop" style="background: rgb(255, 255, 0);"></div><div class="chip" title="#4A2E2B → 2. oszlop" style="background: rgb(74, 46, 43);"></div><div class="chip" title="#800000 → 2. oszlop" style="background: rgb(128, 0, 0);"></div><div class="chip" title="#4169E1 → 1. oszlop" style="background: rgb(65, 105, 225);"></div><div class="chip" title="#008080 → 1. oszlop" style="background: rgb(0, 128, 128);"></div><div class="chip" title="#808080 → 3. oszlop" style="background: rgb(128, 128, 128);"></div><div class="chip" title="#000000 → 3. oszlop" style="background: rgb(0, 0, 0);"></div><div class="chip" title="#FF1493 → 2. oszlop" style="background: rgb(255, 20, 147);"></div><div class="chip" title="#87CEEB → 4. oszlop" style="background: rgb(135, 206, 235);"></div><div class="chip" title="#FFB703 → 4. oszlop" style="background: rgb(255, 183, 3);"></div><div class="chip" title="#e5e5e5 → 4. oszlop" style="background: rgb(229, 229, 229);"></div><div class="chip" title="#ffffff → 4. oszlop" style="background: rgb(255, 255, 255);"></div></div>
+<label class="small"><span>Alsó</span></label><div class="chips" id="bottomChips"><div class="chip" title="#000080 → 1. oszlop" style="background: rgb(0, 0, 128);"></div><div class="chip" title="#800020 → 2. oszlop" style="background: rgb(128, 0, 32);"></div><div class="chip" title="#004225 → 3. oszlop" style="background: rgb(0, 66, 37);"></div><div class="chip" title="#FFFF00 → 4. oszlop" style="background: rgb(255, 255, 0);"></div><div class="chip" title="#4A2E2B → 2. oszlop" style="background: rgb(74, 46, 43);"></div><div class="chip" title="#800000 → 2. oszlop" style="background: rgb(128, 0, 0);"></div><div class="chip" title="#4169E1 → 1. oszlop" style="background: rgb(65, 105, 225);"></div><div class="chip" title="#008080 → 1. oszlop" style="background: rgb(0, 128, 128);"></div><div class="chip" title="#808080 → 3. oszlop" style="background: rgb(128, 128, 128);"></div><div class="chip" title="#000000 → 3. oszlop" style="background: rgb(0, 0, 0);"></div><div class="chip" title="#FF1493 → 2. oszlop" style="background: rgb(255, 20, 147);"></div><div class="chip" title="#87CEEB → 4. oszlop" style="background: rgb(135, 206, 235);"></div><div class="chip" title="#FFB703 → 4. oszlop" style="background: rgb(255, 183, 3);"></div><div class="chip" title="#e5e5e5 → 4. oszlop" style="background: rgb(229, 229, 229);"></div><div class="chip" title="#ffffff → 4. oszlop" style="background: rgb(255, 255, 255);"></div></div>
+<div class="badge">
+<div>📍 <strong>Pozíció:</strong> <span class="gold" id="studioPos">1. sor (Fair) × 1. oszlop (Sötétkék)</span></div>
+<div>📊 <strong>M[i][j]:</strong> <span id="studioElem">M[1][1] = 0.95</span></div>
+<div>🎯 <span id="studioScore" class="green">Tökéletes</span></div>
+</div>
+</div>
+<div class="glass" style="display:flex;flex-direction:column;align-items:center">
+<div class="avatar-viewport">
+<svg id="avatarSvg" viewBox="0 0 400 600" style="height:92%"><circle cx="200" cy="280" r="170" fill="url(#g)" opacity=".2"></circle><defs><radialgradient id="g"><stop offset="0%" stop-color="#ff758c"></stop><stop offset="100%" stop-color="transparent"></stop></radialgradient></defs><path id="sNeck" d="M180 230 L220 230 L225 280 L175 280 Z" fill="rgb(252,224,209)"></path><path id="sHead" d="M150 150 C150 230 250 230 250 150 C250 90 150 90 150 150 Z" fill="rgb(252,224,209)"></path><circle cx="178" cy="155" r="5" fill="#111"></circle><circle cx="222" cy="155" r="5" fill="#111"></circle><path id="sTop" d="M150 270 Q200 280 250 270 L258 390 L142 390 Z" fill="#000080"></path><path id="sJacketL" d="M140 270 L175 270 L180 390 L135 380 Z" fill="#800020"></path><path id="sJacketR" d="M260 270 L225 270 L220 390 L265 380 Z" fill="#800020"></path><path id="sBottom" d="M165 380 L192 560 L208 560 L235 380 Z" fill="#1e293b"></path><g id="sHair"><path d="M140 140 C130 60 270 60 260 140 C270 200 240 210 240 160 C200 120 160 120 160 160 C160 210 130 200 140 140 Z" fill="#2c1d11"></path></g></svg>
+</div>
+<div class="badge" style="width:100%;margin-top:10px">A ruha színe a Mátrix oszlopára van map-elve: Navy=1, Burgundy=2, Green=3, Yellow=4</div>
+</div>
+<div class="glass">
+<div class="title">🌟 Score</div>
+<div style="text-align:center;padding:10px;background:linear-gradient(135deg,rgba(255,78,136,.15),rgba(155,81,224,.15));border-radius:16px;border:1px solid rgba(255,78,136,.3)"><div style="font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,#ffb703,#ff4e88);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="scoreTxt">95%</div><div id="scoreTag" style="font-size:.8rem;font-weight:700;background:rgba(255,255,255,.1);display:inline-block;padding:4px 12px;border-radius:16px;margin-top:6px">TÖKÉLETES MATCH</div><p id="scoreDesc" style="font-size:.8rem;color:var(--sub);margin-top:8px">M[1][1] = 0.95 | #000080 → 1. oszlop</p></div>
+<div class="title" style="margin-top:14px">Ajánlott</div><div class="chips" id="recChips"><div class="chip sel" title="Sötétkék" style="background: rgb(0, 0, 128);"></div><div class="chip sel" title="Bordó" style="background: rgb(128, 0, 32);"></div></div>
+</div>
+</div>
+</section>
+
+<section id="face" class="sec" style="display:none">
+<div class="glass">
+<div class="title">👤 Interaktív 3D AI Fej</div>
+<p style="color:var(--sub);font-size:.88rem;margin-bottom:12px">Egérrel húzva forgatható 3D AI fej. Állítsd be a színeket a csúszkákkal!</p>
+<div style="display:grid;grid-template-columns:380px 1fr;gap:16px">
+<div class="glass" style="margin:0">
+<label class="small"><span>Arc Szín - R</span><span id="rV">235</span></label><input type="range" class="slider" id="skinR" min="20" max="255" value="235" oninput="updateHead()">
+<label class="small"><span>G</span><span id="gV">235</span></label><input type="range" class="slider" id="skinG" min="20" max="255" value="235" oninput="updateHead()">
+<label class="small"><span>B</span><span id="bV">235</span></label><input type="range" class="slider" id="skinB" min="20" max="255" value="235" oninput="updateHead()">
+<label class="small"><span>Ruha Oszlop Szín</span></label><div class="chips" id="faceCloth"><div class="chip" title="#000080 → 1. oszlop" style="background: rgb(0, 0, 128);"></div><div class="chip" title="#800020 → 2. oszlop" style="background: rgb(128, 0, 32);"></div><div class="chip" title="#004225 → 3. oszlop" style="background: rgb(0, 66, 37);"></div><div class="chip" title="#FFFF00 → 4. oszlop" style="background: rgb(255, 255, 0);"></div><div class="chip" title="#4A2E2B → 2. oszlop" style="background: rgb(74, 46, 43);"></div><div class="chip" title="#800000 → 2. oszlop" style="background: rgb(128, 0, 0);"></div><div class="chip" title="#4169E1 → 1. oszlop" style="background: rgb(65, 105, 225);"></div><div class="chip" title="#008080 → 1. oszlop" style="background: rgb(0, 128, 128);"></div><div class="chip" title="#808080 → 3. oszlop" style="background: rgb(128, 128, 128);"></div><div class="chip" title="#000000 → 3. oszlop" style="background: rgb(0, 0, 0);"></div><div class="chip" title="#FF1493 → 2. oszlop" style="background: rgb(255, 20, 147);"></div><div class="chip" title="#87CEEB → 4. oszlop" style="background: rgb(135, 206, 235);"></div><div class="chip" title="#FFB703 → 4. oszlop" style="background: rgb(255, 183, 3);"></div><div class="chip" title="#e5e5e5 → 4. oszlop" style="background: rgb(229, 229, 229);"></div><div class="chip" title="#ffffff → 4. oszlop" style="background: rgb(255, 255, 255);"></div></div>
+<div class="badge">
+<div>📍 <strong>Sor (bőr):</strong> <span class="gold" id="mRow">1. Fair</span></div>
+<div>📍 <strong>Oszlop (ruha):</strong> <span class="gold" id="mCol">1. Navy</span></div>
+<div>📊 <strong>M[i][j]:</strong> <span id="mElem" style="font-weight:800;color:#fff">M[1][1]</span> = <span class="green" id="mScore">0.95</span></div>
+<div style="font-size:.78rem;color:var(--sub);margin-top:6px">RGB vektor: <span id="rgbVec">[235,235,235]</span></div>
+</div>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="randomSkin()" style="width:100%">🎲 Random bőrszín</button></div>
+</div>
+<div id="canvasWrap">
+<div class="hint">🖱 Egér nyomva tartva + Húzás = 3D Forgatás</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<script>
+const SKINS=[{name:"Fair",rgb:[252,224,209]},{name:"Olive",rgb:[227,168,87]},{name:"Light Brown",rgb:[198,134,66]},{name:"Brown",rgb:[141,85,36]},{name:"Dark Brown",rgb:[59,34,25]}];
+const MATRIX=[[0.95,0.98,0.85,0.30],[0.92,0.95,0.90,0.40],[0.90,0.88,0.82,0.60],[0.88,0.85,0.92,0.95],[0.96,0.94,0.90,0.98]];
+const COLS=[{idx:1,name:"Navy",label:"Sötétkék",hex:"#000080"},{idx:2,name:"Burgundy",label:"Bordó",hex:"#800020"},{idx:3,name:"Green",label:"Zöld",hex:"#004225"},{idx:4,name:"Yellow",label:"Sárga",hex:"#FFFF00"}];
+const ALL=["#000080","#800020","#004225","#FFFF00","#4A2E2B","#800000","#4169E1","#008080","#808080","#000000","#FF1493","#87CEEB","#FFB703","#e5e5e5","#ffffff"];
+let state={skin:0,top:"#000080",jacket:"#800020",bottom:"#1e293b",faceCloth:"#000080"};
+function hex2rgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function dist(a,b){return Math.sqrt((a[0]-b[0])**2+(a[1]-b[1])**2+(a[2]-b[2])**2)}
+function getCol(hex){const rgb=hex2rgb(hex); if(rgb[2]>110 && rgb[0]<90) return 1; if(rgb[0]>110 && rgb[1]<90) return 2; if(rgb[0]>80 && rgb[0]<150 && rgb[2]>70 && rgb[1]<120) return 2; if(rgb[1]>70 && rgb[0]<140 && rgb[2]<140) return 3; if(rgb[0]>200 && rgb[1]>180) return 4; if(rgb[0]>180 && rgb[1]>120 && rgb[2]<120) return 4; let best=1,md=1e9; COLS.forEach(c=>{const d=dist(rgb,hex2rgb(c.hex)); if(d<md){md=d;best=c.idx}}); return best;}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.style.display='none');
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).style.display='block';
+  btn.classList.add('active');
+  if(id==='face' && !threeInitialized) { initThree(); }
+}
+
+function initChips(){['topChips','jacketChips','bottomChips','faceCloth'].forEach(id=>{const el=document.getElementById(id);el.innerHTML='';ALL.forEach(hex=>{const d=document.createElement('div');d.className='chip';d.style.background=hex;d.title=hex+' → '+getCol(hex)+'. oszlop';d.onclick=()=>{if(id==='topChips') state.top=hex; if(id==='jacketChips') state.jacket=hex; if(id==='bottomChips') state.bottom=hex; if(id==='faceCloth') state.faceCloth=hex; Array.from(el.children).forEach(c=>c.classList.remove('sel'));d.classList.add('sel'); updAvatar(); updateHead();};el.appendChild(d);})});}
+function updSkin(v){state.skin=parseInt(v);document.getElementById('skinLabel').innerText=(state.skin+1)+'. '+SKINS[state.skin].name; document.getElementById('skinR').value=SKINS[state.skin].rgb[0];document.getElementById('skinG').value=SKINS[state.skin].rgb[1];document.getElementById('skinB').value=SKINS[state.skin].rgb[2]; updAvatar(); updateHead();}
+function updAvatar(){document.getElementById('sTop').setAttribute('fill',state.top);document.getElementById('sJacketL').setAttribute('fill',state.jacket);document.getElementById('sJacketR').setAttribute('fill',state.jacket);document.getElementById('sBottom').setAttribute('fill',state.bottom);document.getElementById('sHead').setAttribute('fill',`rgb(${SKINS[state.skin].rgb.join(',')})`);document.getElementById('sNeck').setAttribute('fill',`rgb(${SKINS[state.skin].rgb.join(',')})`);const col=getCol(state.top);const score=MATRIX[state.skin][col-1];document.getElementById('studioPos').innerText=`${state.skin+1}. sor (${SKINS[state.skin].name}) × ${col}. oszlop (${COLS[col-1].label})`;document.getElementById('studioElem').innerText=`M[${state.skin+1}][${col}] = ${score}`;document.getElementById('studioScore').innerText=score>0.9?'Tökéletes':score>0.6?'Jó':'Gyenge';document.getElementById('scoreTxt').innerText=Math.round(score*100)+'%';document.getElementById('scoreTag').innerText=score>0.9?'TÖKÉLETES MATCH':score>0.6?'JÓ MATCH':'GYENGE';document.getElementById('scoreDesc').innerText=`M[${state.skin+1}][${col}] = ${score} | ${state.top} → ${col}. oszlop`; const rec=document.getElementById('recChips');rec.innerHTML=''; COLS.forEach(c=>{if(MATRIX[state.skin][c.idx-1]>0.88){const ch=document.createElement('div');ch.className='chip sel';ch.style.background=c.hex;ch.title=c.label;rec.appendChild(ch);}});}
+
+window.onload=()=>{initChips();updAvatar();}
+
+// --- THREE.JS 3D AI ARC ENGINE ---
+let scene, camera, renderer, headGroup, headMesh, leftEye, rightEye;
+let threeInitialized = false;
+let isDragging = false, prevMousePos = { x: 0, y: 0 };
+
+function initThree() {
+  threeInitialized = true;
+  const wrap = document.getElementById('canvasWrap');
+  scene = new THREE.Scene();
+  
+  camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.1, 1000);
+  camera.position.z = 7;
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  wrap.appendChild(renderer.domElement);
+
+  // Fények
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+  scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0x00f2fe, 1.2);
+  dirLight.position.set(5, 5, 5);
+  scene.add(dirLight);
+
+  const pointLight = new THREE.PointLight(0xff4e88, 1.5, 10);
+  pointLight.position.set(-5, -2, 3);
+  scene.add(pointLight);
+
+  // Fej Csoport
+  headGroup = new THREE.Group();
+
+  // Fej Geometria (Sima gömb deformálva arc formára)
+  const headGeo = new THREE.SphereGeometry(1.6, 32, 32);
+  headGeo.scale(1, 1.25, 0.9);
+  const headMat = new THREE.MeshPhongMaterial({
+    color: 0xebebeb,
+    shininess: 40,
+    flatShading: false
+  });
+  headMesh = new THREE.Mesh(headGeo, headMat);
+  headGroup.add(headMesh);
+
+  // Szemek (Világító korongok)
+  const eyeGeo = new THREE.SphereGeometry(0.2, 16, 16);
+  const eyeMat = new THREE.MeshBasicMaterial({ color: 0x00f2fe });
+  
+  leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+  leftEye.position.set(-0.55, 0.35, 1.35);
+  headGroup.add(leftEye);
+
+  rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+  rightEye.position.set(0.55, 0.35, 1.35);
+  headGroup.add(rightEye);
+
+  // Száj (Ív)
+  const mouthGeo = new THREE.TorusGeometry(0.35, 0.05, 8, 16, Math.PI);
+  const mouthMat = new THREE.MeshBasicMaterial({ color: 0xff4e88 });
+  const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+  mouth.position.set(0, -0.45, 1.35);
+  mouth.rotation.x = Math.PI;
+  headGroup.add(mouth);
+
+  scene.add(headGroup);
+
+  // Egér vezérlés (Forgatás)
+  wrap.addEventListener('mousedown', (e) => { isDragging = true; prevMousePos = { x: e.clientX, y: e.clientY }; });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - prevMousePos.x;
+    const deltaY = e.clientY - prevMousePos.y;
+    headGroup.rotation.y += deltaX * 0.01;
+    headGroup.rotation.x += deltaY * 0.01;
+    prevMousePos = { x: e.clientX, y: e.clientY };
+  });
+
+  // Animáció
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!isDragging) {
+      headGroup.rotation.y += 0.005; // Finom automatikus forgás
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+  updateHead();
+}
+
+function updateHead(){
+  const r=parseInt(document.getElementById('skinR').value);
+  const g=parseInt(document.getElementById('skinG').value);
+  const b=parseInt(document.getElementById('skinB').value);
+  
+  document.getElementById('rV').innerText=r; 
+  document.getElementById('gV').innerText=g; 
+  document.getElementById('bV').innerText=b;
+  document.getElementById('rgbVec').innerText=`[${r},${g},${b}]`;
+
+  // 3D Modell színének frissítése
+  if(headMesh) {
+    headMesh.material.color.setRGB(r/255, g/255, b/255);
+  }
+
+  // Mátrix kalkuláció
+  const skinDist=SKINS.map(s=>dist([r,g,b],s.rgb)); 
+  const closest=skinDist.indexOf(Math.min(...skinDist)); 
+  const colIdx=getCol(state.faceCloth); 
+  const score=MATRIX[closest][colIdx-1];
+
+  document.getElementById('mRow').innerText=`${closest+1}. sor - ${SKINS[closest].name} [${SKINS[closest].rgb.join(',')}]`; 
+  document.getElementById('mCol').innerText=`${colIdx}. oszlop - ${COLS[colIdx-1].label} (${COLS[colIdx-1].name}) ${state.faceCloth}`; 
+  document.getElementById('mElem').innerText=`M[${closest+1}][${colIdx}]`; 
+  document.getElementById('mScore').innerText=`${score} - ${score>0.9?'Tökéletes':score>0.7?'Jó':'Gyenge'}`;
+}
+
+function randomSkin(){
+  const r=180+Math.floor(Math.random()*75);
+  const g=180+Math.floor(Math.random()*75);
+  const b=180+Math.floor(Math.random()*75); 
+  document.getElementById('skinR').value=r; 
+  document.getElementById('skinG').value=g; 
+  document.getElementById('skinB').value=b; 
+  updateHead();
+}
+</script>
+
+</body></html>
