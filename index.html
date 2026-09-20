@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<!-- saved from url=(0094)file:///D:/tankonyv/Digit%C3%A1lis%20Informatika%20Tank%C3%B6nyv%20-%2010.%20Oszt%C3%A1ly.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitális Informatika Tankönyv - 10. Osztály</title>
+    <script src="./Digitális Informatika Tankönyv - 10. Osztály_files/saved_resource"></script>
+    <link href="./Digitális Informatika Tankönyv - 10. Osztály_files/css2" rel="stylesheet">
+    <link rel="stylesheet" href="./Digitális Informatika Tankönyv - 10. Osztály_files/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#fdfbf7',
+                        'paper-dark': '#f3ede2',
+                        'paper-border': '#e2d7c5',
+                        'ink-main': '#2c2825',
+                        'ink-light': '#5c554e',
+                        'book-accent': '#8c2d19',
+                        'book-secondary': '#2b5b84',
+                        'ide-bg': '#1e1e2e',
+                        'ide-header': '#181825',
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f7f3e9;
+            color: #2c2825;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#e2d7c5 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1e9db;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5b8a5;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8c2d19;
+        }
+
+        .ide-scroll::-webkit-scrollbar-track { background: #181825; }
+        .ide-scroll::-webkit-scrollbar-thumb { background: #45475a; }
+
+        .pip-window {
+            position: fixed;
+            z-index: 9999;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            transition: width 0.2s, height 0.2s;
+            resize: both;
+            overflow: hidden;
+            min-width: 320px;
+            min-height: 240px;
+        }
+        .pip-window.minimized {
+            height: 44px !important;
+            min-height: 44px !important;
+            resize: none;
+        }
+        .pip-drag-handle {
+            cursor: move;
+        }
+
+        .shape-btn {
+            cursor: grab;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+        .shape-btn:active {
+            cursor: grabbing;
+        }
+
+        .book-page {
+            background-color: #fdfbf7;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2d7c5;
+        }
+
+        canvas {
+            touch-action: none;
+        }
+
+        .matrix-cell-input {
+            width: 100%;
+            height: 26px;
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 10px;
+            border: 1px solid #e2d7c5;
+            border-radius: 4px;
+            background: #ffffff;
+            transition: all 0.1s ease;
+        }
+        .matrix-cell-input:focus {
+            outline: none;
+            border-color: #8c2d19;
+            box-shadow: 0 0 0 2px rgba(140, 45, 25, 0.2);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Plus Jakarta Sans, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:Fira Code, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-14{height:3.5rem}.h-1\.5{height:0.375rem}.h-20{height:5rem}.h-28{height:7rem}.min-h-screen{min-height:100vh}.w-12{width:3rem}.w-20{width:5rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-grow{flex-grow:1}.cursor-crosshair{cursor:crosshair}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-b-xl{border-bottom-right-radius:0.75rem;border-bottom-left-radius:0.75rem}.rounded-t-lg{border-top-left-radius:0.5rem;border-top-right-radius:0.5rem}.rounded-t-xl{border-top-left-radius:0.75rem;border-top-right-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-paper-border{--tw-border-opacity:1;border-color:rgb(226 215 197 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-book-accent{--tw-border-opacity:1;border-color:rgb(140 45 25 / var(--tw-border-opacity, 1))}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202 / var(--tw-border-opacity, 1))}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.bg-book-accent{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.bg-paper\/90{background-color:rgb(253 251 247 / 0.9)}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-book-secondary{--tw-bg-opacity:1;background-color:rgb(43 91 132 / var(--tw-bg-opacity, 1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.bg-emerald-200{--tw-bg-opacity:1;background-color:rgb(167 243 208 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/60{background-color:rgb(236 253 245 / 0.6)}.bg-emerald-50\/70{background-color:rgb(236 253 245 / 0.7)}.bg-emerald-700{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-ide-bg{--tw-bg-opacity:1;background-color:rgb(30 30 46 / var(--tw-bg-opacity, 1))}.bg-ide-header{--tw-bg-opacity:1;background-color:rgb(24 24 37 / var(--tw-bg-opacity, 1))}.bg-paper{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-paper-dark{--tw-bg-opacity:1;background-color:rgb(243 237 226 / var(--tw-bg-opacity, 1))}.bg-paper\/60{background-color:rgb(253 251 247 / 0.6)}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-red-100\/80{background-color:rgb(254 226 226 / 0.8)}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-red-50\/60{background-color:rgb(254 242 242 / 0.6)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244 / var(--tw-bg-opacity, 1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249 / var(--tw-bg-opacity, 1))}.bg-stone-50\/50{background-color:rgb(250 250 249 / 0.5)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-1{padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pt-1{padding-top:0.25rem}.pt-1\.5{padding-top:0.375rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.font-serif{font-family:Merriweather, Georgia, serif}.font-mono{font-family:Fira Code, monospace}.font-sans{font-family:Plus Jakarta Sans, sans-serif}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-3{line-height:.75rem}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:0.05em}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-book-accent{--tw-text-opacity:1;color:rgb(140 45 25 / var(--tw-text-opacity, 1))}.text-book-secondary{--tw-text-opacity:1;color:rgb(43 91 132 / var(--tw-text-opacity, 1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-ink-light{--tw-text-opacity:1;color:rgb(92 85 78 / var(--tw-text-opacity, 1))}.text-ink-main{--tw-text-opacity:1;color:rgb(44 40 37 / var(--tw-text-opacity, 1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-red-700{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.accent-book-accent{accent-color:#8c2d19}.opacity-50{opacity:0.5}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-book-accent *::selection{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-book-accent::selection{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:border-book-accent:hover{--tw-border-opacity:1;border-color:rgb(140 45 25 / var(--tw-border-opacity, 1))}.hover\:bg-book-accent\/90:hover{background-color:rgb(140 45 25 / 0.9)}.hover\:bg-book-secondary\/90:hover{background-color:rgb(43 91 132 / 0.9)}.hover\:bg-emerald-600:hover{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.hover\:bg-paper:hover{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.hover\:bg-paper\/50:hover{background-color:rgb(253 251 247 / 0.5)}.hover\:bg-red-100:hover{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.hover\:bg-red-200\/80:hover{background-color:rgb(254 202 202 / 0.8)}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-ink-main:hover{--tw-text-opacity:1;color:rgb(44 40 37 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:ring-book-accent:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(140 45 25 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:col-span-3{grid-column:span 3 / span 3}.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Plus Jakarta Sans, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:Fira Code, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-4{margin-bottom:1rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-14{height:3.5rem}.h-1\.5{height:0.375rem}.h-20{height:5rem}.h-28{height:7rem}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-12{width:3rem}.w-20{width:5rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-grow{flex-grow:1}.cursor-crosshair{cursor:crosshair}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-t-lg{border-top-left-radius:0.5rem;border-top-right-radius:0.5rem}.rounded-b-xl{border-bottom-right-radius:0.75rem;border-bottom-left-radius:0.75rem}.rounded-t-xl{border-top-left-radius:0.75rem;border-top-right-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-book-accent{--tw-border-opacity:1;border-color:rgb(140 45 25 / var(--tw-border-opacity, 1))}.border-paper-border{--tw-border-opacity:1;border-color:rgb(226 215 197 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202 / var(--tw-border-opacity, 1))}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209 / var(--tw-border-opacity, 1))}.bg-book-accent{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.bg-paper{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-paper-dark{--tw-bg-opacity:1;background-color:rgb(243 237 226 / var(--tw-bg-opacity, 1))}.bg-paper\/90{background-color:rgb(253 251 247 / 0.9)}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-book-secondary{--tw-bg-opacity:1;background-color:rgb(43 91 132 / var(--tw-bg-opacity, 1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.bg-emerald-200{--tw-bg-opacity:1;background-color:rgb(167 243 208 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/60{background-color:rgb(236 253 245 / 0.6)}.bg-emerald-50\/70{background-color:rgb(236 253 245 / 0.7)}.bg-emerald-700{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-ide-bg{--tw-bg-opacity:1;background-color:rgb(30 30 46 / var(--tw-bg-opacity, 1))}.bg-ide-header{--tw-bg-opacity:1;background-color:rgb(24 24 37 / var(--tw-bg-opacity, 1))}.bg-paper\/60{background-color:rgb(253 251 247 / 0.6)}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-red-100\/80{background-color:rgb(254 226 226 / 0.8)}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-red-50\/60{background-color:rgb(254 242 242 / 0.6)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244 / var(--tw-bg-opacity, 1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249 / var(--tw-bg-opacity, 1))}.bg-stone-50\/50{background-color:rgb(250 250 249 / 0.5)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-1{padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pt-1{padding-top:0.25rem}.pt-1\.5{padding-top:0.375rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.font-mono{font-family:Fira Code, monospace}.font-serif{font-family:Merriweather, Georgia, serif}.font-sans{font-family:Plus Jakarta Sans, sans-serif}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-tight{line-height:1.25}.leading-3{line-height:.75rem}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-book-accent{--tw-text-opacity:1;color:rgb(140 45 25 / var(--tw-text-opacity, 1))}.text-ink-light{--tw-text-opacity:1;color:rgb(92 85 78 / var(--tw-text-opacity, 1))}.text-ink-main{--tw-text-opacity:1;color:rgb(44 40 37 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-book-secondary{--tw-text-opacity:1;color:rgb(43 91 132 / var(--tw-text-opacity, 1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-red-700{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.accent-book-accent{accent-color:#8c2d19}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-book-accent *::selection{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-book-accent::selection{--tw-bg-opacity:1;background-color:rgb(140 45 25 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:border-book-accent:hover{--tw-border-opacity:1;border-color:rgb(140 45 25 / var(--tw-border-opacity, 1))}.hover\:bg-paper\/50:hover{background-color:rgb(253 251 247 / 0.5)}.hover\:bg-book-accent\/90:hover{background-color:rgb(140 45 25 / 0.9)}.hover\:bg-book-secondary\/90:hover{background-color:rgb(43 91 132 / 0.9)}.hover\:bg-emerald-600:hover{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.hover\:bg-paper:hover{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.hover\:bg-red-100:hover{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.hover\:bg-red-200\/80:hover{background-color:rgb(254 202 202 / 0.8)}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:text-ink-main:hover{--tw-text-opacity:1;color:rgb(44 40 37 / var(--tw-text-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:ring-book-accent:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(140 45 25 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:col-span-3{grid-column:span 3 / span 3}.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-book-accent selection:text-white">
+
+<!-- Header Nav -->
+<header class="border-b border-paper-border bg-paper/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <span class="bg-book-accent text-white font-serif font-bold text-sm px-2.5 py-0.5 rounded shadow-sm">10.</span>
+            <div>
+                <h1 class="font-serif font-bold text-base leading-tight text-ink-main">Digitális Informatika Tankönyv</h1>
+                <p class="text-[11px] text-ink-light">Mátrix ábrázolás, Transzformációk &amp; Adatszerkezetek</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2 text-xs font-mono">
+            <span class="px-2 py-0.5 bg-paper-dark rounded text-ink-light border border-paper-border text-[11px]">2D/3D Mátrix Modell</span>
+        </div>
+    </div>
+</header>
+
+<!-- Main Container -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-grow w-full">
+
+    <!-- Navigation Tabs -->
+    <nav class="flex space-x-2 border-b border-paper-border mb-4 overflow-x-auto pb-1" id="mainNav">
+        <button onclick="switchTab('tab1')" id="nav-tab1" class="tab-btn px-3.5 py-2 rounded-t-lg font-medium text-xs transition-all flex items-center gap-1.5 border-b-2 active border-book-accent bg-paper text-book-accent shadow-sm">
+            <i class="fa-solid font-bold fa-shapes"></i> 1. Fejezet: Tábla &amp; Építés
+        </button>
+        <button onclick="switchTab('tab2')" id="nav-tab2" class="tab-btn px-3.5 py-2 rounded-t-lg font-medium text-xs transition-all flex items-center gap-1.5 border-b-2 hover:text-ink-main hover:bg-paper/50 border-transparent text-ink-light">
+            <i class="fa-solid fa-layer-group"></i> 2. Fejezet: Fedési Problémák
+        </button>
+        <button onclick="switchTab('tab3')" id="nav-tab3" class="tab-btn px-3.5 py-2 rounded-t-lg font-medium text-xs transition-all flex items-center gap-1.5 border-b-2 hover:text-ink-main hover:bg-paper/50 border-transparent text-ink-light">
+            <i class="fa-solid fa-table-cells"></i> 3. Fejezet: Adatszerkezet Opciók (a, b, c)
+        </button>
+        <button onclick="switchTab('tab4')" id="nav-tab4" class="tab-btn px-3.5 py-2 rounded-t-lg font-medium text-xs transition-all flex items-center gap-1.5 border-b-2 hover:text-ink-main hover:bg-paper/50 border-transparent text-ink-light">
+            <i class="fa-solid fa-code"></i> 4. Fejezet: C++ &amp; Python Kódok
+        </button>
+        <button onclick="switchTab('tab5')" id="nav-tab5" class="tab-btn px-3.5 py-2 rounded-t-lg font-medium text-xs transition-all flex items-center gap-1.5 border-b-2 border-transparent text-ink-light hover:text-ink-main hover:bg-paper/50">
+            <i class="fa-solid fa-vial"></i> 5. Fejezet: Kvíz
+        </button>
+    </nav>
+
+    <!-- SECTION 1: Interaktív Mátrix Leképző & Drag and Drop -->
+    <section id="tab1" class="tab-content block space-y-4">
+        <div class="book-page p-4 rounded-xl">
+            <div class="flex justify-between items-center mb-2">
+                <div>
+                    <span class="text-[10px] font-semibold tracking-wider uppercase text-book-accent">Elmélet és Gyakorlat</span>
+                    <h2 class="text-xl font-serif font-bold text-ink-main">2D Geometriai Alakzatok Mátrixos Leképzése</h2>
+                </div>
+                <button onclick="togglePiP()" class="bg-book-secondary hover:bg-book-secondary/90 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all shadow-sm">
+                    <i class="fa-solid fa-up-right-from-square"></i> <span id="pipToggleText">Kód Nézet Kiültetése (PiP)</span>
+                </button>
+            </div>
+            
+            <p class="text-ink-light text-xs leading-relaxed mb-3">
+                A számítógépes grafikában a képernyő egy képpont-mátrixnak (raszternek) felel meg. Húzd át az alakzatokat a palettáról a munkaterületre! Rotáld őket <strong>tetszőleges szögben</strong>, állítsd be a <strong>rétegrendet (Előre/Hátra küldés)</strong>, és figyeld meg valós időben a generált 12x12-es diszkrét mátrix leképzést.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+                <!-- Left: Palette & Toolbar -->
+                <div class="lg:col-span-3 space-y-3">
+                    <!-- Shape Palette -->
+                    <div class="bg-paper-dark p-3 rounded-xl border border-paper-border space-y-1.5">
+                        <h3 class="font-serif font-bold text-xs text-ink-main flex items-center gap-1.5">
+                            <i class="fa-solid fa-shapes text-book-accent"></i> Alakzat Paletta (Drag &amp; Drop)
+                        </h3>
+                        <p class="text-[11px] text-ink-light">Kattints hozzáadáshoz:</p>
+                        
+                        <div class="grid grid-cols-3 gap-1.5 pt-1">
+                            <button onclick="addShape('triangle_lg')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><polygon points="5,35 35,35 5,5" fill="#e74c3c"></polygon></svg>
+                            </button>
+                            <button onclick="addShape('triangle_med')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><polygon points="10,30 30,30 10,10" fill="#3498db"></polygon></svg>
+                            </button>
+                            <button onclick="addShape('triangle_sm')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><polygon points="10,30 25,30 10,15" fill="#06b6d4"></polygon></svg>
+                            </button>
+                            <button onclick="addShape('square')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><rect x="10" y="10" width="20" height="20" fill="#f97316"></rect></svg>
+                            </button>
+                            <button onclick="addShape('parallelogram')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><polygon points="10,30 25,30 30,10 15,10" fill="#a855f7"></polygon></svg>
+                            </button>
+                            <button onclick="addShape('trapezoid')" class="shape-btn p-1.5 bg-paper rounded border border-paper-border hover:border-book-accent flex items-center justify-center">
+                                <svg width="26" height="26" viewBox="0 0 40 40"><polygon points="5,30 35,30 28,10 12,10" fill="#ec4899"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Selected Shape Control Panel -->
+                    <div class="bg-paper-dark p-3 rounded-xl border border-paper-border space-y-2">
+                        <h3 class="font-serif font-bold text-xs text-ink-main flex items-center gap-1.5">
+                            <i class="fa-solid fa-sliders text-book-accent"></i> Kijelölt Elem Kezelése
+                        </h3>
+                        <div id="selectionControls" class="space-y-2">
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-between text-[11px] text-ink-light">
+                                    <span>Tetszőleges forgatás:</span>
+                                    <input type="number" id="customAngleInput" min="-360" max="360" value="0" onchange="setCustomAngle(this.value)" class="w-12 px-1 py-0.5 border border-paper-border rounded text-center text-xs font-mono font-bold text-ink-main bg-white">
+                                </div>
+                                <input type="range" id="angleSlider" min="0" max="360" value="0" oninput="setCustomAngle(this.value)" class="w-full accent-book-accent cursor-pointer h-1.5">
+                                
+                                <div class="grid grid-cols-4 gap-1 pt-1">
+                                    <button onclick="rotateSelected(-45)" class="px-1 py-0.5 bg-white rounded border border-paper-border text-[10px] hover:bg-stone-50 text-ink-main font-medium">-45°</button>
+                                    <button onclick="rotateSelected(-15)" class="px-1 py-0.5 bg-white rounded border border-paper-border text-[10px] hover:bg-stone-50 text-ink-main font-medium">-15°</button>
+                                    <button onclick="rotateSelected(15)" class="px-1 py-0.5 bg-white rounded border border-paper-border text-[10px] hover:bg-stone-50 text-ink-main font-medium">+15°</button>
+                                    <button onclick="rotateSelected(45)" class="px-1 py-0.5 bg-white rounded border border-paper-border text-[10px] hover:bg-stone-50 text-ink-main font-medium">+45°</button>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-paper-border pt-1.5 space-y-1">
+                                <span class="text-[11px] text-ink-light block">Rétegrend (Z-Index):</span>
+                                <div class="grid grid-cols-2 gap-1.5">
+                                    <button onclick="bringToFront()" class="py-1 bg-white rounded border border-paper-border text-[11px] hover:bg-stone-50 text-ink-main font-medium flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-layer-group text-book-accent"></i> Előre küld
+                                    </button>
+                                    <button onclick="sendToBack()" class="py-1 bg-white rounded border border-paper-border text-[11px] hover:bg-stone-50 text-ink-main font-medium flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-layer-group text-book-secondary"></i> Hátra küld
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button onclick="deleteSelected()" class="w-full py-1 bg-red-100/80 text-red-700 rounded border border-red-200 text-[11px] hover:bg-red-200/80 font-medium flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-trash"></i> Elem törlése
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid settings -->
+                    <div class="bg-paper-dark p-3 rounded-xl border border-paper-border space-y-1.5">
+                        <div class="flex justify-between items-center text-[11px]">
+                            <label class="font-medium text-ink-main">Rácshoz illesztés (Snap):</label>
+                            <input type="checkbox" id="snapToGrid" checked="" class="rounded border-paper-border text-book-accent focus:ring-book-accent">
+                        </div>
+                        <div class="flex justify-between items-center text-[11px]">
+                            <label class="font-medium text-ink-main">Mátrix háló megjelenítés:</label>
+                            <input type="checkbox" id="showMatrixGrid" checked="" onchange="drawBoard()" class="rounded border-paper-border text-book-accent focus:ring-book-accent">
+                        </div>
+                        <button onclick="clearBoard()" class="w-full py-1 bg-white rounded border border-paper-border text-[11px] font-medium text-ink-main hover:bg-stone-50 transition-all shadow-sm flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-eraser"></i> Tábla ürítése
+                        </button>
+                    </div>
+
+                    <!-- Task Cards Section -->
+                    <div class="bg-paper-dark p-3 rounded-xl border border-paper-border space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-serif font-bold text-xs text-ink-main flex items-center gap-1.5">
+                                <i class="fa-solid fa-clone text-amber-600"></i> Minta Kártyák
+                            </h3>
+                            <span id="cardCounter" class="text-[10px] font-mono font-bold text-ink-light">1 / 6</span>
+                        </div>
+                        
+                        <div class="bg-white p-2 rounded-xl border-2 border-amber-200 shadow-sm flex flex-col items-center space-y-1.5">
+                            <span id="cardTitle" class="font-serif font-bold text-[11px] text-ink-main">1. Kisház Model</span>
+                            <div class="w-20 h-20 border border-dashed border-stone-300 rounded flex items-center justify-center bg-stone-50 p-1">
+                                <svg id="cardSvg" width="70" height="70" viewBox="0 0 100 100"><polygon points="20,50 80,50 50,15" fill="#e74c3c"></polygon>
+                  <rect x="30" y="50" width="40" height="35" fill="#f97316"></rect>
+                  <rect x="45" y="65" width="10" height="20" fill="#ec4899"></rect>
+                  <rect x="65" y="25" width="8" height="8" fill="#a855f7"></rect></svg>
+                            </div>
+                            <div class="flex gap-1.5 w-full">
+                                <button onclick="nextCard(-1)" class="flex-1 py-0.5 bg-paper border border-paper-border rounded text-[10px] font-medium hover:bg-white text-ink-main">
+                                    <i class="fa-solid fa-chevron-left"></i> Előző
+                                </button>
+                                <button onclick="nextCard(1)" class="flex-1 py-0.5 bg-book-accent text-white rounded text-[10px] font-medium hover:bg-book-accent/90">
+                                    Következő <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle: Canvas Board -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-start">
+                    <div class="relative bg-white p-3 rounded-xl border-2 border-paper-border shadow-inner w-full flex flex-col items-center">
+                        <div class="text-xs font-mono text-ink-light mb-2 flex justify-between w-full px-1">
+                            <span class="font-bold text-ink-main">2D Szabad Geometriai Rajztábla (12×12)</span>
+                            <span id="canvasCoords" class="text-book-accent font-mono font-bold">X: 2 | Y: 2</span>
+                        </div>
+                        
+                        <canvas id="tangramCanvas" width="360" height="360" class="border border-paper-border rounded cursor-crosshair bg-stone-50/50 shadow-sm"></canvas>
+                        
+                        <p class="text-[10px] text-ink-light mt-2 italic text-center">
+                            Tipp: Egérrel / érintéssel ragadd meg és mozgasd az alakzatokat a rácson!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: Inline Compact Matrix & Code -->
+                <div class="lg:col-span-4" id="dockedCodeContainer">
+                    <div id="inlineCodeBlock" class="flex flex-col">
+                        <div class="bg-ide-header px-3 py-2 rounded-t-xl border-b border-gray-700 flex justify-between items-center">
+                            <span class="text-xs font-mono text-gray-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-cyan-400"></i> Élő Mátrix Transzformáció
+                            </span>
+                            <span class="text-[10px] text-emerald-400 font-mono">LIVE MATRIX</span>
+                        </div>
+                        <div class="bg-ide-bg p-3 rounded-b-xl border border-gray-800 font-mono text-xs text-gray-200 flex flex-col space-y-3">
+                            <div>
+                                <div class="text-[10px] text-gray-400 mb-1">// Generált 12x12-es Érték Mátrix:</div>
+                                <div id="liveMatrixGrid" class="font-mono text-[9px] leading-3 bg-black/40 p-2 rounded border border-gray-800 text-cyan-300 overflow-x-auto ide-scroll font-bold"><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">1 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">2 </span><span class="text-amber-400 font-bold">2 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">2 </span><span class="text-amber-400 font-bold">2 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br></div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 mb-1">// Mátrix Adatszerkezet (JSON Nézet):</div>
+                                <pre id="liveMatrixCode" class="text-[10px] bg-black/40 p-2 rounded border border-gray-800 text-amber-200 overflow-x-auto h-28 ide-scroll">// Aktív Alakzatok Réteg Stacks:
+[
+  {
+    "id": 1,
+    "type": "triangle_lg",
+    "pos": "[1, 1]",
+    "rot": "315.0°",
+    "z": 2
+  },
+  {
+    "id": 2,
+    "type": "triangle_med",
+    "pos": "[2, 3]",
+    "rot": "45.0°",
+    "z": 1
+  }
+]</pre>
+                            </div>
+                            <button onclick="executeReconstruction()" class="w-full py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded font-sans text-xs font-medium transition-all flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-play"></i> Rekonstrukció Futtatása
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: A Fedés Problémája -->
+    <section id="tab2" class="tab-content space-y-4 hidden">
+        <div class="book-page p-5 rounded-xl space-y-4">
+            <div>
+                <span class="text-[10px] font-semibold tracking-wider uppercase text-book-accent">Elméleti Háttér</span>
+                <h2 class="text-xl font-serif font-bold text-ink-main mt-0.5">Fedési Problémák (Overlap) &amp; Réteg-Mátrixok (Layering)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-red-50/60 p-4 rounded-xl border border-red-200 space-y-2">
+                    <div class="flex items-center gap-2 text-red-800 font-serif font-bold text-sm">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <h3>1. Egyszerű Cellafelülírás (Adatvesztés)</h3>
+                    </div>
+                    <p class="text-xs text-ink-light leading-relaxed">
+                        Ha egy 2D-s tömbben egy cellában csak **egyetlen értéket** tárolunk, felülfedés esetén az alul lévő alakzat adata véglegesen megsemmisül!
+                    </p>
+                    <div class="bg-ide-bg p-2.5 rounded font-mono text-[11px] text-red-300">
+                        M[4][5] = SHAPE_TRIANGLE; // Háromszög<br>
+                        M[4][5] = SHAPE_SQUARE;   // <span class="text-red-400">HIBA: A háromszög elveszett!</span>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50/60 p-4 rounded-xl border border-emerald-200 space-y-2">
+                    <div class="flex items-center gap-2 text-emerald-800 font-serif font-bold text-sm">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <h3>2. Réteg-Mátrix / Stack Cellák (Megoldás)</h3>
+                    </div>
+                    <p class="text-xs text-ink-light leading-relaxed">
+                        Minden cellában egy **Stack-et (Vektoros Listát)** tartunk fenn (`M[row][col][layer]`), így a Z-sorrend és az áttetszőség is megmarad!
+                    </p>
+                    <div class="bg-ide-bg p-2.5 rounded font-mono text-[11px] text-emerald-300">
+                        M[4][5].push(SHAPE_TRIANGLE); // Réteg 0<br>
+                        M[4][5].push(SHAPE_SQUARE);   // Réteg 1 (Tetején)
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-paper-dark p-4 rounded-xl border border-paper-border space-y-3">
+                <h3 class="font-serif font-bold text-xs text-ink-main">Interaktív Fedési Demó: Két Alakzat Egymáson</h3>
+                <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <div class="space-y-1 text-center">
+                        <div class="inline-block p-1.5 bg-white rounded border border-paper-border shadow-sm">
+                            <canvas id="overlapCanvas" width="160" height="160" class="bg-stone-50 rounded"></canvas>
+                        </div>
+                        <div class="text-[11px] text-ink-light">Látvány: Négyzet fed egy Háromszöget</div>
+                    </div>
+
+                    <div class="flex-grow space-y-2 w-full">
+                        <div class="p-2.5 bg-white rounded-lg border border-paper-border">
+                            <h4 class="text-xs font-bold text-red-700 font-serif">A) Veszteséges 2D Mátrix Nézete:</h4>
+                            <p class="text-xs font-mono text-gray-700 mt-0.5">Cell[3][3] = <span class="bg-emerald-100 text-emerald-800 font-bold px-1 rounded">3 (Négyzet)</span> — A Háromszög elveszett!</p>
+                        </div>
+                        <div class="p-2.5 bg-white rounded-lg border border-paper-border">
+                            <h4 class="text-xs font-bold text-emerald-700 font-serif">B) Réteges 3D Mátrix Cell Nézete:</h4>
+                            <p class="text-xs font-mono text-gray-700 mt-0.5">Cell[3][3] = <span class="bg-red-100 text-red-800 font-bold px-1 rounded">[ 1 (Háromszög) , 3 (Négyzet) ]</span> — Mindkét réteg megőrizve!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: EXACT REPLICATION OF USER IMAGE (A, B, C OPTIONS) + INTERACTIVE MATRIX EDITOR -->
+    <section id="tab3" class="tab-content space-y-6 hidden">
+        <div class="book-page p-6 rounded-xl space-y-6">
+            <div>
+                <span class="text-xs font-semibold tracking-wider uppercase text-book-accent">SZEMLÉLTETÉS &amp; ÖSSZEHASONLÍTÁS</span>
+                <h2 class="text-2xl font-serif font-bold text-ink-main mt-1">Adatszerkezeti Opciók Részletes Példái</h2>
+                <p class="text-xs text-ink-light mt-1">Nézzük meg az 5. fejezet kvízkérdésének 3 opcióját működés és kód szempontjából!</p>
+            </div>
+
+            <!-- OPTION A (VERBATIM FROM USER IMAGE) -->
+            <div class="bg-paper-dark p-5 rounded-xl border border-paper-border space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-book-accent font-mono uppercase bg-red-100/80 text-red-800 px-2 py-0.5 rounded">OPTION A</span>
+                    <span class="text-[11px] text-gray-500 font-mono">1D Tömb (Float Array)</span>
+                </div>
+                <h3 class="font-serif font-bold text-base text-ink-main">a) Egydimenziós float tömb (`float array[N]`)</h3>
+                <p class="text-xs text-ink-light leading-relaxed">
+                    Egy egydimenziós tömbben a kétdimenziós rácsot indexszámítással sorfolytonosan tárolhatjuk (<code>index = row * cols + col</code>), vagy lefedettségi tényezőket / átlátszósági értékeket (0.0–tól 1.0–ig) írhatunk bele.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-gray-300">
+                        <div class="text-gray-500 mb-1">// C++ Példa:</div>
+                        <span class="text-cyan-400">float</span> grid1D[144]; <span class="text-gray-500">// 12×12 rács 1D-ben</span><br>
+                        <span class="text-gray-500">// Elérés: row=3, col=4</span><br>
+                        grid1D[3 * 12 + 4] = 0.85f; <span class="text-gray-500">// 85% lefedettség</span>
+                    </div>
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-amber-200">
+                        <div class="text-gray-500 mb-1">// Python Példa:</div>
+                        import numpy as np<br>
+                        grid_1d = np.zeros(144, dtype=float)<br>
+                        grid_1d[3 * 12 + 4] = 0.85
+                    </div>
+                </div>
+                <div class="text-[11px] text-red-700 bg-red-50 p-2 rounded border border-red-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-xmark"></i> <span><strong>Korlát:</strong> Nem képes több egymásra helyezett alakzat Z-sorrendjének és egyedi azonosítóinak tárolására.</span>
+                </div>
+            </div>
+
+            <!-- OPTION B (VERBATIM FROM USER IMAGE) -->
+            <div class="bg-emerald-50/70 p-5 rounded-xl border border-emerald-300 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-emerald-800 font-mono uppercase bg-emerald-200 px-2 py-0.5 rounded">OPTION B (HELYES)</span>
+                    <span class="text-[11px] text-emerald-700 font-mono">Dinamikus Stack / Vektorok Vektora</span>
+                </div>
+                <h3 class="font-serif font-bold text-base text-ink-main">b) Dinamikus lista / Stack (Vektorok vektora cellánként)</h3>
+                <p class="text-xs text-ink-light leading-relaxed">
+                    A rács minden egyes cellája önmagában egy dinamikusan növekvő listát / vermet tárol. Ha új alakzat takarja be az adott cellát, az felkerül a lista tetejére. Így a teljes rétegrend és átfedés megmarad.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-gray-300">
+                        <div class="text-gray-500 mb-1">// C++ Példa (std::vector 3D):</div>
+                        <span class="text-cyan-400">std::vector</span>&lt;Shape&gt; grid[12][12];<br>
+                        grid[3][4].push_back(triangle); <span class="text-gray-500">// 0. Réteg</span><br>
+                        grid[3][4].push_back(square);   <span class="text-gray-500">// 1. Réteg (Felül)</span>
+                    </div>
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-emerald-300">
+                        <div class="text-gray-500 mb-1">// Python Példa:</div>
+                        grid_stack = [[[] for _ in range(12)] for _ in range(12)]<br>
+                        grid_stack[3][4].append({"type": "triangle"})<br>
+                        grid_stack[3][4].append({"type": "square"})
+                    </div>
+                </div>
+                <div class="text-[11px] text-emerald-800 bg-emerald-100 p-2 rounded border border-emerald-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-check"></i> <span><strong>Előny:</strong> Veszteségmentes! Rekonstruálható az eredeti kirakó teljes rétegrendje.</span>
+                </div>
+            </div>
+
+            <!-- OPTION C (VERBATIM FROM USER IMAGE) -->
+            <div class="bg-paper-dark p-5 rounded-xl border border-paper-border space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-book-accent font-mono uppercase bg-red-100/80 text-red-800 px-2 py-0.5 rounded">OPTION C</span>
+                    <span class="text-[11px] text-gray-500 font-mono">Bool Matrix</span>
+                </div>
+                <h3 class="font-serif font-bold text-base text-ink-main">c) Logikai (bool) mátrix (`bool M[12][12]`)</h3>
+                <p class="text-xs text-ink-light leading-relaxed">
+                    Egyszerű bináris mátrix: egy adott celláról csak annyit mond meg, hogy **foglalt-e (true)** vagy **üres (false)**.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-gray-300">
+                        <div class="text-gray-500 mb-1">// C++ Példa:</div>
+                        <span class="text-cyan-400">bool</span> isOccupied[12][12] = {<span class="text-amber-400">false</span>};<br>
+                        isOccupied[3][4] = <span class="text-amber-400">true</span>; <span class="text-gray-500">// Van itt valami</span>
+                    </div>
+                    <div class="bg-ide-bg p-3.5 rounded-lg text-xs font-mono text-amber-200">
+                        <div class="text-gray-500 mb-1">// Python Példa:</div>
+                        import numpy as np<br>
+                        is_occupied = np.zeros((12, 12), dtype=bool)<br>
+                        is_occupied[3, 4] = True
+                    </div>
+                </div>
+                <div class="text-[11px] text-red-700 bg-red-50 p-2 rounded border border-red-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-xmark"></i> <span><strong>Korlát:</strong> Csak az érzékelhető, hogy üres-e a pixel, az alakzat típusa, színe és rétege elveszik.</span>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE MATRIX TYPE EDITOR SUB-MODULE -->
+            <div class="border-t border-paper-border pt-6 space-y-4">
+                <h3 class="font-serif font-bold text-lg text-ink-main flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-book-accent"></i> Interaktív Kitölthető Mátrix Részlet (6×6)
+                </h3>
+                
+                <div class="flex space-x-2 border-b border-paper-border pb-2">
+                    <button onclick="setMatrixType('bool')" id="mtype-bool" class="px-3 py-1.5 rounded text-xs font-medium bg-book-accent text-white transition-all">c) Logikai bool Mátrix</button>
+                    <button onclick="setMatrixType('float1d')" id="mtype-float1d" class="px-3 py-1.5 rounded text-xs font-medium bg-paper-dark border border-paper-border text-ink-main hover:bg-paper transition-all">a) 1D Float Tömb</button>
+                    <button onclick="setMatrixType('stack')" id="mtype-stack" class="px-3 py-1.5 rounded text-xs font-medium bg-paper-dark border border-paper-border text-ink-main hover:bg-paper transition-all">b) Dinamikus Stack (3D)</button>
+                </div>
+
+                <div id="matrixTypeDescription" class="p-3 bg-paper-dark rounded-xl border border-paper-border text-xs leading-relaxed">
+                    <!-- Dynamic Text -->
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-paper-border space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-ink-main">Szerkeszthető Cellák:</span>
+                        <div class="flex gap-2">
+                            <button onclick="fillSampleMatrix()" class="px-2.5 py-1 bg-paper border border-paper-border text-[11px] rounded font-medium hover:bg-stone-50">Minta Kitöltése</button>
+                            <button onclick="resetEditorGrid()" class="px-2.5 py-1 bg-red-50 text-red-700 border border-red-200 text-[11px] rounded font-medium hover:bg-red-100">Nullázás</button>
+                        </div>
+                    </div>
+
+                    <div id="interactiveGridContainer" class="grid grid-cols-6 gap-1.5 max-w-md mx-auto"><input class="matrix-cell-input" id="cell_0_0"><input class="matrix-cell-input" id="cell_0_1"><input class="matrix-cell-input" id="cell_0_2"><input class="matrix-cell-input" id="cell_0_3"><input class="matrix-cell-input" id="cell_0_4"><input class="matrix-cell-input" id="cell_0_5"><input class="matrix-cell-input" id="cell_1_0"><input class="matrix-cell-input" id="cell_1_1"><input class="matrix-cell-input" id="cell_1_2"><input class="matrix-cell-input" id="cell_1_3"><input class="matrix-cell-input" id="cell_1_4"><input class="matrix-cell-input" id="cell_1_5"><input class="matrix-cell-input" id="cell_2_0"><input class="matrix-cell-input" id="cell_2_1"><input class="matrix-cell-input" id="cell_2_2"><input class="matrix-cell-input" id="cell_2_3"><input class="matrix-cell-input" id="cell_2_4"><input class="matrix-cell-input" id="cell_2_5"><input class="matrix-cell-input" id="cell_3_0"><input class="matrix-cell-input" id="cell_3_1"><input class="matrix-cell-input" id="cell_3_2"><input class="matrix-cell-input" id="cell_3_3"><input class="matrix-cell-input" id="cell_3_4"><input class="matrix-cell-input" id="cell_3_5"><input class="matrix-cell-input" id="cell_4_0"><input class="matrix-cell-input" id="cell_4_1"><input class="matrix-cell-input" id="cell_4_2"><input class="matrix-cell-input" id="cell_4_3"><input class="matrix-cell-input" id="cell_4_4"><input class="matrix-cell-input" id="cell_4_5"><input class="matrix-cell-input" id="cell_5_0"><input class="matrix-cell-input" id="cell_5_1"><input class="matrix-cell-input" id="cell_5_2"><input class="matrix-cell-input" id="cell_5_3"><input class="matrix-cell-input" id="cell_5_4"><input class="matrix-cell-input" id="cell_5_5"></div>
+
+                    <div class="p-3 bg-ide-bg rounded-lg text-xs font-mono text-cyan-300">
+                        <span class="text-gray-400 text-[10px]">// Generált Kód-Reprezentáció az élő adatokból:</span>
+                        <pre id="generatedCodePreview" class="mt-1 text-amber-200 overflow-x-auto text-[11px]">// bool isOccupied[6][6]
+{
+  {1, 0, 0, 0, 0, 1},
+  {0, 1, 0, 0, 1, 0},
+  {0, 0, 1, 1, 0, 0},
+  {0, 0, 1, 1, 0, 0},
+  {0, 1, 0, 0, 1, 0},
+  {1, 0, 0, 0, 0, 1}
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: C++ vs Python Kódok -->
+    <section id="tab4" class="tab-content space-y-4 hidden">
+        <div class="book-page p-5 rounded-xl space-y-4">
+            <div>
+                <span class="text-[10px] font-semibold tracking-wider uppercase text-book-accent">Implementáció</span>
+                <h2 class="text-xl font-serif font-bold text-ink-main mt-0.5">C++ vs Python Adatszerkezetek</h2>
+            </div>
+
+            <div class="bg-ide-bg rounded-xl overflow-hidden border border-gray-800 shadow-lg">
+                <div class="bg-ide-header px-4 py-2.5 border-b border-gray-800 flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="showCodeLang('cpp')" id="lang-btn-cpp" class="px-3 py-1 rounded text-xs font-mono font-medium bg-book-accent text-white transition-all">C++20 (std::vector &amp; struct)</button>
+                        <button onclick="showCodeLang('py')" id="lang-btn-py" class="px-3 py-1 rounded text-xs font-mono font-medium bg-gray-800 text-gray-400 hover:text-white transition-all">Python 3 (Listák &amp; Dictionaries)</button>
+                    </div>
+                    <span class="text-[11px] font-mono text-gray-500">10. Osztály</span>
+                </div>
+
+                <!-- C++ Code -->
+                <div id="code-cpp" class="p-4 font-mono text-xs text-gray-200 overflow-x-auto ide-scroll space-y-2">
+<pre class="text-emerald-400">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+struct Shape {
+    int id;
+    std::string type; // "triangle_lg", "square"
+    double rotation;  // tetszőleges fok
+    std::string colorHex;
+};
+
+using LayerMatrix = std::vector&lt;std::vector&lt;std::vector&lt;Shape&gt;&gt;&gt;;
+
+int main() {
+    LayerMatrix grid(12, std::vector&lt;std::vector&lt;Shape&gt;&gt;(12));
+
+    Shape triangle{1, "triangle_lg", 315.0, "#e74c3c"};
+    grid[4][5].push_back(triangle);
+
+    Shape square{2, "square", 0.0, "#f97316"};
+    grid[4][5].push_back(square);
+
+    std::cout &lt;&lt; "Cella [4][5] rétegei: " &lt;&lt; grid[4][5].size() &lt;&lt; std::endl;
+    return 0;
+}</pre>
+                </div>
+
+                <!-- Python Code -->
+                <div id="code-py" class="p-4 font-mono text-xs text-gray-200 overflow-x-auto ide-scroll hidden space-y-2">
+<pre class="text-amber-300"># 12x12-es Mátrix inicializálása dinamikus listákkal
+grid_matrix = [[[] for _ in range(12)] for _ in range(12)]
+
+shape_1 = {"id": 1, "type": "triangle_lg", "rotation": 315.0, "color": "#e74c3c"}
+shape_2 = {"id": 2, "type": "square", "rotation": 0.0, "color": "#f97316"}
+
+grid_matrix[4][5].append(shape_1) # Réteg 0
+grid_matrix[4][5].append(shape_2) # Réteg 1 (Fedés)
+
+def get_top_shape(row, col):
+    cell = grid_matrix[row][col]
+    return cell[-1] if cell else None
+
+print(f"Legfelső alakzat [4][5]: {get_top_shape(4, 5)}")</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Kvíz -->
+    <section id="tab5" class="tab-content hidden space-y-4">
+        <div class="book-page p-5 rounded-xl space-y-4">
+            <div>
+                <span class="text-[10px] font-semibold tracking-wider uppercase text-book-accent">Tudásellenőrzés</span>
+                <h2 class="text-xl font-serif font-bold text-ink-main mt-0.5">Interaktív Kvíz</h2>
+            </div>
+
+            <div class="space-y-3">
+                <div class="p-3.5 bg-paper-dark rounded-xl border border-paper-border space-y-2">
+                    <p class="text-xs font-serif font-bold text-ink-main">1. Mi történik, ha egy egyszerű 2D int tömbben (`int M[12][12]`) két alakzat ugyanazt a cellát foglalja el?</p>
+                    <div class="space-y-1 text-xs">
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q1" value="a" class="text-book-accent">
+                            <span>a) A rendszer automatikusan új dimenziót hoz létre.</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q1" value="b" class="text-book-accent">
+                            <span>b) Felülíródik az előző érték, így az alsó alakzat adatai elvesznek.</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q1" value="c" class="text-book-accent">
+                            <span>c) A program szintaktikai hibát dob futás közben.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="p-3.5 bg-paper-dark rounded-xl border border-paper-border space-y-2">
+                    <p class="text-xs font-serif font-bold text-ink-main">2. Melyik adatszerkezet alkalmas a fedési sorrend (Z-Index) hiánytalan tárolására egy mátrix cellában?</p>
+                    <div class="space-y-1 text-xs">
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q2" value="a" class="text-book-accent">
+                            <span>a) Egydimenziós float tömb.</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q2" value="b" class="text-book-accent">
+                            <span>b) Dinamikus lista / Stack (vektorok vektora cellánként).</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1.5 rounded hover:bg-white cursor-pointer">
+                            <input type="radio" name="q2" value="c" class="text-book-accent">
+                            <span>c) Logikai (bool) mátrix.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="evaluateQuiz()" class="px-4 py-2 bg-book-accent hover:bg-book-accent/90 text-white rounded-lg text-xs font-medium shadow-sm transition-all">
+                    Válaszok Ellenőrzése
+                </button>
+                <div id="quizResult" class="hidden p-2.5 rounded-lg text-xs font-medium"></div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FLOATING PIP WINDOW -->
+<div id="pipModal" class="pip-window hidden bg-ide-bg rounded-xl border-2 border-book-accent text-white font-mono shadow-2xl flex flex-col" style="top: 70px; right: 20px; width: 380px; height: 440px;">
+    <div id="pipHeader" class="pip-drag-handle bg-ide-header px-3 py-2 border-b border-gray-700 flex justify-between items-center select-none">
+        <span class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-window-restore"></i> PiP Mátrix Figyelő
+        </span>
+        <div class="flex items-center gap-1">
+            <button onclick="toggleMinimizePiP()" title="Minimál nézet" class="p-1 px-1.5 hover:bg-gray-700 rounded text-gray-300 text-xs">
+                <i class="fa-solid fa-minus" id="pipMinIcon"></i>
+            </button>
+            <button onclick="togglePiP()" title="Visszatétel" class="p-1 px-1.5 hover:bg-gray-700 rounded text-gray-300 text-xs">
+                <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+            </button>
+            <button onclick="togglePiP()" title="Bezárás" class="p-1 px-1.5 hover:bg-red-600 rounded text-gray-300 text-xs">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="pipBody" class="p-3 flex-grow flex flex-col justify-between space-y-2 overflow-hidden">
+        <div class="flex-grow flex flex-col space-y-2 overflow-hidden">
+            <div>
+                <span class="text-[10px] text-gray-400">// Élő 12x12 Raszter Mátrix:</span>
+                <div id="pipMatrixGrid" class="font-mono text-[9px] leading-3 bg-black/50 p-2 rounded border border-gray-800 text-cyan-300 overflow-x-auto ide-scroll font-bold mt-1"><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">1 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">1 </span><span class="text-amber-400 font-bold">2 </span><span class="text-amber-400 font-bold">2 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-amber-400 font-bold">2 </span><span class="text-amber-400 font-bold">2 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><span class="text-gray-700">0 </span><br></div>
+            </div>
+            <div class="flex-grow flex flex-col">
+                <span class="text-[10px] text-gray-400">// Adatszerkezet Állapot:</span>
+                <pre id="pipMatrixCode" class="text-[10px] bg-black/50 p-2 rounded border border-gray-800 text-amber-200 overflow-auto flex-grow ide-scroll mt-1">// Aktív Alakzatok Réteg Stacks:
+[
+  {
+    "id": 1,
+    "type": "triangle_lg",
+    "pos": "[1, 1]",
+    "rot": "315.0°",
+    "z": 2
+  },
+  {
+    "id": 2,
+    "type": "triangle_med",
+    "pos": "[2, 3]",
+    "rot": "45.0°",
+    "z": 1
+  }
+]</pre>
+            </div>
+        </div>
+
+        <div class="pt-1.5 border-t border-gray-800 flex gap-2">
+            <button onclick="executeReconstruction()" class="flex-1 py-1 bg-emerald-700 hover:bg-emerald-600 text-white rounded font-sans text-xs font-medium transition-all flex items-center justify-center gap-1">
+                <i class="fa-solid fa-play"></i> Futtatás
+            </button>
+            <button onclick="clearBoard()" class="py-1 px-3 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded font-sans text-xs font-medium transition-all">
+                Ürítés
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Dialog for Reconstruction -->
+<div id="reconstructModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-sm w-full p-5 space-y-3 border border-paper-border shadow-2xl">
+        <div class="flex justify-between items-center border-b pb-2">
+            <h3 class="font-serif font-bold text-base text-ink-main">Rekonstrukciós Szimulátor</h3>
+            <button onclick="closeReconstructModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <p class="text-xs text-ink-light">
+            Az algoritmus beolvasta a diszkrét mátrix tömböt és újjáépítette a vektorgrafikus alakzatokat:
+        </p>
+        <div class="bg-stone-100 p-2 rounded border flex justify-center">
+            <canvas id="reconstructCanvas" width="220" height="220" class="bg-white border rounded"></canvas>
+        </div>
+        <div id="reconstructLog" class="text-[11px] font-mono bg-ide-bg text-emerald-400 p-2.5 rounded h-20 overflow-y-auto ide-scroll"></div>
+        <button onclick="closeReconstructModal()" class="w-full py-1.5 bg-book-accent text-white rounded font-medium text-xs">Rendben</button>
+    </div>
+</div>
+
+<footer class="border-t border-paper-border bg-paper/60 py-3 mt-8 text-center text-[11px] text-ink-light">
+    Digitális Tananyag — Informatika 10. Osztály | Mátrix Geometriai Modell &amp; Fedési Algoritmusok
+</footer>
+
+<script>
+    const GRID_SIZE = 12;
+    const CELL_SIZE = 30;
+    let shapes = [];
+    let selectedShapeId = null;
+    let isDragging = false;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+    let isPiPActive = false;
+    let isPiPMinimized = false;
+    let currentMatrixType = 'bool';
+
+    const CARDS = [
+        {
+            title: "1. Kisház Model",
+            svg: `<polygon points="20,50 80,50 50,15" fill="#e74c3c"/>
+                  <rect x="30" y="50" width="40" height="35" fill="#f97316"/>
+                  <rect x="45" y="65" width="10" height="20" fill="#ec4899"/>
+                  <rect x="65" y="25" width="8" height="8" fill="#a855f7"/>`
+        },
+        {
+            title: "2. Vitorlás Hajó",
+            svg: `<polygon points="50,15 85,60 50,60" fill="#3498db"/>
+                  <polygon points="45,25 20,60 45,60" fill="#06b6d4"/>
+                  <polygon points="15,65 85,65 75,80 25,80" fill="#a855f7"/>`
+        },
+        {
+            title: "3. Róka / Cica",
+            svg: `<polygon points="30,30 50,50 30,50" fill="#e74c3c"/>
+                  <polygon points="70,30 50,50 70,50" fill="#e74c3c"/>
+                  <rect x="35" y="50" width="30" height="30" fill="#f59e0b" transform="rotate(45 50 65)"/>`
+        },
+        {
+            title: "4. Szélerőmű / Torony",
+            svg: `<polygon points="40,85 60,85 53,30 47,30" fill="#ec4899"/>
+                  <polygon points="50,30 80,20 50,35" fill="#10b981"/>
+                  <polygon points="50,30 20,20 50,35" fill="#06b6d4"/>
+                  <polygon points="50,30 50,60 42,35" fill="#a855f7"/>`
+        },
+        {
+            title: "5. Kishal",
+            svg: `<rect x="30" y="35" width="30" height="30" fill="#e74c3c" transform="rotate(45 45 50)"/>
+                  <polygon points="65,50 85,30 85,70" fill="#3498db"/>`
+        },
+        {
+            title: "6. Rakéta",
+            svg: `<polygon points="50,10 70,35 30,35" fill="#e74c3c"/>
+                  <rect x="35" y="35" width="30" height="35" fill="#3498db"/>
+                  <polygon points="35,50 15,75 35,70" fill="#ec4899"/>
+                  <polygon points="65,50 85,75 65,70" fill="#ec4899"/>`
+        }
+    ];
+    let currentCardIdx = 0;
+
+    const canvas = document.getElementById('tangramCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const SHAPE_TYPES = {
+        'triangle_lg': { type: 'triangle_lg', name: 'Nagy Háromszög', color: '#e74c3c', matrixId: 1, path: [ {x:0, y:0}, {x:90, y:0}, {x:0, y:90} ] },
+        'triangle_med': { type: 'triangle_med', name: 'Közepes Háromszög', color: '#3498db', matrixId: 2, path: [ {x:0, y:0}, {x:60, y:0}, {x:0, y:60} ] },
+        'triangle_sm': { type: 'triangle_sm', name: 'Kis Háromszög', color: '#06b6d4', matrixId: 3, path: [ {x:0, y:0}, {x:45, y:0}, {x:0, y:45} ] },
+        'square': { type: 'square', name: 'Négyzet', color: '#f97316', matrixId: 4, path: [ {x:0, y:0}, {x:45, y:0}, {x:45, y:45}, {x:0, y:45} ] },
+        'parallelogram': { type: 'parallelogram', name: 'Paralelogramma', color: '#a855f7', matrixId: 5, path: [ {x:0, y:30}, {x:45, y:30}, {x:60, y:0}, {x:15, y:0} ] },
+        'trapezoid': { type: 'trapezoid', name: 'Trapéz', color: '#ec4899', matrixId: 6, path: [ {x:0, y:30}, {x:60, y:30}, {x:45, y:0}, {x:15, y:0} ] }
+    };
+
+    window.onload = function() {
+        shapes.push({ id: 1, type: 'triangle_lg', x: 30, y: 30, rotation: 315, color: '#e74c3c', zIndex: 2 });
+        shapes.push({ id: 2, type: 'triangle_med', x: 90, y: 60, rotation: 45, color: '#3498db', zIndex: 1 });
+        selectedShapeId = 1;
+        
+        setupCanvasListeners();
+        setupPiPDrag();
+        drawBoard();
+        drawOverlapDemo();
+        updateMatrixViews();
+        renderCard();
+        updateSelectionUI();
+        initInteractiveEditorGrid();
+    };
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(el => {
+            el.classList.remove('active', 'border-book-accent', 'bg-paper', 'text-book-accent', 'shadow-sm');
+            el.classList.add('border-transparent', 'text-ink-light');
+        });
+
+        document.getElementById(tabId).classList.remove('hidden');
+        const activeNav = document.getElementById('nav-' + tabId);
+        activeNav.classList.add('active', 'border-book-accent', 'bg-paper', 'text-book-accent', 'shadow-sm');
+        activeNav.classList.remove('border-transparent', 'text-ink-light');
+
+        if (tabId === 'tab2') drawOverlapDemo();
+        if (tabId === 'tab3') initInteractiveEditorGrid();
+    }
+
+    function addShape(typeKey) {
+        const proto = SHAPE_TYPES[typeKey];
+        if (!proto) return;
+
+        const maxZ = shapes.length > 0 ? Math.max(...shapes.map(s => s.zIndex)) : 0;
+
+        const newShape = {
+            id: Date.now(),
+            type: typeKey,
+            x: 60 + (shapes.length * 15) % 180,
+            y: 60 + (shapes.length * 15) % 180,
+            rotation: 0,
+            color: proto.color,
+            zIndex: maxZ + 1
+        };
+
+        shapes.push(newShape);
+        selectedShapeId = newShape.id;
+        updateSelectionUI();
+        drawBoard();
+        updateMatrixViews();
+    }
+
+    function setupCanvasListeners() {
+        canvas.addEventListener('pointerdown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const sorted = [...shapes].sort((a,b) => b.zIndex - a.zIndex);
+            let hit = null;
+
+            for (let s of sorted) {
+                if (isPointInShape(mouseX, mouseY, s)) {
+                    hit = s;
+                    break;
+                }
+            }
+
+            if (hit) {
+                selectedShapeId = hit.id;
+                isDragging = true;
+                dragOffsetX = mouseX - hit.x;
+                dragOffsetY = mouseY - hit.y;
+                try { canvas.setPointerCapture(e.pointerId); } catch(err){}
+            } else {
+                selectedShapeId = null;
+            }
+
+            updateSelectionUI();
+            drawBoard();
+        });
+
+        canvas.addEventListener('pointermove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const gridX = Math.floor(mouseX / CELL_SIZE);
+            const gridY = Math.floor(mouseY / CELL_SIZE);
+            document.getElementById('canvasCoords').innerText = `X: ${Math.max(0, Math.min(11, gridX))} | Y: ${Math.max(0, Math.min(11, gridY))}`;
+
+            if (isDragging && selectedShapeId) {
+                const shape = shapes.find(s => s.id === selectedShapeId);
+                if (shape) {
+                    let newX = mouseX - dragOffsetX;
+                    let newY = mouseY - dragOffsetY;
+
+                    if (document.getElementById('snapToGrid').checked) {
+                        newX = Math.round(newX / CELL_SIZE) * CELL_SIZE;
+                        newY = Math.round(newY / CELL_SIZE) * CELL_SIZE;
+                    }
+
+                    shape.x = Math.max(0, Math.min(300, newX));
+                    shape.y = Math.max(0, Math.min(300, newY));
+
+                    drawBoard();
+                    updateMatrixViews();
+                }
+            }
+        });
+
+        const stopDrag = () => { isDragging = false; };
+        window.addEventListener('pointerup', stopDrag);
+        window.addEventListener('pointercancel', stopDrag);
+    }
+
+    function isPointInShape(px, py, shape) {
+        const proto = SHAPE_TYPES[shape.type];
+        if (!proto) return false;
+
+        const rad = -shape.rotation * Math.PI / 180;
+        const dx = px - shape.x;
+        const dy = py - shape.y;
+
+        const rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+        const ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+
+        let maxX = 0, maxY = 0;
+        proto.path.forEach(pt => {
+            if (pt.x > maxX) maxX = pt.x;
+            if (pt.y > maxY) maxY = pt.y;
+        });
+
+        return (rx >= -10 && rx <= maxX + 10 && ry >= -10 && ry <= maxY + 10);
+    }
+
+    function drawBoard() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (document.getElementById('showMatrixGrid').checked) {
+            ctx.strokeStyle = '#e2d7c5';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= GRID_SIZE; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * CELL_SIZE, 0);
+                ctx.lineTo(i * CELL_SIZE, canvas.height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, i * CELL_SIZE);
+                ctx.lineTo(canvas.width, i * CELL_SIZE);
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = '#b8aba0';
+            ctx.font = '10px Plus Jakarta Sans, sans-serif';
+            for (let r = 0; r < GRID_SIZE; r += 3) {
+                for (let c = 0; c < GRID_SIZE; c += 3) {
+                    ctx.fillText(`${r},${c}`, c * CELL_SIZE + 3, r * CELL_SIZE + 12);
+                }
+            }
+        }
+
+        const sorted = [...shapes].sort((a,b) => a.zIndex - b.zIndex);
+
+        sorted.forEach(s => {
+            const proto = SHAPE_TYPES[s.type];
+            if (!proto) return;
+
+            ctx.save();
+            ctx.translate(s.x, s.y);
+            ctx.rotate(s.rotation * Math.PI / 180);
+
+            ctx.beginPath();
+            proto.path.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.closePath();
+
+            ctx.fillStyle = s.color;
+            ctx.fill();
+            ctx.strokeStyle = '#3a2010';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            if (s.id === selectedShapeId) {
+                let minX = 0, maxX = 0, minY = 0, maxY = 0;
+                proto.path.forEach(pt => {
+                    if (pt.x < minX) minX = pt.x;
+                    if (pt.x > maxX) maxX = pt.x;
+                    if (pt.y < minY) minY = pt.y;
+                    if (pt.y > maxY) maxY = pt.y;
+                });
+
+                ctx.strokeStyle = '#8c2d19';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 4]);
+                ctx.strokeRect(minX - 6, minY - 6, (maxX - minX) + 12, (maxY - minY) + 12);
+            }
+
+            ctx.restore();
+        });
+    }
+
+    function updateSelectionUI() {
+        const ctrl = document.getElementById('selectionControls');
+        const shape = shapes.find(s => s.id === selectedShapeId);
+
+        if (shape) {
+            ctrl.classList.remove('opacity-50', 'pointer-events-none');
+            document.getElementById('customAngleInput').value = Math.round(shape.rotation);
+            document.getElementById('angleSlider').value = Math.round(shape.rotation % 360);
+        } else {
+            ctrl.classList.add('opacity-50', 'pointer-events-none');
+            document.getElementById('customAngleInput').value = 0;
+            document.getElementById('angleSlider').value = 0;
+        }
+    }
+
+    function setCustomAngle(val) {
+        if (!selectedShapeId) return;
+        const shape = shapes.find(s => s.id === selectedShapeId);
+        if (shape) {
+            let angle = parseFloat(val) || 0;
+            shape.rotation = (angle % 360 + 360) % 360;
+            document.getElementById('customAngleInput').value = Math.round(shape.rotation);
+            document.getElementById('angleSlider').value = Math.round(shape.rotation);
+            drawBoard();
+            updateMatrixViews();
+        }
+    }
+
+    function rotateSelected(angle) {
+        if (!selectedShapeId) return;
+        const shape = shapes.find(s => s.id === selectedShapeId);
+        if (shape) {
+            shape.rotation = (shape.rotation + angle + 360) % 360;
+            updateSelectionUI();
+            drawBoard();
+            updateMatrixViews();
+        }
+    }
+
+    function bringToFront() {
+        if (!selectedShapeId) return;
+        const shape = shapes.find(s => s.id === selectedShapeId);
+        if (shape) {
+            const maxZ = Math.max(...shapes.map(s => s.zIndex), 0);
+            shape.zIndex = maxZ + 1;
+            drawBoard();
+            updateMatrixViews();
+        }
+    }
+
+    function sendToBack() {
+        if (!selectedShapeId) return;
+        const shape = shapes.find(s => s.id === selectedShapeId);
+        if (shape) {
+            const minZ = Math.min(...shapes.map(s => s.zIndex), 0);
+            shape.zIndex = minZ - 1;
+            drawBoard();
+            updateMatrixViews();
+        }
+    }
+
+    function deleteSelected() {
+        if (!selectedShapeId) return;
+        shapes = shapes.filter(s => s.id !== selectedShapeId);
+        selectedShapeId = null;
+        updateSelectionUI();
+        drawBoard();
+        updateMatrixViews();
+    }
+
+    function clearBoard() {
+        shapes = [];
+        selectedShapeId = null;
+        updateSelectionUI();
+        drawBoard();
+        updateMatrixViews();
+    }
+
+    function generateMatrixData() {
+        const matrix3D = Array.from({ length: GRID_SIZE }, () =>
+            Array.from({ length: GRID_SIZE }, () => [])
+        );
+
+        const matrix2D = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0));
+
+        const sorted = [...shapes].sort((a,b) => a.zIndex - b.zIndex);
+
+        sorted.forEach(s => {
+            const proto = SHAPE_TYPES[s.type];
+            if (!proto) return;
+
+            const startCol = Math.max(0, Math.floor(s.x / CELL_SIZE));
+            const startRow = Math.max(0, Math.floor(s.y / CELL_SIZE));
+            const endCol = Math.min(GRID_SIZE - 1, Math.floor((s.x + 35) / CELL_SIZE));
+            const endRow = Math.min(GRID_SIZE - 1, Math.floor((s.y + 35) / CELL_SIZE));
+
+            for (let r = startRow; r <= endRow; r++) {
+                for (let c = startCol; c <= endCol; c++) {
+                    matrix3D[r][c].push({
+                        id: s.id,
+                        type: s.type,
+                        rot: s.rotation,
+                        mId: proto.matrixId
+                    });
+                    matrix2D[r][c] = proto.matrixId;
+                }
+            }
+        });
+
+        return { matrix2D, matrix3D };
+    }
+
+    function updateMatrixViews() {
+        const { matrix2D } = generateMatrixData();
+
+        let gridHtml = '';
+        for (let r = 0; r < GRID_SIZE; r++) {
+            let rowStr = '';
+            for (let c = 0; c < GRID_SIZE; c++) {
+                const val = matrix2D[r][c];
+                const colorClass = val === 0 ? 'text-gray-700' : 'text-amber-400 font-bold';
+                rowStr += `<span class="${colorClass}">${val} </span>`;
+            }
+            gridHtml += rowStr + '<br/>';
+        }
+
+        const activeShapesSummary = shapes.map(s => ({
+            id: s.id,
+            type: s.type,
+            pos: `[${Math.floor(s.y/CELL_SIZE)}, ${Math.floor(s.x/CELL_SIZE)}]`,
+            rot: s.rotation.toFixed(1) + '°',
+            z: s.zIndex
+        }));
+
+        const codeText = `// Aktív Alakzatok Réteg Stacks:\n` + JSON.stringify(activeShapesSummary, null, 2);
+
+        document.getElementById('liveMatrixGrid').innerHTML = gridHtml;
+        document.getElementById('liveMatrixCode').textContent = codeText;
+
+        document.getElementById('pipMatrixGrid').innerHTML = gridHtml;
+        document.getElementById('pipMatrixCode').textContent = codeText;
+    }
+
+    function nextCard(dir) {
+        currentCardIdx = (currentCardIdx + dir + CARDS.length) % CARDS.length;
+        renderCard();
+    }
+
+    function renderCard() {
+        const card = CARDS[currentCardIdx];
+        document.getElementById('cardTitle').innerText = card.title;
+        document.getElementById('cardSvg').innerHTML = card.svg;
+        document.getElementById('cardCounter').innerText = `${currentCardIdx + 1} / ${CARDS.length}`;
+    }
+
+    function togglePiP() {
+        const modal = document.getElementById('pipModal');
+        const docked = document.getElementById('dockedCodeContainer');
+        const btnText = document.getElementById('pipToggleText');
+
+        isPiPActive = !isPiPActive;
+
+        if (isPiPActive) {
+            modal.classList.remove('hidden');
+            docked.classList.add('opacity-30', 'pointer-events-none');
+            btnText.innerText = "Kód Nézet Visszacsatolása";
+        } else {
+            modal.classList.add('hidden');
+            docked.classList.remove('opacity-30', 'pointer-events-none');
+            btnText.innerText = "Kód Nézet Kiültetése (PiP)";
+        }
+    }
+
+    function toggleMinimizePiP() {
+        const modal = document.getElementById('pipModal');
+        const body = document.getElementById('pipBody');
+        const icon = document.getElementById('pipMinIcon');
+
+        isPiPMinimized = !isPiPMinimized;
+
+        if (isPiPMinimized) {
+            modal.classList.add('minimized');
+            body.classList.add('hidden');
+            icon.classList.remove('fa-minus');
+            icon.classList.add('fa-plus');
+        } else {
+            modal.classList.remove('minimized');
+            body.classList.remove('hidden');
+            icon.classList.remove('fa-plus');
+            icon.classList.add('fa-minus');
+        }
+    }
+
+    function setupPiPDrag() {
+        const modal = document.getElementById('pipModal');
+        const header = document.getElementById('pipHeader');
+
+        let isMouseDown = false;
+        let startX, startY, startLeft, startTop;
+
+        header.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = modal.offsetLeft;
+            startTop = modal.offsetTop;
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            modal.style.left = (startLeft + dx) + 'px';
+            modal.style.top = (startTop + dy) + 'px';
+            modal.style.right = 'auto';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+            document.body.style.userSelect = '';
+        });
+    }
+
+    function drawOverlapDemo() {
+        const oCanvas = document.getElementById('overlapCanvas');
+        if (!oCanvas) return;
+        const oCtx = oCanvas.getContext('2d');
+
+        oCtx.clearRect(0, 0, 160, 160);
+
+        oCtx.fillStyle = '#e74c3c';
+        oCtx.beginPath();
+        oCtx.moveTo(20, 130);
+        oCtx.lineTo(130, 130);
+        oCtx.lineTo(20, 20);
+        oCtx.closePath();
+        oCtx.fill();
+
+        oCtx.fillStyle = '#f97316';
+        oCtx.fillRect(50, 50, 70, 70);
+        oCtx.strokeStyle = '#1e1e2e';
+        oCtx.lineWidth = 1.5;
+        oCtx.strokeRect(50, 50, 70, 70);
+
+        oCtx.fillStyle = '#ffffff';
+        oCtx.font = '10px Plus Jakarta Sans';
+        oCtx.fillText('FEDÉS!', 65, 90);
+    }
+
+    /* CHAPTER 3 INTERACTIVE MATRIX TYPES EDITOR */
+    function setMatrixType(type) {
+        currentMatrixType = type;
+        document.querySelectorAll('#tab3 button[id^="mtype-"]').forEach(btn => {
+            btn.className = "px-3 py-1.5 rounded text-xs font-medium bg-paper-dark border border-paper-border text-ink-main hover:bg-paper transition-all";
+        });
+        document.getElementById(`mtype-${type}`).className = "px-3 py-1.5 rounded text-xs font-medium bg-book-accent text-white transition-all";
+
+        const desc = document.getElementById('matrixTypeDescription');
+        if (type === 'bool') {
+            desc.innerHTML = `<strong>c) Logikai (bool) Mátrix:</strong> Minden cellában <code>true (1)</code> vagy <code>false (0)</code> tárolódik. Csak az jeleníthető meg, hogy foglalt-e a képpont (fekete-fehér mask).`;
+        } else if (type === 'float1d') {
+            desc.innerHTML = `<strong>a) 1D Float Tömb:</strong> Sorfolytonos indexeléssel <code>index = row * 6 + col</code> 0.0 és 1.0 közötti lefedettséget / átlátszósági értéket tárolunk.`;
+        } else {
+            desc.innerHTML = `<strong>b) Dinamikus Stack / 3D Vektor:</strong> Minden cella egy dinamikus tömb/lista <code>[ID1, ID2, ...]</code>, ami megőrzi az egymásra helyezett alakzatok rétegrendjét!`;
+        }
+
+        initInteractiveEditorGrid();
+    }
+
+    function initInteractiveEditorGrid() {
+        const container = document.getElementById('interactiveGridContainer');
+        container.innerHTML = '';
+
+        for (let r = 0; r < 6; r++) {
+            for (let c = 0; c < 6; c++) {
+                const input = document.createElement('input');
+                input.className = 'matrix-cell-input';
+                input.id = `cell_${r}_${c}`;
+                
+                if (currentMatrixType === 'bool') {
+                    input.value = (r === c || r + c === 5) ? '1' : '0';
+                } else if (currentMatrixType === 'float1d') {
+                    input.value = ((r * 6 + c) % 3 === 0) ? '0.85' : '0.00';
+                } else {
+                    input.value = (r === 3 && c === 4) ? '[1,2]' : (r === c ? '[1]' : '[]');
+                }
+
+                input.addEventListener('input', updateGeneratedCodePreview);
+                container.appendChild(input);
+            }
+        }
+        updateGeneratedCodePreview();
+    }
+
+    function fillSampleMatrix() {
+        for (let r = 0; r < 6; r++) {
+            for (let c = 0; c < 6; c++) {
+                const input = document.getElementById(`cell_${r}_${c}`);
+                if (currentMatrixType === 'bool') {
+                    input.value = (r >= 1 && r <= 4 && c >= 1 && c <= 4) ? '1' : '0';
+                } else if (currentMatrixType === 'float1d') {
+                    input.value = (Math.sin(r + c) > 0 ? '0.95' : '0.10');
+                } else {
+                    input.value = (r === c) ? `[${r+1}]` : '[]';
+                }
+            }
+        }
+        updateGeneratedCodePreview();
+    }
+
+    function resetEditorGrid() {
+        for (let r = 0; r < 6; r++) {
+            for (let c = 0; c < 6; c++) {
+                const input = document.getElementById(`cell_${r}_${c}`);
+                input.value = currentMatrixType === 'bool' ? '0' : (currentMatrixType === 'float1d' ? '0.00' : '[]');
+            }
+        }
+        updateGeneratedCodePreview();
+    }
+
+    function updateGeneratedCodePreview() {
+        const gridData = [];
+        for (let r = 0; r < 6; r++) {
+            const row = [];
+            for (let c = 0; c < 6; c++) {
+                const val = document.getElementById(`cell_${r}_${c}`)?.value || '0';
+                row.push(val);
+            }
+            gridData.push(row);
+        }
+
+        let code = '';
+        if (currentMatrixType === 'bool') {
+            code = `// bool isOccupied[6][6]\n{\n` + gridData.map(r => '  {' + r.join(', ') + '}').join(',\n') + '\n}';
+        } else if (currentMatrixType === 'float1d') {
+            const flat = gridData.flat();
+            code = `// float grid1D[36] (Sorfolytonos: row * 6 + col)\n[\n  ` + flat.join(', ') + '\n]';
+        } else {
+            code = `// std::vector<Shape> grid[6][6] (Stack rétegek)\n[\n` + gridData.map(r => '  [' + r.join(', ') + ']').join(',\n') + '\n]';
+        }
+
+        document.getElementById('generatedCodePreview').textContent = code;
+    }
+
+    function showCodeLang(lang) {
+        document.getElementById('code-cpp').classList.add('hidden');
+        document.getElementById('code-py').classList.add('hidden');
+        document.getElementById('lang-btn-cpp').className = "px-3 py-1 rounded text-xs font-mono font-medium bg-gray-800 text-gray-400 hover:text-white transition-all";
+        document.getElementById('lang-btn-py').className = "px-3 py-1 rounded text-xs font-mono font-medium bg-gray-800 text-gray-400 hover:text-white transition-all";
+
+        if (lang === 'cpp') {
+            document.getElementById('code-cpp').classList.remove('hidden');
+            document.getElementById('lang-btn-cpp').className = "px-3 py-1 rounded text-xs font-mono font-medium bg-book-accent text-white transition-all";
+        } else {
+            document.getElementById('code-py').classList.remove('hidden');
+            document.getElementById('lang-btn-py').className = "px-3 py-1 rounded text-xs font-mono font-medium bg-book-accent text-white transition-all";
+        }
+    }
+
+    function executeReconstruction() {
+        const modal = document.getElementById('reconstructModal');
+        const rCanvas = document.getElementById('reconstructCanvas');
+        const rCtx = rCanvas.getContext('2d');
+        const log = document.getElementById('reconstructLog');
+
+        modal.classList.remove('hidden');
+        rCtx.clearRect(0, 0, rCanvas.width, rCanvas.height);
+
+        log.innerHTML = `> Mátrix tömb beolvasása...\n> 12x12 raszter felépítése...\n`;
+
+        const scale = 220 / 360;
+
+        setTimeout(() => {
+            log.innerHTML += `> Rétegek szétválogatása...\n> ${shapes.length} alakzat észleelve.\n`;
+
+            shapes.forEach(s => {
+                const proto = SHAPE_TYPES[s.type];
+                if (!proto) return;
+
+                rCtx.save();
+                rCtx.scale(scale, scale);
+                rCtx.translate(s.x, s.y);
+                rCtx.rotate(s.rotation * Math.PI / 180);
+
+                rCtx.beginPath();
+                proto.path.forEach((pt, i) => {
+                    if (i === 0) rCtx.moveTo(pt.x, pt.y);
+                    else rCtx.lineTo(pt.x, pt.y);
+                });
+                rCtx.closePath();
+                rCtx.fillStyle = s.color;
+                rCtx.fill();
+                rCtx.stroke();
+                rCtx.restore();
+            });
+
+            log.innerHTML += `> SIKER: Vektorgrafikus rekonstrukció lefutott!`;
+        }, 250);
+    }
+
+    function closeReconstructModal() {
+        document.getElementById('reconstructModal').classList.add('hidden');
+    }
+
+    function evaluateQuiz() {
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        const res = document.getElementById('quizResult');
+
+        if (!q1 || !q2) {
+            res.className = "p-2.5 rounded-lg text-xs font-medium bg-amber-100 text-amber-800 block";
+            res.innerText = "Kérjük, válaszolj minden kérdésre a kiértékeléshez!";
+            return;
+        }
+
+        let score = 0;
+        if (q1.value === 'b') score++;
+        if (q2.value === 'b') score++;
+
+        res.classList.remove('hidden');
+        if (score === 2) {
+            res.className = "p-2.5 rounded-lg text-xs font-medium bg-emerald-100 text-emerald-800 block";
+            res.innerText = "Kiváló! 2/2 Helyes válasz. Teljesen megértetted a mátrixos fedési problémát!";
+        } else {
+            res.className = "p-2.5 rounded-lg text-xs font-medium bg-red-100 text-red-800 block";
+            res.innerText = `Eredmény: ${score}/2 helyes válasz. Nézd át újra az elméleti leírásokat!`;
+        }
+    }
+</script>
+
+</body></html>
