@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!-- saved from url=(0102)file:///D:/tankonyv/M%C3%A1trix%20Rendez%C3%A9si%20Szimul%C3%A1tor%20%C3%A9s%20Anim%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix Rendezési Szimulátor és Animáció</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --panel-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --text-color: #0f172a;
+            --cell-default: #e2e8f0;
+            --cell-swap: #ef4444;     /* Piros: Csere */
+            --cell-compare: #facc15;  /* Sárga: Összehasonlítás */
+            --cell-sorted: #4ade80;   /* Zöld: Helyén van */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { text-align: center; color: #0284c7; margin-bottom: 5px; font-size: 1.6rem; }
+        p.subtitle { text-align: center; color: #475569; margin-bottom: 20px; font-size: 0.9rem; }
+
+        .selector-bar {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .select-group { display: flex; flex-direction: column; gap: 4px; }
+        .select-group label { font-size: 0.85rem; font-weight: bold; color: #334155; }
+        .select-group select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #0f172a;
+            background-color: #f8fafc;
+            cursor: pointer;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .full-width { grid-column: span 2; }
+        .code-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .code-title { font-weight: bold; margin-bottom: 5px; color: #0284c7; font-size: 0.9rem; }
+        .line { display: block; padding: 0 6px; border-radius: 3px; }
+        .active-line { background-color: #0284c7; color: #ffffff; font-weight: bold; }
+        .comment { color: #64748b; font-style: italic; }
+
+        .controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
+        button.btn-ctrl {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.btn-ctrl:hover { background-color: #0369a1; }
+
+        .matrix-grid, .vector-grid { display: grid; gap: 6px; justify-content: center; margin-top: 5px; }
+
+        .cell {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            background-color: var(--cell-default);
+            color: #1e293b;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .cell-compare { background-color: var(--cell-compare); color: #0f172a; transform: scale(1.05); }
+        .cell-swap { background-color: var(--cell-swap); color: #ffffff; transform: scale(1.08); }
+        .cell-sorted { background-color: var(--cell-sorted); color: #064e3b; }
+
+        .console {
+            background-color: #0f172a;
+            color: #38adf8;
+            font-family: 'Consolas', monospace;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            min-height: 45px;
+        }
+
+        /* GRAFIKUS FOLYAMATÁBRA */
+        .diagram-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .diagram-title { text-align: center; font-size: 1.3rem; font-weight: bold; color: #0f172a; margin-bottom: 20px; }
+        .diagram-step { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px dashed var(--border-color); }
+        .step-label { font-weight: bold; width: 80px; color: #475569; font-size: 0.9rem; }
+        .step-grid { display: grid; gap: 4px; }
+        .step-cell { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: bold; border-radius: 4px; background-color: #cbd5e1; color: #0f172a; }
+        .step-cell.active { background-color: #ef4444; color: #ffffff; }
+        .step-cell.sorted { background-color: #22c55e; color: #ffffff; }
+        .step-desc { width: 400px; font-size: 0.88rem; color: #334155; line-height: 1.3; }
+    </style>
+</head>
+<body>
+
+<h1>Mátrix Rendezés Interaktív Szimulátor</h1>
+<p class="subtitle">Válaszd ki a módszert és az algoritmust az animált futtatáshoz és a részletes beszámolóhoz!</p>
+
+<div class="selector-bar">
+    <div class="select-group">
+        <label for="methodSelect">1. Rendezési Módszer:</label>
+        <select id="methodSelect" onchange="onConfigChange()">
+            <option value="vector">1. Vektorba másolás + Rendezés</option>
+            <option value="direct">2. Közvetlen (Helyben) Rendezés</option>
+        </select>
+    </div>
+
+    <div class="select-group" id="algoGroup" style="display: flex;">
+        <label for="algoSelect">2. Rendezési Algoritmus:</label>
+        <select id="algoSelect" onchange="onConfigChange()">
+            <option value="bubble">Buborékrendezés (Bubble Sort)</option>
+            <option value="selection">Kijelöléses Rendezés (Selection Sort)</option>
+            <option value="insertion">Beszúrásos Rendezés (Insertion Sort)</option>
+        </select>
+    </div>
+</div>
+
+<div class="main-layout">
+    <div class="panel full-width">
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Kód</div>
+                <pre id="cpp-code"><span id="c1" class="line">vector<int> vec;</int></span><span id="c2" class="line active-line">for(int r=0;r<n;r++) for(int="" c="0;c&lt;M;c++)" vec.push_back(a[r][c]);<="" span=""><span id="c3" class="line">for(int i=0; i<n*m-1; i++)="" {<="" span=""><span id="c4" class="line">  for(int j=0; j<n*m-i-1; j++)="" {<="" span=""><span id="c5" class="line">    if(vec[j] &gt; vec[j+1]) swap(vec[j], vec[j+1]);</span><span id="c6" class="line">  }</span><span id="c7" class="line">}</span><span id="c8" class="line">int k=0; for(int r=0;r<n;r++) for(int="" c="0;c&lt;M;c++)" a[r][c]="vec[k++];&lt;/span"></n;r++)></span></n*m-i-1;></span></n*m-1;></span></n;r++)></span></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Kód</div>
+                <pre id="py-code"><span id="p1" class="line">vec = []</span><span id="p2" class="line active-line">for r in range(N): for c in range(M): vec.append(a[r][c])</span><span id="p3" class="line">for i in range(N*M - 1):</span><span id="p4" class="line">  for j in range(N*M - i - 1):</span><span id="p5" class="line">    if vec[j] &gt; vec[j+1]: vec[j], vec[j+1] = vec[j+1], vec[j]</span><span id="p6" class="line"> </span><span id="p7" class="line"> </span><span id="p8" class="line">k=0; for r in range(N): for c in range(M): a[r][c]=vec[k]; k+=1</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="controls">
+            <button id="playBtn" class="btn-ctrl" onclick="togglePlay()">Auto Lejátszás ▶</button>
+            <button id="stepBtn" class="btn-ctrl" onclick="stepForward()">Lépés ➔</button>
+            <button class="btn-ctrl" onclick="resetAll()" style="background-color: #64748b;">Újra</button>
+        </div>
+        <div id="logBox" class="console">&gt; Mátrix elemeinek kimásolása a vektorba...</div>
+    </div>
+
+    <div class="panel" style="display: flex; flex-direction: column; align-items: center;">
+        <h4 style="margin:0 0 5px 0; color:#64748b;">2D Mátrix Állapota (2 x 3)</h4>
+        <div id="matrixGrid" class="matrix-grid" style="grid-template-columns: repeat(3, 42px);"><div class="cell">42</div><div class="cell">15</div><div class="cell">8</div><div class="cell">23</div><div class="cell">4</div><div class="cell">19</div></div>
+        <div id="vectorSection" style="width: 100%; text-align: center; margin-top: 10px; display: block;">
+            <h4 style="margin:5px 0; color:#0284c7;">1D Vektor Állapota</h4>
+            <div id="vectorGrid" class="vector-grid" style="grid-template-columns: repeat(6, 42px);"><div class="cell">?</div><div class="cell">?</div><div class="cell">?</div><div class="cell">?</div><div class="cell">?</div><div class="cell">?</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="diagram-section">
+    <div class="diagram-title" id="diagramTitle">Részletes Folyamatábra: Vektoros bubble</div>
+    <div id="diagramContainer"><div class="diagram-step">
+                <div class="step-label">Lépés 1</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell active">15</div><div class="step-cell active">42</div><div class="step-cell">8</div><div class="step-cell">23</div><div class="step-cell">4</div><div class="step-cell">19</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [15, 42, 8, 23, 4, 19]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 2</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">15</div><div class="step-cell active">8</div><div class="step-cell active">42</div><div class="step-cell">23</div><div class="step-cell">4</div><div class="step-cell">19</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [15, 8, 42, 23, 4, 19]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 3</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">15</div><div class="step-cell">8</div><div class="step-cell active">23</div><div class="step-cell active">42</div><div class="step-cell">4</div><div class="step-cell">19</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [15, 8, 23, 42, 4, 19]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 4</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">15</div><div class="step-cell">8</div><div class="step-cell">23</div><div class="step-cell active">4</div><div class="step-cell active">42</div><div class="step-cell">19</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [15, 8, 23, 4, 42, 19]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 5</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">15</div><div class="step-cell">8</div><div class="step-cell">23</div><div class="step-cell">4</div><div class="step-cell active">19</div><div class="step-cell active">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [15, 8, 23, 4, 19, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 6</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell active">8</div><div class="step-cell active">15</div><div class="step-cell">23</div><div class="step-cell">4</div><div class="step-cell">19</div><div class="step-cell">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [8, 15, 23, 4, 19, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 7</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">8</div><div class="step-cell">15</div><div class="step-cell active">4</div><div class="step-cell active">23</div><div class="step-cell">19</div><div class="step-cell">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [8, 15, 4, 23, 19, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 8</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">8</div><div class="step-cell">15</div><div class="step-cell">4</div><div class="step-cell active">19</div><div class="step-cell active">23</div><div class="step-cell">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [8, 15, 4, 19, 23, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 9</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell">8</div><div class="step-cell active">4</div><div class="step-cell active">15</div><div class="step-cell">19</div><div class="step-cell">23</div><div class="step-cell">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [8, 4, 15, 19, 23, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 10</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell active">4</div><div class="step-cell active">8</div><div class="step-cell">15</div><div class="step-cell">19</div><div class="step-cell">23</div><div class="step-cell">42</div></div>
+                <div class="step-desc">Csere megtörtént! Új vektor: [4, 8, 15, 19, 23, 42]</div>
+            </div><div class="diagram-step">
+                <div class="step-label">Lépés 11</div>
+                <div class="step-grid" style="grid-template-columns: repeat(6, 38px);"><div class="step-cell sorted">4</div><div class="step-cell sorted">8</div><div class="step-cell sorted">15</div><div class="step-cell sorted">19</div><div class="step-cell sorted">23</div><div class="step-cell sorted">42</div></div>
+                <div class="step-desc">Vektor elemeinek visszamásolása a 2D mátrixba...</div>
+            </div></div>
+</div>
+
+<script>
+    const N = 2, M = 3;
+    const initialData = [[42, 15, 8], [23, 4, 19]];
+    
+    let matrix = [];
+    let vec = [];
+    let stepsQueue = [];
+    let currentStepIdx = 0;
+    let timer = null;
+    let isPlaying = false;
+
+    // Kódminták
+    const codeSnippets = {
+        vector: {
+            bubble: {
+                cpp: `<span id="c1" class="line">vector<int> vec;</span><span id="c2" class="line">for(int r=0;r<N;r++) for(int c=0;c<M;c++) vec.push_back(a[r][c]);</span><span id="c3" class="line">for(int i=0; i<N*M-1; i++) {</span><span id="c4" class="line">  for(int j=0; j<N*M-i-1; j++) {</span><span id="c5" class="line">    if(vec[j] > vec[j+1]) swap(vec[j], vec[j+1]);</span><span id="c6" class="line">  }</span><span id="c7" class="line">}</span><span id="c8" class="line">int k=0; for(int r=0;r<N;r++) for(int c=0;c<M;c++) a[r][c]=vec[k++];</span>`,
+                py: `<span id="p1" class="line">vec = []</span><span id="p2" class="line">for r in range(N): for c in range(M): vec.append(a[r][c])</span><span id="p3" class="line">for i in range(N*M - 1):</span><span id="p4" class="line">  for j in range(N*M - i - 1):</span><span id="p5" class="line">    if vec[j] > vec[j+1]: vec[j], vec[j+1] = vec[j+1], vec[j]</span><span id="p6" class="line"> </span><span id="p7" class="line"> </span><span id="p8" class="line">k=0; for r in range(N): for c in range(M): a[r][c]=vec[k]; k+=1</span>`
+            },
+            selection: {
+                cpp: `<span id="c1" class="line">vector<int> vec;</span><span id="c2" class="line">for(int r=0;r<N;r++) for(int c=0;c<M;c++) vec.push_back(a[r][c]);</span><span id="c3" class="line">for(int i=0; i<N*M-1; i++) {</span><span id="c4" class="line">  int minIdx = i;</span><span id="c5" class="line">  for(int j=i+1; j<N*M; j++) if(vec[j] < vec[minIdx]) minIdx = j;</span><span id="c6" class="line">  swap(vec[i], vec[minIdx]);</span><span id="c7" class="line">}</span><span id="c8" class="line">int k=0; for(int r=0;r<N;r++) for(int c=0;c<M;c++) a[r][c]=vec[k++];</span>`,
+                py: `<span id="p1" class="line">vec = []</span><span id="p2" class="line">for r in range(N): for c in range(M): vec.append(a[r][c])</span><span id="p3" class="line">for i in range(N*M - 1):</span><span id="p4" class="line">  min_idx = i</span><span id="p5" class="line">  for j in range(i+1, N*M): if vec[j] < vec[min_idx]: min_idx = j</span><span id="p6" class="line">  vec[i], vec[min_idx] = vec[min_idx], vec[i]</span><span id="p7" class="line"> </span><span id="p8" class="line">k=0; for r in range(N): for c in range(M): a[r][c]=vec[k]; k+=1</span>`
+            },
+            insertion: {
+                cpp: `<span id="c1" class="line">vector<int> vec;</span><span id="c2" class="line">for(int r=0;r<N;r++) for(int c=0;c<M;c++) vec.push_back(a[r][c]);</span><span id="c3" class="line">for(int i=1; i<N*M; i++) {</span><span id="c4" class="line">  int key = vec[i], j = i - 1;</span><span id="c5" class="line">  while(j >= 0 && vec[j] > key) { vec[j+1] = vec[j]; j--; }</span><span id="c6" class="line">  vec[j+1] = key;</span><span id="c7" class="line">}</span><span id="c8" class="line">int k=0; for(int r=0;r<N;r++) for(int c=0;c<M;c++) a[r][c]=vec[k++];</span>`,
+                py: `<span id="p1" class="line">vec = []</span><span id="p2" class="line">for r in range(N): for c in range(M): vec.append(a[r][c])</span><span id="p3" class="line">for i in range(1, N*M):</span><span id="p4" class="line">  key = vec[i]; j = i - 1</span><span id="p5" class="line">  while j >= 0 and vec[j] > key: vec[j+1] = vec[j]; j -= 1</span><span id="p6" class="line">  vec[j+1] = key</span><span id="p7" class="line"> </span><span id="p8" class="line">k=0; for r in range(N): for c in range(M): a[r][c]=vec[k]; k+=1</span>`
+            }
+        },
+        direct: {
+            cpp: `<span id="c1" class="line">for(int i = 0; i < N * M - 1; i++) {</span><span id="c2" class="line">  for(int p = 0; p < N * M - i - 1; p++) {</span><span id="c3" class="line">    int r1 = p / M, c1 = p % M;</span><span id="c4" class="line">    int r2 = (p + 1) / M, c2 = (p + 1) % M;</span><span id="c5" class="line">    if(a[r1][c1] > a[r2][c2]) swap(a[r1][c1], a[r2][c2]);</span><span id="c6" class="line">  }</span><span id="c7" class="line">}</span>`,
+            py: `<span id="p1" class="line">for i in range(N * M - 1):</span><span id="p2" class="line">  for p in range(N * M - i - 1):</span><span id="p3" class="line">    r1, c1 = p // M, p % M</span><span id="p4" class="line">    r2, c2 = (p + 1) // M, (p + 1) % M</span><span id="p5" class="line">    if a[r1][c1] > a[r2][c2]: a[r1][c1], a[r2][c2] = a[r2][c2], a[r1][c1]</span><span id="p6" class="line"> </span><span id="p7" class="line"> </span>`
+        }
+    };
+
+    function onConfigChange() {
+        stopPlay();
+        const method = document.getElementById('methodSelect').value;
+        const algoGroup = document.getElementById('algoGroup');
+        const vecSection = document.getElementById('vectorSection');
+
+        if (method === 'vector') {
+            algoGroup.style.display = 'flex';
+            vecSection.style.display = 'block';
+            const algo = document.getElementById('algoSelect').value;
+            document.getElementById('cpp-code').innerHTML = codeSnippets.vector[algo].cpp;
+            document.getElementById('py-code').innerHTML = codeSnippets.vector[algo].py;
+        } else {
+            algoGroup.style.display = 'none';
+            vecSection.style.display = 'none';
+            document.getElementById('cpp-code').innerHTML = codeSnippets.direct.cpp;
+            document.getElementById('py-code').innerHTML = codeSnippets.direct.py;
+        }
+
+        generateExecutionSteps();
+        renderReport();
+        resetAll();
+    }
+
+    // A lépések szimulációjának előállítása (Execution Generator)
+    function generateExecutionSteps() {
+        stepsQueue = [];
+        let m = JSON.parse(JSON.stringify(initialData));
+        let v = [];
+        const method = document.getElementById('methodSelect').value;
+        const algo = document.getElementById('algoSelect').value;
+
+        if (method === 'vector') {
+            // 1. Másolás
+            stepsQueue.push({ cLine: 2, pLine: 2, msg: "Mátrix elemeinek kimásolása a vektorba...", m: JSON.parse(JSON.stringify(m)), v: [] });
+            for(let r=0; r<N; r++) for(let c=0; c<M; c++) v.push(m[r][c]);
+            stepsQueue.push({ cLine: 2, pLine: 2, msg: `Vektor feltöltve: [${v.join(', ')}]`, m: JSON.parse(JSON.stringify(m)), v: [...v] });
+
+            // 2. Rendezés
+            if (algo === 'bubble') {
+                let len = v.length;
+                for (let i = 0; i < len - 1; i++) {
+                    stepsQueue.push({ cLine: 3, pLine: 3, msg: `Buborék menet indítása: i = ${i}`, m: JSON.parse(JSON.stringify(m)), v: [...v] });
+                    for (let j = 0; j < len - i - 1; j++) {
+                        stepsQueue.push({ cLine: 5, pLine: 5, msg: `Összehasonlítás: vec[${j}] (${v[j]}) és vec[${j+1}] (${v[j+1]})`, m: JSON.parse(JSON.stringify(m)), v: [...v], vComp: [j, j+1] });
+                        if (v[j] > v[j+1]) {
+                            let temp = v[j]; v[j] = v[j+1]; v[j+1] = temp;
+                            stepsQueue.push({ cLine: 5, pLine: 5, msg: `Csere megtörtént! Új vektor: [${v.join(', ')}]`, m: JSON.parse(JSON.stringify(m)), v: [...v], vSwap: [j, j+1] });
+                        }
+                    }
+                }
+            } else if (algo === 'selection') {
+                let len = v.length;
+                for (let i = 0; i < len - 1; i++) {
+                    let minIdx = i;
+                    stepsQueue.push({ cLine: 4, pLine: 4, msg: `Minimális elem keresése a(z) ${i}. pozíciótól...`, m: JSON.parse(JSON.stringify(m)), v: [...v], vComp: [i] });
+                    for (let j = i + 1; j < len; j++) {
+                        stepsQueue.push({ cLine: 5, pLine: 5, msg: `Összehasonlítás: vec[${j}] (${v[j]}) < vec[minIdx] (${v[minIdx]})?`, m: JSON.parse(JSON.stringify(m)), v: [...v], vComp: [j, minIdx] });
+                        if (v[j] < v[minIdx]) minIdx = j;
+                    }
+                    if (minIdx !== i) {
+                        let temp = v[i]; v[i] = v[minIdx]; v[minIdx] = temp;
+                        stepsQueue.push({ cLine: 6, pLine: 6, msg: `Legkisebb elem (${v[i]}) cserélve a(z) ${i}. helyre!`, m: JSON.parse(JSON.stringify(m)), v: [...v], vSwap: [i, minIdx] });
+                    }
+                }
+            } else if (algo === 'insertion') {
+                let len = v.length;
+                for (let i = 1; i < len; i++) {
+                    let key = v[i];
+                    let j = i - 1;
+                    stepsQueue.push({ cLine: 4, pLine: 4, msg: `Beszúrandó elem kiválasztása: key = ${key} (index: ${i})`, m: JSON.parse(JSON.stringify(m)), v: [...v], vComp: [i] });
+                    while (j >= 0 && v[j] > key) {
+                        stepsQueue.push({ cLine: 5, pLine: 5, msg: `${v[j]} > ${key} ➔ Elem eltolása jobbra`, m: JSON.parse(JSON.stringify(m)), v: [...v], vSwap: [j, j+1] });
+                        v[j+1] = v[j];
+                        j--;
+                    }
+                    v[j+1] = key;
+                    stepsQueue.push({ cLine: 6, pLine: 6, msg: `Key (${key}) beillesztve a pozíciójára (${j+1})`, m: JSON.parse(JSON.stringify(m)), v: [...v], vSwap: [j+1] });
+                }
+            }
+
+            // 3. Visszamásolás
+            let idx = 0;
+            for(let r=0; r<N; r++) {
+                for(let c=0; c<M; c++) {
+                    m[r][c] = v[idx++];
+                }
+            }
+            stepsQueue.push({ cLine: 8, pLine: 8, msg: "Vektor elemeinek visszamásolása a 2D mátrixba...", m: JSON.parse(JSON.stringify(m)), v: [...v], done: true });
+
+        } else {
+            // Közvetlen 2D Mátrix Rendezés
+            let total = N * M;
+            for (let i = 0; i < total - 1; i++) {
+                stepsQueue.push({ cLine: 1, pLine: 1, msg: `Közvetlen menet indítása: i = ${i}`, m: JSON.parse(JSON.stringify(m)) });
+                for (let p = 0; p < total - i - 1; p++) {
+                    let r1 = Math.floor(p / M), c1 = p % M;
+                    let r2 = Math.floor((p + 1) / M), c2 = (p + 1) % M;
+                    
+                    stepsQueue.push({ 
+                        cLine: 5, pLine: 5, 
+                        msg: `Közvetlen Összehasonlítás: [${r1}][${c1}] (${m[r1][c1]}) és [${r2}][${c2}] (${m[r2][c2]})`, 
+                        m: JSON.parse(JSON.stringify(m)), 
+                        mComp: [[r1,c1], [r2,c2]] 
+                    });
+
+                    if (m[r1][c1] > m[r2][c2]) {
+                        let temp = m[r1][c1]; m[r1][c1] = m[r2][c2]; m[r2][c2] = temp;
+                        stepsQueue.push({ 
+                            cLine: 5, pLine: 5, 
+                            msg: `Csere a mátrixban! Új értékek: [${r1}][${c1}]=${m[r1][c1]}, [${r2}][${c2}]=${m[r2][c2]}`, 
+                            m: JSON.parse(JSON.stringify(m)), 
+                            mSwap: [[r1,c1], [r2,c2]] 
+                        });
+                    }
+                }
+            }
+            stepsQueue.push({ cLine: 7, pLine: 7, msg: "Közvetlen mátrix rendezés befejeződött!", m: JSON.parse(JSON.stringify(m)), done: true });
+        }
+    }
+
+    function renderUI(step) {
+        document.querySelectorAll('.line').forEach(l => l.classList.remove('active-line'));
+        if (step.cLine) document.getElementById(`c${step.cLine}`)?.classList.add('active-line');
+        if (step.pLine) document.getElementById(`p${step.pLine}`)?.classList.add('active-line');
+
+        document.getElementById('logBox').innerHTML = `> ${step.msg}`;
+
+        // Mátrix kirajzolás
+        const mGrid = document.getElementById('matrixGrid');
+        mGrid.style.gridTemplateColumns = `repeat(${M}, 42px)`;
+        mGrid.innerHTML = '';
+        for (let r = 0; r < N; r++) {
+            for (let c = 0; c < M; c++) {
+                const div = document.createElement('div');
+                div.className = 'cell';
+                if (step.done) div.classList.add('cell-sorted');
+                if (step.mComp && step.mComp.some(p => p[0]===r && p[1]===c)) div.classList.add('cell-compare');
+                if (step.mSwap && step.mSwap.some(p => p[0]===r && p[1]===c)) div.classList.add('cell-swap');
+                div.innerText = step.m[r][c];
+                mGrid.appendChild(div);
+            }
+        }
+
+        // Vektor kirajzolás
+        if (document.getElementById('methodSelect').value === 'vector') {
+            const vGrid = document.getElementById('vectorGrid');
+            vGrid.style.gridTemplateColumns = `repeat(${N*M}, 42px)`;
+            vGrid.innerHTML = '';
+            for (let idx = 0; idx < N*M; idx++) {
+                const div = document.createElement('div');
+                div.className = 'cell';
+                if (step.done) div.classList.add('cell-sorted');
+                if (step.vComp && step.vComp.includes(idx)) div.classList.add('cell-compare');
+                if (step.vSwap && step.vSwap.includes(idx)) div.classList.add('cell-swap');
+                div.innerText = (step.v && idx < step.v.length) ? step.v[idx] : '?';
+                vGrid.appendChild(div);
+            }
+        }
+    }
+
+    function stepForward() {
+        if (currentStepIdx < stepsQueue.length) {
+            renderUI(stepsQueue[currentStepIdx]);
+            currentStepIdx++;
+        } else {
+            stopPlay();
+        }
+    }
+
+    function togglePlay() {
+        if (isPlaying) {
+            stopPlay();
+        } else {
+            isPlaying = true;
+            document.getElementById('playBtn').innerText = "Szünet ❚❚";
+            timer = setInterval(() => {
+                if (currentStepIdx >= stepsQueue.length) stopPlay();
+                else stepForward();
+            }, 500);
+        }
+    }
+
+    function stopPlay() {
+        isPlaying = false;
+        clearInterval(timer);
+        document.getElementById('playBtn').innerText = "Auto Lejátszás ▶";
+    }
+
+    function resetAll() {
+        stopPlay();
+        currentStepIdx = 0;
+        matrix = JSON.parse(JSON.stringify(initialData));
+        vec = [];
+        if (stepsQueue.length > 0) renderUI(stepsQueue[0]);
+    }
+
+    // GRAFIKUS BESZÁMOLÓ GENERÁLÁSA
+    function renderReport() {
+        const container = document.getElementById('diagramContainer');
+        const title = document.getElementById('diagramTitle');
+        container.innerHTML = '';
+
+        const method = document.getElementById('methodSelect').value;
+        const algo = document.getElementById('algoSelect').value;
+
+        let filtered = stepsQueue.filter(s => s.mSwap || s.vSwap || s.done);
+        title.innerText = `Részletes Folyamatábra: ${method === 'vector' ? 'Vektoros ' + algo : 'Közvetlen Helyben Rendezés'}`;
+
+        filtered.forEach((step, idx) => {
+            const row = document.createElement('div');
+            row.className = 'diagram-step';
+
+            let gridHtml = '';
+            if (method === 'vector' && step.v && step.v.length > 0) {
+                gridHtml = `<div class="step-grid" style="grid-template-columns: repeat(${N*M}, 38px);">` +
+                    step.v.map((val, i) => {
+                        let cls = 'step-cell';
+                        if (step.vSwap && step.vSwap.includes(i)) cls += ' active';
+                        if (step.done) cls += ' sorted';
+                        return `<div class="${cls}">${val}</div>`;
+                    }).join('') + `</div>`;
+            } else {
+                gridHtml = `<div class="step-grid" style="grid-template-columns: repeat(${M}, 38px);">`;
+                for(let r=0;r<N;r++){
+                    for(let c=0;c<M;c++){
+                        let cls = 'step-cell';
+                        if (step.mSwap && step.mSwap.some(p => p[0]===r && p[1]===c)) cls += ' active';
+                        if (step.done) cls += ' sorted';
+                        clsHtml = `<div class="${cls}">${step.m[r][c]}</div>`;
+                        gridHtml += clsHtml;
+                    }
+                }
+                gridHtml += `</div>`;
+            }
+
+            row.innerHTML = `
+                <div class="step-label">Lépés ${idx + 1}</div>
+                ${gridHtml}
+                <div class="step-desc">${step.msg}</div>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // Inicializálás
+    onConfigChange();
+</script>
+
+
+</body></html>
