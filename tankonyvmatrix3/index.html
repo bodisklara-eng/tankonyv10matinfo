@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)file:///D:/tankonyv/interaktiv_matrix_teszt%20(1).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Mátrix-Mintázat Tesztfelület</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg-dark: #0f172a;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--bg-dark);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            color: #38bdf8;
+        }
+
+        header p {
+            margin: 0;
+            color: #94a3b8;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+
+        .quiz-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+        }
+
+        .badge {
+            background: #e0f2fe;
+            color: var(--primary-dark);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .quiz-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .quiz-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matrix-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table.matrix {
+            border-collapse: collapse;
+        }
+
+        table.matrix td {
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-weight: bold;
+            font-family: 'Consolas', monospace;
+            font-size: 1.05rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: var(--success) !important;
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: var(--error) !important;
+            color: #b91c1c;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-height: 24px;
+        }
+
+        .score-board {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--bg-dark);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .score-board button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .score-board button:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Interaktív Mátrix-Mintázat Tesztfelület</h1>
+        <p>Teszteld az indexlogikai tudásodat! Válaszd ki a mátrixhoz tartozó helyes C++ / matematikai formulát.</p>
+    </header>
+
+    <div class="score-board">
+        <div>📊 Eredmény: <span id="score">0</span> / <span id="total">7</span> pont</div>
+        <button onclick="resetQuiz()">Újraindítás</button>
+    </div>
+
+    <div id="quiz-container"><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">1.1  Sorindex Mátrix (N = 4)</span>
+                <span class="badge">Alapok</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>2</td><td>2</td><td>2</td></tr><tr><td>3</td><td>3</td><td>3</td><td>3</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(0, 0, this)">A[i][j] = j</button><button class="option-btn" onclick="checkAnswer(0, 1, this)">A[i][j] = i</button><button class="option-btn" onclick="checkAnswer(0, 2, this)">A[i][j] = i + j</button><button class="option-btn" onclick="checkAnswer(0, 3, this)">A[i][j] = i * j</button></div>
+                    <div class="feedback" id="feedback-0"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">1.2  Oszlopindex Mátrix (N = 4)</span>
+                <span class="badge">Alapok</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(1, 0, this)">A[i][j] = i</button><button class="option-btn" onclick="checkAnswer(1, 1, this)">A[i][j] = j</button><button class="option-btn" onclick="checkAnswer(1, 2, this)">A[i][j] = i + j</button><button class="option-btn" onclick="checkAnswer(1, 3, this)">A[i][j] = j - i</button></div>
+                    <div class="feedback" id="feedback-1"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">2.1  Indexek Összege (N = 4)</span>
+                <span class="badge">Aritmetika</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><td>3</td><td>4</td><td>5</td><td>6</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(2, 0, this)">A[i][j] = i * j</button><button class="option-btn" onclick="checkAnswer(2, 1, this)">A[i][j] = i + j</button><button class="option-btn" onclick="checkAnswer(2, 2, this)">A[i][j] = abs(i - j)</button><button class="option-btn" onclick="checkAnswer(2, 3, this)">A[i][j] = i + 1</button></div>
+                    <div class="feedback" id="feedback-2"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">2.3  Távolság a Főátlótól (N = 4)</span>
+                <span class="badge">Aritmetika</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><td>1</td><td>0</td><td>1</td><td>2</td></tr><tr><td>2</td><td>1</td><td>0</td><td>1</td></tr><tr><td>3</td><td>2</td><td>1</td><td>0</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(3, 0, this)">A[i][j] = i - j</button><button class="option-btn" onclick="checkAnswer(3, 1, this)">A[i][j] = abs(i - j)</button><button class="option-btn" onclick="checkAnswer(3, 2, this)">A[i][j] = (i + j) % 2</button><button class="option-btn" onclick="checkAnswer(3, 3, this)">A[i][j] = i * j</button></div>
+                    <div class="feedback" id="feedback-3"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">3.1  Sakktábla Mintázat (N = 4)</span>
+                <span class="badge">Modulo &amp; Paritás</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(4, 0, this)">A[i][j] = i % 2</button><button class="option-btn" onclick="checkAnswer(4, 1, this)">A[i][j] = j % 2</button><button class="option-btn" onclick="checkAnswer(4, 2, this)">A[i][j] = (i + j) % 2</button><button class="option-btn" onclick="checkAnswer(4, 3, this)">A[i][j] = (i * j) % 2</button></div>
+                    <div class="feedback" id="feedback-4"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">4.1  Folytonos Sorszámozás (N = 4)</span>
+                <span class="badge">Sorozatok</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr><td>9</td><td>10</td><td>11</td><td>12</td></tr><tr><td>13</td><td>14</td><td>15</td><td>16</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(5, 0, this)">A[i][j] = i * N + j + 1</button><button class="option-btn" onclick="checkAnswer(5, 1, this)">A[i][j] = i + j + 1</button><button class="option-btn" onclick="checkAnswer(5, 2, this)">A[i][j] = (i + 1) * (j + 1)</button><button class="option-btn" onclick="checkAnswer(5, 3, this)">A[i][j] = j * N + i</button></div>
+                    <div class="feedback" id="feedback-5"></div>
+                </div>
+            </div>
+        </div><div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-title">5.1  Főátló Feletti Mátrix (N = 4)</span>
+                <span class="badge">Feltételes Logika</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix"><tbody><tr><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>
+                </div>
+                <div class="controls">
+                    <div class="options-list"><button class="option-btn" onclick="checkAnswer(6, 0, this)">A[i][j] = (i == j) ? 1 : 0</button><button class="option-btn" onclick="checkAnswer(6, 1, this)">A[i][j] = (i &lt; j) ? 1 : 0</button><button class="option-btn" onclick="checkAnswer(6, 2, this)">A[i][j] = (i &gt; j) ? 1 : 0</button><button class="option-btn" onclick="checkAnswer(6, 3, this)">A[i][j] = (i + j &lt; N) ? 1 : 0</button></div>
+                    <div class="feedback" id="feedback-6"></div>
+                </div>
+            </div>
+        </div></div>
+</div>
+
+<script>
+const quizData = [
+    {
+        id: "1.1",
+        title: " Sorindex Mátrix (N = 4)",
+        category: "Alapok",
+        matrix: [
+            [0, 0, 0, 0],
+            [1, 1, 1, 1],
+            [2, 2, 2, 2],
+            [3, 3, 3, 3]
+        ],
+        options: ["A[i][j] = j", "A[i][j] = i", "A[i][j] = i + j", "A[i][j] = i * j"],
+        correct: 1,
+        explanation: "Az értékek soronként állandóak, és megegyeznek a sor indexével (i)."
+    },
+    {
+        id: "1.2",
+        title: " Oszlopindex Mátrix (N = 4)",
+        category: "Alapok",
+        matrix: [
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3]
+        ],
+        options: ["A[i][j] = i", "A[i][j] = j", "A[i][j] = i + j", "A[i][j] = j - i"],
+        correct: 1,
+        explanation: "Az értékek oszloponként megegyeznek az oszlop indexével (j)."
+    },
+    {
+        id: "2.1",
+        title: " Indexek Összege (N = 4)",
+        category: "Aritmetika",
+        matrix: [
+            [0, 1, 2, 3],
+            [1, 2, 3, 4],
+            [2, 3, 4, 5],
+            [3, 4, 5, 6]
+        ],
+        options: ["A[i][j] = i * j", "A[i][j] = i + j", "A[i][j] = abs(i - j)", "A[i][j] = i + 1"],
+        correct: 1,
+        explanation: "A mellékátlóval párhuzamos átlók mentén az i + j összeg állandó."
+    },
+    {
+        id: "2.3",
+        title: " Távolság a Főátlótól (N = 4)",
+        category: "Aritmetika",
+        matrix: [
+            [0, 1, 2, 3],
+            [1, 0, 1, 2],
+            [2, 1, 0, 1],
+            [3, 2, 1, 0]
+        ],
+        options: ["A[i][j] = i - j", "A[i][j] = abs(i - j)", "A[i][j] = (i + j) % 2", "A[i][j] = i * j"],
+        correct: 1,
+        explanation: "Főátlóban 0, a főátlótól távolodva a sor- és oszlopindex különbségének abszolút értéke nő."
+    },
+    {
+        id: "3.1",
+        title: " Sakktábla Mintázat (N = 4)",
+        category: "Modulo & Paritás",
+        matrix: [
+            [0, 1, 0, 1],
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [1, 0, 1, 0]
+        ],
+        options: ["A[i][j] = i % 2", "A[i][j] = j % 2", "A[i][j] = (i + j) % 2", "A[i][j] = (i * j) % 2"],
+        correct: 2,
+        explanation: "A sor- és oszlopindex összege váltakozik páros és páratlan között, így (i + j) % 2 sakktábla mintát ad."
+    },
+    {
+        id: "4.1",
+        title: " Folytonos Sorszámozás (N = 4)",
+        category: "Sorozatok",
+        matrix: [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ],
+        options: ["A[i][j] = i * N + j + 1", "A[i][j] = i + j + 1", "A[i][j] = (i + 1) * (j + 1)", "A[i][j] = j * N + i"],
+        correct: 0,
+        explanation: "A 2D indexelés 1D tömbbé konvertálásának képlete 1-től sorszámozva: i * N + j + 1."
+    },
+    {
+        id: "5.1",
+        title: " Főátló Feletti Mátrix (N = 4)",
+        category: "Feltételes Logika",
+        matrix: [
+            [0, 1, 1, 1],
+            [0, 0, 1, 1],
+            [0, 0, 0, 1],
+            [0, 0, 0, 0]
+        ],
+        options: ["A[i][j] = (i == j) ? 1 : 0", "A[i][j] = (i < j) ? 1 : 0", "A[i][j] = (i > j) ? 1 : 0", "A[i][j] = (i + j < N) ? 1 : 0"],
+        correct: 1,
+        explanation: "A főátló felett mindig teljesül, hogy a sorindex kisebb az oszlopindexnél (i < j)."
+    }
+];
+
+let score = 0;
+let answered = new Set();
+
+function renderQuiz() {
+    const container = document.getElementById('quiz-container');
+    document.getElementById('total').innerText = quizData.length;
+    container.innerHTML = '';
+
+    quizData.forEach((q, qIndex) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+
+        let matrixRows = q.matrix.map(row => 
+            `<tr>${row.map(val => `<td>${val}</td>`).join('')}</tr>`
+        ).join('');
+
+        let optionsBtns = q.options.map((opt, optIndex) => 
+            `<button class="option-btn" onclick="checkAnswer(${qIndex}, ${optIndex}, this)">${opt}</button>`
+        ).join('');
+
+        card.innerHTML = `
+            <div class="quiz-header">
+                <span class="quiz-title">${q.id} ${q.title}</span>
+                <span class="badge">${q.category}</span>
+            </div>
+            <div class="quiz-body">
+                <div class="matrix-container">
+                    <table class="matrix">${matrixRows}</table>
+                </div>
+                <div class="controls">
+                    <div class="options-list">${optionsBtns}</div>
+                    <div class="feedback" id="feedback-${qIndex}"></div>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIndex, selectedOpt, btn) {
+    if (answered.has(qIndex)) return;
+    
+    const q = quizData[qIndex];
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.option-btn');
+    const feedback = document.getElementById(`feedback-${qIndex}`);
+
+    answered.add(qIndex);
+
+    if (selectedOpt === q.correct) {
+        btn.classList.add('correct');
+        feedback.style.color = 'var(--success)';
+        feedback.innerText = '✓ Helyes válasz! ' + q.explanation;
+        score++;
+        document.getElementById('score').innerText = score;
+    } else {
+        btn.classList.add('wrong');
+        buttons[q.correct].classList.add('correct');
+        feedback.style.color = 'var(--error)';
+        feedback.innerText = '✗ Helytelen! A helyes képlet: ' + q.options[q.correct] + '. ' + q.explanation;
+    }
+}
+
+function resetQuiz() {
+    score = 0;
+    answered.clear();
+    document.getElementById('score').innerText = 0;
+    renderQuiz();
+}
+
+renderQuiz();
+</script>
+
+
+</body></html>
