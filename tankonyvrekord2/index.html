@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)file:///D:/tankonyv/ma/tyuk2.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prémium 3D Mátrix Stúdió</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #080c14;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Dinamikus háttér fények */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-glow, radial-gradient(circle at 50% 50%, #1e1b4b 0%, #080c14 100%));
+      opacity: 0.6;
+      z-index: -1;
+      transition: all 0.8s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    p.subtitle {
+      color: #64748b;
+      margin-bottom: 40px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* Szimmetrikus 2 soros Mátrix Rács (Felül 4 - Alul 4) */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      width: 100%;
+      max-width: 1000px;
+      perspective: 1000px;
+    }
+
+    @media (max-width: 768px) {
+      .matrix-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .color-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .color-card:hover {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    /* Matrix elem jelölés a kártyán */
+    .card-matrix-tag {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    /* 3D Kocka animáció */
+    .cube-scene {
+      width: 70px;
+      height: 70px;
+      perspective: 400px;
+      margin: 15px 0;
+    }
+
+    .cube-3d {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-20deg) rotateY(-25deg);
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .color-card:hover .cube-3d {
+      transform: scale(1.25) rotateX(15deg) rotateY(195deg);
+    }
+
+    .face {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+
+    .front  { transform: rotateY(  0deg) translateZ(35px); }
+    .back   { transform: rotateY(180deg) translateZ(35px); }
+    .right  { transform: rotateY( 90deg) translateZ(35px); filter: brightness(0.85); }
+    .left   { transform: rotateY(-90deg) translateZ(35px); filter: brightness(0.85); }
+    .top    { transform: rotateX( 90deg) translateZ(35px); filter: brightness(1.2); }
+    .bottom { transform: rotateX(-90deg) translateZ(35px); filter: brightness(0.6); }
+
+    .color-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .hex-code {
+      font-family: monospace;
+      color: #64748b;
+      font-size: 0.8rem;
+      margin-top: 2px;
+    }
+
+    /* Középső Modal (Központi Arckép + Mátrix infó) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(8, 12, 20, 0.85);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 28px;
+      padding: 35px;
+      width: 90%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.9);
+      transform: scale(0.7) translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #fff;
+    }
+
+    .portrait-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #38bdf8;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+      margin-bottom: 15px;
+    }
+
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .modal-hex {
+      font-family: monospace;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    /* Mátrix Információs Doboz */
+    .matrix-info-box {
+      width: 100%;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .matrix-info-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #38bdf8;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .matrix-info-text {
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #f1f5f9;
+    }
+
+    .wheels-container {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+    }
+
+    .wheel-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 1px;
+    }
+
+    .color-wheel {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 3px solid #0f172a;
+    }
+  </style>
+</head>
+<body style="--bg-glow: radial-gradient(circle at 50% 50%, #FF1493aa 0%, #080c14 100%);">
+
+  <h1>PRÉMIUM MÁTRIX STÚDIÓ</h1>
+  <p class="subtitle">Válassz a szimmetrikus 3D színmátrixból az arckép és pozíció megtekintéséhez!</p>
+
+  <!-- Mátrix 2 sorban (4 felül, 4 alul) -->
+  <div class="matrix-grid">
+
+    <!-- FELSŐ SOR -->
+    <!-- 1. elem: [0, 0] -->
+    <div class="color-card" onclick="openMatrixModal('#8A2BE2', 'Lila Varázs', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&amp;auto=format&amp;fit=crop', '#FF007F', '#00E5FF', 1, 1, 1)">
+      <div class="card-matrix-tag">M[0][0]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #8A2BE2;"></div>
+          <div class="face back" style="background: #8A2BE2;"></div>
+          <div class="face right" style="background: #8A2BE2;"></div>
+          <div class="face left" style="background: #8A2BE2;"></div>
+          <div class="face top" style="background: #8A2BE2;"></div>
+          <div class="face bottom" style="background: #8A2BE2;"></div>
+        </div>
+      </div>
+      <div class="color-title">Lila Varázs</div>
+      <div class="hex-code">#8A2BE2</div>
+    </div>
+
+    <!-- 2. elem: [0, 1] -->
+    <div class="color-card" onclick="openMatrixModal('#FF1493', 'Neon Rózsaszín', 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&amp;auto=format&amp;fit=crop', '#00F5D4', '#7B2CBF', 2, 1, 2)">
+      <div class="card-matrix-tag">M[0][1]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #FF1493;"></div>
+          <div class="face back" style="background: #FF1493;"></div>
+          <div class="face right" style="background: #FF1493;"></div>
+          <div class="face left" style="background: #FF1493;"></div>
+          <div class="face top" style="background: #FF1493;"></div>
+          <div class="face bottom" style="background: #FF1493;"></div>
+        </div>
+      </div>
+      <div class="color-title">Neon Rózsaszín</div>
+      <div class="hex-code">#FF1493</div>
+    </div>
+
+    <!-- 3. elem: [0, 2] -->
+    <div class="color-card" onclick="openMatrixModal('#FFD700', 'Napsárga', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&amp;auto=format&amp;fit=crop', '#3182CE', '#E53E3E', 3, 1, 3)">
+      <div class="card-matrix-tag">M[0][2]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #FFD700;"></div>
+          <div class="face back" style="background: #FFD700;"></div>
+          <div class="face right" style="background: #FFD700;"></div>
+          <div class="face left" style="background: #FFD700;"></div>
+          <div class="face top" style="background: #FFD700;"></div>
+          <div class="face bottom" style="background: #FFD700;"></div>
+        </div>
+      </div>
+      <div class="color-title">Napsárga</div>
+      <div class="hex-code">#FFD700</div>
+    </div>
+
+    <!-- 4. elem: [0, 3] -->
+    <div class="color-card" onclick="openMatrixModal('#2ECC71', 'Smaragdzöld', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&amp;auto=format&amp;fit=crop', '#F39C12', '#2C3E50', 4, 1, 4)">
+      <div class="card-matrix-tag">M[0][3]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #2ECC71;"></div>
+          <div class="face back" style="background: #2ECC71;"></div>
+          <div class="face right" style="background: #2ECC71;"></div>
+          <div class="face left" style="background: #2ECC71;"></div>
+          <div class="face top" style="background: #2ECC71;"></div>
+          <div class="face bottom" style="background: #2ECC71;"></div>
+        </div>
+      </div>
+      <div class="color-title">Smaragdzöld</div>
+      <div class="hex-code">#2ECC71</div>
+    </div>
+
+    <!-- ALSÓ SOR -->
+    <!-- 5. elem: [1, 0] -->
+    <div class="color-card" onclick="openMatrixModal('#00E5FF', 'Ciankék', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&amp;auto=format&amp;fit=crop', '#F43F5E', '#FBBF24', 5, 2, 1)">
+      <div class="card-matrix-tag">M[1][0]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #00E5FF;"></div>
+          <div class="face back" style="background: #00E5FF;"></div>
+          <div class="face right" style="background: #00E5FF;"></div>
+          <div class="face left" style="background: #00E5FF;"></div>
+          <div class="face top" style="background: #00E5FF;"></div>
+          <div class="face bottom" style="background: #00E5FF;"></div>
+        </div>
+      </div>
+      <div class="color-title">Ciankék</div>
+      <div class="hex-code">#00E5FF</div>
+    </div>
+
+    <!-- 6. elem: [1, 1] -->
+    <div class="color-card" onclick="openMatrixModal('#FF5733', 'Kallópiros', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&amp;auto=format&amp;fit=crop', '#F1C40F', '#1C2833', 6, 2, 2)">
+      <div class="card-matrix-tag">M[1][1]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #FF5733;"></div>
+          <div class="face back" style="background: #FF5733;"></div>
+          <div class="face right" style="background: #FF5733;"></div>
+          <div class="face left" style="background: #FF5733;"></div>
+          <div class="face top" style="background: #FF5733;"></div>
+          <div class="face bottom" style="background: #FF5733;"></div>
+        </div>
+      </div>
+      <div class="color-title">Kallópiros</div>
+      <div class="hex-code">#FF5733</div>
+    </div>
+
+    <!-- 7. elem: [1, 2] -->
+    <div class="color-card" onclick="openMatrixModal('#A855F7', 'Ibolya Neonszín', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&amp;auto=format&amp;fit=crop', '#10B981', '#F59E0B', 7, 2, 3)">
+      <div class="card-matrix-tag">M[1][2]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #A855F7;"></div>
+          <div class="face back" style="background: #A855F7;"></div>
+          <div class="face right" style="background: #A855F7;"></div>
+          <div class="face left" style="background: #A855F7;"></div>
+          <div class="face top" style="background: #A855F7;"></div>
+          <div class="face bottom" style="background: #A855F7;"></div>
+        </div>
+      </div>
+      <div class="color-title">Ibolya Neon</div>
+      <div class="hex-code">#A855F7</div>
+    </div>
+
+    <!-- 8. elem: [1, 3] -->
+    <div class="color-card" onclick="openMatrixModal('#3B82F6', 'Elektromos Kék', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&amp;auto=format&amp;fit=crop', '#EC4899', '#10B981', 8, 2, 4)">
+      <div class="card-matrix-tag">M[1][3]</div>
+      <div class="cube-scene">
+        <div class="cube-3d">
+          <div class="face front" style="background: #3B82F6;"></div>
+          <div class="face back" style="background: #3B82F6;"></div>
+          <div class="face right" style="background: #3B82F6;"></div>
+          <div class="face left" style="background: #3B82F6;"></div>
+          <div class="face top" style="background: #3B82F6;"></div>
+          <div class="face bottom" style="background: #3B82F6;"></div>
+        </div>
+      </div>
+      <div class="color-title">Elektromos Kék</div>
+      <div class="hex-code">#3B82F6</div>
+    </div>
+
+  </div>
+
+  <!-- Középső Felugró Kártya -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-card">
+      <span class="close-btn" onclick="forceCloseModal()">×</span>
+      <img id="modalAvatar" class="portrait-avatar" src="./index_files/photo-1524504388940-b1c1722653e1" alt="Arckép" style="border-color: rgb(255, 20, 147); box-shadow: rgba(255, 20, 147, 0.533) 0px 0px 30px;">
+      <div id="modalTitle" class="modal-title">Neon Rózsaszín</div>
+      <div id="modalHex" class="modal-hex">#FF1493</div>
+
+      <!-- MÁTRIX POZÍCIÓ KIÍRÁSA -->
+      <div class="matrix-info-box">
+        <div class="matrix-info-title">A Mátrixban kiválasztott elem</div>
+        <div id="matrixInfoText" class="matrix-info-text">A mátrix 2. elemét választottad ki (Sor: 1, Oszlop: 2)</div>
+      </div>
+
+      <div class="wheels-container">
+        <div class="wheel-box">
+          <div id="harmoniaWheel" class="color-wheel" style="background: conic-gradient(rgb(255, 20, 147), rgb(0, 245, 212), rgb(255, 20, 147));"></div>
+          <span>HARMÓNIA</span>
+        </div>
+        <div class="wheel-box">
+          <div id="kontrasztWheel" class="color-wheel" style="background: conic-gradient(rgb(255, 20, 147), rgb(123, 44, 191), rgb(255, 20, 147));"></div>
+          <span>KONTRASZT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openMatrixModal(hex, name, avatarUrl, harmoniaHex, kontrasztHex, index, row, col) {
+      // 1. Háttér színezése
+      document.body.style.setProperty('--bg-glow', `radial-gradient(circle at 50% 50%, ${hex}aa 0%, #080c14 100%)`);
+
+      // 2. Adatok átadása
+      const avatar = document.getElementById('modalAvatar');
+      avatar.src = avatarUrl;
+      avatar.style.borderColor = hex;
+      avatar.style.boxShadow = `0 0 30px ${hex}88`;
+
+      document.getElementById('modalTitle').innerText = name;
+      document.getElementById('modalHex').innerText = hex;
+
+      // Mátrix pozíció kiírása pontosan
+      document.getElementById('matrixInfoText').innerText = `A mátrix ${index}. elemét választottad ki (Sor: ${row}, Oszlop: ${col})`;
+
+      document.getElementById('harmoniaWheel').style.background = `conic-gradient(${hex}, ${harmoniaHex}, ${hex})`;
+      document.getElementById('kontrasztWheel').style.background = `conic-gradient(${hex}, ${kontrasztHex}, ${hex})`;
+
+      // 3. Megjelenítés
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal(event) {
+      if (event.target.id === 'modalOverlay') {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+    }
+
+    function forceCloseModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+  </script>
+
+
+</body></html>
