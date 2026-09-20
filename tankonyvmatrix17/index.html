@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<!-- saved from url=(0121)file:///D:/tankonyv/Vektor%20&%20M%C3%A1trix%20Vil%C3%A1g%20-%20Interakt%C3%ADv%20Matematikai%20Szimul%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vektor &amp; Mátrix Világ - Interaktív Matematikai Szimuláció</title>
+  
+  <!-- Tailwind CSS, Phosphor Icons & Canvas Confetti -->
+  <script src="./index_files/saved_resource"></script>
+  <script src="./index_files/web"></script><link rel="stylesheet" type="text/css" href="./index_files/style.css"><link rel="stylesheet" type="text/css" href="./index_files/style(1).css"><link rel="stylesheet" type="text/css" href="./index_files/style(2).css"><link rel="stylesheet" type="text/css" href="./index_files/style(3).css"><link rel="stylesheet" type="text/css" href="./index_files/style(4).css"><link rel="stylesheet" type="text/css" href="./index_files/style(5).css"><link rel="stylesheet" type="text/css" href="./index_files/style(6).css"><link rel="stylesheet" type="text/css" href="./index_files/style(7).css"><link rel="stylesheet" type="text/css" href="./index_files/style(8).css"><link rel="stylesheet" type="text/css" href="./index_files/style(9).css"><link rel="stylesheet" type="text/css" href="./index_files/style(10).css"><link rel="stylesheet" type="text/css" href="./index_files/style(11).css">
+  <script src="./index_files/confetti.browser.min.js.descărcare"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Fira+Code:wght@500;700&display=swap');
+
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: 'Fredoka', cursive, sans-serif;
+      background: #c29b68 url('https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+    }
+
+    .math-font {
+      font-family: 'Fira Code', monospace;
+    }
+
+    .book-container {
+      background: #fdfbf7;
+      border: 8px solid #3e2723;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(139, 90, 43, 0.2);
+      border-radius: 28px;
+    }
+
+    .page-left {
+      background: #fffdf8;
+      border-right: 3px dashed #d7ccc8;
+    }
+
+    .page-right {
+      background: #faf8f5;
+    }
+
+    .btn-chunky {
+      transition: all 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 5px 0 var(--btn-shadow);
+    }
+
+    .btn-chunky:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 var(--btn-shadow);
+    }
+
+    .btn-chunky:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 var(--btn-shadow);
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(2deg); }
+    }
+
+    @keyframes leafWiggle {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-8deg); }
+    }
+
+    .animate-float {
+      animation: floaty 3s ease-in-out infinite;
+    }
+
+    .leaf-wiggle {
+      animation: leafWiggle 2s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    .star-particle {
+      position: fixed;
+      pointer-events: none;
+      animation: starPop 0.8s ease-out forwards;
+      z-index: 1000;
+    }
+
+    @keyframes starPop {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.4) rotate(180deg); opacity: 0.9; }
+      100% { transform: scale(0.2) translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
+    }
+
+    .matrix-card {
+      transition: all 0.15s ease-out;
+      cursor: pointer;
+    }
+
+    .matrix-card:hover {
+      transform: scale(1.03) translateY(-2px);
+    }
+
+    .matrix-card.selected {
+      border-color: #f59e0b !important;
+      background-color: #fffbeb !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.5) !important;
+    }
+
+    .drop-target-active {
+      border-color: #10b981 !important;
+      background-color: #ecfdf5 !important;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    canvas {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-left-20{left:-5rem}.-top-9{top:-2.25rem}.bottom-2{bottom:0.5rem}.left-0{left:0px}.left-2{left:0.5rem}.right-3{right:0.75rem}.right-4{right:1rem}.top-0{top:0px}.top-1{top:0.25rem}.top-2{top:0.5rem}.top-4{top:1rem}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-36{height:9rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-\[90vh\]{max-height:90vh}.min-h-screen{min-height:100vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-24{width:6rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\[2px\]{width:2px}.w-full{width:100%}.w-6{width:1.5rem}.max-w-2xl{max-width:42rem}.max-w-6xl{max-width:72rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-crosshair{cursor:crosshair}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-2\.5{gap:0.625rem}.gap-x-2{column-gap:0.5rem}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b-2{border-bottom-width:2px}.border-l-2{border-left-width:2px}.border-r-2{border-right-width:2px}.border-amber-100{--tw-border-opacity:1;border-color:rgb(254 243 199 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-amber-700{--tw-border-opacity:1;border-color:rgb(180 83 9 / var(--tw-border-opacity, 1))}.border-amber-800{--tw-border-opacity:1;border-color:rgb(146 64 14 / var(--tw-border-opacity, 1))}.border-amber-900{--tw-border-opacity:1;border-color:rgb(120 53 15 / var(--tw-border-opacity, 1))}.border-emerald-100{--tw-border-opacity:1;border-color:rgb(209 250 229 / var(--tw-border-opacity, 1))}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.border-orange-400{--tw-border-opacity:1;border-color:rgb(251 146 60 / var(--tw-border-opacity, 1))}.border-orange-500{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.border-orange-700{--tw-border-opacity:1;border-color:rgb(194 65 12 / var(--tw-border-opacity, 1))}.border-orange-800{--tw-border-opacity:1;border-color:rgb(154 52 18 / var(--tw-border-opacity, 1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168 / var(--tw-border-opacity, 1))}.border-red-800{--tw-border-opacity:1;border-color:rgb(153 27 27 / var(--tw-border-opacity, 1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-teal-400{--tw-border-opacity:1;border-color:rgb(45 212 191 / var(--tw-border-opacity, 1))}.border-teal-800{--tw-border-opacity:1;border-color:rgb(17 94 89 / var(--tw-border-opacity, 1))}.border-yellow-700{--tw-border-opacity:1;border-color:rgb(161 98 7 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-red-300{--tw-border-opacity:1;border-color:rgb(252 165 165 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-100\/70{background-color:rgb(254 243 199 / 0.7)}.bg-amber-100\/90{background-color:rgb(254 243 199 / 0.9)}.bg-amber-100\/95{background-color:rgb(254 243 199 / 0.95)}.bg-amber-200{--tw-bg-opacity:1;background-color:rgb(253 230 138 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-50\/30{background-color:rgb(255 251 235 / 0.3)}.bg-amber-50\/50{background-color:rgb(255 251 235 / 0.5)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-800{--tw-bg-opacity:1;background-color:rgb(146 64 14 / var(--tw-bg-opacity, 1))}.bg-amber-800\/10{background-color:rgb(146 64 14 / 0.1)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/30{background-color:rgb(236 253 245 / 0.3)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-orange-400{--tw-bg-opacity:1;background-color:rgb(251 146 60 / var(--tw-bg-opacity, 1))}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(249 115 22 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.bg-teal-500{--tw-bg-opacity:1;background-color:rgb(20 184 166 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-yellow-400{--tw-bg-opacity:1;background-color:rgb(250 204 21 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:0.025em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136 / var(--tw-text-opacity, 1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34 / var(--tw-text-opacity, 1))}.text-orange-900{--tw-text-opacity:1;color:rgb(124 45 18 / var(--tw-text-opacity, 1))}.text-red-950{--tw-text-opacity:1;color:rgb(69 10 10 / var(--tw-text-opacity, 1))}.opacity-95{opacity:0.95}.opacity-90{opacity:0.9}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.ring-4{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-amber-300{--tw-ring-opacity:1;--tw-ring-color:rgb(252 211 77 / var(--tw-ring-opacity, 1))}.drop-shadow-xl{--tw-drop-shadow:drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-400:hover{--tw-bg-opacity:1;background-color:rgb(148 163 184 / var(--tw-bg-opacity, 1))}.active\:cursor-grabbing:active{cursor:grabbing}@media (min-width: 640px){.sm\:p-4{padding:1rem}.sm\:p-5{padding:1.25rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:flex-row{flex-direction:row}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-left-20{left:-5rem}.-top-9{top:-2.25rem}.bottom-2{bottom:0.5rem}.left-0{left:0px}.left-2{left:0.5rem}.right-3{right:0.75rem}.right-4{right:1rem}.top-0{top:0px}.top-1{top:0.25rem}.top-2{top:0.5rem}.top-4{top:1rem}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-36{height:9rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-\[90vh\]{max-height:90vh}.min-h-screen{min-height:100vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-24{width:6rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\[2px\]{width:2px}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-6xl{max-width:72rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-crosshair{cursor:crosshair}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-x-2{column-gap:0.5rem}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b-2{border-bottom-width:2px}.border-l-2{border-left-width:2px}.border-r-2{border-right-width:2px}.border-amber-100{--tw-border-opacity:1;border-color:rgb(254 243 199 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-amber-700{--tw-border-opacity:1;border-color:rgb(180 83 9 / var(--tw-border-opacity, 1))}.border-amber-800{--tw-border-opacity:1;border-color:rgb(146 64 14 / var(--tw-border-opacity, 1))}.border-amber-900{--tw-border-opacity:1;border-color:rgb(120 53 15 / var(--tw-border-opacity, 1))}.border-emerald-100{--tw-border-opacity:1;border-color:rgb(209 250 229 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.border-orange-400{--tw-border-opacity:1;border-color:rgb(251 146 60 / var(--tw-border-opacity, 1))}.border-orange-500{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.border-orange-700{--tw-border-opacity:1;border-color:rgb(194 65 12 / var(--tw-border-opacity, 1))}.border-orange-800{--tw-border-opacity:1;border-color:rgb(154 52 18 / var(--tw-border-opacity, 1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168 / var(--tw-border-opacity, 1))}.border-red-800{--tw-border-opacity:1;border-color:rgb(153 27 27 / var(--tw-border-opacity, 1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-teal-400{--tw-border-opacity:1;border-color:rgb(45 212 191 / var(--tw-border-opacity, 1))}.border-teal-800{--tw-border-opacity:1;border-color:rgb(17 94 89 / var(--tw-border-opacity, 1))}.border-yellow-700{--tw-border-opacity:1;border-color:rgb(161 98 7 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-100\/70{background-color:rgb(254 243 199 / 0.7)}.bg-amber-100\/90{background-color:rgb(254 243 199 / 0.9)}.bg-amber-100\/95{background-color:rgb(254 243 199 / 0.95)}.bg-amber-200{--tw-bg-opacity:1;background-color:rgb(253 230 138 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-50\/30{background-color:rgb(255 251 235 / 0.3)}.bg-amber-50\/50{background-color:rgb(255 251 235 / 0.5)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-800{--tw-bg-opacity:1;background-color:rgb(146 64 14 / var(--tw-bg-opacity, 1))}.bg-amber-800\/10{background-color:rgb(146 64 14 / 0.1)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/30{background-color:rgb(236 253 245 / 0.3)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-orange-400{--tw-bg-opacity:1;background-color:rgb(251 146 60 / var(--tw-bg-opacity, 1))}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(249 115 22 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.bg-teal-500{--tw-bg-opacity:1;background-color:rgb(20 184 166 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-yellow-400{--tw-bg-opacity:1;background-color:rgb(250 204 21 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-1\.5{padding:0.375rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:0.025em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136 / var(--tw-text-opacity, 1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-90{opacity:0.9}.opacity-95{opacity:0.95}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.ring-4{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-amber-300{--tw-ring-opacity:1;--tw-ring-color:rgb(252 211 77 / var(--tw-ring-opacity, 1))}.drop-shadow-xl{--tw-drop-shadow:drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-400:hover{--tw-bg-opacity:1;background-color:rgb(148 163 184 / var(--tw-bg-opacity, 1))}.active\:cursor-grabbing:active{cursor:grabbing}@media (min-width: 640px){.sm\:p-4{padding:1rem}.sm\:p-5{padding:1.25rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:flex-row{flex-direction:row}}</style></head>
+<body class="min-h-screen p-2 sm:p-4 md:p-6 flex flex-col items-center justify-center">
+
+  <header class="w-full max-w-6xl bg-amber-100/95 backdrop-blur-md border-4 border-amber-900 rounded-2xl p-3 mb-4 shadow-xl flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-orange-500 border-2 border-amber-900 flex items-center justify-center text-3xl text-white shadow-md">
+        🥕
+      </div>
+      <div>
+        <h1 class="text-2xl font-black text-amber-950 tracking-wide flex items-center gap-2">
+          Vektor &amp; Mátrix Világ
+        </h1>
+        <p class="text-xs text-amber-800 font-bold">Lásd és érted meg a matematikát akció közben!</p>
+      </div>
+    </div>
+
+    <!-- Score & Level Badge -->
+    <div class="flex items-center gap-3 bg-white/90 border-2 border-amber-300 rounded-xl px-4 py-1.5 shadow-inner">
+      <div class="flex items-center gap-1 text-amber-500 font-black text-base">
+        <i class="ph-fill ph-star text-2xl text-amber-400"></i>
+        <span id="score-text">200</span> Pont
+      </div>
+      <div class="h-6 w-[2px] bg-amber-200"></div>
+      <div class="text-xs font-bold text-amber-900 flex items-center gap-1">
+        <i class="ph-bold ph-trophy text-orange-500 text-lg"></i>
+        <span id="level-badge-text">1. Szint: Vektor Beállítás</span>
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="flex items-center gap-2">
+      <button id="btn-sound" class="btn-chunky bg-amber-200 border-2 border-amber-700 text-amber-900 p-2.5 rounded-xl font-bold text-sm" style="--btn-shadow: #b45309" title="Hang ki/be">
+        <i class="ph-bold ph-speaker-high text-xl" id="sound-icon"></i>
+      </button>
+      <button id="btn-sugo" class="btn-chunky bg-yellow-400 border-2 border-yellow-700 text-amber-950 px-3 py-2 rounded-xl font-bold text-xs flex items-center gap-1 shadow" style="--btn-shadow: #b45309">
+        <i class="ph-bold ph-lightbulb text-lg"></i> SÚGÓ &amp; ÚTMUTATÓ
+      </button>
+      <button id="btn-reset" class="btn-chunky bg-orange-400 border-2 border-orange-700 text-white px-3 py-2 rounded-xl font-bold text-xs flex items-center gap-1" style="--btn-shadow: #c2410c">
+        <i class="ph-bold ph-arrows-counter-clockwise text-base"></i> Újra
+      </button>
+    </div>
+  </header>
+
+  <main class="w-full max-w-6xl book-container overflow-hidden flex flex-col lg:flex-row relative shadow-2xl">
+
+    <!-- Interactive Patch Cable Overlay SVG Canvas -->
+    <svg id="cable-overlay" class="absolute top-0 left-0 w-full h-full pointer-events-none z-20">
+      <path id="cable-path-x" d="M 120.86250305175781 556.8000202178955 C 90.86250305175781 616.8000202178955, 70.86250305175781 496.8000202178955, 40.86250305175781 436.8000202178955" stroke="#ef4444" stroke-width="5" fill="none" stroke-linecap="round" filter="drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"></path>
+      <path id="cable-path-y" d="M 291.3937530517578 556.8000202178955 C 261.3937530517578 616.8000202178955, 241.3937530517578 496.8000202178955, 211.3937530517578 436.8000202178955" stroke="#14b8a6" stroke-width="5" fill="none" stroke-linecap="round" filter="drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"></path>
+      <path id="cable-path-z" d="" stroke="#a855f7" stroke-width="5" fill="none" stroke-linecap="round" filter="drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"></path>
+    </svg>
+
+    <!-- LEFT PAGE: VECTOR CONTROLS & CABLE PATCHING BAY -->
+    <section class="page-left flex-1 p-4 sm:p-5 flex flex-col gap-3">
+      <div class="text-center border-b-2 border-amber-200 pb-2">
+        <h2 class="text-lg font-black text-amber-900 flex items-center justify-center gap-2">
+          <i class="ph-bold ph-sliders-horizontal text-orange-500"></i> VEKTOR KAPCSOLÓK &amp; KÁBELEK
+        </h2>
+        <p class="text-xs text-amber-700 font-bold" id="level-instruction-left">Állítsd be a gombokkal a vektort [3, -2]-re és csatlakoztasd az X, Y kábeleket!</p>
+      </div>
+
+      <!-- Vector Canvas Area -->
+      <div class="bg-white border-4 border-amber-200 rounded-2xl p-2.5 shadow-md flex flex-col items-center relative">
+        <div id="target-pill" class="absolute top-2 left-2 bg-amber-400 border-2 border-amber-700 text-amber-950 font-black text-xs px-2.5 py-1 rounded-full shadow flex items-center gap-1 z-10">
+          🎯 Cél Vektor: <span id="target-val-text">[3, -2]</span>
+        </div>
+
+        <canvas id="vector-canvas" width="300" height="200" class="rounded-xl border-2 border-amber-100 bg-amber-50/50 cursor-crosshair"></canvas>
+
+        <div class="flex justify-between w-full mt-2 px-1 text-xs font-bold">
+          <span class="text-blue-600 flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+            Bemenő Vektor <b class="math-font text-blue-900">v = [<span id="val-vx">3</span>, <span id="val-vy">-2</span>]</b>
+          </span>
+          <span class="text-purple-600 flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+            Csatlakozott Kábelek: <b id="active-cables-text" class="text-purple-900">X, Y, Z</b>
+          </span>
+        </div>
+      </div>
+
+      <!-- Rotary Dial Controls -->
+      <div class="grid grid-cols-2 gap-3 bg-amber-100/70 border-2 border-amber-300 rounded-2xl p-2.5">
+        <div class="flex flex-col items-center gap-1">
+          <span class="font-black text-amber-900 text-xs">X komponens (-3 .. +3)</span>
+          <div class="relative w-14 h-14 cursor-pointer flex items-center justify-center" id="knob-x-container">
+            <div id="knob-x-dial" class="w-12 h-12 bg-amber-800 border-4 border-orange-400 rounded-full shadow-lg relative flex items-center justify-center transition-transform" style="transform: rotate(120deg);">
+              <div class="w-1.5 h-4 bg-white rounded-full absolute top-1"></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 mt-0.5">
+            <button id="btn-x-minus" class="btn-chunky bg-white border-2 border-amber-400 text-amber-900 font-black text-xs px-2.5 py-0.5 rounded-lg" style="--btn-shadow: #d97706">-</button>
+            <span id="val-x-display" class="math-font font-black text-amber-900 text-sm w-8 text-center bg-white rounded border border-amber-200 py-0.5">(3)</span>
+            <button id="btn-x-plus" class="btn-chunky bg-white border-2 border-amber-400 text-amber-900 font-black text-xs px-2.5 py-0.5 rounded-lg" style="--btn-shadow: #d97706">+</button>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-1">
+          <span class="font-black text-amber-900 text-xs">Y komponens (-3 .. +3)</span>
+          <div class="relative w-14 h-14 cursor-pointer flex items-center justify-center" id="knob-y-container">
+            <div id="knob-y-dial" class="w-12 h-12 bg-amber-800 border-4 border-teal-400 rounded-full shadow-lg relative flex items-center justify-center transition-transform" style="transform: rotate(-80deg);">
+              <div class="w-1.5 h-4 bg-white rounded-full absolute top-1"></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 mt-0.5">
+            <button id="btn-y-minus" class="btn-chunky bg-white border-2 border-amber-400 text-amber-900 font-black text-xs px-2.5 py-0.5 rounded-lg" style="--btn-shadow: #d97706">-</button>
+            <span id="val-y-display" class="math-font font-black text-amber-900 text-sm w-8 text-center bg-white rounded border border-amber-200 py-0.5">(-2)</span>
+            <button id="btn-y-plus" class="btn-chunky bg-white border-2 border-amber-400 text-amber-900 font-black text-xs px-2.5 py-0.5 rounded-lg" style="--btn-shadow: #d97706">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vector Patch Bay (Cable Jacks) -->
+      <div class="bg-amber-800/10 border-2 border-amber-300 rounded-2xl p-2.5 flex flex-col gap-2">
+        <div class="flex justify-between items-center">
+          <span class="font-black text-amber-900 text-xs flex items-center gap-1">
+            <i class="ph-bold ph-plugs text-orange-600"></i> Csatlakozó Aljzatok
+          </span>
+          <span class="text-[10px] text-amber-700 font-bold">Kattints a csatlakoztatáshoz!</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center" id="jack-container">
+          <button id="jack-x" data-jack="x" class="cable-jack btn-chunky bg-red-500 border-2 border-red-800 text-white font-black text-xs py-2 rounded-xl flex items-center justify-center gap-1 shadow ring-4 ring-amber-300" style="--btn-shadow: #991b1b">
+            <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span> Jack X
+          </button>
+          <button id="jack-y" data-jack="y" class="cable-jack btn-chunky bg-teal-500 border-2 border-teal-800 text-white font-black text-xs py-2 rounded-xl flex items-center justify-center gap-1 shadow ring-4 ring-amber-300" style="--btn-shadow: #115e59">
+            <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span> Jack Y
+          </button>
+          <button id="jack-z" data-jack="z" class="cable-jack btn-chunky bg-purple-500 border-2 border-purple-800 text-white font-black text-xs py-2 rounded-xl flex items-center justify-center gap-1 shadow ring-4 ring-amber-300" style="--btn-shadow: #6b21a8">
+            <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span> Jack Z
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-right flex-1 p-4 sm:p-5 flex flex-col gap-3 relative">
+      <div class="text-center border-b-2 border-amber-200 pb-2">
+        <h2 class="text-lg font-black text-amber-900 flex items-center justify-center gap-2">
+          <i class="ph-bold ph-grid-four text-emerald-600"></i> MÁTRIX TRANSZFORMÁCIÓ ($M \cdot v = v'$)
+        </h2>
+        <p class="text-xs text-amber-700 font-bold" id="level-instruction-right">Válaszd az 1. Identitás Mátrixot!</p>
+      </div>
+
+      <!-- Step-by-step Formula Display Box -->
+      <div class="bg-amber-100/90 border-2 border-amber-400 rounded-2xl p-2.5 flex flex-col items-center gap-1 shadow-sm">
+        <span class="font-black text-amber-950 text-xs flex items-center gap-1">
+          <i class="ph-bold ph-calculator text-orange-600"></i> Mátrixszorzás Képlete számokkal:
+        </span>
+        
+        <div class="flex items-center gap-2 math-font text-xs sm:text-sm font-bold text-amber-950 bg-white border border-amber-300 rounded-xl px-3 py-1.5 shadow-inner flex-wrap justify-center">
+          <div class="inline-flex items-center px-1 border-l-2 border-r-2 border-amber-900 rounded">
+            <div class="grid grid-cols-2 gap-x-2 text-center">
+              <span id="m-a" class="text-blue-600">1</span><span id="m-b" class="text-blue-600">0</span>
+              <span id="m-c" class="text-teal-600">0</span><span id="m-d" class="text-teal-600">1</span>
+            </div>
+          </div>
+          <span>·</span>
+          <div class="inline-flex items-center px-1 border-l-2 border-r-2 border-amber-900 rounded">
+            <div class="flex flex-col text-center">
+              <span id="m-vx" class="text-blue-700">3</span>
+              <span id="m-vy" class="text-teal-700">-2</span>
+            </div>
+          </div>
+          <span>=</span>
+          <span class="text-slate-600 text-[11px]">(<span id="calc-x">1·3 + 0·-2</span>, <span id="calc-y">0·3 + 1·-2</span>) =</span>
+          <div class="inline-flex items-center px-1 border-l-2 border-r-2 border-emerald-800 bg-emerald-50 rounded">
+            <div class="flex flex-col text-center font-black text-emerald-700">
+              <span id="res-vx">3</span>
+              <span id="res-vy">-2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dual Canvas Grids -->
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-white border-2 border-amber-200 rounded-xl p-1.5 flex flex-col items-center">
+          <span class="text-[11px] font-black text-amber-900 mb-1 flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Eredeti Alakzat ($v$)
+          </span>
+          <canvas id="canvas-orig" width="135" height="120" class="rounded border border-amber-100 bg-amber-50/30"></canvas>
+        </div>
+
+        <div id="drop-target-area" class="bg-white border-2 border-amber-300 rounded-xl p-1.5 flex flex-col items-center transition-all">
+          <span class="text-[11px] font-black text-emerald-800 mb-1 flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Transzformált ($v'$)
+          </span>
+          <canvas id="canvas-trans" width="135" height="120" class="rounded border border-emerald-100 bg-emerald-50/30"></canvas>
+        </div>
+      </div>
+
+      <!-- Matrix Selection Cards Grid -->
+      <div class="grid grid-cols-2 gap-2" id="matrix-cards-container">
+        <div data-matrix-id="1" class="matrix-card bg-white border-2 border-amber-200 rounded-xl p-2 flex flex-col items-center gap-1 shadow-sm selected">
+          <span class="text-[11px] font-black text-amber-900" id="card-title-1">1. Alapmátrix (Identitás)</span>
+          <div class="math-font text-xs font-bold text-amber-950 border-l-2 border-r-2 border-amber-800 px-2 py-0.5">
+            [ 1 &nbsp; 0 ]<br>[ 0 &nbsp; 1 ]
+          </div>
+          <span class="text-[10px] text-amber-700 font-bold">1x Változatlan</span>
+        </div>
+
+        <div data-matrix-id="2" class="matrix-card bg-white border-2 border-amber-200 rounded-xl p-2 flex flex-col items-center gap-1 shadow-sm">
+          <span class="text-[11px] font-black text-amber-900" id="card-title-2">2. Skálázás (2x Nyújtás)</span>
+          <div class="math-font text-xs font-bold text-amber-950 border-l-2 border-r-2 border-amber-800 px-2 py-0.5">
+            [ 2 &nbsp; 0 ]<br>[ 0 &nbsp; 2 ]
+          </div>
+          <span class="text-[10px] text-amber-700 font-bold">2x Dupla Méret</span>
+        </div>
+
+        <div data-matrix-id="3" class="matrix-card bg-white border-2 border-amber-200 rounded-xl p-2 flex flex-col items-center gap-1 shadow-sm">
+          <span class="text-[11px] font-black text-amber-900" id="card-title-3">3. X Tükrözés</span>
+          <div class="math-font text-xs font-bold text-amber-950 border-l-2 border-r-2 border-amber-800 px-2 py-0.5">
+            [ 1 &nbsp; 0 ]<br>[ 0 &nbsp;-1 ]
+          </div>
+          <span class="text-[10px] text-amber-700 font-bold">Y tengelyre tükröz</span>
+        </div>
+
+        <div data-matrix-id="4" class="matrix-card bg-white border-2 border-amber-200 rounded-xl p-2 flex flex-col items-center gap-1 shadow-sm">
+          <span class="text-[11px] font-black text-amber-900" id="card-title-4">4. 90° Forgatás</span>
+          <div class="math-font text-xs font-bold text-amber-950 border-l-2 border-r-2 border-amber-800 px-2 py-0.5">
+            [ 0 &nbsp;-1 ]<br>[ 1 &nbsp; 0 ]
+          </div>
+          <span class="text-[10px] text-amber-700 font-bold">90° Forgatás</span>
+        </div>
+      </div>
+
+      <!-- MÁTRIX-RÉPA INTERACTIVE DRAGGABLE CHARACTER -->
+      <div id="carrot-character" class="absolute right-3 bottom-2 w-24 h-36 cursor-grab active:cursor-grabbing z-30 transition-transform" style="left: 391.6px; top: 202.4px;">
+        <div id="carrot-bubble" class="absolute -top-9 -left-20 bg-white border-2 border-orange-500 rounded-2xl px-2.5 py-1 font-black text-[10px] text-amber-950 shadow-md whitespace-nowrap pointer-events-none opacity-95">Állítsd be a vektort [3, -2]-re! 🥕</div>
+
+        <svg viewBox="0 0 120 180" class="w-full h-full filter drop-shadow-xl">
+          <g class="leaf-wiggle">
+            <path d="M 50 45 C 30 10, 10 20, 40 55 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="3"></path>
+            <path d="M 60 40 C 60 0, 45 0, 55 50 Z" fill="#81c784" stroke="#2e7d32" stroke-width="3"></path>
+            <path d="M 70 45 C 90 10, 110 20, 80 55 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="3"></path>
+          </g>
+          <path d="M 35 50 Q 60 40 85 50 L 60 170 Z" fill="#ff7043" stroke="#e64a19" stroke-width="4" stroke-linejoin="round"></path>
+          <path d="M 45 80 Q 55 82 65 78" stroke="#fbe9e7" stroke-width="3" stroke-linecap="round" fill="none"></path>
+          <path d="M 48 110 Q 58 112 68 108" stroke="#fbe9e7" stroke-width="3" stroke-linecap="round" fill="none"></path>
+
+          <circle cx="60" cy="62" r="11" fill="#ffd54f" stroke="#ffb300" stroke-width="2"></circle>
+          <text x="60" y="67" font-family="Fredoka" font-weight="bold" font-size="13" fill="#5d4037" text-anchor="middle">M</text>
+
+          <g id="carrot-eyes">
+            <circle cx="50" cy="85" r="7" fill="white" stroke="#3e2723" stroke-width="1.5"></circle>
+            <circle id="pupil-left" cx="50" cy="85" r="3.5" fill="#3e2723"></circle>
+            <circle cx="52" cy="83" r="1.5" fill="white"></circle>
+
+            <circle cx="70" cy="85" r="7" fill="white" stroke="#3e2723" stroke-width="1.5"></circle>
+            <circle id="pupil-right" cx="70" cy="85" r="3.5" fill="#3e2723"></circle>
+            <circle cx="72" cy="83" r="1.5" fill="white"></circle>
+          </g>
+
+          <circle cx="42" cy="95" r="3.5" fill="#ff8a80" opacity="0.8"></circle>
+          <circle cx="78" cy="95" r="3.5" fill="#ff8a80" opacity="0.8"></circle>
+
+          <path id="carrot-mouth" d="M 48 95 Q 60 115 72 95" stroke="#3e2723" stroke-width="3" stroke-linecap="round" fill="none"></path>
+        </svg>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM CHECK ANSWER BUTTON BAR -->
+  <div class="mt-4 flex flex-col items-center gap-2">
+    <button id="btn-check" class="btn-chunky bg-emerald-500 border-4 border-emerald-800 text-white text-xl font-black px-10 py-3.5 rounded-2xl flex items-center gap-3 shadow-xl" style="--btn-shadow: #065f46">
+      <i class="ph-bold ph-check-circle text-3xl"></i>
+      <span>ELLENŐRZÉS</span>
+    </button>
+  </div>
+
+  <div id="modal-sugo" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-amber-50 border-4 border-amber-800 rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+      
+      <button id="modal-sugo-close" class="absolute top-4 right-4 bg-red-500 text-white w-9 h-9 rounded-full font-black text-lg border-2 border-red-800 flex items-center justify-center hover:bg-red-600 transition shadow">✕</button>
+
+      <div class="flex items-center gap-3 border-b-2 border-amber-200 pb-3">
+        <div class="w-12 h-12 bg-yellow-400 border-2 border-amber-800 rounded-2xl flex items-center justify-center text-2xl shadow">💡</div>
+        <div>
+          <h3 class="text-xl font-black text-amber-950">SÚGÓ &amp; ÚTMUTATÓ</h3>
+          <p class="text-xs text-amber-800 font-bold">Így működik a Vektor &amp; Mátrix szimuláció lépésről lépésre!</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3 text-sm text-amber-950">
+        
+        <!-- 1. Cables -->
+        <div class="bg-white border-2 border-amber-200 rounded-2xl p-3 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-red-500 border-2 border-red-800 text-white font-black text-xl flex items-center justify-center flex-shrink-0">🔌</div>
+          <div>
+            <h4 class="font-black text-amber-900 text-base">1. Kábelek &amp; Csatlakozók (Patch Bay)</h4>
+            <p class="text-xs text-amber-800 leading-relaxed mt-0.5">
+              A bal oldalon lévő <b>Jack X, Jack Y és Jack Z</b> csatlakozók közvetítik a vektor koordinátáit. Kattintással tudod csatlakoztatni vagy leválasztani az aktív kábeleket! Győződj meg róla, hogy a feladat által kért kábelek be vannak dugva.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. Knobs -->
+        <div class="bg-white border-2 border-amber-200 rounded-2xl p-3 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-orange-500 border-2 border-orange-800 text-white font-black text-xl flex items-center justify-center flex-shrink-0">🎛️</div>
+          <div>
+            <h4 class="font-black text-amber-900 text-base">2. Vektor Gombok (Knobs)</h4>
+            <p class="text-xs text-amber-800 leading-relaxed mt-0.5">
+              A tekerőgombokkal állíthatod be a bemeneti vektor <b>X és Y</b> komponensét. A kék koordináta-háló élőben kirajzolja a vektort (<span class="math-font font-bold text-blue-700">v = [x, y]</span>). Igazítsd a vektort a sárga karikával jelölt 🎯 <b>Cél Vektorhoz</b>!
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. Matrix Transformation -->
+        <div class="bg-white border-2 border-amber-200 rounded-2xl p-3 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500 border-2 border-emerald-800 text-white font-black text-xl flex items-center justify-center flex-shrink-0">📐</div>
+          <div>
+            <h4 class="font-black text-amber-900 text-base">3. Mátrixszorzás &amp; Skálázás ($M \cdot v = v'$)</h4>
+            <p class="text-xs text-amber-800 leading-relaxed mt-0.5">
+              A jobb oldalon a kiválasztott mátrix megszorozza a vektort:
+              <br>
+              <span class="math-font font-bold text-slate-900 bg-amber-100 px-2 py-0.5 rounded border border-amber-300 inline-block mt-1">
+                [a b ; c d] · [x ; y] = [a·x + b·y ; c·x + d·y] = [x' ; y']
+              </span>
+              <br>
+              Láthatod, hogy az <b>Eredeti Alakzat</b> hogyan nyúlik (2x Skálázás), tükröződik vagy forog el a zöld <b>Transzformált</b> hálón!
+            </p>
+          </div>
+        </div>
+
+        <!-- 4. Carrot -->
+        <div class="bg-white border-2 border-amber-200 rounded-2xl p-3 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 border-2 border-amber-800 text-white font-black text-xl flex items-center justify-center flex-shrink-0">🥕</div>
+          <div>
+            <h4 class="font-black text-amber-900 text-base">4. Mátrix-Répa Húzása</h4>
+            <p class="text-xs text-amber-800 leading-relaxed mt-0.5">
+              Fogd meg a Mátrix-Répát az egérrel vagy az ujjaddal, és húzd át a zöld **Transzformált Alakzat** kijelzőjére, hogy érvényesítsd a kiválasztást!
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <button id="modal-sugo-ok" class="btn-chunky bg-amber-500 border-2 border-amber-800 text-white font-black py-2.5 rounded-xl text-base shadow mt-2" style="--btn-shadow: #78350f">
+        ÉRTEM, JÁTSSZUNK! 🚀
+      </button>
+
+    </div>
+  </div>
+
+  <div id="modal-feedback" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-amber-50 border-4 border-amber-800 rounded-3xl max-w-xl w-full p-6 shadow-2xl relative flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+      
+      <button id="modal-feedback-close" class="absolute top-4 right-4 bg-slate-300 text-slate-800 w-9 h-9 rounded-full font-black text-lg border-2 border-slate-600 flex items-center justify-center hover:bg-slate-400 transition shadow">✕</button>
+
+      <div class="flex items-center gap-3 border-b-2 border-amber-200 pb-3">
+        <div id="feedback-icon-box" class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow bg-emerald-500 text-white border-2 border-emerald-800">🎉</div>
+        <div>
+          <h3 id="feedback-title" class="text-2xl font-black text-emerald-800">HELYES MEGOLDÁS!</h3>
+          <p id="feedback-subtitle" class="text-xs font-bold text-amber-800">Tökéletes matematikai kiszámítás és beállítás!</p>
+        </div>
+      </div>
+
+      <!-- Checklist items -->
+      <div class="flex flex-col gap-2" id="feedback-checklist"><div class="p-2.5 rounded-xl border-2 flex items-center gap-2.5 text-xs font-bold bg-emerald-50 border-emerald-300 text-emerald-950">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center font-black text-white bg-emerald-500 flex-shrink-0">
+            ✓
+          </div>
+          <div>
+            <div class="font-black text-sm">1. Kábelek csatlakoztatása</div>
+            <div class="text-[11px] opacity-90">Minden szükséges kábel (X, Y) be van dugva!</div>
+          </div>
+        </div><div class="p-2.5 rounded-xl border-2 flex items-center gap-2.5 text-xs font-bold bg-emerald-50 border-emerald-300 text-emerald-950">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center font-black text-white bg-emerald-500 flex-shrink-0">
+            ✓
+          </div>
+          <div>
+            <div class="font-black text-sm">2. Vektor Gombok (Knobs)</div>
+            <div class="text-[11px] opacity-90">Helyes bemenő vektor: v = [2, -1]</div>
+          </div>
+        </div><div class="p-2.5 rounded-xl border-2 flex items-center gap-2.5 text-xs font-bold bg-emerald-50 border-emerald-300 text-emerald-950">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center font-black text-white bg-emerald-500 flex-shrink-0">
+            ✓
+          </div>
+          <div>
+            <div class="font-black text-sm">3. Mátrix Kiválasztása</div>
+            <div class="text-[11px] opacity-90">Helyesen kiválasztott Mátrix: 2. Skálázás (2x Nyújtás)</div>
+          </div>
+        </div><div class="p-2.5 rounded-xl border-2 flex items-center gap-2.5 text-xs font-bold bg-emerald-50 border-emerald-300 text-emerald-950">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center font-black text-white bg-emerald-500 flex-shrink-0">
+            ✓
+          </div>
+          <div>
+            <div class="font-black text-sm">4. Mátrix-Répa Húzása</div>
+            <div class="text-[11px] opacity-90">A Répa a zöld Transzformált Alakzat kijelzőre van helyezve!</div>
+          </div>
+        </div></div>
+
+      <!-- Mathematical Calculation Explanation Box -->
+      <div class="bg-white border-2 border-amber-300 rounded-2xl p-3 flex flex-col gap-1.5 shadow-inner">
+        <span class="font-black text-amber-950 text-xs flex items-center gap-1">
+          <i class="ph-bold ph-function text-orange-600 text-sm"></i> Lépésről Lépésre Matematikai Kiszámítás:
+        </span>
+        <div id="feedback-math-details" class="math-font text-xs font-bold text-slate-800 bg-amber-50 border border-amber-200 p-2.5 rounded-xl leading-relaxed">
+        M mátrix: [2 0 ; 0 2]<br>
+        Bemenő vektor v: [2 ; -1]<br>
+        <span class="text-emerald-700">Számítás:</span><br>
+        x' = (2 · 2) + (0 · -1) = <b>4</b><br>
+        y' = (0 · 2) + (2 · -1) = <b>-2</b><br>
+        Resulting Transformed Vector v' = <span class="text-emerald-700 font-black">[4, -2]</span>
+      </div>
+      </div>
+
+      <button id="modal-feedback-btn" class="btn-chunky bg-emerald-500 border-2 border-emerald-800 text-white font-black py-3 rounded-xl text-base shadow mt-2" style="--btn-shadow: #065f46">KÖVETKEZŐ SZINT! 🚀</button>
+
+    </div>
+  </div>
+
+  <script>
+    // GLOBAL GAME STATE
+    const state = {
+      score: 0,
+      currentLevel: 1,
+      vector: { x: 3, y: -2 },
+      targetVector: { x: 3, y: -2 },
+      selectedMatrixId: 1,
+      targetMatrixId: 1,
+      soundEnabled: true,
+      connectedJacks: ['x', 'y'], // default connected
+      carrotDroppedOnTarget: false,
+      matrices: {
+        1: { name: "1. Identitás (1x)", matrix: [1, 0, 0, 1] },
+        2: { name: "2. Skálázás (2x Nyújtás)", matrix: [2, 0, 0, 2] },
+        3: { name: "3. X Tükrözés", matrix: [1, 0, 0, -1] },
+        4: { name: "4. 90° Forgatás", matrix: [0, -1, 1, 0] }
+      }
+    };
+
+    // LEVEL DEFINITIONS
+    const levels = [
+      {
+        level: 1,
+        badge: '1. Szint: Vektor Beállítás',
+        instructionLeft: 'Állítsd be a gombokkal a vektort [3, -2]-re és csatlakoztasd az X, Y kábeleket!',
+        instructionRight: 'Válaszd az 1. Identitás Mátrixot!',
+        targetVector: { x: 3, y: -2 },
+        targetMatrixId: 1,
+        requiredJacks: ['x', 'y'],
+        carrotSpeech: 'Állítsd be a vektort [3, -2]-re! 🥕'
+      },
+      {
+        level: 2,
+        badge: '2. Szint: 2x Skálázás (Nyújtás)',
+        instructionLeft: 'Állítsd a vektort [2, -1] pozícióba!',
+        instructionRight: 'Válaszd a 2x Skálázás mátrixot a dupla méretezéshez!',
+        targetVector: { x: 2, y: -1 },
+        targetMatrixId: 2,
+        requiredJacks: ['x', 'y'],
+        carrotSpeech: 'Duplázd meg a méretet a 2x Skálázással! 🚀'
+      },
+      {
+        level: 3,
+        badge: '3. Szint: Y Tükrözés',
+        instructionLeft: 'Állítsd a vektort [3, 2] koordinátára!',
+        instructionRight: 'Válaszd az X Tükrözés mátrixot az alakzat megfordításához!',
+        targetVector: { x: 3, y: 2 },
+        targetMatrixId: 3,
+        requiredJacks: ['x', 'y'],
+        carrotSpeech: 'Tükrözd le az alakzatot! 🪞'
+      },
+      {
+        level: 4,
+        badge: '4. Szint: 90° Forgatás',
+        instructionLeft: 'Állítsd a vektort [2, 2]-re és csatlakoztasd a Z kábelt is!',
+        instructionRight: 'Válaszd a 90° Forgatás mátrixot!',
+        targetVector: { x: 2, y: 2 },
+        targetMatrixId: 4,
+        requiredJacks: ['x', 'y', 'z'],
+        carrotSpeech: 'Forgasd el az alakzatot 90°-al! 🔄'
+      }
+    ];
+
+    // WEB AUDIO API SYNTHESIZER
+    let audioCtx = null;
+    function playAudioTone(freq, type = 'sine', duration = 0.1) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSuccessJingle() {
+      if (!state.soundEnabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        setTimeout(() => playAudioTone(freq, 'triangle', 0.22), idx * 90);
+      });
+    }
+
+    // VECTOR CANVAS RENDERING
+    const vectorCanvas = document.getElementById('vector-canvas');
+    const vCtx = vectorCanvas.getContext('2d');
+
+    function drawVectorGrid() {
+      const w = vectorCanvas.width;
+      const h = vectorCanvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const scale = 25;
+
+      vCtx.clearRect(0, 0, w, h);
+
+      vCtx.strokeStyle = '#fde68a';
+      vCtx.lineWidth = 1;
+      for (let x = 0; x <= w; x += scale) {
+        vCtx.beginPath(); vCtx.moveTo(x, 0); vCtx.lineTo(x, h); vCtx.stroke();
+      }
+      for (let y = 0; y <= h; y += scale) {
+        vCtx.beginPath(); vCtx.moveTo(0, y); vCtx.lineTo(w, y); vCtx.stroke();
+      }
+
+      vCtx.strokeStyle = '#b45309';
+      vCtx.lineWidth = 2;
+      vCtx.beginPath(); vCtx.moveTo(0, cy); vCtx.lineTo(w, cy); vCtx.stroke();
+      vCtx.beginPath(); vCtx.moveTo(cx, 0); vCtx.lineTo(cx, h); vCtx.stroke();
+
+      vCtx.fillStyle = '#78350f';
+      vCtx.font = 'bold 10px Fredoka';
+      vCtx.fillText('X', w - 12, cy - 5);
+      vCtx.fillText('Y', cx + 5, 12);
+
+      const targetX = cx + state.targetVector.x * scale;
+      const targetY = cy - state.targetVector.y * scale;
+      vCtx.strokeStyle = '#f59e0b';
+      vCtx.lineWidth = 2;
+      vCtx.setLineDash([3, 3]);
+      vCtx.beginPath();
+      vCtx.arc(targetX, targetY, 9, 0, Math.PI * 2);
+      vCtx.stroke();
+      vCtx.setLineDash([]);
+
+      const vecX = cx + state.vector.x * scale;
+      const vecY = cy - state.vector.y * scale;
+
+      vCtx.strokeStyle = '#93c5fd';
+      vCtx.lineWidth = 1.5;
+      vCtx.setLineDash([2, 2]);
+      vCtx.beginPath(); vCtx.moveTo(vecX, cy); vCtx.lineTo(vecX, vecY); vCtx.stroke();
+      vCtx.beginPath(); vCtx.moveTo(cx, vecY); vCtx.lineTo(vecX, vecY); vCtx.stroke();
+      vCtx.setLineDash([]);
+
+      vCtx.strokeStyle = '#2563eb';
+      vCtx.fillStyle = '#2563eb';
+      vCtx.lineWidth = 3.5;
+      vCtx.beginPath();
+      vCtx.moveTo(cx, cy);
+      vCtx.lineTo(vecX, vecY);
+      vCtx.stroke();
+
+      vCtx.beginPath();
+      vCtx.arc(vecX, vecY, 5, 0, Math.PI * 2);
+      vCtx.fill();
+    }
+
+    // ORIGINAL SHAPE CANVAS & TRANSFORMED SHAPE CANVAS
+    const origCanvas = document.getElementById('canvas-orig');
+    const oCtx = origCanvas.getContext('2d');
+    const transCanvas = document.getElementById('canvas-trans');
+    const tCtx = transCanvas.getContext('2d');
+
+    const baseShapePoints = [
+      { x: 0, y: 0 },
+      { x: 2, y: 0 },
+      { x: 2, y: 1 },
+      { x: 1, y: 1 },
+      { x: 1, y: 2 },
+      { x: 0, y: 2 }
+    ];
+
+    function drawShapeOnCanvas(canvasCtx, points, color, strokeColor, scaleFactor = 12) {
+      const w = canvasCtx.canvas.width;
+      const h = canvasCtx.canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+
+      canvasCtx.clearRect(0, 0, w, h);
+
+      canvasCtx.strokeStyle = '#f3f4f6';
+      canvasCtx.lineWidth = 1;
+      for (let x = 0; x <= w; x += 15) {
+        canvasCtx.beginPath(); canvasCtx.moveTo(x, 0); canvasCtx.lineTo(x, h); canvasCtx.stroke();
+        canvasCtx.beginPath(); canvasCtx.moveTo(0, x); canvasCtx.lineTo(w, x); canvasCtx.stroke();
+      }
+
+      canvasCtx.strokeStyle = '#d1d5db';
+      canvasCtx.lineWidth = 1.5;
+      canvasCtx.beginPath(); canvasCtx.moveTo(0, cy); canvasCtx.lineTo(w, cy); canvasCtx.stroke();
+      canvasCtx.beginPath(); canvasCtx.moveTo(cx, 0); canvasCtx.lineTo(cx, h); canvasCtx.stroke();
+
+      if (!points || points.length === 0) return;
+
+      canvasCtx.fillStyle = color;
+      canvasCtx.strokeStyle = strokeColor;
+      canvasCtx.lineWidth = 2.5;
+
+      canvasCtx.beginPath();
+      points.forEach((p, idx) => {
+        const px = cx + p.x * scaleFactor;
+        const py = cy - p.y * scaleFactor;
+        if (idx === 0) canvasCtx.moveTo(px, py);
+        else canvasCtx.lineTo(px, py);
+      });
+      canvasCtx.closePath();
+      canvasCtx.fill();
+      canvasCtx.stroke();
+
+      canvasCtx.fillStyle = strokeColor;
+      points.forEach(p => {
+        const px = cx + p.x * scaleFactor;
+        const py = cy - p.y * scaleFactor;
+        canvasCtx.beginPath();
+        canvasCtx.arc(px, py, 3, 0, Math.PI * 2);
+        canvasCtx.fill();
+      });
+    }
+
+    function updateMatrixCalculations() {
+      const mObj = state.matrices[state.selectedMatrixId];
+      const [a, b, c, d] = mObj.matrix;
+      const vx = state.vector.x;
+      const vy = state.vector.y;
+
+      const resX = a * vx + b * vy;
+      const resY = c * vx + d * vy;
+
+      document.getElementById('m-a').textContent = a;
+      document.getElementById('m-b').textContent = b;
+      document.getElementById('m-c').textContent = c;
+      document.getElementById('m-d').textContent = d;
+
+      document.getElementById('m-vx').textContent = vx;
+      document.getElementById('m-vy').textContent = vy;
+
+      document.getElementById('val-vx').textContent = vx;
+      document.getElementById('val-vy').textContent = vy;
+
+      document.getElementById('calc-x').textContent = `${a}·${vx} + ${b}·${vy}`;
+      document.getElementById('calc-y').textContent = `${c}·${vx} + ${d}·${vy}`;
+
+      document.getElementById('res-vx').textContent = resX;
+      document.getElementById('res-vy').textContent = resY;
+
+      drawShapeOnCanvas(oCtx, baseShapePoints, 'rgba(59, 130, 246, 0.4)', '#1d4ed8');
+
+      const transformedPoints = baseShapePoints.map(p => ({
+        x: a * p.x + b * p.y,
+        y: c * p.x + d * p.y
+      }));
+
+      drawShapeOnCanvas(tCtx, transformedPoints, 'rgba(16, 185, 129, 0.4)', '#047857');
+
+      drawVectorGrid();
+      updateCableOverlayPaths();
+    }
+
+    function updateKnobUI() {
+      document.getElementById('val-x-display').textContent = `(${state.vector.x})`;
+      document.getElementById('val-y-display').textContent = `(${state.vector.y})`;
+
+      document.getElementById('knob-x-dial').style.transform = `rotate(${state.vector.x * 40}deg)`;
+      document.getElementById('knob-y-dial').style.transform = `rotate(${state.vector.y * 40}deg)`;
+
+      updateMatrixCalculations();
+    }
+
+    document.getElementById('btn-x-minus').addEventListener('click', () => {
+      state.vector.x = Math.max(-3, state.vector.x - 1);
+      playAudioTone(240, 'sine', 0.05);
+      updateKnobUI();
+    });
+
+    document.getElementById('btn-x-plus').addEventListener('click', () => {
+      state.vector.x = Math.min(3, state.vector.x + 1);
+      playAudioTone(300, 'sine', 0.05);
+      updateKnobUI();
+    });
+
+    document.getElementById('btn-y-minus').addEventListener('click', () => {
+      state.vector.y = Math.max(-3, state.vector.y - 1);
+      playAudioTone(340, 'sine', 0.05);
+      updateKnobUI();
+    });
+
+    document.getElementById('btn-y-plus').addEventListener('click', () => {
+      state.vector.y = Math.min(3, state.vector.y + 1);
+      playAudioTone(400, 'sine', 0.05);
+      updateKnobUI();
+    });
+
+    document.querySelectorAll('.cable-jack').forEach(jack => {
+      jack.addEventListener('click', () => {
+        const jKey = jack.getAttribute('data-jack');
+        if (state.connectedJacks.includes(jKey)) {
+          state.connectedJacks = state.connectedJacks.filter(k => k !== jKey);
+          jack.classList.remove('ring-4', 'ring-amber-300');
+          playAudioTone(200, 'sawtooth', 0.06);
+        } else {
+          state.connectedJacks.push(jKey);
+          jack.classList.add('ring-4', 'ring-amber-300');
+          playAudioTone(580, 'sine', 0.08);
+          spawnStarParticles(jack.getBoundingClientRect().left + 30, jack.getBoundingClientRect().top + 10);
+        }
+        document.getElementById('active-cables-text').textContent = state.connectedJacks.map(j => j.toUpperCase()).join(', ') || 'Nincs';
+        updateCableOverlayPaths();
+      });
+    });
+
+    function updateCableOverlayPaths() {
+      const jacks = ['x', 'y', 'z'];
+      jacks.forEach(jKey => {
+        const pathEl = document.getElementById(`cable-path-${jKey}`);
+        const jackBtn = document.getElementById(`jack-${jKey}`);
+
+        if (!state.connectedJacks.includes(jKey) || !jackBtn) {
+          pathEl.setAttribute('d', '');
+          return;
+        }
+
+        const bookRect = document.querySelector('.book-container').getBoundingClientRect();
+        const jackRect = jackBtn.getBoundingClientRect();
+
+        const startX = jackRect.left + jackRect.width / 2 - bookRect.left;
+        const startY = jackRect.top + jackRect.height / 2 - bookRect.top;
+
+        const endX = startX - 80;
+        const endY = startY - 120;
+
+        const controlX1 = startX - 30;
+        const controlY1 = startY + 60;
+        const controlX2 = endX + 30;
+        const controlY2 = endY + 60;
+
+        const pathStr = `M ${startX} ${startY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}`;
+        pathEl.setAttribute('d', pathStr);
+      });
+    }
+
+    const matrixCards = document.querySelectorAll('.matrix-card');
+    matrixCards.forEach(card => {
+      card.addEventListener('click', () => {
+        matrixCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        state.selectedMatrixId = parseInt(card.getAttribute('data-matrix-id'));
+        playAudioTone(520, 'triangle', 0.08);
+
+        setCarrotExpression('happy', 'Kiválasztva! Húzd a Répát a zöld szándékra! 🥕');
+        updateMatrixCalculations();
+      });
+    });
+
+    // DRAGGABLE MÁTRIX-RÉPA LOGIC
+    const carrot = document.getElementById('carrot-character');
+    const carrotBubble = document.getElementById('carrot-bubble');
+    const dropTarget = document.getElementById('drop-target-area');
+    let isDraggingCarrot = false;
+    let dragOffset = { x: 0, y: 0 };
+
+    function setCarrotExpression(type, text) {
+      if (text) carrotBubble.textContent = text;
+      const mouth = document.getElementById('carrot-mouth');
+      if (type === 'happy') {
+        mouth.setAttribute('d', 'M 48 95 Q 60 115 72 95');
+      } else if (type === 'surprised') {
+        mouth.setAttribute('d', 'M 55 98 A 5 5 0 1 1 65 98 A 5 5 0 1 1 55 98');
+      } else {
+        mouth.setAttribute('d', 'M 52 98 Q 60 108 68 98');
+      }
+    }
+
+    carrot.addEventListener('pointerdown', (e) => {
+      isDraggingCarrot = true;
+      carrot.setPointerCapture(e.pointerId);
+      dragOffset.x = e.clientX - carrot.offsetLeft;
+      dragOffset.y = e.clientY - carrot.offsetTop;
+      carrot.classList.remove('animate-float');
+      setCarrotExpression('surprised', 'Illeszd a transzformált alakra! 🚀');
+      playAudioTone(460, 'sine', 0.08);
+    });
+
+    carrot.addEventListener('pointermove', (e) => {
+      if (!isDraggingCarrot) return;
+      const newX = e.clientX - dragOffset.x;
+      const newY = e.clientY - dragOffset.y;
+      carrot.style.left = `${newX}px`;
+      carrot.style.top = `${newY}px`;
+
+      const targetRect = dropTarget.getBoundingClientRect();
+      if (e.clientX >= targetRect.left && e.clientX <= targetRect.right &&
+          e.clientY >= targetRect.top && e.clientY <= targetRect.bottom) {
+        dropTarget.classList.add('drop-target-active');
+        state.carrotDroppedOnTarget = true;
+      } else {
+        dropTarget.classList.remove('drop-target-active');
+        state.carrotDroppedOnTarget = false;
+      }
+
+      if (Math.random() < 0.25) {
+        spawnStarParticles(e.clientX, e.clientY);
+      }
+    });
+
+    carrot.addEventListener('pointerup', (e) => {
+      if (!isDraggingCarrot) return;
+      isDraggingCarrot = false;
+      try { carrot.releasePointerCapture(e.pointerId); } catch(err){}
+
+      if (state.carrotDroppedOnTarget) {
+        playAudioTone(640, 'triangle', 0.12);
+        setCarrotExpression('happy', 'Rátetted a transzformációra! ✨');
+      } else {
+        setCarrotExpression('happy', 'Itt vagyok! 🥕');
+      }
+      dropTarget.classList.remove('drop-target-active');
+    });
+
+    function spawnStarParticles(x, y) {
+      for (let i = 0; i < 2; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-particle font-bold text-base';
+        star.textContent = ['⭐', '✨', '🥕', '💫'][Math.floor(Math.random() * 4)];
+        star.style.left = `${x}px`;
+        star.style.top = `${y}px`;
+        const dx = (Math.random() - 0.5) * 70;
+        const dy = (Math.random() - 0.5) * 70;
+        star.style.setProperty('--dx', `${dx}px`);
+        star.style.setProperty('--dy', `${dy}px`);
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 800);
+      }
+    }
+
+    // MODAL CONTROL LOGIC (SÚGÓ & DETAILED VERIFICATION FEEDBACK)
+    const modalSugo = document.getElementById('modal-sugo');
+    document.getElementById('btn-sugo').addEventListener('click', () => {
+      modalSugo.classList.remove('hidden');
+      playAudioTone(440, 'sine', 0.1);
+    });
+    document.getElementById('modal-sugo-close').addEventListener('click', () => modalSugo.classList.add('hidden'));
+    document.getElementById('modal-sugo-ok').addEventListener('click', () => modalSugo.classList.add('hidden'));
+
+    const modalFeedback = document.getElementById('modal-feedback');
+    document.getElementById('modal-feedback-close').addEventListener('click', () => modalFeedback.classList.add('hidden'));
+
+    function showVerificationFeedback(isSuccess, checklist, mathExplanation) {
+      const iconBox = document.getElementById('feedback-icon-box');
+      const title = document.getElementById('feedback-title');
+      const subtitle = document.getElementById('feedback-subtitle');
+      const checklistContainer = document.getElementById('feedback-checklist');
+      const mathDetails = document.getElementById('feedback-math-details');
+      const btn = document.getElementById('modal-feedback-btn');
+
+      checklistContainer.innerHTML = '';
+
+      if (isSuccess) {
+        iconBox.className = 'w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow bg-emerald-500 text-white border-2 border-emerald-800';
+        iconBox.textContent = '🎉';
+        title.textContent = 'HELYES MEGOLDÁS!';
+        title.className = 'text-2xl font-black text-emerald-800';
+        subtitle.textContent = 'Tökéletes matematikai kiszámítás és beállítás!';
+        btn.textContent = 'KÖVETKEZŐ SZINT! 🚀';
+        btn.className = 'btn-chunky bg-emerald-500 border-2 border-emerald-800 text-white font-black py-3 rounded-xl text-base shadow mt-2';
+        btn.onclick = () => {
+          modalFeedback.classList.add('hidden');
+          if (state.currentLevel < levels.length) {
+            state.currentLevel++;
+            loadCurrentLevel();
+          }
+        };
+      } else {
+        iconBox.className = 'w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow bg-orange-500 text-white border-2 border-orange-800';
+        iconBox.textContent = '🤔';
+        title.textContent = 'PRÓBÁLD ÚJRA!';
+        title.className = 'text-2xl font-black text-orange-900';
+        subtitle.textContent = 'Nézd meg, melyik lépésnél történt a hiba:';
+        btn.textContent = 'ÉRTEM, JAVÍTOM! 💪';
+        btn.className = 'btn-chunky bg-orange-500 border-2 border-orange-800 text-white font-black py-3 rounded-xl text-base shadow mt-2';
+        btn.onclick = () => modalFeedback.classList.add('hidden');
+      }
+
+      checklist.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `p-2.5 rounded-xl border-2 flex items-center gap-2.5 text-xs font-bold ${
+          item.passed ? 'bg-emerald-50 border-emerald-300 text-emerald-950' : 'bg-red-50 border-red-300 text-red-950'
+        }`;
+        div.innerHTML = `
+          <div class="w-6 h-6 rounded-full flex items-center justify-center font-black text-white ${item.passed ? 'bg-emerald-500' : 'bg-red-500'} flex-shrink-0">
+            ${item.passed ? '✓' : '✕'}
+          </div>
+          <div>
+            <div class="font-black text-sm">${item.label}</div>
+            <div class="text-[11px] opacity-90">${item.detail}</div>
+          </div>
+        `;
+        checklistContainer.appendChild(div);
+      });
+
+      mathDetails.innerHTML = mathExplanation;
+      modalFeedback.classList.remove('hidden');
+    }
+
+    function loadCurrentLevel() {
+      const lvl = levels[state.currentLevel - 1];
+      document.getElementById('level-badge-text').textContent = lvl.badge;
+      document.getElementById('level-instruction-left').textContent = lvl.instructionLeft;
+      document.getElementById('level-instruction-right').textContent = lvl.instructionRight;
+      document.getElementById('target-val-text').textContent = `[${lvl.targetVector.x}, ${lvl.targetVector.y}]`;
+
+      state.targetVector = lvl.targetVector;
+      state.targetMatrixId = lvl.targetMatrixId;
+      state.carrotDroppedOnTarget = false;
+
+      matrixCards.forEach(c => {
+        c.classList.remove('selected');
+        if (parseInt(c.getAttribute('data-matrix-id')) === state.selectedMatrixId) {
+          c.classList.add('selected');
+        }
+      });
+
+      setCarrotExpression('happy', lvl.carrotSpeech);
+      updateKnobUI();
+    }
+
+    // CHECK ANSWER EXECUTION WITH DETAILED VERIFICATION FEEDBACK
+    document.getElementById('btn-check').addEventListener('click', () => {
+      const currentLvl = levels[state.currentLevel - 1];
+
+      // 1. Check Cable Jacks
+      const missingJacks = currentLvl.requiredJacks.filter(j => !state.connectedJacks.includes(j));
+      const cablesPassed = missingJacks.length === 0;
+
+      // 2. Check Vector Knobs
+      const vectorPassed = (state.vector.x === state.targetVector.x && state.vector.y === state.targetVector.y);
+
+      // 3. Check Matrix selection
+      const matrixPassed = (state.selectedMatrixId === state.targetMatrixId);
+
+      // 4. Check Carrot Placement
+      const carrotPassed = state.carrotDroppedOnTarget;
+
+      const isOverallSuccess = cablesPassed && vectorPassed && matrixPassed && carrotPassed;
+
+      // Build checklist details
+      const checklist = [
+        {
+          label: '1. Kábelek csatlakoztatása',
+          passed: cablesPassed,
+          detail: cablesPassed
+            ? `Minden szükséges kábel (${currentLvl.requiredJacks.map(j => j.toUpperCase()).join(', ')}) be van dugva!`
+            : `Hiányzó kábel: ${missingJacks.map(j => j.toUpperCase()).join(', ')}!`
+        },
+        {
+          label: '2. Vektor Gombok (Knobs)',
+          passed: vectorPassed,
+          detail: vectorPassed
+            ? `Helyes bemenő vektor: v = [${state.vector.x}, ${state.vector.y}]`
+            : `Bementél: [${state.vector.x}, ${state.vector.y}], Elvárt Cél: [${state.targetVector.x}, ${state.targetVector.y}]`
+        },
+        {
+          label: '3. Mátrix Kiválasztása',
+          passed: matrixPassed,
+          detail: matrixPassed
+            ? `Helyesen kiválasztott Mátrix: ${state.matrices[state.selectedMatrixId].name}`
+            : `Kiválasztott: ${state.matrices[state.selectedMatrixId].name}, Elvárt: ${state.matrices[state.targetMatrixId].name}`
+        },
+        {
+          label: '4. Mátrix-Répa Húzása',
+          passed: carrotPassed,
+          detail: carrotPassed
+            ? 'A Répa a zöld Transzformált Alakzat kijelzőre van helyezve!'
+            : 'Húzd a Mátrix-Répát az egérrel a zöld Transzformált kijelzőre!'
+        }
+      ];
+
+      // Build Math Explanation text
+      const mObj = state.matrices[state.selectedMatrixId];
+      const [a, b, c, d] = mObj.matrix;
+      const vx = state.vector.x;
+      const vy = state.vector.y;
+      const rx = a * vx + b * vy;
+      const ry = c * vx + d * vy;
+
+      const mathExplanation = `
+        M mátrix: [${a} ${b} ; ${c} ${d}]<br>
+        Bemenő vektor v: [${vx} ; ${vy}]<br>
+        <span class="text-emerald-700">Számítás:</span><br>
+        x' = (${a} · ${vx}) + (${b} · ${vy}) = <b>${rx}</b><br>
+        y' = (${c} · ${vx}) + (${d} · ${vy}) = <b>${ry}</b><br>
+        Resulting Transformed Vector v' = <span class="text-emerald-700 font-black">[${rx}, ${ry}]</span>
+      `;
+
+      if (isOverallSuccess) {
+        state.score += 100;
+        document.getElementById('score-text').textContent = state.score;
+        playSuccessJingle();
+        confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+        setCarrotExpression('happy', 'Minden helyes! Csodás munka! 🎉');
+      } else {
+        playAudioTone(200, 'sawtooth', 0.25);
+        setCarrotExpression('surprised', 'Javítsd a hibákat a checklist szerint! 💪');
+      }
+
+      showVerificationFeedback(isOverallSuccess, checklist, mathExplanation);
+    });
+
+    document.getElementById('btn-sound').addEventListener('click', () => {
+      state.soundEnabled = !state.soundEnabled;
+      document.getElementById('sound-icon').className = state.soundEnabled ? 'ph-bold ph-speaker-high text-xl' : 'ph-bold ph-speaker-slash text-xl text-red-500';
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      state.vector = { x: 0, y: 0 };
+      updateKnobUI();
+      playAudioTone(300, 'sine', 0.1);
+    });
+
+    window.addEventListener('resize', updateCableOverlayPaths);
+
+    // Initialize Game
+    loadCurrentLevel();
+  </script>
+
+</body></html>
