@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!-- saved from url=(0099)file:///D:/tankonyv/M%C3%A1trixok%20Rendez%C3%A9se%20%C3%A9s%20Indextranszform%C3%A1ci%C3%B3ja.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Mátrixok Rendezése és Indextranszformációja</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm;
+            background-color: #fafaf9;
+            @bottom-right {
+                content: counter(page) " / " counter(pages);
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                font-size: 9pt;
+                color: #71717a;
+            }
+            @bottom-left {
+                content: "Informatikai Ismeretek • Egy- és Kétdimenziós Tömbök Műveletei";
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                font-size: 9pt;
+                color: #71717a;
+            }
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #1c1917;
+            margin: 0;
+            padding: 0;
+            font-size: 10.5pt;
+            line-height: 1.6;
+            background-color: #fafaf9;
+        }
+
+        .header-banner {
+            background-color: #0284c7;
+            color: #ffffff;
+            margin: -20mm -15mm 25px -15mm;
+            padding: 25px 20mm 20px 20mm;
+            border-bottom: 4px solid #0369a1;
+        }
+
+        .header-banner h1 {
+            font-size: 20pt;
+            margin: 0 0 6px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-banner .subtitle {
+            font-size: 11pt;
+            opacity: 0.92;
+            margin: 0;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-size: 14pt;
+            color: #0369a1;
+            border-left: 4px solid #0284c7;
+            padding-left: 10px;
+            margin: 22px 0 12px 0;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            color: #0f172a;
+            margin: 16px 0 8px 0;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin: 0 0 12px 0;
+            text-align: justify;
+        }
+
+        .math {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-weight: bold;
+            color: #095797;
+        }
+
+        .formula-box {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 11pt;
+        }
+
+        .formula-box .math {
+            font-size: 12pt;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9.5pt;
+        }
+
+        th {
+            background-color: #0284c7;
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 10px;
+            border: 1px solid #0284c7;
+        }
+
+        td {
+            padding: 7px 10px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        .remember-box {
+            background-color: #fffbebfb;
+            border-left: 4px solid #f59e0b;
+            border-top: 1px solid #fde68a;
+            border-right: 1px solid #fde68a;
+            border-bottom: 1px solid #fde68a;
+            border-radius: 0 6px 6px 0;
+            padding: 12px 15px;
+            margin: 18px 0;
+            page-break-inside: avoid;
+        }
+
+        .remember-box h4 {
+            margin: 0 0 6px 0;
+            color: #b45309;
+            font-size: 11pt;
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .remember-box li {
+            margin-bottom: 5px;
+            color: #451a03;
+        }
+
+        .code-block {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 8.5pt;
+            line-height: 1.4;
+            margin: 15px 0;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        .code-keyword { color: #38bdf8; font-weight: bold; }
+        .code-type { color: #818cf8; }
+        .code-comment { color: #94a3b8; font-style: italic; }
+
+        .quiz-section {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-top: 25px;
+            page-break-inside: avoid;
+        }
+
+        .quiz-question {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .quiz-options {
+            margin-bottom: 15px;
+            padding-left: 5px;
+        }
+
+        .quiz-option {
+            margin-bottom: 6px;
+            font-size: 9.5pt;
+        }
+
+        .answer-key {
+            background-color: #f1f5f9;
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 9pt;
+            color: #334155;
+            margin-top: 15px;
+        }
+
+        .method-card {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .method-title {
+            font-weight: bold;
+            color: #0369a1;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-banner">
+        <h1>Mátrixok Rendezése és Indextranszformációja</h1>
+        <div class="subtitle">Egyetemi és középiskolai tankönyvi fejezet • Elmélet, Szimuláció és Tesztfeladatok</div>
+    </div>
+
+    <h2>1. Bevezetés és Alapfogalmak</h2>
+    <p>
+        Az informatikában és a programozásban a kétdimenziós tömbök (mátrixok) rendezése az egyik legalapvetőbb adatszerkezeti művelet. A mátrix elemeinek sorfolytonos rendezése során célunk, hogy a mátrix elemei balról jobbra, fentről lefelé növekvő (vagy csökkenő) sorrendbe kerüljenek.
+    </p>
+    <p>
+        Egy <span class="math">N × M</span> méretű mátrix esetén a teljes elemszám <span class="math">K = N × M</span>. A rendezés megvalósítására két fő módszertani megközelítés létezik:
+    </p>
+
+    <div class="method-card">
+        <div class="method-title">1. Módszer: Vektorba másolásos rendezés (Közvetett rendezés)</div>
+        <div>A 2D mátrix elemeit egy 1D tömbbe (vektorba) soroljuk át, ott elvégezzük a hagyományos rendezést (pl. Buborék-, Kijelöléses vagy Beszúrásos rendezés), majd a rendezett elemeket visszamásoljuk a mátrixba.</div>
+    </div>
+
+    <div class="method-card">
+        <div class="method-title">2. Módszer: Helyben (Közvetlen) történő rendezés</div>
+        <div>Nem használunk segédvektort. A mátrix elemeit közvetlenül a 2D struktúrában hasonlítjuk össze és cseréljük ki, az indexek lineáris leképezésével.</div>
+    </div>
+
+    <h2>2. Az Indextranszformáció Matematikai Háttere</h2>
+    <p>
+        A rendezés legkritikusabb lépése az 1D lineáris index (<span class="math">k</span>) és a 2D mátrix koordinátái (<span class="math">r</span>: sor, <span class="math">c</span>: oszlop) közötti transzformáció. Ez a matematikai kapcsolat biztosítja, hogy a vektorba rendezett elemek pontosan a megfelelő sorfolytonos pozícióra kerüljenek vissza.
+    </p>
+
+    <div class="formula-box">
+        <b>Transzformációs Képletek (<span class="math">M</span> oszlop esetén):</b><br><br>
+        Sor indexe: <span class="math">r = ⌊k / M⌋</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oszlop indexe: <span class="math">c = k mod M</span>
+    </div>
+
+    <p>
+        Ahol:
+    </p>
+    <ul>
+        <li><span class="math">k</span>: az 1D vektor indexe (<span class="math">0 ≤ k &lt; N × M</span>)</li>
+        <li><span class="math">M</span>: a mátrix oszlopainak száma</li>
+        <li><span class="math">⌊k / M⌋</span>: egészosztás (azt adja meg, hány egész sor telt be)</li>
+        <li><span class="math">k mod M</span>: az oszlopindex (a soron belüli maradék pozíció)</li>
+    </ul>
+
+    <h3>Mintapélda Levezetése (<span class="math">2 × 3</span>-as mátrix, <span class="math">M = 3</span>)</h3>
+    <p>
+        Tegyük fel, hogy az eredeti mátrixunk <span class="math">A = [[42, 15, 8], [23, 4, 19]]</span>. A vektorba másolás és rendezés után a vektor állapota: <span class="math">vec = [4, 8, 15, 19, 23, 42]</span>.
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Vektor index (<span class="math">k</span>)</th>
+                <th>Érték (<span class="math">vec[k]</span>)</th>
+                <th>Sor kiszámítása (<span class="math">r = ⌊k / 3⌋</span>)</th>
+                <th>Oszlop kiszámítása (<span class="math">c = k mod 3</span>)</th>
+                <th>Mátrix pozíció (<span class="math">A[r][c]</span>)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>0</b></td>
+                <td>4</td>
+                <td>0 / 3 = <b>0</b></td>
+                <td>0 mod 3 = <b>0</b></td>
+                <td><b>A[0][0]</b></td>
+            </tr>
+            <tr>
+                <td><b>1</b></td>
+                <td>8</td>
+                <td>1 / 3 = <b>0</b></td>
+                <td>1 mod 3 = <b>1</b></td>
+                <td><b>A[0][1]</b></td>
+            </tr>
+            <tr>
+                <td><b>2</b></td>
+                <td>15</td>
+                <td>2 / 3 = <b>0</b></td>
+                <td>2 mod 3 = <b>2</b></td>
+                <td><b>A[0][2]</b></td>
+            </tr>
+            <tr>
+                <td><b>3</b></td>
+                <td>19</td>
+                <td>3 / 3 = <b>1</b></td>
+                <td>3 mod 3 = <b>0</b></td>
+                <td><b>A[1][0]</b></td>
+            </tr>
+            <tr>
+                <td><b>4</b></td>
+                <td>23</td>
+                <td>4 / 3 = <b>1</b></td>
+                <td>4 mod 3 = <b>1</b></td>
+                <td><b>A[1][1]</b></td>
+            </tr>
+            <tr>
+                <td><b>5</b></td>
+                <td>42</td>
+                <td>5 / 3 = <b>1</b></td>
+                <td>5 mod 3 = <b>2</b></td>
+                <td><b>A[1][2]</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="remember-box">
+        <h4>📌 MEGJEGYZENDŐ KÓDTÁR ÉS BÖLCSESSÉGEK</h4>
+        <ul>
+            <li><b>Oszlopszám szerepe:</b> A képletekben mindig a **mátrix oszlopainak száma (<span class="math">M</span>)** szerepel az osztóban, SOHA nem a sorok száma!</li>
+            <li><b>Inverz transzformáció:</b> Ha a 2D indexből (<span class="math">r, c</span>) szeretnénk megkapni az 1D indexet (<span class="math">k</span>): <span class="math">k = r × M + c</span>.</li>
+            <li><b>Memória hatékonyság:</b> A közvetlen helyben rendezés memóriaigénye <span class="math">O(1)</span>, míg a vektoros módszeré <span class="math">O(N × M)</span> plusz tárhelyet igényel.</li>
+        </ul>
+    </div>
+
+    <h2>3. Algoritmusok Implementációja (C++ és Python)</h2>
+
+    <div class="code-block">
+<span class="code-comment">// C++: Visszamásolás Vektoros Rendezés Után</span>
+<span class="code-type">int</span> k = 0;
+<span class="code-keyword">for</span> (<span class="code-type">int</span> r = 0; r &lt; N; r++) {
+    <span class="code-keyword">for</span> (<span class="code-type">int</span> c = 0; c &lt; M; c++) {
+        A[r][c] = vec[k++]; <span class="code-comment">// Ezzel egyenértékű: vec[r * M + c]</span>
+    }
+}
+
+<span class="code-comment">// C++: Közvetlen Mátrix Buborékrendezés</span>
+<span class="code-type">int</span> total = N * M;
+<span class="code-keyword">for</span> (<span class="code-type">int</span> i = 0; i &lt; total - 1; i++) {
+    <span class="code-keyword">for</span> (<span class="code-type">int</span> p = 0; p &lt; total - i - 1; p++) {
+        <span class="code-type">int</span> r1 = p / M, c1 = p % M;
+        <span class="code-type">int</span> r2 = (p + 1) / M, c2 = (p + 1) % M;
+        <span class="code-keyword">if</span> (A[r1][c1] &gt; A[r2][c2]) swap(A[r1][c1], A[r2][c2]);
+    }
+}
+    </div>
+
+    <h2>4. Ellenőrző Tesztkérdések és Feladatok</h2>
+
+    <div class="quiz-section">
+        <div class="quiz-question">1. Egy 4 sorból és 5 oszlopból álló mátrix esetén hova kerül az 1D vektor 13-as indexű eleme a visszamásoláskor?</div>
+        <div class="quiz-options">
+            <div class="quiz-option">A) A[2][3] (3. sor, 4. oszlop)</div>
+            <div class="quiz-option">B) A[3][2] (4. sor, 3. oszlop)</div>
+            <div class="quiz-option">C) A[2][2] (3. sor, 3. oszlop)</div>
+            <div class="quiz-option">D) A[1][3] (2. sor, 4. oszlop)</div>
+        </div>
+
+        <div class="quiz-question">2. Mi az inverz transzformáció képlete, amellyel az A[r][c] elem 1D vektoros indexét megkapjuk?</div>
+        <div class="quiz-options">
+            <div class="quiz-option">A) k = c * N + r</div>
+            <div class="quiz-option">B) k = r * M + c</div>
+            <div class="quiz-option">C) k = (r + c) * M</div>
+            <div class="quiz-option">D) k = r * N + c</div>
+        </div>
+
+        <div class="quiz-question">3. Milyen tárhely-összetettségű (Space Complexity) a közvetlen mátrixrendezés?</div>
+        <div class="quiz-options">
+            <div class="quiz-option">A) O(N * M)</div>
+            <div class="quiz-option">B) O(N + M)</div>
+            <div class="quiz-option">C) O(1)</div>
+            <div class="quiz-option">D) O(log(N*M))</div>
+        </div>
+
+        <div class="answer-key">
+            <b>Helyes válaszok és magyarázatok:</b><br>
+            <b>1. A)</b> <span class="math">r = ⌊13 / 5⌋ = 2</span>, <span class="math">c = 13 mod 5 = 3</span>. Tehát a 2. indexű sor 3. indexű oszlopa.<br>
+            <b>2. B)</b> A sorszámot megszorozzuk az oszlopok számával (<span class="math">M</span>), majd hozzáadjuk az oszlopindexet (<span class="math">c</span>).<br>
+            <b>3. C)</b> Mivel nem hozunk létre plusz tömböt, a memóriaszükséglet konstans: <span class="math">O(1)</span>.
+        </div>
+    </div>
+
+
+
+</body></html>
