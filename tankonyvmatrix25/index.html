@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)file:///D:/tankonyv/ma/matrix_addition_simulation.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrix Összeadás C++ Szimuláció</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #2b2b3b;
+            --text-color: #cdd6f4;
+            --accent: #89b4fa;
+            --active-bg: #f38ba8;
+            --grid-a: #a6e3a1;
+            --grid-b: #f9e2af;
+            --grid-c: #89dceb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            flex: 1;
+            min-width: 320px;
+        }
+
+        pre {
+            background-color: #11111b;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            padding: 2px 5px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: block;
+        }
+
+        .highlight-line {
+            background-color: rgba(243, 139, 168, 0.3);
+            border-left: 4px solid var(--active-bg);
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid var(--accent);
+            background: #11111b;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--accent);
+            color: #11111b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        button:disabled { background-color: #585b70; cursor: not-allowed; transform: none; }
+
+        .matrices-container {
+            display: flex;
+            gap: 15px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .matrix-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .matrix-box h4 { margin: 5px 0; color: var(--accent); }
+
+        .matrix-grid {
+            display: grid;
+            gap: 5px;
+            background: #11111b;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .cell {
+            width: 35px;
+            height: 35px;
+            background-color: #313244;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .cell.active {
+            outline: 3px solid var(--active-bg);
+            transform: scale(1.1);
+            z-index: 2;
+        }
+
+        .cell.set-a { background-color: rgba(166, 227, 161, 0.3); color: var(--grid-a); }
+        .cell.set-b { background-color: rgba(249, 226, 175, 0.3); color: var(--grid-b); }
+        .cell.set-c { background-color: rgba(137, 220, 235, 0.3); color: var(--grid-c); }
+
+        .status-box {
+            background: #11111b;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mátrix Összeadás C++ Szimuláció</h1>
+
+    <div class="container">
+        <!-- Bal oldal: Kód -->
+        <div class="panel">
+            <h3>C++ Forráskód</h3>
+            <pre><span id="line1" class="code-line">float a[10][5], b[10][5], c[10][5];</span>
+<span id="line2" class="code-line">cin &gt;&gt; n &gt;&gt; m;</span>
+<span id="line3" class="code-line">// A mátrix beolvasása</span>
+<span id="line4" class="code-line">for(i=1; i&lt;=n; i++) for(j=1; j&lt;=m; j++) cin &gt;&gt; a[i][j];</span>
+<span id="line5" class="code-line">// B mátrix beolvasása</span>
+<span id="line6" class="code-line">for(i=1; i&lt;=n; i++) for(j=1; j&lt;=m; j++) cin &gt;&gt; b[i][j];</span>
+<span id="line7" class="code-line">// Összeadás és kiírás (C = A + B)</span>
+<span id="line8" class="code-line">for(i=1; i&lt;=n; i++) {</span>
+<span id="line9" class="code-line">  for(j=1; j&lt;=m; j++) {</span>
+<span id="line10" class="code-line">    c[i][j] = a[i][j] + b[i][j];</span>
+<span id="line11" class="code-line">    cout &lt;&lt; c[i][j] &lt;&lt; " ";</span>
+<span id="line12" class="code-line">  }</span>
+<span id="line13" class="code-line">}</span>
+            </pre>
+
+            <div class="status-box">
+                <b>Pillanatnyi állapot:</b><br>
+                Fázis: <span id="phase-text">A mátrix beolvasása</span><br>
+                i = <span id="var-i">-</span> | j = <span id="var-j">-</span><br>
+                <span id="calc-text">-</span>
+            </div>
+        </div>
+
+        <!-- Jobb oldal: Animáció -->
+        <div class="panel">
+            <h3>Animáció Vezérlés</h3>
+            <div class="controls">
+                <label>n (sorok): </label>
+                <input type="number" id="input-n" value="3" min="1" max="5">
+                <label>m (oszlopok): </label>
+                <input type="number" id="input-m" value="3" min="1" max="5">
+                <button id="btn-start">Automatikus Lejátszás</button>
+                <button id="btn-step">Lépés</button>
+                <button id="btn-reset">Alaphelyzet</button>
+            </div>
+
+            <div class="matrices-container">
+                <div class="matrix-box">
+                    <h4>A mátrix</h4>
+                    <div id="grid-a" class="matrix-grid" style="grid-template-columns: repeat(3, 35px);"><div class="cell" id="cell-a-1-1">?</div><div class="cell" id="cell-a-1-2">?</div><div class="cell" id="cell-a-1-3">?</div><div class="cell" id="cell-a-2-1">?</div><div class="cell" id="cell-a-2-2">?</div><div class="cell" id="cell-a-2-3">?</div><div class="cell" id="cell-a-3-1">?</div><div class="cell" id="cell-a-3-2">?</div><div class="cell" id="cell-a-3-3">?</div></div>
+                </div>
+                <div class="matrix-box">
+                    <h4>B mátrix</h4>
+                    <div id="grid-b" class="matrix-grid" style="grid-template-columns: repeat(3, 35px);"><div class="cell" id="cell-b-1-1">?</div><div class="cell" id="cell-b-1-2">?</div><div class="cell" id="cell-b-1-3">?</div><div class="cell" id="cell-b-2-1">?</div><div class="cell" id="cell-b-2-2">?</div><div class="cell" id="cell-b-2-3">?</div><div class="cell" id="cell-b-3-1">?</div><div class="cell" id="cell-b-3-2">?</div><div class="cell" id="cell-b-3-3">?</div></div>
+                </div>
+                <div class="matrix-box">
+                    <h4>C mátrix (A + B)</h4>
+                    <div id="grid-c" class="matrix-grid" style="grid-template-columns: repeat(3, 35px);"><div class="cell" id="cell-c-1-1">?</div><div class="cell" id="cell-c-1-2">?</div><div class="cell" id="cell-c-1-3">?</div><div class="cell" id="cell-c-2-1">?</div><div class="cell" id="cell-c-2-2">?</div><div class="cell" id="cell-c-2-3">?</div><div class="cell" id="cell-c-3-1">?</div><div class="cell" id="cell-c-3-2">?</div><div class="cell" id="cell-c-3-3">?</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let n = 3, m = 3;
+        let phase = 0; // 0: input A, 1: input B, 2: calc C, 3: done
+        let i = 1, j = 1;
+        let isRunning = false;
+        let autoInterval = null;
+
+        let matA = [];
+        let matB = [];
+        let matC = [];
+
+        const inputN = document.getElementById('input-n');
+        const inputM = document.getElementById('input-m');
+        const btnStart = document.getElementById('btn-start');
+        const btnStep = document.getElementById('btn-step');
+        const btnReset = document.getElementById('btn-reset');
+
+        const phaseText = document.getElementById('phase-text');
+        const varI = document.getElementById('var-i');
+        const varJ = document.getElementById('var-j');
+        const calcText = document.getElementById('calc-text');
+
+        function highlightLine(lineNum) {
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('highlight-line'));
+            if(lineNum) document.getElementById(`line${lineNum}`).classList.add('highlight-line');
+        }
+
+        function createGrids() {
+            n = parseInt(inputN.value);
+            m = parseInt(inputM.value);
+
+            matA = Array.from({length: n+1}, () => Array(m+1).fill(0));
+            matB = Array.from({length: n+1}, () => Array(m+1).fill(0));
+            matC = Array.from({length: n+1}, () => Array(m+1).fill(0));
+
+            ['a', 'b', 'c'].forEach(type => {
+                const grid = document.getElementById(`grid-${type}`);
+                grid.innerHTML = '';
+                grid.style.gridTemplateColumns = `repeat(${m}, 35px)`;
+
+                for (let r = 1; r <= n; r++) {
+                    for (let c = 1; c <= m; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.id = `cell-${type}-${r}-${c}`;
+                        cell.innerText = '?';
+                        grid.appendChild(cell);
+                    }
+                }
+            });
+        }
+
+        function resetSimulation() {
+            clearInterval(autoInterval);
+            isRunning = false;
+            phase = 0;
+            i = 1;
+            j = 1;
+            btnStart.innerText = "Automatikus Lejátszás";
+            btnStep.disabled = false;
+            phaseText.innerText = "A mátrix beolvasása";
+            varI.innerText = '-';
+            varJ.innerText = '-';
+            calcText.innerText = '-';
+            highlightLine(null);
+            createGrids();
+        }
+
+        function clearActive() {
+            document.querySelectorAll('.cell').forEach(c => c.classList.remove('active'));
+        }
+
+        function step() {
+            clearActive();
+            varI.innerText = i;
+            varJ.innerText = j;
+
+            if (phase === 0) { // Beolvasás A
+                highlightLine(4);
+                phaseText.innerText = "A mátrix feltöltése véletlenszerű számokkal";
+                const val = Math.floor(Math.random() * 9) + 1;
+                matA[i][j] = val;
+                const cell = document.getElementById(`cell-a-${i}-${j}`);
+                cell.innerText = val;
+                cell.classList.add('active', 'set-a');
+                calcText.innerText = `a[${i}][${j}] = ${val}`;
+
+            } else if (phase === 1) { // Beolvasás B
+                highlightLine(6);
+                phaseText.innerText = "B mátrix feltöltése véletlenszerű számokkal";
+                const val = Math.floor(Math.random() * 9) + 1;
+                matB[i][j] = val;
+                const cell = document.getElementById(`cell-b-${i}-${j}`);
+                cell.innerText = val;
+                cell.classList.add('active', 'set-b');
+                calcText.innerText = `b[${i}][${j}] = ${val}`;
+
+            } else if (phase === 2) { // Számítás C = A + B
+                highlightLine(10);
+                phaseText.innerText = "C mátrix kiszámítása (c[i][j] = a[i][j] + b[i][j])";
+                const sum = matA[i][j] + matB[i][j];
+                matC[i][j] = sum;
+
+                document.getElementById(`cell-a-${i}-${j}`).classList.add('active');
+                document.getElementById(`cell-b-${i}-${j}`).classList.add('active');
+                const cellC = document.getElementById(`cell-c-${i}-${j}`);
+                cellC.innerText = sum;
+                cellC.classList.add('active', 'set-c');
+
+                calcText.innerText = `c[${i}][${j}] = ${matA[i][j]} + ${matB[i][j]} = ${sum}`;
+            }
+
+            // Léptetési logika
+            j++;
+            if (j > m) {
+                j = 1;
+                i++;
+                if (i > n) {
+                    i = 1;
+                    phase++;
+                    if (phase > 2) {
+                        clearInterval(autoInterval);
+                        btnStep.disabled = true;
+                        btnStart.innerText = "Kész";
+                        phaseText.innerText = "Mátrix összeadás befejeződött!";
+                        calcText.innerText = "Kész!";
+                        highlightLine(null);
+                        clearActive();
+                    }
+                }
+            }
+        }
+
+        btnStep.addEventListener('click', step);
+
+        btnStart.addEventListener('click', () => {
+            if (isRunning) {
+                clearInterval(autoInterval);
+                isRunning = false;
+                btnStart.innerText = "Folytatás";
+            } else {
+                if (phase > 2) resetSimulation();
+                isRunning = true;
+                btnStart.innerText = "Szünet";
+                autoInterval = setInterval(step, 400);
+            }
+        });
+
+        btnReset.addEventListener('click', resetSimulation);
+        inputN.addEventListener('change', resetSimulation);
+        inputM.addEventListener('change', resetSimulation);
+
+        resetSimulation();
+    </script>
+
+
+</body></html>
