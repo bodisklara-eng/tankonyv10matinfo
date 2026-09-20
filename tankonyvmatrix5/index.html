@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<!-- saved from url=(0114)file:///D:/tankonyv/Virtu%C3%A1lis%20Sminkst%C3%BAdi%C3%B3%20-%20Sz%C3%ADnform%C3%A1tumok%20&%20M%C3%A1trixok.html -->
+<html lang="hu" style="--lip-color: #F4A6B9; --eye-color: #D9A0B5; --blush-color: #F48FB1; --lip-opacity: 1; --eye-opacity: 0.8; --blush-opacity: 0.55;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtuális Sminkstúdió - Színformátumok &amp; Mátrixok</title>
+
+<style>
+:root {
+  --lip-color: #D94F7D;
+  --eye-color: #D9A0B5;
+  --blush-color: #F48FB1;
+
+  --lip-opacity: 1;
+  --eye-opacity: 0.8;
+  --blush-opacity: 0.55;
+
+  --primary-color: #c94f76;
+  --primary-hover: #b03e63;
+  --bg-gradient: linear-gradient(135deg, #fff1f5, #f5e6ed);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --text-main: #4b3040;
+  --text-muted: #8c4d68;
+  --border-color: #e5c7d4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 25px 15px;
+}
+
+.app { max-width: 1100px; margin: 0 auto; }
+header { text-align: center; margin-bottom: 25px; }
+h1 { color: #9b4266; font-size: 2.2rem; margin: 0 0 8px 0; }
+.subtitle { color: var(--text-muted); margin: 0; font-size: 1rem; }
+
+.studio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 35px rgba(120, 50, 80, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.preview { display: flex; flex-direction: column; align-items: center; }
+.face-container { width: 100%; max-width: 380px; position: relative; }
+.face-container svg { width: 100%; height: auto; display: block; }
+
+.makeup { transition: fill 0.3s ease, opacity 0.3s ease; }
+
+#lipUpper, #lipLower { fill: var(--lip-color) !important; opacity: var(--lip-opacity); }
+#leftShadow, #rightShadow { fill: var(--eye-color) !important; opacity: var(--eye-opacity); }
+#leftBlush, #rightBlush { fill: var(--blush-color) !important; opacity: var(--blush-opacity); }
+.eye-iris { transition: fill 0.3s ease; }
+
+.before-mode .makeup { opacity: 0 !important; }
+
+/* Színinfó kártya */
+.current-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+  background: #fff;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.current-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #ccc;
+  background-color: var(--lip-color);
+  flex-shrink: 0;
+}
+
+.color-formats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  background: #fdf8fa;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #f2e1e8;
+}
+
+.color-formats div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+h2 { color: #7d3c57; margin-top: 0; font-size: 1.4rem; }
+h3 { color: var(--text-muted); font-size: 0.95rem; margin: 10px 0; }
+
+.types, .index-mode-selector { display: flex; gap: 8px; margin-bottom: 15px; }
+
+/* Indexelés kiválasztó gombok (0-s vs 1-es indexelés) */
+.index-btn {
+  flex: 1; border: 1px dashed var(--border-color); border-radius: 10px;
+  padding: 6px; background: #ffffff; color: var(--text-muted);
+  font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.index-btn.active {
+  background: #7d3c57; color: white; border-color: #7d3c57; border-style: solid;
+}
+
+.type-btn {
+  flex: 1; border: 1px solid var(--border-color); border-radius: 16px;
+  padding: 10px; background: #fff7fa; color: var(--text-muted);
+  font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.type-btn:hover, .type-btn:focus-visible { background: var(--primary-color); color: white; outline: none; }
+.type-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+.colors-wrapper { position: relative; }
+.colors-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+
+.color-btn {
+  aspect-ratio: 1; border-radius: 50%; border: 3px solid white;
+  background: var(--color); cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s;
+}
+.color-btn:hover, .color-btn:focus-visible { transform: scale(1.15); outline: none; }
+.color-btn.selected { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color); transform: scale(1.08); }
+
+/* Letisztult Pop-up ablak - KIZÁRÓLAG a Mátrix elemnek */
+.matrix-popup {
+  position: absolute; top: 0; left: 0; transform: translate(-50%, -115%);
+  background: #2b1a23; color: #fff; padding: 6px 10px; border-radius: 8px;
+  font-size: 0.85rem; font-weight: bold; font-family: monospace; pointer-events: none; white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25); opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 10;
+}
+.matrix-popup::after {
+  content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+  border-width: 5px 5px 0; border-style: solid; border-color: #2b1a23 transparent transparent;
+}
+.matrix-popup.visible { opacity: 1; }
+
+.control-group {
+  margin-top: 15px; background: rgba(255,255,255,0.6); padding: 12px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+}
+.control-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.control-row:last-child { margin-bottom: 0; }
+.control-row label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+input[type="range"] { flex: 1; accent-color: var(--primary-color); }
+
+.custom-color-picker { display: flex; align-items: center; gap: 8px; }
+input[type="color"] { border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; background: transparent; }
+input[type="text"] { width: 80px; padding: 5px; border: 1px solid var(--border-color); border-radius: 6px; font-family: monospace; text-align: center; }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.action-btn {
+  padding: 10px; border-radius: 10px; border: 1px solid var(--border-color);
+  background: white; color: var(--text-muted); font-weight: 600; cursor: pointer; transition: background 0.2s;
+}
+.action-btn:hover, .action-btn:focus-visible { background: #fcebf2; outline: none; }
+.action-btn.primary { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+.action-btn.primary:hover { background: var(--primary-hover); }
+
+@media (max-width: 768px) {
+  .studio { grid-template-columns: 1fr; }
+  .colors-grid { grid-template-columns: repeat(5, 1fr); }
+  .color-formats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<header>
+  <h1>✦ Virtuális Sminkstúdió ✦</h1>
+  <p class="subtitle">Mátrix elemek és Webes Színformátumok (HEX, RGB, HSL, OKLCH)</p>
+</header>
+
+<div class="studio">
+
+  <section class="panel preview">
+    <div class="face-container" id="faceContainer">
+      <svg viewBox="0 0 360 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Női arc smink előnézete">
+        <defs>
+          <radialgradient id="skin" cx="40%" cy="30%" r="80%">
+            <stop offset="0%" stop-color="#f9d8c1"></stop>
+            <stop offset="65%" stop-color="#eeb99e"></stop>
+            <stop offset="100%" stop-color="#ce9078"></stop>
+          </radialgradient>
+          <radialgradient id="hair" cx="40%" cy="20%" r="80%">
+            <stop offset="0%" stop-color="#6d463c"></stop>
+            <stop offset="100%" stop-color="#24191c"></stop>
+          </radialgradient>
+          <filter id="soft"><fegaussianblur stdDeviation="7"></fegaussianblur></filter>
+          <clippath id="faceClip">
+            <path d="M104 116 C76 144 69 193 82 247 C95 310 137 352 180 354 C223 352 265 310 278 247 C291 193 284 144 256 116 C231 91 129 91 104 116Z"></path>
+          </clippath>
+        </defs>
+
+        <ellipse cx="180" cy="445" rx="116" ry="13" fill="#d8b6c4" opacity=".4"></ellipse>
+        <path d="M91 166 C40 112 66 39 138 25 C220 5 300 56 285 142 C282 182 270 220 280 287 C252 310 236 290 232 258 L125 258 C116 299 91 312 69 289 C82 234 66 200 91 166Z" fill="url(#hair)"></path>
+
+        <path d="M143 316 L143 392 Q180 414 217 392 L217 316Z" fill="#e8aa8f"></path>
+        <path d="M143 375 Q180 397 217 375 Q277 390 307 470 L53 470 Q83 390 143 375Z" fill="#ead2db"></path>
+
+        <ellipse cx="83" cy="224" rx="17" ry="29" fill="#e8aa8f"></ellipse>
+        <ellipse cx="277" cy="224" rx="17" ry="29" fill="#e8aa8f"></ellipse>
+
+        <path d="M104 116 C76 144 69 193 82 247 C95 310 137 352 180 354 C223 352 265 310 278 247 C291 193 284 144 256 116 C231 91 129 91 104 116Z" fill="url(#skin)" stroke="#c68d76" stroke-width="1.5"></path>
+
+        <g clip-path="url(#faceClip)">
+          <ellipse cx="133" cy="172" rx="55" ry="62" fill="#fff2e5" opacity=".18"></ellipse>
+
+          <ellipse id="leftBlush" class="makeup" cx="111" cy="249" rx="36" ry="23" filter="url(#soft)"></ellipse>
+          <ellipse id="rightBlush" class="makeup" cx="249" cy="249" rx="36" ry="23" filter="url(#soft)"></ellipse>
+
+          <path id="leftShadow" class="makeup" d="M105 190 Q130 166 157 190 Q131 207 105 190Z" style="fill: rgb(217, 160, 181); opacity: 0.8;"></path>
+          <path id="rightShadow" class="makeup" d="M203 190 Q230 166 255 190 Q229 207 203 190Z" style="fill: rgb(217, 160, 181); opacity: 0.8;"></path>
+
+          <path d="M103 168 Q130 151 158 169" stroke="#5b3930" stroke-width="8" fill="none" stroke-linecap="round"></path>
+          <path d="M202 169 Q230 151 257 168" stroke="#5b3930" stroke-width="8" fill="none" stroke-linecap="round"></path>
+
+          <path d="M104 191 Q130 172 157 191 Q130 210 104 191Z" fill="#fffaf5"></path>
+          <path d="M203 191 Q230 172 257 191 Q230 210 203 191Z" fill="#fffaf5"></path>
+
+          <ellipse id="leftIris" class="eye-iris" cx="131" cy="191" rx="9" ry="11" fill="#D9A0B5" style="fill: rgb(217, 160, 181);"></ellipse>
+          <ellipse id="rightIris" class="eye-iris" cx="230" cy="191" rx="9" ry="11" fill="#D9A0B5" style="fill: rgb(217, 160, 181);"></ellipse>
+
+          <ellipse cx="131" cy="191" rx="4.5" ry="7" fill="#201616"></ellipse>
+          <ellipse cx="230" cy="191" rx="4.5" ry="7" fill="#201616"></ellipse>
+
+          <circle cx="134" cy="187" r="2.5" fill="white"></circle>
+          <circle cx="233" cy="187" r="2.5" fill="white"></circle>
+
+          <path d="M104 190 Q130 169 157 190" fill="none" stroke="#38241f" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M203 190 Q230 169 257 190" fill="none" stroke="#38241f" stroke-width="3" stroke-linecap="round"></path>
+
+          <path d="M180 190 C174 220 164 254 169 265 Q180 273 191 265" fill="none" stroke="#c58a72" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M162 276 Q180 283 198 276" fill="none" stroke="#c58a72" stroke-width="2" stroke-linecap="round"></path>
+
+          <path id="lipUpper" class="makeup" d="M139 300 Q151 286 164 295 Q180 282 196 295 Q209 286 221 300 Q201 310 180 309 Q159 310 139 300Z"></path>
+          <path id="lipLower" class="makeup" d="M139 300 Q159 310 180 309 Q201 310 221 300 Q211 331 180 333 Q149 331 139 300Z"></path>
+
+          <path d="M143 302 Q180 310 217 302" stroke="#7e304b" stroke-width="1.5" fill="none"></path>
+          <path d="M161 320 Q180 324 199 320" stroke="#ffffff" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"></path>
+        </g>
+
+        <path d="M105 126 C75 82 111 35 171 35 C228 25 274 61 257 131 C244 102 217 82 180 83 C148 80 121 100 105 126Z" fill="url(#hair)"></path>
+        <path d="M104 120 Q78 154 89 216 Q62 192 66 144 Q73 84 125 61" fill="url(#hair)"></path>
+        <path d="M256 120 Q282 154 271 216 Q298 192 294 144 Q287 84 235 61" fill="url(#hair)"></path>
+
+        <circle cx="82" cy="255" r="6" fill="#d8a94f" stroke="#b88b39" stroke-width="2"></circle>
+        <circle cx="278" cy="255" r="6" fill="#d8a94f" stroke="#b88b39" stroke-width="2"></circle>
+      </svg>
+    </div>
+
+    <!-- Színinfó Kártya -->
+    <div class="current-info">
+      <div class="info-header">
+        <div class="current-dot" id="currentDot" style="background: rgb(244, 166, 185);"></div>
+        <div>
+          <strong id="currentName">Babarózsaszín</strong>
+          <span id="matrixTag" style="font-family: monospace; font-weight: bold; color: var(--primary-color);">ruzs[0][1]</span>
+        </div>
+      </div>
+      <div class="color-formats">
+        <div><strong>HEX:</strong> <span id="fmtHex">#F4A6B9</span></div>
+        <div><strong>RGB:</strong> <span id="fmtRgb">rgb(244, 166, 185)</span></div>
+        <div><strong>HSL:</strong> <span id="fmtHsl">hsl(345, 78%, 80%)</span></div>
+        <div><strong>OKLCH:</strong> <span id="fmtOklch">oklch(0.72 0.08 346)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Smink &amp; Mátrix Beállítások</h2>
+
+    <!-- ÚJ: Indexelési Mód Kiválasztó Fül -->
+    <div class="index-mode-selector">
+      <button class="index-btn" data-base="0">0-tól való indexelés (JS / C / C++)</button>
+      <button class="index-btn active" data-base="1">1-től való indexelés (Lua / R / Matek)</button>
+    </div>
+
+    <div class="types" role="tablist">
+      <button class="type-btn active" data-type="lip" role="tab" aria-selected="true">💋 Rúzs</button>
+      <button class="type-btn" data-type="eye" role="tab" aria-selected="false">👁 Szem</button>
+      <button class="type-btn" data-type="blush" role="tab" aria-selected="false">🌸 Pirosító</button>
+    </div>
+
+    <h3 id="sectionTitle">Rúzs színek mátrixa (ruzs[r][c])</h3>
+
+    <div class="colors-wrapper" id="colorsWrapper">
+      <!-- A popup kizárólag a mátrix elemet jeleníti meg -->
+      <div class="matrix-popup visible" id="matrixPopup" style="left: 119.481px; top: -5.47406px;">ruzs[0][1]</div>
+      <div class="colors-grid" id="colorsGrid" role="grid"><button class="color-btn" style="--color: #F8C8D4;"></button><button class="color-btn selected" style="--color: #F4A6B9;"></button><button class="color-btn" style="--color: #E77D9B;"></button><button class="color-btn" style="--color: #D94F7D;"></button><button class="color-btn" style="--color: #C2185B;"></button><button class="color-btn" style="--color: #AD1457;"></button><button class="color-btn" style="--color: #E91E63;"></button><button class="color-btn" style="--color: #F06292;"></button><button class="color-btn" style="--color: #FF5252;"></button><button class="color-btn" style="--color: #E53935;"></button><button class="color-btn" style="--color: #B71C1C;"></button><button class="color-btn" style="--color: #8E244D;"></button><button class="color-btn" style="--color: #6D214F;"></button><button class="color-btn" style="--color: #9C27B0;"></button><button class="color-btn" style="--color: #D7A0A7;"></button><button class="color-btn" style="--color: #B7796C;"></button><button class="color-btn" style="--color: #8D5A4C;"></button><button class="color-btn" style="--color: #F4B183;"></button></div>
+    </div>
+
+    <div class="control-group">
+      <div class="control-row">
+        <label for="opacitySlider">Intenzitás / Átlátszóság:</label>
+        <input type="range" id="opacitySlider" min="0" max="1" step="0.05" value="1">
+        <span id="opacityVal" style="font-size: 0.8rem; font-weight: bold;">100%</span>
+      </div>
+      <div class="control-row">
+        <label for="pickerColor">Egyedi HEX szín:</label>
+        <div class="custom-color-picker">
+          <input type="color" id="pickerColor" value="#D94F7D">
+          <input type="text" id="textHex" value="#D94F7D" maxlength="7">
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" id="beforeAfterBtn">👁️ Előtte / Utána</button>
+      <button class="action-btn primary" id="randomBtn">✨ Véletlen szín</button>
+      <button class="action-btn" id="resetBtn">↺ Alaphelyzet</button>
+      <button class="action-btn" id="downloadSvgBtn">💾 Mentés (SVG)</button>
+    </div>
+  </section>
+
+</div>
+
+</div>
+
+<script>
+const MATRIX_COLS = 6;
+
+const palettes = {
+  lip: {
+    prefix: "ruzs",
+    title: "Rúzs színek mátrixa",
+    colors: [
+      ["#F8C8D4","Világos rózsaszín"], ["#F4A6B9","Babarózsaszín"], ["#E77D9B","Rózsaszín"], ["#D94F7D","Ciklámen"], ["#C2185B","Málnapiros"], ["#AD1457","Bordó rózsaszín"],
+      ["#E91E63","Élénk pink"], ["#F06292","Pasztell pink"], ["#FF5252","Korallpiros"], ["#E53935","Piros"], ["#B71C1C","Sötétpiros"], ["#8E244D","Borvörös"],
+      ["#6D214F","Szilvalila"], ["#9C27B0","Lila"], ["#D7A0A7","Nude"], ["#B7796C","Barna nude"], ["#8D5A4C","Csokoládé"], ["#F4B183","Barack"]
+    ]
+  },
+  eye: {
+    prefix: "szem",
+    title: "Szemhéj- és szemszínek mátrixa",
+    colors: [
+      ["#2E5B88","Királykék"], ["#42A5F5","Világoskék"], ["#00838F","Mélytürkiz"], ["#26A69A","Smaragdzöld"], ["#388E3C","Moha zöld"], ["#795548","Mogyoróbarna"],
+      ["#5D4037","Sötétbarna"], ["#A1887F","Avar barna"], ["#8E5572","Szilvakék"], ["#6A1B9A","Sötétlila"], ["#CE93D8","Ibolya"], ["#FFD54F","Aranybarna"],
+      ["#F5D6C6","Bézs"], ["#E7B8A0","Barack"], ["#D9A0B5","Rózsás"], ["#B76E79","Mályva"], ["#BDBDBD","Ezüst"], ["#37474F","Apalpal"]
+    ]
+  },
+  blush: {
+    prefix: "pirosito",
+    title: "Pirosító színek mátrixa",
+    colors: [
+      ["#FADADD","Halvány rózsaszín"], ["#F8BBD0","Babarózsaszín"], ["#F48FB1","Rózsaszín"], ["#EC407A","Pink"], ["#D81B60","Málna"], ["#E57373","Piros"],
+      ["#EF9A9A","Lazac"], ["#FFAB91","Barack"], ["#FF8A65","Korall"], ["#FF7043","Narancs"], ["#D7CCC8","Nude"], ["#BCAAA4","Barna rózsás"]
+    ]
+  }
+};
+
+let currentType = "lip";
+let isBeforeMode = false;
+let indexBase = 0; // 0 vagy 1 indexelési mód
+
+const state = {
+  lip: { color: "#D94F7D", opacity: 1, name: "Ciklámen", index: 3 },
+  eye: { color: "#D9A0B5", opacity: 0.8, name: "Rózsás", index: 14 },
+  blush: { color: "#F48FB1", opacity: 0.55, name: "Rózsaszín", index: 2 }
+};
+
+// Mátrix sztring generálása indexelt mód alapján
+function getMatrixStr(prefix, index) {
+  if (typeof index !== 'number') return `${prefix}[egyedi]`;
+  
+  const r = Math.floor(index / MATRIX_COLS) + indexBase;
+  const c = (index % MATRIX_COLS) + indexBase;
+  return `${prefix}[${r}][${c}]`;
+}
+
+/* SZÍN ÁTALAKÍTÓ FÜGGVÉNYEK */
+function hexToRgb(hex) {
+  let r = parseInt(hex.slice(1, 3), 16);
+  let g = parseInt(hex.slice(3, 5), 16);
+  let b = parseInt(hex.slice(5, 7), 16);
+  return { r, g, b, str: `rgb(${r}, ${g}, ${b})` };
+}
+
+function hexToHsl(hex) {
+  let { r, g, b } = hexToRgb(hex);
+  r /= 255; g /= 255; b /= 255;
+  let max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    let d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+}
+
+function hexToOklch(hex) {
+  let { r, g, b } = hexToRgb(hex);
+  let l = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  let c = (Math.max(r,g,b) - Math.min(r,g,b)) / 255 * 0.25;
+  let h = Math.round((Math.atan2(g - b, r - g) * 180 / Math.PI + 360) % 360);
+  return `oklch(${l.toFixed(2)} ${c.toFixed(2)} ${h})`;
+}
+
+const root = document.documentElement;
+const colorsGrid = document.getElementById("colorsGrid");
+const colorsWrapper = document.getElementById("colorsWrapper");
+const matrixPopup = document.getElementById("matrixPopup");
+const titleEl = document.getElementById("sectionTitle");
+const currentName = document.getElementById("currentName");
+const matrixTag = document.getElementById("matrixTag");
+const currentDot = document.getElementById("currentDot");
+const opacitySlider = document.getElementById("opacitySlider");
+const opacityVal = document.getElementById("opacityVal");
+const pickerColor = document.getElementById("pickerColor");
+const textHex = document.getElementById("textHex");
+const faceContainer = document.getElementById("faceContainer");
+
+const fmtHex = document.getElementById("fmtHex");
+const fmtRgb = document.getElementById("fmtRgb");
+const fmtHsl = document.getElementById("fmtHsl");
+const fmtOklch = document.getElementById("fmtOklch");
+
+function updateMakeupStyles() {
+  root.style.setProperty("--lip-color", state.lip.color);
+  root.style.setProperty("--eye-color", state.eye.color);
+  root.style.setProperty("--blush-color", state.blush.color);
+
+  root.style.setProperty("--lip-opacity", state.lip.opacity);
+  root.style.setProperty("--eye-opacity", state.eye.opacity);
+  root.style.setProperty("--blush-opacity", state.blush.opacity);
+
+  const leftShadow = document.getElementById("leftShadow");
+  const rightShadow = document.getElementById("rightShadow");
+  if (leftShadow && rightShadow) {
+    leftShadow.style.fill = state.eye.color;
+    leftShadow.style.opacity = state.eye.opacity;
+    rightShadow.style.fill = state.eye.color;
+    rightShadow.style.opacity = state.eye.opacity;
+  }
+
+  const leftIris = document.getElementById("leftIris");
+  const rightIris = document.getElementById("rightIris");
+  if (leftIris && rightIris) {
+    leftIris.style.fill = state.eye.color;
+    rightIris.style.fill = state.eye.color;
+  }
+}
+
+function updateUI() {
+  const current = state[currentType];
+  const color = current.color;
+
+  currentDot.style.background = color;
+  currentName.textContent = current.name;
+  matrixTag.textContent = getMatrixStr(palettes[currentType].prefix, current.index);
+
+  // Színkódok kiszámítása és kijelzése
+  fmtHex.textContent = color;
+  fmtRgb.textContent = hexToRgb(color).str;
+  fmtHsl.textContent = hexToHsl(color);
+  fmtOklch.textContent = hexToOklch(color);
+
+  opacitySlider.value = current.opacity;
+  opacityVal.textContent = Math.round(current.opacity * 100) + "%";
+  pickerColor.value = isValidHex(color) ? color : "#000000";
+  textHex.value = color;
+
+  updateMakeupStyles();
+}
+
+function isValidHex(hex) {
+  return /^#[0-9A-F]{6}$/i.test(hex);
+}
+
+// Csak a Mátrix elem jelenik meg a felugró ablakban
+function showMatrixPopup(buttonElement, matrixStr) {
+  const btnRect = buttonElement.getBoundingClientRect();
+  const wrapperRect = colorsWrapper.getBoundingClientRect();
+
+  const leftPos = (btnRect.left - wrapperRect.left) + (btnRect.width / 2);
+  const topPos = (btnRect.top - wrapperRect.top);
+
+  matrixPopup.style.left = `${leftPos}px`;
+  matrixPopup.style.top = `${topPos}px`;
+  matrixPopup.textContent = matrixStr;
+  matrixPopup.classList.add("visible");
+}
+
+function hideMatrixPopup() {
+  matrixPopup.classList.remove("visible");
+}
+
+function renderColors() {
+  const palette = palettes[currentType];
+  titleEl.textContent = `${palette.title} (${palettes[currentType].prefix}[r][c])`;
+  colorsGrid.innerHTML = "";
+
+  palette.colors.forEach(([color, name], index) => {
+    const matrixStr = getMatrixStr(palette.prefix, index);
+
+    const button = document.createElement("button");
+    button.className = "color-btn";
+    button.style.setProperty("--color", color);
+
+    if (state[currentType].color.toUpperCase() === color.toUpperCase()) {
+      button.classList.add("selected");
+      state[currentType].index = index;
+      setTimeout(() => showMatrixPopup(button, matrixStr), 50);
+    }
+
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".color-btn").forEach(b => b.classList.remove("selected"));
+      button.classList.add("selected");
+
+      state[currentType].color = color;
+      state[currentType].name = name;
+      state[currentType].index = index;
+
+      updateUI();
+      showMatrixPopup(button, matrixStr);
+    });
+
+    colorsGrid.appendChild(button);
+  });
+}
+
+// Indexelési mód fül gombok kódja (0-s vs 1-es indexelés)
+document.querySelectorAll(".index-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".index-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    indexBase = parseInt(btn.dataset.base);
+
+    renderColors();
+    updateUI();
+  });
+});
+
+document.querySelectorAll(".type-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".type-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentType = btn.dataset.type;
+
+    hideMatrixPopup();
+    renderColors();
+    updateUI();
+  });
+});
+
+opacitySlider.addEventListener("input", (e) => {
+  const val = parseFloat(e.target.value);
+  state[currentType].opacity = val;
+  opacityVal.textContent = Math.round(val * 100) + "%";
+  updateMakeupStyles();
+});
+
+pickerColor.addEventListener("input", (e) => {
+  const color = e.target.value.toUpperCase();
+  textHex.value = color;
+  applyCustomColor(color);
+});
+
+textHex.addEventListener("change", (e) => {
+  let val = e.target.value.trim();
+  if (!val.startsWith("#")) val = "#" + val;
+  if (isValidHex(val)) {
+    pickerColor.value = val;
+    applyCustomColor(val.toUpperCase());
+  }
+});
+
+function applyCustomColor(hexColor) {
+  state[currentType].color = hexColor;
+  state[currentType].name = "Egyedi";
+  state[currentType].index = null;
+  
+  document.querySelectorAll(".color-btn").forEach(b => b.classList.remove("selected"));
+  hideMatrixPopup();
+  updateUI();
+}
+
+document.getElementById("beforeAfterBtn").addEventListener("click", () => {
+  isBeforeMode = !isBeforeMode;
+  faceContainer.classList.toggle("before-mode", isBeforeMode);
+});
+
+document.getElementById("randomBtn").addEventListener("click", () => {
+  const colors = palettes[currentType].colors;
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  const [color, name] = colors[randomIndex];
+
+  state[currentType].color = color;
+  state[currentType].name = name;
+  state[currentType].index = randomIndex;
+
+  renderColors();
+  updateUI();
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  state.lip = { color: "#D94F7D", opacity: 1, name: "Ciklámen", index: 3 };
+  state.eye = { color: "#D9A0B5", opacity: 0.8, name: "Rózsás", index: 14 };
+  state.blush = { color: "#F48FB1", opacity: 0.55, name: "Rózsaszín", index: 2 };
+  
+  isBeforeMode = false;
+  faceContainer.classList.remove("before-mode");
+
+  renderColors();
+  updateUI();
+});
+
+document.getElementById("downloadSvgBtn").addEventListener("click", () => {
+  const svgData = faceContainer.querySelector("svg").outerHTML;
+  const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+  const svgUrl = URL.createObjectURL(svgBlob);
+  
+  const downloadLink = document.createElement("a");
+  downloadLink.href = svgUrl;
+  downloadLink.download = "sminkelt_arckep.svg";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+});
+
+renderColors();
+updateUI();
+</script>
+
+
+</body></html>
