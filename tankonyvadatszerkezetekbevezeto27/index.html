@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///D:/programe%20scolare/tankonyv/preview%20(3).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informatika &amp; Elektronika – Interaktív tankönyv</title>
+<style>
+:root{
+  --ink:#172033;--muted:#5c667a;--paper:#fff;--bg:#e8edf4;--accent:#2563eb;
+  --blue:#e8f3ff;--blue-b:#1976d2;--yellow:#fff4cf;--yellow-b:#e0a100;
+  --green:#e8f7ed;--green-b:#229447;--purple:#f2eaff;--purple-b:#8055c7;
+  --gray:#f3f6f9;--line:#d9e0e9;--shadow:0 12px 32px #1c2a3a22;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+.toolbar{position:sticky;top:0;z-index:50;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:12px;background:#111827ee;backdrop-filter:blur(8px)}
+button,.tool-link{border:0;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer;text-decoration:none}
+.effect-btn{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 6px 18px #2563eb44}
+.print-btn{background:#fff;color:#172033}
+.book{max-width:210mm;margin:22px auto}
+.page{
+  width:210mm;min-height:297mm;background:var(--paper);margin:0 auto 18px;
+  padding:18mm 15mm 20mm;position:relative;box-shadow:var(--shadow);
+  page-break-after:always;overflow:hidden
+}
+.page-header{font-size:10pt;color:#667085;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:18px;display:flex;justify-content:space-between}
+.page-footer{position:absolute;bottom:8mm;left:15mm;right:15mm;border-top:1px solid var(--line);padding-top:4px;font-size:9pt;color:#667085;display:flex;justify-content:space-between}
+h1{font-size:28pt;line-height:1.12;margin:20px 0 10px;color:#102a56}
+h2{font-size:20pt;color:#153e75;border-bottom:2px solid #dbeafe;padding-bottom:5px;margin-top:25px}
+h3{font-size:14pt;color:#334155;margin-bottom:7px}
+.lead{font-size:13pt;color:#475569}
+.chapter{font-size:11pt;letter-spacing:.08em;text-transform:uppercase;color:#2563eb;font-weight:800}
+.box{border-radius:12px;padding:13px 15px;margin:15px 0;border-left:6px solid}
+.observe{background:var(--blue);border-color:var(--blue-b)}
+.remember{background:var(--yellow);border-color:var(--yellow-b)}
+.know{background:var(--green);border-color:var(--green-b)}
+.think{background:var(--purple);border-color:var(--purple-b)}
+.tasks{background:var(--gray);border:2px solid #9aa9bc;border-left:6px solid #52708f}
+.box strong{display:block;margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.code-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.code-title{font-weight:800;margin-bottom:5px;color:#334155}
+pre{margin:0;background:#101827;color:#e8eef7;border-radius:10px;padding:13px;overflow:auto;font-size:9pt;line-height:1.45}
+code{font-family:"Cascadia Code","Consolas",monospace}
+.diagram{border:2px dashed #94a3b8;border-radius:14px;padding:18px;text-align:center;background:#f8fafc;margin:16px 0}
+.flow{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+.node{padding:10px 14px;border-radius:9px;background:#dbeafe;border:1px solid #60a5fa;font-weight:700}
+.arrow{font-size:20px;color:#64748b}
+ul{padding-left:22px}
+.note{font-size:10pt;color:var(--muted)}
+.modal-backdrop{position:fixed;inset:0;background:#0b1220b8;display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+.modal-backdrop.open{display:flex}
+.modal{width:min(1000px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 30px 80px #0008}
+.modal-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.modal-head h2{margin:0;border:0;padding:0;font-size:18pt}
+.close{font-size:22px;background:#eef2f7;color:#172033;width:42px;height:42px;padding:0}
+.effects{padding:18px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.effect-card{display:block;border:1px solid #dbe2ea;border-radius:13px;padding:14px;text-decoration:none;color:var(--ink);background:#fbfdff;transition:.2s}
+.effect-card:hover{transform:translateY(-2px);border-color:#7c3aed;box-shadow:0 8px 22px #1e293b18}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e0e7ff;color:#3730a3;font-weight:800;margin-right:8px}
+.effect-card:last-child{border:2px solid #2563eb;background:#eff6ff}
+.simulator{background:#0b1220;color:#fff;border-radius:14px;padding:18px;margin-top:14px}
+.simulator a{color:#93c5fd;font-weight:800}
+.chip{display:inline-block;padding:3px 8px;border-radius:999px;background:#e2e8f0;font-size:9pt;margin:2px}
+@media(max-width:800px){
+ .book{width:100%;margin:0}.page{width:100%;min-height:auto;margin-bottom:8px;padding:12mm 9mm 18mm}
+ .grid2,.code-wrap,.effects{grid-template-columns:1fr}.page-footer{position:static;margin-top:30px}
+ h1{font-size:23pt}
+}
+@media print{
+ @page{size:A4 portrait;margin:18mm 15mm 20mm}
+ body{background:#fff}
+ .toolbar,.modal-backdrop,.print-btn,.effect-btn{display:none!important}
+ .book{max-width:none;margin:0}
+ .page{width:auto;min-height:0;margin:0;box-shadow:none;padding:0;page-break-after:always}
+ .page:last-child{page-break-after:auto}
+ .page-footer{position:fixed;bottom:0;left:0;right:0}
+ a{color:inherit;text-decoration:none}
+ .box,.diagram,pre{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="effect-btn" id="openEffects">✨ Csillogó / Effekt Menü Megnyitása (22 Opció)</button>
+  <button class="print-btn" onclick="window.print()">🖨️ A4 nyomtatás / PDF</button>
+</div>
+
+<main class="book">
+<section class="page">
+  <div class="page-header"><span>INFORMATIKA &amp; ELEKTRONIKA</span><span>Interaktív tankönyv</span></div>
+  <div class="chapter">1. fejezet • Digitális rendszerek</div>
+  <h1>Informatika &amp; Elektronika</h1>
+  <p class="lead">A4-es, nyomtatható és interaktív tananyag az algoritmikus gondolkodás, a mikrokontrollerek és az elektronikai vezérlés összekapcsolásához.</p>
+
+  <div class="box observe"><strong>🔍 MIT KELL MEGFIGYELNIE?</strong>
+  Figyeld meg, hogyan lesz egy egyszerű programutasításból fizikai jelenség: egy LED világítani kezd, a fényerő változik, vagy egy piezo hangot ad ki.</div>
+  <div class="box remember"><strong>📌 MIT KELL MEGJEGYEZNIE?</strong>
+  A mikrokontroller digitális jeleket dolgoz fel és kimenetein vezérlőjeleket hoz létre. A PWM segítségével például egy LED átlagos fényereje szabályozható.</div>
+  <div class="box know"><strong>🎓 MIT KELL TUDNIA?</strong>
+  Ismerje fel a bemenet–feldolgozás–kimenet modellt, tudjon egyszerű algoritmust felépíteni, és legyen képes egy érzékelő vagy gomb jelére LED-et, motort vagy hangkeltőt vezérelni.</div>
+  <div class="box think"><strong>💡 GONDOLATOK</strong>
+  Mérnöki kérdés: mitől lesz egy villogó LED „okos rendszer”? Mi történik, ha a program időzítését, a tápfeszültséget vagy a terhelést megváltoztatjuk?</div>
+
+  <div class="diagram">
+    <div class="flow">
+      <div class="node">BEMENET<br><span class="note">gomb / érzékelő</span></div>
+      <div class="arrow">→</div><div class="node">ALGORITMUS<br><span class="note">feltétel + ciklus</span></div>
+      <div class="arrow">→</div><div class="node">KIMENET<br><span class="note">LED / hang</span></div>
+    </div>
+  </div>
+  <div class="box tasks"><strong>✏️ GYAKORLATI FELADATOK</strong>
+    <ol><li>Tervezzen olyan rendszert, amely gombnyomásra háromszor felvillantja a LED-et.</li>
+    <li>Módosítsa a villogás periódusát, és figyelje meg a változást.</li>
+    <li>Adjon hozzá hangjelzést piezoelemmel.</li></ol>
+  </div>
+  <div class="page-footer"><span>Informatika &amp; Elektronika</span><span>1</span></div>
+</section>
+
+<section class="page">
+  <div class="page-header"><span>INFORMATIKA &amp; ELEKTRONIKA</span><span>Algoritmus → áramkör</span></div>
+  <div class="chapter">2. fejezet • LED, PWM és időzítés</div>
+  <h2>A villogástól a fényerőszabályzásig</h2>
+  <p>A digitális kimenet kétállapotú jelként képzelhető el: LOW vagy HIGH. PWM-nél gyorsan váltogatjuk a jelet, és a kitöltési tényező határozza meg az átlagos teljesítményt.</p>
+
+  <div class="box observe"><strong>🔍 MIT KELL MEGFIGYELNIE?</strong>
+  25% kitöltésnél a jel az idő nagyjából negyedében HIGH. A gyors váltás miatt a LED folyamatosabbnak látszó fényt ad.</div>
+
+  <div class="code-wrap">
+    <div><div class="code-title">C++ / Arduino</div><pre><code>const int LED = 9;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  analogWrite(LED, 64);   // kb. 25%
+  delay(1000);
+
+  analogWrite(LED, 255);  // 100%
+  delay(1000);
+}</code></pre></div>
+    <div><div class="code-title">MicroPython / Python</div><pre><code>from machine import Pin, PWM
+from time import sleep
+
+led = PWM(Pin(15))
+led.freq(1000)
+
+while True:
+    led.duty_u16(16384)  # kb. 25%
+    sleep(1)
+
+    led.duty_u16(65535)  # 100%
+    sleep(1)</code></pre></div>
+  </div>
+
+  <div class="box remember"><strong>📌 MIT KELL MEGJEGYEZNIE?</strong>
+  A PWM nem egyszerűen „kevesebb feszültséget” jelent: gyors impulzussorozattal szabályozzuk az energiaátadást. A pontos működés az adott mikrokontroller és terhelés tulajdonságaitól függ.</div>
+
+  <h3>Egyszerű 555-ös astabil multivibrátor</h3>
+  <p>Az 555 időzítő astabil kapcsolásban önállóan oszcilláló négyszögjelet állíthat elő. A frekvenciát és kitöltést az ellenállások és a kondenzátor értékei befolyásolják.</p>
+  <div class="diagram">
+    <div class="flow"><div class="node">R1</div><div class="arrow">+</div><div class="node">R2</div><div class="arrow">+</div><div class="node">C</div><div class="arrow">→</div><div class="node">555 → OUT</div></div>
+    <p class="note">A kondenzátor töltése és kisütése hozza létre az ismétlődő időzítést.</p>
+  </div>
+  <div class="page-footer"><span>2. fejezet • LED, PWM és időzítés</span><span>2</span></div>
+</section>
+
+<section class="page">
+  <div class="page-header"><span>INFORMATIKA &amp; ELEKTRONIKA</span><span>Hang és kapcsolás</span></div>
+  <div class="chapter">3. fejezet • Hanghatás és teljesítményvezérlés</div>
+  <h2>Piezo, tranzisztor és terhelés</h2>
+  <p>A mikrokontroller kimenete nem minden terhelés közvetlen meghajtására alkalmas. Nagyobb áramigényű terhelésnél gyakran tranzisztoros vagy MOSFET-es kapcsoló fokozatot alkalmazunk.</p>
+
+  <div class="grid2">
+    <div class="box observe"><strong>🔍 MIT KELL MEGFIGYELNIE?</strong>
+      A piezo hangkeltőnél a vezérlőjel frekvenciája határozza meg a hangmagasságot. A LED fényerejénél inkább a PWM kitöltési tényezője a döntő.</div>
+    <div class="box remember"><strong>📌 MIT KELL MEGJEGYEZNIE?</strong>
+      Motor, relé vagy más induktív terhelés esetén megfelelő meghajtás és védelem szükséges. Mindig az adott alkatrész adatlapja alapján méretezzen.</div>
+  </div>
+
+  <div class="code-wrap">
+    <div><div class="code-title">C++ / Arduino – hang</div><pre><code>const int BUZZ = 8;
+
+void setup() {}
+
+void loop() {
+  tone(BUZZ, 880); // A5 körüli hang
+  delay(250);
+  noTone(BUZZ);
+  delay(250);
+}</code></pre></div>
+    <div><div class="code-title">MicroPython – hang</div><pre><code>from machine import Pin, PWM
+from time import sleep
+
+buzzer = PWM(Pin(15))
+buzzer.freq(880)
+
+while True:
+    buzzer.duty_u16(20000)
+    sleep(.25)
+    buzzer.duty_u16(0)
+    sleep(.25)</code></pre></div>
+  </div>
+
+  <div class="diagram">
+    <h3>Tranzisztoros kapcsoló – elvi modell</h3>
+    <div class="flow">
+      <div class="node">GPIO<br>vezérlés</div><div class="arrow">→</div>
+      <div class="node">R<br>bázis/gate</div><div class="arrow">→</div>
+      <div class="node">Tranzisztor</div><div class="arrow">→</div>
+      <div class="node">LED / motor</div>
+    </div>
+    <p class="note">A rajz szemléltető; tényleges kapcsolásnál feszültség-, áram- és védelmi követelményeket kell ellenőrizni.</p>
+  </div>
+
+  <div class="box think"><strong>💡 GONDOLATOK</strong>
+    Ha egy LED villog, az algoritmus láthatóvá válik. Ha egy motor mozog, az algoritmus mechanikai munkává alakul. Milyen más fizikai jelenséget lehetne programmal vezérelni?</div>
+
+  <div class="box tasks"><strong>✏️ GYAKORLATI FELADATOK</strong>
+    <ol><li>Készítsen két különböző hangmagasságú hangjelzést.</li>
+    <li>Tervezzen „figyelmeztető” fény + hang mintát.</li>
+    <li>Magyarázza el, miért lehet szükség tranzisztorra nagyobb terhelésnél.</li></ol>
+  </div>
+  <div class="page-footer"><span>3. fejezet • Hang és kapcsolás</span><span>3</span></div>
+</section>
+
+<section class="page">
+  <div class="page-header"><span>INFORMATIKA &amp; ELEKTRONIKA</span><span>Projektlabor</span></div>
+  <div class="chapter">4. fejezet • Mini projekt</div>
+  <h2>„Csillogó jelzőfény” – algoritmusból tárgy</h2>
+  <p>Építsen olyan rendszert, amely nyugalmi állapotban lassan pulzál, eseménykor gyorsan villog, majd rövid hangjelzést ad.</p>
+  <div class="box know"><strong>🎓 MIT KELL TUDNIA?</strong>
+    A tanuló tudjon változót használni, feltételt és ciklust írni, PWM-jelet előállítani, valamint egy egyszerű bemenetet és kimenetet összekapcsolni.</div>
+  <div class="box tasks"><strong>✏️ GYAKORLATI FELADATOK</strong>
+    <ol>
+      <li>Határozza meg a bemeneteket és kimeneteket.</li>
+      <li>Rajzolja fel az algoritmus folyamatábráját.</li>
+      <li>Írja meg a programot Arduino C++ vagy MicroPython nyelven.</li>
+      <li>Változtassa meg a villogási sebességet és a hang frekvenciáját.</li>
+      <li>Fogalmazza meg, hogyan lehetne a projektet fényérzékelővel vagy mozgásérzékelővel továbbfejleszteni.</li>
+    </ol>
+  </div>
+  <div class="simulator">
+    <h3 style="color:#fff;margin-top:0">22. kiemelt eszköz: Falstad áramköri szimulátor</h3>
+    <p>Az interaktív szimulációban áramköröket lehet felépíteni és működés közben vizsgálni. Kiválóan alkalmas arra, hogy a feszültség, áram, kondenzátortöltés és oszcilláció változásait kísérletként figyeljük meg.</p>
+    <a href="https://falstad.com/circuit/" target="_blank" rel="noopener">🔗 Falstad Circuit Simulator megnyitása</a>
+  </div>
+  <div class="box think"><strong>💡 GONDOLATOK</strong>
+    Egy jó mérnöki megoldás nemcsak működik, hanem megmagyarázható, mérhető és továbbfejleszthető. A szimuláció segítségével a fizikai építés előtt is tesztelhetünk elképzeléseket.</div>
+  <div class="page-footer"><span>4. fejezet • Projektlabor</span><span>4</span></div>
+</section>
+</main>
+
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">✨ Csillogó / Effekt Menü – 22 opció</h2>
+      <button class="close" id="closeEffects" aria-label="Bezárás">×</button>
+    </div>
+    <div class="effects">
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">1</span><strong>LED villogó alapkapcsolás</strong><br>Egyszerű digitális kimenettel periodikusan kapcsolható LED. Jó belépő a ciklusok és időzítések megértéséhez.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">2</span><strong>555-ös astabil villogó</strong><br>Az 555 kondenzátorának töltése és kisütése ismétlődő kimeneti négyszögjelet hoz létre.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">3</span><strong>PWM LED fényerő</strong><br>A PWM kitöltési tényezője szabályozza az átlagos energiaátadást, így változik a LED látszólagos fényereje.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">4</span><strong>RGB LED színkeverés</strong><br>Három csatorna fényerejének változtatásával sokféle szín állítható elő additív keveréssel.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">5</span><strong>Futófény</strong><br>Több LED egymás utáni bekapcsolása mozgó fényhatást kelt; a sorrend programozott állapotgépként is felfogható.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">6</span><strong>Fade / pulzáló fény</strong><br>A PWM értékét fokozatosan változtatva a LED fényereje fel- és leúsztatható.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">7</span><strong>Piezo hangjelző</strong><br>Periodikus vezérlőjel rezgésbe hozza a piezoelemet; a frekvencia határozza meg a hangmagasságot.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">8</span><strong>Mini sziréna</strong><br>Két vagy több frekvencia váltogatásával emelkedő-süllyedő figyelmeztető hang készíthető.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">9</span><strong>Gomb + fényhatás</strong><br>A bemeneti állapot alapján az algoritmus megváltoztatja a LED mintázatát.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">10</span><strong>Potméter + PWM</strong><br>Az analóg bemenetből olvasott értéket PWM-tartományra képezve kézi fényerőszabályzó készíthető.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">11</span><strong>Tranzisztoros LED-kapcsoló</strong><br>A tranzisztor elektronikus kapcsolóként választja el a vezérlőjelet a nagyobb terheléstől.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">12</span><strong>MOSFET-es terhelésvezérlés</strong><br>A MOSFET kapujának vezérlése nagyobb áramú terhelések kapcsolására használható megfelelő méretezés mellett.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">13</span><strong>Motoros fényprojekt</strong><br>A motor mechanikai mozgást ad az elektronikai vezérléshez; meghajtásához megfelelő kapcsolóelem és tápellátás szükséges.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">14</span><strong>Érzékelőre reagáló LED</strong><br>Az érzékelő mért értékét küszöbértékkel összehasonlítva automatikus fényhatás készíthető.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">15</span><strong>Fényérzékelős éjszakai fény</strong><br>Fotóellenállás vagy fényérzékelő segítségével sötétedéskor bekapcsolható a fényforrás.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">16</span><strong>NeoPixel / címezhető LED</strong><br>Digitális adatfolyammal LED-enként állítható a szín és fényerő, így összetett animációk hozhatók létre.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">17</span><strong>RGB „rendőrfény”</strong><br>Két szín időzített váltogatásával feltűnő villogó effekt készíthető, amely jól szemlélteti az időzítést.</a>
+      <a class="effect-card" href="https://learn.sparkfun.com/" target="_blank" rel="noopener"><span class="num">18</span><strong>Hang + fény szinkron</strong><br>A fény- és hangkimenet közös időzítési logikával egyszerre indítható, így multimédiás hatás érhető el.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">19</span><strong>Kapacitív érintés</strong><br>Az érintés változást okoz egy kapacitív érzékelési rendszerben, amely eseményként használható a programban.</a>
+      <a class="effect-card" href="https://www.scienceworld.ca/" target="_blank" rel="noopener"><span class="num">20</span><strong>Fény és tudomány</strong><br>A fényjelenségek kísérleti vizsgálata összekapcsolható az elektronikus vezérléssel és a mérési adatok értelmezésével.</a>
+      <a class="effect-card" href="https://www.instructables.com/" target="_blank" rel="noopener"><span class="num">21</span><strong>Maker projekt – saját effekt</strong><br>Válasszon LED-et, hangot, érzékelőt és időzítést, majd tervezzen saját interaktív fény-hang rendszert.</a>
+      <a class="effect-card" href="https://falstad.com/circuit/" target="_blank" rel="noopener"><span class="num">22</span><strong>⚡ FALSTAD CIRCUIT SIMULATOR – KIEMELT</strong><br>Interaktív áramköri szimulátor, amellyel az áramkörök működése, az áramok és feszültségek változása vizsgálható. Kísérletezéshez és előzetes tervezéshez különösen hasznos.</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const modal = document.getElementById('modal');
+  const open = document.getElementById('openEffects');
+  const close = document.getElementById('closeEffects');
+
+  function showModal(){
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    close.focus();
+    document.body.style.overflow='hidden';
+  }
+  function hideModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    open.focus();
+  }
+  open.addEventListener('click', showModal);
+  close.addEventListener('click', hideModal);
+  modal.addEventListener('click', e => { if(e.target === modal) hideModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) hideModal(); });
+})();
+</script>
+
+</body></html>
