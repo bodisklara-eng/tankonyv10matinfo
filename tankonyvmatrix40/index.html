@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/Kockah%C3%A1l%C3%B3k%20%C3%A9s%20M%C3%A1trix%20%C3%81br%C3%A1zol%C3%A1suk%20Interakt%C3%ADv%20Oktat%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kockahálók és Mátrix Ábrázolásuk Interaktív Oktató</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="./index_files/saved_resource"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <!-- Three.js Library -->
+    <script src="./index_files/three.min.js.descărcare"></script>
+    <!-- OrbitControls -->
+    <script src="./index_files/OrbitControls.js.descărcare"></script>
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        .cell-transition {
+            transition: all 0.2s ease-in-out;
+        }
+        canvas {
+            display: block;
+            outline: none;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.bottom-2{bottom:0.5rem}.left-2{left:0.5rem}.top-0{top:0px}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.my-2{margin-top:0.5rem;margin-bottom:0.5rem}.my-3{margin-top:0.75rem;margin-bottom:0.75rem}.mb-1\.5{margin-bottom:0.375rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mr-1\.5{margin-right:0.375rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-3{margin-top:0.75rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:0.375rem}.h-10{height:2.5rem}.h-\[380px\]{height:380px}.h-full{height:100%}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.min-h-\[110px\]{min-height:110px}.w-10{width:2.5rem}.w-8{width:2rem}.w-full{width:100%}.w-5{width:1.25rem}.w-fit{width:-moz-fit-content;width:fit-content}.max-w-3xl{max-width:48rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.list-inside{list-style-position:inside}.list-disc{list-style-type:disc}.appearance-none{-webkit-appearance:none;appearance:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-1{gap:0.25rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-sm{border-radius:0.125rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}.border-slate-700\/60{border-color:rgb(51 65 85 / 0.6)}.border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-emerald-600\/60{border-color:rgb(5 150 105 / 0.6)}.border-emerald-700\/60{border-color:rgb(4 120 87 / 0.6)}.border-indigo-400{--tw-border-opacity:1;border-color:rgb(129 140 248 / var(--tw-border-opacity, 1))}.border-indigo-800\/50{border-color:rgb(55 48 163 / 0.5)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-amber-500\/20{background-color:rgb(245 158 11 / 0.2)}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-indigo-500\/20{background-color:rgb(99 102 241 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800\/60{background-color:rgb(30 41 59 / 0.6)}.bg-slate-800\/70{background-color:rgb(30 41 59 / 0.7)}.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-emerald-950{--tw-bg-opacity:1;background-color:rgb(2 44 34 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/40{background-color:rgb(2 44 34 / 0.4)}.bg-indigo-950{--tw-bg-opacity:1;background-color:rgb(30 27 75 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.pb-3{padding-bottom:0.75rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.accent-indigo-500{accent-color:#6366f1}.opacity-40{opacity:0.4}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-indigo-500\/30{--tw-shadow-color:rgb(99 102 241 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.hover\:border-indigo-400:hover{--tw-border-opacity:1;border-color:rgb(129 140 248 / var(--tw-border-opacity, 1))}.hover\:border-indigo-500:hover{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-600:hover{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.hover\:text-slate-200:hover{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-indigo-500:focus{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.active\:cursor-grabbing:active{cursor:grabbing}@media (min-width: 640px){.sm\:h-12{height:3rem}.sm\:w-12{width:3rem}.sm\:p-6{padding:1.5rem}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-indigo-600 rounded-lg text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid font-bold text-xl fa-cube"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-slate-100">Kockahálók &amp; Mátrix Munkatér</h1>
+                    <p class="text-xs text-slate-400">Síkbeli kiterítések és bináris mátrix reprezentációk</p>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-1 bg-slate-800/60 p-1 rounded-xl border border-slate-700/50">
+                <button id="tab-editor" onclick="switchTab('editor')" class="px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow">
+                    <i class="fa-solid fa-pen-ruler mr-1.5"></i>Tervező &amp; Ellenőrző
+                </button>
+                <button id="tab-catalog" onclick="switchTab('catalog')" class="px-4 py-1.5 text-sm font-medium rounded-lg hover:text-slate-200 transition-all duration-200 text-slate-400">
+                    <i class="fa-solid fa-shapes mr-1.5"></i>Mind a 11 Kockaháló
+                </button>
+                <button id="tab-theory" onclick="switchTab('theory')" class="px-4 py-1.5 text-sm font-medium rounded-lg hover:text-slate-200 transition-all duration-200 text-slate-400">
+                    <i class="fa-solid fa-book-open mr-1.5"></i>Elmélet &amp; Mátrixok
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col gap-6">
+
+        <!-- SECTION 1: EDITOR & VALIDATOR (DEFAULT TAB) -->
+        <div id="section-editor" class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex">
+            
+            <!-- Left Side: 2D Grid Editor & Controls -->
+            <div class="lg:col-span-5 flex flex-col gap-4">
+                <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-5 shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold flex items-center text-indigo-300">
+                            <i class="fa-solid fa-table-cells mr-2"></i>2D Mátrix Tervező
+                        </h2>
+                        <span id="square-count" class="text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-950 text-emerald-400 border border-emerald-700/60">Kijelölt lapok: 6/6</span>
+                    </div>
+
+                    <!-- Grid canvas element -->
+                    <div class="flex justify-center my-2">
+                        <div id="grid-container" class="grid grid-cols-5 gap-1.5 p-3 bg-slate-900 rounded-xl border border-slate-700/80 shadow-inner"><button id="cell-0-0" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-0-1" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-0-2" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-0-3" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-0-4" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-1-0" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-1-1" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-1-2" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-1-3" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-1-4" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-2-0" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-2-1" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105">1</button><button id="cell-2-2" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-2-3" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-2-4" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-3-0" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-3-1" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-3-2" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-3-3" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-3-4" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-4-0" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-4-1" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-4-2" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-4-3" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button><button id="cell-4-4" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400">0</button></div>
+                    </div>
+
+                    <p class="text-xs text-slate-400 text-center my-3">
+                        Kattints a cellákra a kockalapok elhelyezéséhez vagy eltávolításához (pontosan 6 lap szükséges).
+                    </p>
+
+                    <!-- Control Buttons -->
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button onclick="clearGrid()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium transition text-slate-200 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-trash-can text-rose-400"></i>Törlés
+                        </button>
+                        <button onclick="validateCurrentGrid()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition text-white shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-check"></i>Ellenőrzés
+                        </button>
+                    </div>
+
+                    <!-- Preset dropdown -->
+                    <div class="mt-4 pt-4 border-t border-slate-700/60">
+                        <label class="block text-xs font-medium text-slate-400 mb-1.5">Előre beállított minták töltése:</label>
+                        <select id="preset-select" onchange="loadPreset(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                            <option value="">-- Válassz egy mintát --</option>
+                            <optgroup label="Érvényes kockahálók (11 típus)">
+                                <option value="net-1">Típus 1 (1-4-1 "Kereszt")</option>
+                                <option value="net-2">Típus 2 (1-4-1 "Hosszú T")</option>
+                                <option value="net-3">Típus 3 (1-4-1 "Z-forma")</option>
+                                <option value="net-4">Típus 4 (1-4-1 "Eltolt Z")</option>
+                                <option value="net-5">Típus 5 (1-4-1 "Kiszögellés")</option>
+                                <option value="net-6">Típus 6 (1-4-1 "C-forma")</option>
+                                <option value="net-7">Típus 7 (2-3-1 "Lépcsős")</option>
+                                <option value="net-8">Típus 8 (2-3-1 "Kompakt")</option>
+                                <option value="net-9">Típus 9 (2-3-1 "Eltolt")</option>
+                                <option value="net-10">Típus 10 (2-2-2 "Lépcső")</option>
+                                <option value="net-11">Típus 11 (3-3 "Dupla sor")</option>
+                            </optgroup>
+                            <optgroup label="Érvénytelen alakzatok (Hibás)">
+                                <option value="invalid-1">O-alakú gyűrű (Nem hajtogatható)</option>
+                                <option value="invalid-2">2x3 Tégla (Átfedések)</option>
+                                <option value="invalid-3">Nem összefüggő lapok</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Validation Status Card -->
+                <div id="status-card" class="bg-emerald-950/40 rounded-2xl border border-emerald-600/60 p-4 shadow-xl transition-all">
+                    <div class="flex items-start gap-3">
+                        <div id="status-icon" class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400"><i class="fa-solid fa-circle-check text-xl"></i></div>
+                        <div>
+                            <h3 id="status-title" class="font-semibold text-emerald-300">Érvényes Kockaháló</h3>
+                            <p id="status-desc" class="text-xs text-slate-400 mt-1">Érvényes kockaháló! Hiánytalanul zárt 3D kockává hajtogatható.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: 3D Visualization & Matrix Output -->
+            <div class="lg:col-span-7 flex flex-col gap-4">
+                
+                <!-- 3D Canvas Box -->
+                <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-4 shadow-xl flex flex-col h-[380px] relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-2 z-10">
+                        <span class="text-sm font-semibold text-indigo-300 flex items-center">
+                            <i class="fa-solid fa-cube mr-2"></i>3D Kocka Hajtogatási Szimuláció
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <button id="fold-btn" onclick="toggleFold()" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-semibold text-white transition flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-box"></i><span id="fold-btn-text">Összehajtás</span>
+                            </button>
+                            <button onclick="reset3DCamera()" title="Kamera alaphelyzetbe" class="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs text-slate-300">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fold Progress Slider -->
+                    <div class="flex items-center gap-3 bg-slate-900/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/60 z-10 my-1">
+                        <span class="text-xs text-slate-400 font-medium">Hajlítás:</span>
+                        <input id="fold-slider" type="range" min="0" max="100" value="0" oninput="onFoldSliderChange(this.value)" class="w-full accent-indigo-500 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                        <span id="fold-val" class="text-xs font-mono text-indigo-400 w-8 text-right">0%</span>
+                    </div>
+
+                    <!-- 3D Viewport -->
+                    <div id="three-container" class="w-full h-full rounded-xl bg-slate-950 overflow-hidden relative cursor-grab active:cursor-grabbing">
+                        <div class="absolute bottom-2 left-2 text-[10px] text-slate-500 pointer-events-none bg-slate-900/80 px-2 py-1 rounded">
+                            Forgatás: Bal egérgomb | Eltolás: Jobb egérgomb | Nagyítás: Gördítés
+                        </div>
+                    <canvas width="835" height="341" style="display: block; width: 668px; height: 273px;"></canvas></div>
+                </div>
+
+                <!-- Matrix Representation Panel -->
+                <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-4 shadow-xl">
+                    <div class="flex items-center justify-between border-b border-slate-700/60 pb-3 mb-3">
+                        <h3 class="text-sm font-semibold text-indigo-300 flex items-center">
+                            <i class="fa-solid fa-code-merge mr-2"></i>Mátrix Reprezentációk
+                        </h3>
+                        <div class="flex space-x-1 bg-slate-900 p-1 rounded-lg border border-slate-700/50">
+                            <button id="mat-btn-binary" onclick="showMatrixType('binary')" class="px-2.5 py-1 text-xs rounded font-medium bg-indigo-600 text-white">Bináris $M_{5\times5}$</button>
+                            <button id="mat-btn-adj" onclick="showMatrixType('adj')" class="px-2.5 py-1 text-xs rounded font-medium text-slate-400 hover:text-slate-200">Szomszédsági $A_{6\times6}$</button>
+                            <button id="mat-btn-coord" onclick="showMatrixType('coord')" class="px-2.5 py-1 text-xs rounded font-medium text-slate-400 hover:text-slate-200">Koordináták</button>
+                        </div>
+                    </div>
+
+                    <!-- Matrix Display Area -->
+                    <div id="matrix-output-container" class="font-mono text-sm bg-slate-950 p-4 rounded-xl border border-slate-800 custom-scrollbar overflow-x-auto min-h-[110px] flex items-center justify-center"><div class="text-slate-300"><span class="text-indigo-400">M<sub>5x5</sub></span> = [<br>&nbsp;&nbsp;[<span class="text-slate-600">0</span>, <span class="text-amber-400 font-bold">1</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>],<br>&nbsp;&nbsp;[<span class="text-amber-400 font-bold">1</span>, <span class="text-amber-400 font-bold">1</span>, <span class="text-amber-400 font-bold">1</span>, <span class="text-amber-400 font-bold">1</span>, <span class="text-slate-600">0</span>],<br>&nbsp;&nbsp;[<span class="text-slate-600">0</span>, <span class="text-amber-400 font-bold">1</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>],<br>&nbsp;&nbsp;[<span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>],<br>&nbsp;&nbsp;[<span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>, <span class="text-slate-600">0</span>]<br>]</div></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECTION 2: CATALOG OF ALL 11 CUBE NETS -->
+        <div id="section-catalog" class="flex-col gap-6 hidden">
+            <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-5 shadow-xl">
+                <div class="max-w-3xl">
+                    <h2 class="text-xl font-bold text-indigo-300 flex items-center gap-2">
+                        <i class="fa-solid fa-cubes"></i> A 11 Egyedi Kockaháló (Kocka-hexominók)
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                        Forgatástól és tükrözéstől eltekintve **pontosan 11 olyan síkbeli alakzat létezik**, amely 6 összefüggő négyzetből áll (hexominó) és hiánytalanul, átfedések nélkül összehajtható egy zárt 3D kockává. Ezeket 4 fő csoportba sorolhatjuk a leghosszabb folytonos soraik alapján.
+                    </p>
+                </div>
+
+                <!-- Catalog Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6" id="catalog-grid"><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #1</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 1 (1-4-1 'Kereszt')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(1)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #2</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 2 (1-4-1 'Hosszú T')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(2)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #3</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 3 (1-4-1 'Z-forma')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(3)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #4</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 4 (1-4-1 'Eltolt Z')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(4)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #5</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 5 (1-4-1 'Kiszögellés')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(5)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">1-4-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #6</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 6 (1-4-1 'C-forma')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(6)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">2-3-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #7</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 7 (2-3-1 'Lépcsős')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(7)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">2-3-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #8</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 8 (2-3-1 'Kompakt')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(8)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">2-3-1 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #9</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 9 (2-3-1 'Eltolt')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(9)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">2-2-2 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #10</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 10 (2-2-2 'Lépcső')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(10)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div><div class="bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">3-3 Csoport</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #11</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">Típus 11 (3-3 'Dupla sor')</h4>
+                        <div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800"><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-indigo-600 border-indigo-400"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div><div class="w-5 h-5 rounded-sm border bg-slate-900 border-slate-800 opacity-40"></div></div>
+                    </div>
+                    <button onclick="selectCatalogNet(11)" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: THEORY & MATHEMATICAL MATRIX EXPLANATION -->
+        <div id="section-theory" class="flex-col gap-6 hidden">
+            <div class="bg-slate-800/70 rounded-2xl border border-slate-700 p-6 shadow-xl space-y-6">
+                
+                <div>
+                    <h2 class="text-2xl font-bold text-indigo-300 flex items-center gap-2">
+                        <i class="fa-solid fa-square-root-variable"></i> Hogyan Ábrázoljuk a Kockahálókat Mátrixban?
+                    </h2>
+                    <p class="text-slate-300 mt-2 leading-relaxed">
+                        Amikor egy 3 dimenziós kocka felszínét kiterítjük a 2D síkba, a kapott alakzatot számítógépes feldolgozáshoz vagy matematikai elemzéshez többféle mátrixos formában is leírhatjuk.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Explanation 1: 2D Grid Binary Matrix -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg mb-3">1</div>
+                            <h3 class="font-bold text-slate-100 text-base mb-2">Síkrajzi Bináris Mátrix ($M_{m \times n}$)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                A síkot egy négyszögrácsra osztjuk. A mátrix eleme **1-es**, ha az adott cellában van kockalap, és **0-s**, ha üres.
+                            </p>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-indigo-300">
+                            M = [<br>
+                            &nbsp;&nbsp;[0, 1, 0],<br>
+                            &nbsp;&nbsp;[1, 1, 1],<br>
+                            &nbsp;&nbsp;[0, 1, 0]<br>
+                            ]
+                        </div>
+                    </div>
+
+                    <!-- Explanation 2: Adjacency Matrix -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg mb-3">2</div>
+                            <h3 class="font-bold text-slate-100 text-base mb-2">Szomszédsági Mátrix ($A_{6 \times 6}$)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                A 6 lapot mint egy gráféleket tekintjük. Az $A_{i,j} = 1$, ha az $i$-edik és $j$-edik lap a síkbeli hálóban él mentén szomszédos.
+                            </p>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-emerald-300">
+                            A = 6x6 szimmetrikus mátrix<br>
+                            A(i,j) = 1 ha érintkeznek<br>
+                            Összesen 5 él van (fa-gráf)
+                        </div>
+                    </div>
+
+                    <!-- Explanation 3: Coordinate / Transformation Matrix -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg mb-3">3</div>
+                            <h3 class="font-bold text-slate-100 text-base mb-2">Koordináta-Mátrix ($C_{6 \times 2}$)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                A 6 lap középpontjának kétértékű $(x, y)$ síkbeli indexeit tároló $6 \times 2$-es mátrix. Gyors feldolgozást tesz lehetővé.
+                            </p>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-amber-300">
+                            C = [<br>
+                            &nbsp;&nbsp;[1,0], [0,1], [1,1],<br>
+                            &nbsp;&nbsp;[2,1], [3,1], [1,2]<br>
+                            ]
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Topologies & Rules -->
+                <div class="bg-slate-900/50 border border-slate-700/80 rounded-xl p-5 mt-4">
+                    <h3 class="font-bold text-indigo-300 text-lg mb-3">Matematikai feltételek: Mikor képez a 2D mátrix érvényes kockahálót?</h3>
+                    <ul class="space-y-2 text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                        <li><strong class="text-white">I. Lapok száma:</strong> A mátrixban lévő 1-es elemek összege pontosan **6** kell legyen ($\sum M_{i,j} = 6$).</li>
+                        <li><strong class="text-white">II. Összefüggőség:</strong> A 6 négyzetnek egyetlen összefüggő komponenst kell alkotnia (él menti szomszédság, átlósan nem elég).</li>
+                        <li><strong class="text-white">III. Átfedésmentes hajtogathatóság:</strong> Amikor a lapokat 90°-ban behajtjuk az éleik mentén a 3D térbe, a kocka mind a 6 oldala (Top, Bottom, Left, Right, Front, Back) lefedésre kerül, és **egyetlen lap sem fed át egy másikat**.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ==========================================
+        // CONSTANTS & GLOBALS
+        // ==========================================
+        const GRID_SIZE = 5;
+        let gridData = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(0));
+        let selectedMatrixType = 'binary'; // 'binary', 'adj', 'coord'
+
+        // 11 Unique Valid Cube Nets encoded in 5x5 matrices
+        const VALID_NETS = [
+            {
+                id: 1,
+                name: "Típus 1 (1-4-1 'Kereszt')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 1, 0, 0, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 2,
+                name: "Típus 2 (1-4-1 'Hosszú T')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 0, 1, 0, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 3,
+                name: "Típus 3 (1-4-1 'Z-forma')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 0, 0, 1, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 4,
+                name: "Típus 4 (1-4-1 'Eltolt Z')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 1, 0, 0, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 5,
+                name: "Típus 5 (1-4-1 'Kiszögellés')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 1, 0, 0, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 6,
+                name: "Típus 6 (1-4-1 'C-forma')",
+                group: "1-4-1 Csoport",
+                grid: [
+                    [0, 0, 1, 0, 0],
+                    [1, 1, 1, 1, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 7,
+                name: "Típus 7 (2-3-1 'Lépcsős')",
+                group: "2-3-1 Csoport",
+                grid: [
+                    [1, 1, 0, 0, 0],
+                    [0, 1, 1, 1, 0],
+                    [0, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 8,
+                name: "Típus 8 (2-3-1 'Kompakt')",
+                group: "2-3-1 Csoport",
+                grid: [
+                    [1, 1, 0, 0, 0],
+                    [0, 1, 1, 1, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 9,
+                name: "Típus 9 (2-3-1 'Eltolt')",
+                group: "2-3-1 Csoport",
+                grid: [
+                    [1, 1, 0, 0, 0],
+                    [0, 1, 1, 1, 0],
+                    [0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 10,
+                name: "Típus 10 (2-2-2 'Lépcső')",
+                group: "2-2-2 Csoport",
+                grid: [
+                    [1, 1, 0, 0, 0],
+                    [0, 1, 1, 0, 0],
+                    [0, 0, 1, 1, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 11,
+                name: "Típus 11 (3-3 'Dupla sor')",
+                group: "3-3 Csoport",
+                grid: [
+                    [1, 1, 1, 0, 0],
+                    [0, 0, 1, 1, 1],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0]
+                ]
+            }
+        ];
+
+        const INVALID_PRESETS = {
+            'invalid-1': [
+                [0, 1, 1, 0, 0],
+                [0, 1, 1, 0, 0],
+                [0, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0]
+            ],
+            'invalid-2': [
+                [1, 1, 1, 0, 0],
+                [1, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0]
+            ],
+            'invalid-3': [
+                [1, 1, 0, 0, 0],
+                [0, 0, 0, 1, 1],
+                [0, 0, 0, 1, 1],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0]
+            ]
+        };
+
+        // Three.js Variables
+        let scene, camera, renderer, controls;
+        let foldGroup;
+        let isFolding = false;
+        let foldProgress = 0; // 0 to 1
+        let foldAnimationId = null;
+        let faceMeshes = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initGrid();
+            initThreeJS();
+            populateCatalog();
+            loadPreset('net-1'); // Load standard cross default
+        });
+
+        // Navigation Tab Switching
+        function switchTab(tabName) {
+            ['editor', 'catalog', 'theory'].forEach(tab => {
+                const sec = document.getElementById(`section-${tab}`);
+                const btn = document.getElementById(`tab-${tab}`);
+                if (tab === tabName) {
+                    sec.classList.remove('hidden');
+                    sec.classList.add('flex');
+                    btn.classList.add('bg-indigo-600', 'text-white', 'shadow');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    sec.classList.add('hidden');
+                    sec.classList.remove('flex');
+                    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+
+            if (tabName === 'editor') {
+                setTimeout(() => { onWindowResize(); }, 50);
+            }
+        }
+
+        // ==========================================
+        // 2D GRID EDITOR LOGIC
+        // ==========================================
+        function initGrid() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const btn = document.createElement('button');
+                    btn.id = `cell-${r}-${c}`;
+                    btn.className = `w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400`;
+                    btn.innerText = '0';
+                    btn.onclick = () => toggleCell(r, c);
+                    container.appendChild(btn);
+                }
+            }
+        }
+
+        function toggleCell(r, c) {
+            gridData[r][c] = gridData[r][c] === 1 ? 0 : 1;
+            updateGridUI();
+            onGridDataChanged();
+        }
+
+        function clearGrid() {
+            gridData = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(0));
+            updateGridUI();
+            onGridDataChanged();
+            document.getElementById('preset-select').value = '';
+        }
+
+        function updateGridUI() {
+            let count = 0;
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const val = gridData[r][c];
+                    const btn = document.getElementById(`cell-${r}-${c}`);
+                    if (val === 1) {
+                        count++;
+                        btn.className = `w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-bold border flex items-center justify-center cell-transition bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/30 scale-105`;
+                        btn.innerText = '1';
+                    } else {
+                        btn.className = `w-10 h-10 sm:w-12 sm:h-12 rounded-lg font-mono text-sm font-semibold border flex items-center justify-center cell-transition bg-slate-800 border-slate-700 text-slate-500 hover:border-indigo-400`;
+                        btn.innerText = '0';
+                    }
+                }
+            }
+
+            const counter = document.getElementById('square-count');
+            counter.innerText = `Kijelölt lapok: ${count}/6`;
+            if (count === 6) {
+                counter.className = "text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-950 text-emerald-400 border border-emerald-700/60";
+            } else {
+                counter.className = "text-xs px-2.5 py-1 rounded-full font-medium bg-slate-700 text-amber-300 border border-slate-600";
+            }
+        }
+
+        function loadPreset(presetKey) {
+            if (!presetKey) return;
+
+            if (presetKey.startsWith('net-')) {
+                const id = parseInt(presetKey.split('-')[1]);
+                const net = VALID_NETS.find(n => n.id === id);
+                if (net) {
+                    gridData = net.grid.map(row => [...row]);
+                }
+            } else if (INVALID_PRESETS[presetKey]) {
+                gridData = INVALID_PRESETS[presetKey].map(row => [...row]);
+            }
+
+            updateGridUI();
+            onGridDataChanged();
+        }
+
+        function onGridDataChanged() {
+            updateMatrixOutput();
+            rebuild3DNet();
+            validateCurrentGrid(false); // Silent validation update
+        }
+
+        // ==========================================
+        // VALIDATOR & TOPOLOGY CHECKER
+        // ==========================================
+        function getActiveCoordinates(grid) {
+            const coords = [];
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    if (grid[r][c] === 1) coords.push({ r, c });
+                }
+            }
+            return coords;
+        }
+
+        function checkConnectivity(coords) {
+            if (coords.length === 0) return false;
+            const visited = new Set();
+            const queue = [coords[0]];
+            visited.add(`${coords[0].r},${coords[0].c}`);
+
+            while (queue.length > 0) {
+                const curr = queue.shift();
+                const neighbors = [
+                    { r: curr.r - 1, c: curr.c },
+                    { r: curr.r + 1, c: curr.c },
+                    { r: curr.r, c: curr.c - 1 },
+                    { r: curr.r, c: curr.c + 1 }
+                ];
+
+                for (let n of neighbors) {
+                    const key = `${n.r},${n.c}`;
+                    if (!visited.has(key) && coords.some(c => c.r === n.r && c.c === n.c)) {
+                        visited.add(key);
+                        queue.push(n);
+                    }
+                }
+            }
+            return visited.size === coords.length;
+        }
+
+        // Canonical hexomino matching to verify foldability
+        function isValidCubeNet(grid) {
+            const coords = getActiveCoordinates(grid);
+            if (coords.length !== 6) return { valid: false, reason: "A lapok száma nem 6 (pontosan 6 lap szükséges)." };
+            if (!checkConnectivity(coords)) return { valid: false, reason: "A lapok nem alkotnak egyetlen összefüggő alakzatot." };
+
+            // Normalize coordinate bounding box
+            const minR = Math.min(...coords.map(c => c.r));
+            const minC = Math.min(...coords.map(c => c.c));
+            const norm = coords.map(c => ({ r: c.r - minR, c: c.c - minC })).sort((a,b) => (a.r - b.r) || (a.c - b.c));
+
+            // Test rotation and reflection transformations against 11 canonical forms
+            const isMatch = VALID_NETS.some(validNet => {
+                const vCoords = getActiveCoordinates(validNet.grid);
+                const vMinR = Math.min(...vCoords.map(c => c.r));
+                const vMinC = Math.min(...vCoords.map(c => c.c));
+                const vNorm = vCoords.map(c => ({ r: c.r - vMinR, c: c.c - vMinC })).sort((a,b) => (a.r - b.r) || (a.c - b.c));
+
+                return checkHexominoEquivalence(norm, vNorm);
+            });
+
+            if (isMatch) {
+                return { valid: true, reason: "Érvényes kockaháló! Hiánytalanul zárt 3D kockává hajtogatható." };
+            } else {
+                return { valid: false, reason: "6 összefüggő lap, de összehajtáskor átfedések keletkeznek (nem képez zárt kockát)." };
+            }
+        }
+
+        function checkHexominoEquivalence(shapeA, shapeB) {
+            let current = shapeA;
+            for (let flip = 0; flip < 2; flip++) {
+                for (let rot = 0; rot < 4; rot++) {
+                    if (areCoordsEqual(current, shapeB)) return true;
+                    current = rotateCoords(current);
+                }
+                current = reflectCoords(shapeA);
+            }
+            return false;
+        }
+
+        function rotateCoords(coords) {
+            const rot = coords.map(c => ({ r: c.c, c: -c.r }));
+            const minR = Math.min(...rot.map(c => c.r));
+            const minC = Math.min(...rot.map(c => c.c));
+            return rot.map(c => ({ r: c.r - minR, c: c.c - minC })).sort((a,b) => (a.r - b.r) || (a.c - b.c));
+        }
+
+        function reflectCoords(coords) {
+            const ref = coords.map(c => ({ r: c.r, c: -c.c }));
+            const minC = Math.min(...ref.map(c => c.c));
+            return ref.map(c => ({ r: c.r, c: c.c - minC })).sort((a,b) => (a.r - b.r) || (a.c - b.c));
+        }
+
+        function areCoordsEqual(a, b) {
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i].r !== b[i].r || a[i].c !== b[i].c) return false;
+            }
+            return true;
+        }
+
+        function validateCurrentGrid(userTriggered = true) {
+            const res = isValidCubeNet(gridData);
+            const statusCard = document.getElementById('status-card');
+            const statusIcon = document.getElementById('status-icon');
+            const statusTitle = document.getElementById('status-title');
+            const statusDesc = document.getElementById('status-desc');
+
+            if (res.valid) {
+                statusCard.className = "bg-emerald-950/40 rounded-2xl border border-emerald-600/60 p-4 shadow-xl transition-all";
+                statusIcon.className = "p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400";
+                statusIcon.innerHTML = `<i class="fa-solid fa-circle-check text-xl"></i>`;
+                statusTitle.innerText = "Érvényes Kockaháló";
+                statusTitle.className = "font-semibold text-emerald-300";
+                statusDesc.innerText = res.reason;
+            } else {
+                statusCard.className = "bg-rose-950/40 rounded-2xl border border-rose-600/60 p-4 shadow-xl transition-all";
+                statusIcon.className = "p-2.5 rounded-xl bg-rose-500/20 text-rose-400";
+                statusIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-xl"></i>`;
+                statusTitle.innerText = "Érvénytelen Formáció";
+                statusTitle.className = "font-semibold text-rose-300";
+                statusDesc.innerText = res.reason;
+            }
+        }
+
+        // ==========================================
+        // MATRIX VISUALIZERS
+        // ==========================================
+        function showMatrixType(type) {
+            selectedMatrixType = type;
+            ['binary', 'adj', 'coord'].forEach(t => {
+                const btn = document.getElementById(`mat-btn-${t}`);
+                if (t === type) {
+                    btn.className = "px-2.5 py-1 text-xs rounded font-medium bg-indigo-600 text-white";
+                } else {
+                    btn.className = "px-2.5 py-1 text-xs rounded font-medium text-slate-400 hover:text-slate-200";
+                }
+            });
+            updateMatrixOutput();
+        }
+
+        function updateMatrixOutput() {
+            const out = document.getElementById('matrix-output-container');
+            const coords = getActiveCoordinates(gridData);
+
+            if (selectedMatrixType === 'binary') {
+                let html = '<div class="text-slate-300"><span class="text-indigo-400">M<sub>5x5</sub></span> = [<br>';
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    html += '&nbsp;&nbsp;[';
+                    for (let c = 0; c < GRID_SIZE; c++) {
+                        const val = gridData[r][c];
+                        const colorClass = val === 1 ? 'text-amber-400 font-bold' : 'text-slate-600';
+                        html += `<span class="${colorClass}">${val}</span>${c < GRID_SIZE - 1 ? ', ' : ''}`;
+                    }
+                    html += `]${r < GRID_SIZE - 1 ? ',' : ''}<br>`;
+                }
+                html += ']</div>';
+                out.innerHTML = html;
+            } 
+            else if (selectedMatrixType === 'adj') {
+                if (coords.length === 0) {
+                    out.innerHTML = '<span class="text-slate-500">Nincs kijelölt lap a rácson.</span>';
+                    return;
+                }
+                // Build adjacency matrix for selected faces
+                const N = coords.length;
+                let adj = Array(N).fill(null).map(() => Array(N).fill(0));
+
+                for (let i = 0; i < N; i++) {
+                    for (let j = 0; j < N; j++) {
+                        if (i === j) continue;
+                        const dist = Math.abs(coords[i].r - coords[j].r) + Math.abs(coords[i].c - coords[j].c);
+                        if (dist === 1) adj[i][j] = 1;
+                    }
+                }
+
+                let html = `<div class="text-slate-300"><span class="text-emerald-400">A<sub>${N}x${N}</sub></span> = [<br>`;
+                for (let i = 0; i < N; i++) {
+                    html += '&nbsp;&nbsp;[';
+                    for (let j = 0; j < N; j++) {
+                        const val = adj[i][j];
+                        const colorClass = val === 1 ? 'text-emerald-400 font-bold' : 'text-slate-600';
+                        html += `<span class="${colorClass}">${val}</span>${j < N - 1 ? ', ' : ''}`;
+                    }
+                    html += `]${i < N - 1 ? ',' : ''}<br>`;
+                }
+                html += ']</div>';
+                out.innerHTML = html;
+            }
+            else if (selectedMatrixType === 'coord') {
+                if (coords.length === 0) {
+                    out.innerHTML = '<span class="text-slate-500">Nincs kijelölt lap.</span>';
+                    return;
+                }
+                let html = `<div class="text-slate-300"><span class="text-amber-400">C<sub>${coords.length}x2</sub></span> = [<br>`;
+                coords.forEach((pt, idx) => {
+                    html += `&nbsp;&nbsp;[<span class="text-indigo-300">${pt.r}</span>, <span class="text-emerald-300">${pt.c}</span>]${idx < coords.length - 1 ? ',' : ''}<br>`;
+                });
+                html += ']</div>';
+                out.innerHTML = html;
+            }
+        }
+
+        // ==========================================
+        // THREE.JS 3D FOLDING SIMULATION
+        // ==========================================
+        function initThreeJS() {
+            const container = document.getElementById('three-container');
+            const width = container.clientWidth || 400;
+            const height = container.clientHeight || 300;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x020617);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 8, 10);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0x4f46e5, 0.8);
+            dirLight.position.set(5, 12, 8);
+            scene.add(dirLight);
+
+            const dirLight2 = new THREE.DirectionalLight(0x10b981, 0.5);
+            dirLight2.position.set(-5, -5, -5);
+            scene.add(dirLight2);
+
+            // Grid helper in 3D background
+            const gridHelper = new THREE.GridHelper(12, 12, 0x334155, 0x1e293b);
+            gridHelper.position.y = -0.01;
+            scene.add(gridHelper);
+
+            foldGroup = new THREE.Group();
+            scene.add(foldGroup);
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('three-container');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function reset3DCamera() {
+            camera.position.set(0, 8, 10);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        }
+
+        // Build 3D face hierarchy tree for folding
+        function rebuild3DNet() {
+            // Clear existing scene meshes
+            while (foldGroup.children.length > 0) {
+                foldGroup.remove(foldGroup.children[0]);
+            }
+
+            const coords = getActiveCoordinates(gridData);
+            if (coords.length === 0) return;
+
+            // Build spanning tree rooted at first face
+            const root = coords[0];
+            const tree = buildSpanningTree(coords, root);
+
+            // Create 3D tree nodes
+            const rootGroup = createTreeNodeMesh(tree);
+            
+            // Center the entire net in 3D viewport
+            const minR = Math.min(...coords.map(c => c.r));
+            const maxR = Math.max(...coords.map(c => c.r));
+            const minC = Math.min(...coords.map(c => c.c));
+            const maxC = Math.max(...coords.map(c => c.c));
+
+            const centerR = (minR + maxR) / 2;
+            const centerC = (minC + maxC) / 2;
+
+            rootGroup.position.set((root.c - centerC) * 1.05, 0, (root.r - centerR) * 1.05);
+            foldGroup.add(rootGroup);
+
+            // Reset fold slider & progress
+            foldProgress = 0;
+            document.getElementById('fold-slider').value = 0;
+            document.getElementById('fold-val').innerText = '0%';
+            applyFoldAngle(0);
+        }
+
+        function buildSpanningTree(coords, root) {
+            const visited = new Set();
+            visited.add(`${root.r},${root.c}`);
+
+            function dfs(curr) {
+                const node = { r: curr.r, c: curr.c, children: [] };
+                const neighbors = [
+                    { r: curr.r - 1, c: curr.c, dir: 'NORTH' },
+                    { r: curr.r + 1, c: curr.c, dir: 'SOUTH' },
+                    { r: curr.r, c: curr.c - 1, dir: 'WEST' },
+                    { r: curr.r, c: curr.c + 1, dir: 'EAST' }
+                ];
+
+                for (let n of neighbors) {
+                    const key = `${n.r},${n.c}`;
+                    if (!visited.has(key) && coords.some(c => c.r === n.r && c.c === n.c)) {
+                        visited.add(key);
+                        const childNode = dfs(n);
+                        childNode.attachDir = n.dir;
+                        node.children.push(childNode);
+                    }
+                }
+                return node;
+            }
+
+            return dfs(root);
+        }
+
+        function createTreeNodeMesh(node) {
+            const group = new THREE.Group();
+
+            // Face Mesh Geometry
+            const geometry = new THREE.PlaneGeometry(1, 1);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x4f46e5,
+                side: THREE.DoubleSide,
+                roughness: 0.3,
+                metalness: 0.2
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.x = -Math.PI / 2; // Flat on XZ plane
+            group.add(mesh);
+
+            // Add border outline
+            const edges = new THREE.EdgesGeometry(geometry);
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x818cf8, linewidth: 2 }));
+            line.rotation.x = -Math.PI / 2;
+            group.add(line);
+
+            // Children groups attached to hinges
+            node.childrenGroup = [];
+            node.children.forEach(child => {
+                const hingeGroup = new THREE.Group();
+                
+                // Position hinge at the edge between parent and child
+                if (child.attachDir === 'NORTH') {
+                    hingeGroup.position.set(0, 0, -0.5);
+                    hingeGroup.userData = { axis: 'X', dir: -1 };
+                } else if (child.attachDir === 'SOUTH') {
+                    hingeGroup.position.set(0, 0, 0.5);
+                    hingeGroup.userData = { axis: 'X', dir: 1 };
+                } else if (child.attachDir === 'WEST') {
+                    hingeGroup.position.set(-0.5, 0, 0);
+                    hingeGroup.userData = { axis: 'Z', dir: 1 };
+                } else if (child.attachDir === 'EAST') {
+                    hingeGroup.position.set(0.5, 0, 0);
+                    hingeGroup.userData = { axis: 'Z', dir: -1 };
+                }
+
+                const childMeshGroup = createTreeNodeMesh(child);
+                
+                // Offset child center relative to hinge
+                if (child.attachDir === 'NORTH') childMeshGroup.position.set(0, 0, -0.5 * 1.05);
+                if (child.attachDir === 'SOUTH') childMeshGroup.position.set(0, 0, 0.5 * 1.05);
+                if (child.attachDir === 'WEST') childMeshGroup.position.set(-0.5 * 1.05, 0, 0);
+                if (child.attachDir === 'EAST') childMeshGroup.position.set(0.5 * 1.05, 0, 0);
+
+                hingeGroup.add(childMeshGroup);
+                group.add(hingeGroup);
+
+                node.childrenGroup.push({ group: hingeGroup, data: child });
+            });
+
+            group.userData = { nodeData: node };
+            return group;
+        }
+
+        function applyFoldAngle(progress) {
+            const angle = (Math.PI / 2) * progress; // 0 to 90 degrees
+
+            function updateHinges(group) {
+                if (!group.children) return;
+                group.children.forEach(child => {
+                    if (child.userData && child.userData.axis) {
+                        const { axis, dir } = child.userData;
+                        if (axis === 'X') child.rotation.x = angle * dir;
+                        if (axis === 'Z') child.rotation.z = angle * dir;
+                    }
+                    // Traverse recursively
+                    updateHinges(child);
+                });
+            }
+
+            if (foldGroup.children.length > 0) {
+                updateHinges(foldGroup.children[0]);
+            }
+        }
+
+        function onFoldSliderChange(val) {
+            foldProgress = val / 100;
+            document.getElementById('fold-val').innerText = `${val}%`;
+            applyFoldAngle(foldProgress);
+        }
+
+        function toggleFold() {
+            isFolding = !isFolding;
+            const btnText = document.getElementById('fold-btn-text');
+            if (isFolding) {
+                btnText.innerText = "Megállítás";
+                animateFold();
+            } else {
+                btnText.innerText = "Összehajtás";
+                if (foldAnimationId) cancelAnimationFrame(foldAnimationId);
+            }
+        }
+
+        function animateFold() {
+            if (!isFolding) return;
+
+            foldProgress += 0.015;
+            if (foldProgress > 1) {
+                foldProgress = 0; // Loop back
+            }
+
+            const val = Math.round(foldProgress * 100);
+            document.getElementById('fold-slider').value = val;
+            document.getElementById('fold-val').innerText = `${val}%`;
+            applyFoldAngle(foldProgress);
+
+            foldAnimationId = requestAnimationFrame(animateFold);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // ==========================================
+        // CATALOG GENERATION (11 UNIQUE CUBE NETS)
+        // ==========================================
+        function populateCatalog() {
+            const gridContainer = document.getElementById('catalog-grid');
+            gridContainer.innerHTML = '';
+
+            VALID_NETS.forEach(net => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500 transition duration-200 shadow-md";
+
+                let gridHtml = '<div class="grid grid-cols-5 gap-1 p-2 bg-slate-950 rounded-lg w-fit mx-auto my-2 border border-slate-800">';
+                for (let r = 0; r < 5; r++) {
+                    for (let c = 0; c < 5; c++) {
+                        const val = net.grid[r][c];
+                        const activeClass = val === 1 ? 'bg-indigo-600 border-indigo-400' : 'bg-slate-900 border-slate-800 opacity-40';
+                        gridHtml += `<div class="w-5 h-5 rounded-sm border ${activeClass}"></div>`;
+                    }
+                }
+                gridHtml += '</div>';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800/50">${net.group}</span>
+                            <span class="text-xs text-slate-400 font-mono">ID: #${net.id}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-100">${net.name}</h4>
+                        ${gridHtml}
+                    </div>
+                    <button onclick="selectCatalogNet(${net.id})" class="mt-3 w-full py-1.5 px-3 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-square-check"></i> Betöltés a Tervezőbe
+                    </button>
+                `;
+
+                gridContainer.appendChild(card);
+            });
+        }
+
+        function selectCatalogNet(id) {
+            switchTab('editor');
+            const select = document.getElementById('preset-select');
+            select.value = `net-${id}`;
+            loadPreset(`net-${id}`);
+        }
+    </script>
+
+</body></html>
