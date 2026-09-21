@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)file:///C:/Users/Utilizator/Downloads/m_trix_skal_ris_szorz_s_projekt.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mátrix Skaláris Szorzás Interaktív Labor</title>
+  <script src="./index_files/saved_resource"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.min-h-\[50px\]{min-height:50px}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-12{width:3rem}.max-w-4xl{max-width:56rem}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-l-4{border-left-width:4px}.border-sky-600{--tw-border-opacity:1;border-color:rgb(2 132 199 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.pl-5{padding-left:1.25rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.leading-relaxed{line-height:1.625}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-sky-200{--tw-text-opacity:1;color:rgb(186 230 253 / var(--tw-text-opacity, 1))}.text-sky-300{--tw-text-opacity:1;color:rgb(125 211 252 / var(--tw-text-opacity, 1))}.text-sky-700{--tw-text-opacity:1;color:rgb(3 105 161 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-amber-600:hover{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-sky-700:hover{--tw-bg-opacity:1;background-color:rgb(3 105 161 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-300:hover{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105 / var(--tw-bg-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:p-6{padding:1.5rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-100 text-slate-800 flex flex-col items-center p-4 sm:p-6 min-h-screen">
+
+  <header class="text-center mb-6">
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-2 text-sky-700">Mátrix Skaláris Szorzás Labor</h1>
+    <p class="text-slate-600 text-sm sm:text-base">Interaktív tanulási környezet JavaScript, Python és C++ megvalósítással</p>
+  </header>
+
+  <nav class="flex flex-wrap justify-center gap-2 mb-6 bg-white p-2 rounded-xl shadow-sm border border-slate-300">
+    <button onclick="switchTab('js')" id="tab-js" class="px-5 py-2.5 font-bold rounded-lg transition text-sm sm:text-base bg-sky-600 text-white shadow">JavaScript Szimuláció</button>
+    <button onclick="switchTab('python')" id="tab-python" class="px-5 py-2.5 font-bold rounded-lg transition text-sm sm:text-base bg-slate-200 text-slate-700 hover:bg-slate-300">Python Megvalósítás</button>
+    <button onclick="switchTab('cpp')" id="tab-cpp" class="px-5 py-2.5 font-bold rounded-lg transition text-sm sm:text-base bg-slate-200 text-slate-700 hover:bg-slate-300">C++ Megvalósítás</button>
+  </nav>
+
+  <main class="w-full max-w-4xl">
+    <section id="content-js" class="tab-content flex flex-col items-center">
+      <div class="w-full bg-white p-5 rounded-2xl shadow-md border border-slate-300 mb-6">
+        <h2 class="text-xl font-bold text-sky-700 mb-4">1. JavaScript Interaktív Mátrix Skaláris Szorzás</h2>
+        
+        <!-- Controls for custom size and scalar -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4 items-end bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Sorok száma (1-4):</label>
+            <input type="number" id="jsRows" value="2" min="1" max="4" class="w-full p-2 rounded border border-slate-300 font-bold text-center bg-white" onchange="initMatrixInputs()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Oszlopok száma (1-4):</label>
+            <input type="number" id="jsCols" value="3" min="1" max="4" class="w-full p-2 rounded border border-slate-300 font-bold text-center bg-white" onchange="initMatrixInputs()">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Skalár érték (k):</label>
+            <input type="number" id="jsScalar" value="3" class="w-full p-2 rounded border border-slate-300 font-bold text-center bg-white text-sky-700">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Sebesség (ms):</label>
+            <select id="jsSpeed" class="w-full p-2 rounded border border-slate-300 font-bold bg-white">
+              <option value="1200">Lassú (1.2s)</option>
+              <option value="700" selected="">Normál (0.7s)</option>
+              <option value="300">Gyors (0.3s)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Custom matrix input generator container -->
+        <div class="mb-4">
+          <label class="block text-xs font-bold text-slate-600 mb-1">Add meg az A mátrix elemeit:</label>
+          <div id="matrixInputContainer" class="flex flex-wrap gap-2 items-center justify-center p-3 bg-slate-100 rounded-xl"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="0" data-col="0"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="0" data-col="1"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="0" data-col="2"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="1" data-col="0"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="1" data-col="1"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="1" data-col="2"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="2" data-col="0"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="2" data-col="1"><input type="number" class="w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm" data-row="2" data-col="2"></div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 justify-center">
+          <button onclick="startJSSimulation()" class="px-5 py-2.5 font-bold bg-sky-600 text-white rounded-xl shadow hover:bg-sky-700 transition">Szorzás Indítása</button>
+          <button onclick="pauseJSSimulation()" class="px-5 py-2.5 font-bold bg-amber-500 text-white rounded-xl shadow hover:bg-amber-600 transition">Szünet</button>
+          <button onclick="resetJSSimulation()" class="px-5 py-2.5 font-bold bg-slate-500 text-white rounded-xl shadow hover:bg-slate-600 transition">Visszaállítás</button>
+        </div>
+      </div>
+
+      <!-- Canvas visualization -->
+      <div class="w-full bg-white p-5 rounded-2xl shadow-md border border-slate-300 flex flex-col items-center mb-6 overflow-x-auto">
+        <canvas id="matrixCanvas" width="750" height="280" class="bg-slate-50 rounded-xl border border-slate-200"></canvas>
+      </div>
+
+      <!-- Explanation Panel -->
+      <div class="w-full bg-white p-6 rounded-2xl shadow-md border-l-4 border-sky-600 text-sm sm:text-base leading-relaxed">
+        <h3 class="font-bold text-sky-700 text-lg mb-2">Hogyan magyarázom ezt diákként?</h3>
+        <p class="mb-2">A <strong>skaláris szorzás</strong> során azt teszem, hogy fogom a mátrix minden egyes elemét, és megszorozom ugyanazzal a megadott <span class="text-amber-600 font-bold">k</span> számmal.</p>
+        <ul class="list-disc pl-5 space-y-1 text-slate-700">
+          <li><strong>Műveleti szabály:</strong> Ha az eredeti mátrixom neve A, és a skalár k, akkor az új B mátrix elemeit így számolom ki: B[i][j] = k * A[i][j].</li>
+          <li><strong>Dimenzió:</strong> Megőrzöm a méretet! Egy sorok_száma × oszlopok_száma méretű mátrixból pontosan ugyanolyan méretű eredményt hozok létre.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="content-python" class="tab-content flex flex-col items-center hidden">
+      <div class="w-full bg-white p-6 rounded-2xl shadow-md border border-slate-300 mb-6">
+        <h2 class="text-xl font-bold text-sky-700 mb-2">2. Python Mátrix Skaláris Szorzás</h2>
+        <p class="text-sm text-slate-600 mb-4">Itt megtekintheted a tiszta Python kód implementációt, és ki is próbálhatod a futtatását a saját megadott értékeiddel.</p>
+
+        <!-- Python Code block -->
+        <pre class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-xs sm:text-sm overflow-x-auto font-mono mb-6 shadow-inner"><code># Mátrix skaláris szorzás megvalósítása Python nyelven
+def scalar_multiply(matrix, k):
+    # Létrehozom az új mátrixot üres listaként
+    result = []
+    for row in matrix:
+        new_row = []
+        for val in row:
+            # Megszorozom a mátrix minden elemét a skalárral
+            new_row.append(val * k)
+        result.append(new_row)
+    return result
+
+# Példa használat:
+A = [[2, 4, -1], [0, -3, 5]]
+k = 3
+B = scalar_multiply(A, k)
+print("Eredmény mátrix:", B)</code></pre>
+
+        <!-- Interactive Python runner simulator -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-700 mb-3 text-base">Python Interaktív Tesztelő</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Mátrix sorai (vesszővel elválasztva, pl: 1,2;3,4):</label>
+              <input type="text" id="pyMatrixInput" value="2,4,-1; 0,-3,5" class="w-full p-2 rounded border border-slate-300 font-mono text-sm bg-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Skalár (k):</label>
+              <input type="number" id="pyScalarInput" value="3" class="w-full p-2 rounded border border-slate-300 font-bold bg-white text-sky-700">
+            </div>
+          </div>
+          <button onclick="runPythonSimulation()" class="px-5 py-2.5 font-bold bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700 transition">Python Kód Futtatása</button>
+          
+          <div class="mt-4">
+            <label class="block text-xs font-bold text-slate-600 mb-1">Szimulált Python kimenet:</label>
+            <div id="pyOutput" class="p-3 bg-slate-900 text-emerald-300 font-mono text-sm rounded-xl min-h-[50px]">Sikeres Python futtatás!<br>Skalár (k) = 3<br>Eredmény mátrix:<br><pre class="text-emerald-400 font-mono">[
+  [6, 12, -3],
+  [0, -9, 15]
+]</pre></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="content-cpp" class="tab-content flex flex-col items-center hidden">
+      <div class="w-full bg-white p-6 rounded-2xl shadow-md border border-slate-300 mb-6">
+        <h2 class="text-xl font-bold text-sky-700 mb-2">3. C++ Mátrix Skaláris Szorzás</h2>
+        <p class="text-sm text-slate-600 mb-4">Itt tanulmányozhatod a C++ nyelvű megvalósítást std::vector konténerek segítségével, és tesztelheted is a futtatási logikát.</p>
+
+        <!-- C++ Code block -->
+        <pre class="bg-slate-900 text-sky-300 p-4 rounded-xl text-xs sm:text-sm overflow-x-auto font-mono mb-6 shadow-inner"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+// Függvény a mátrix skaláris szorzásához
+std::vector&lt;std::vector&lt;int&gt;&gt; scalarMultiply(const std::vector&lt;std::vector&lt;int&gt;&gt;&amp; A, int k) {
+    int rows = A.size();
+    int cols = A[0].size();
+    std::vector&lt;std::vector&lt;int&gt;&gt; B(rows, std::vector&lt;int&gt;(cols));
+    
+    for (int i = 0; i &lt; rows; ++i) {
+        for (int j = 0; j &lt; cols; ++j) {
+            B[i][j] = A[i][j] * k; // Megszorozom az elemet
+        }
+    }
+    return B;
+}
+
+int main() {
+    std::vector&lt;std::vector&lt;int&gt;&gt; A = {{2, 4, -1}, {0, -3, 5}};
+    int k = 3;
+    // Futtatom és kiíratom az eredményt...
+    return 0;
+}</code></pre>
+
+        <!-- Interactive C++ runner simulator -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-700 mb-3 text-base">C++ Interaktív Tesztelő</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Mátrix sorai (pl: 1,2;3,4):</label>
+              <input type="text" id="cppMatrixInput" value="2,4,-1; 0,-3,5" class="w-full p-2 rounded border border-slate-300 font-mono text-sm bg-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Skalár (k):</label>
+              <input type="number" id="cppScalarInput" value="3" class="w-full p-2 rounded border border-slate-300 font-bold bg-white text-sky-700">
+            </div>
+          </div>
+          <button onclick="runCppSimulation()" class="px-5 py-2.5 font-bold bg-sky-600 text-white rounded-xl shadow hover:bg-sky-700 transition">C++ Szimuláció Futtatása</button>
+          
+          <div class="mt-4">
+            <label class="block text-xs font-bold text-slate-600 mb-1">Szimulált C++ kimenet:</label>
+            <div id="cppOutput" class="p-3 bg-slate-900 text-sky-200 font-mono text-sm rounded-xl min-h-[50px]">Kattints a szimulációra az eredményért...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Tab switching utility
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('content-' + tabId).classList.remove('hidden');
+
+      ['js', 'python', 'cpp'].forEach(t => {
+        const btn = document.getElementById('tab-' + t);
+        if (t === tabId) {
+          btn.className = "px-5 py-2.5 font-bold rounded-lg transition text-sm sm:text-base bg-sky-600 text-white shadow";
+        } else {
+          btn.className = "px-5 py-2.5 font-bold rounded-lg transition text-sm sm:text-base bg-slate-200 text-slate-700 hover:bg-slate-300";
+        }
+      });
+    }
+
+    // --- JavaScript Simulation Engine ---
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let userA = [
+      [2,  4, -1],
+      [0, -3,  5]
+    ];
+    let userB = [];
+    let kVal = 3;
+    let currentStep = -1;
+    let totalElements = 6;
+    let animTimer = null;
+    let isPaused = false;
+
+    function initMatrixInputs() {
+      const rows = parseInt(document.getElementById('jsRows').value) || 2;
+      const cols = parseInt(document.getElementById('jsCols').value) || 3;
+      const container = document.getElementById('matrixInputContainer');
+      container.innerHTML = '';
+
+      // Adjust userA array size while keeping existing values where possible
+      let newA = [];
+      for (let r = 0; r < rows; r++) {
+        let rowArr = [];
+        for (let c = 0; c < cols; c++) {
+          let val = (userA[r] && userA[r][c] !== undefined) ? userA[r][c] : Math.floor(Math.random() * 10) - 5;
+          rowArr.push(val);
+          
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.value = val;
+          input.className = 'w-12 h-10 text-center font-bold text-sm bg-white border border-slate-300 rounded shadow-sm';
+          input.dataset.row = r;
+          input.dataset.col = c;
+          input.oninput = updateMatrixFromInputs;
+          container.appendChild(input);
+        }
+        newA.push(rowArr);
+      }
+      userA = newA;
+      resetJSSimulation();
+    }
+
+    function updateMatrixFromInputs() {
+      const inputs = document.querySelectorAll('#matrixInputContainer input');
+      const rows = parseInt(document.getElementById('jsRows').value);
+      const cols = parseInt(document.getElementById('jsCols').value);
+      
+      let newA = [];
+      for (let r = 0; r < rows; r++) {
+        let rowArr = [];
+        for (let c = 0; c < cols; c++) {
+          rowArr.push(0);
+        }
+        newA.push(rowArr);
+      }
+
+      inputs.forEach(inp => {
+        let r = parseInt(inp.dataset.row);
+        let c = parseInt(inp.dataset.col);
+        newA[r][c] = parseInt(inp.value) || 0;
+      });
+
+      userA = newA;
+      resetJSSimulation();
+    }
+
+    function drawMatrix(matrix, startX, startY, label, highlightIdx = -1) {
+      if (!matrix || matrix.length === 0) return;
+      ctx.font = '15px Segoe UI';
+      ctx.fillStyle = '#475569';
+      ctx.fillText(label, startX, startY - 12);
+
+      const cellSize = 48;
+      const rows = matrix.length;
+      const cols = matrix[0].length;
+      const width = cols * cellSize;
+      const height = rows * cellSize;
+
+      // Draw brackets
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      // Left bracket
+      ctx.moveTo(startX - 4, startY - 4);
+      ctx.lineTo(startX - 10, startY - 4);
+      ctx.lineTo(startX - 10, startY + height + 4);
+      ctx.lineTo(startX - 4, startY + height + 4);
+      // Right bracket
+      ctx.moveTo(startX + width + 4, startY - 4);
+      ctx.lineTo(startX + width + 10, startY - 4);
+      ctx.lineTo(startX + width + 10, startY + height + 4);
+      ctx.lineTo(startX + width + 4, startY + height + 4);
+      ctx.stroke();
+
+      let index = 0;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          let x = startX + c * cellSize;
+          let y = startY + r * cellSize;
+
+          if (index === highlightIdx) {
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.roundRect(x + 2, y + 2, cellSize - 4, cellSize - 4, 6);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+          } else {
+            ctx.fillStyle = typeof matrix[r][c] === 'number' ? '#1e293b' : '#94a3b8';
+          }
+
+          ctx.font = 'bold 16px Segoe UI';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(matrix[r][c], x + cellSize / 2, y + cellSize / 2);
+          index++;
+        }
+      }
+    }
+
+    function renderJSCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let rows = userA.length;
+      let cols = userA[0].length;
+
+      // Draw scalar k
+      ctx.fillStyle = '#d97706';
+      ctx.font = 'bold 24px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText(`k = ${kVal}`, 55, 140);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '22px Segoe UI';
+      ctx.fillText("×", 115, 140);
+
+      // Draw Matrix A position calculated based on columns to center nicely
+      let matrixWidth = cols * 48;
+      let startX_A = 150;
+      drawMatrix(userA, startX_A, 85, `Eredeti A (${rows}×${cols})`, currentStep);
+
+      let signX = startX_A + matrixWidth + 20;
+      ctx.fillStyle = '#64748b';
+      ctx.font = '22px Segoe UI';
+      ctx.fillText("=", signX, 140);
+
+      let startX_B = signX + 35;
+      drawMatrix(userB, startX_B, 85, `Eredmény B (${rows}×${cols})`, currentStep);
+    }
+
+    function stepJSSimulation() {
+      let rows = userA.length;
+      let cols = userA[0].length;
+      totalElements = rows * cols;
+
+      if (currentStep < totalElements - 1) {
+        currentStep++;
+        let r = Math.floor(currentStep / cols);
+        let c = currentStep % cols;
+        userB[r][c] = kVal * userA[r][c];
+
+        renderJSCanvas();
+        let speed = parseInt(document.getElementById('jsSpeed').value) || 700;
+        animTimer = setTimeout(stepJSSimulation, speed);
+      }
+    }
+
+    function startJSSimulation() {
+      clearTimeout(animTimer);
+      kVal = parseInt(document.getElementById('jsScalar').value) || 0;
+      let rows = userA.length;
+      let cols = userA[0].length;
+
+      // Initialize userB with '?'
+      userB = [];
+      for (let r = 0; r < rows; r++) {
+        let rowArr = [];
+        for (let c = 0; c < cols; c++) {
+          rowArr.push('?');
+        }
+        userB.push(rowArr);
+      }
+
+      currentStep = -1;
+      stepJSSimulation();
+    }
+
+    function pauseJSSimulation() {
+      clearTimeout(animTimer);
+    }
+
+    function resetJSSimulation() {
+      clearTimeout(animTimer);
+      currentStep = -1;
+      let rows = userA.length;
+      let cols = userA[0].length;
+      userB = [];
+      for (let r = 0; r < rows; r++) {
+        let rowArr = [];
+        for (let c = 0; c < cols; c++) {
+          rowArr.push('?');
+        }
+        userB.push(rowArr);
+      }
+      renderJSCanvas();
+    }
+
+    // --- Python Interactive Simulator Runner ---
+    function runPythonSimulation() {
+      const rawInput = document.getElementById('pyMatrixInput').value;
+      const k = parseInt(document.getElementById('pyScalarInput').value) || 0;
+      const outputDiv = document.getElementById('pyOutput');
+
+      try {
+        let rowsStr = rawInput.split(';');
+        let matrix = [];
+        rowsStr.forEach(rStr => {
+          let colsStr = rStr.split(',');
+          let row = colsStr.map(v => parseInt(v.trim()));
+          matrix.push(row);
+        });
+
+        // Compute scalar multiplication
+        let result = matrix.map(row => row.map(val => val * k));
+
+        let formatted = "[\n" + result.map(r => "  [" + r.join(", ") + "]").join(",\n") + "\n]";
+        outputDiv.innerHTML = `Sikeres Python futtatás!<br>Skalár (k) = ${k}<br>Eredmény mátrix:<br><pre class="text-emerald-400 font-mono">${formatted}</pre>`;
+      } catch (e) {
+        outputDiv.innerHTML = `<span class="text-red-400">Hiba a formátumban! Használj pl: 1,2; 3,4 formátumot.</span>`;
+      }
+    }
+
+    // --- C++ Interactive Simulator Runner ---
+    function runCppSimulation() {
+      const rawInput = document.getElementById('cppMatrixInput').value;
+      const k = parseInt(document.getElementById('cppScalarInput').value) || 0;
+      const outputDiv = document.getElementById('cppOutput');
+
+      try {
+        let rowsStr = rawInput.split(';');
+        let matrix = [];
+        rowsStr.forEach(rStr => {
+          let colsStr = rStr.split(',');
+          let row = colsStr.map(v => parseInt(v.trim()));
+          matrix.push(row);
+        });
+
+        // Compute scalar multiplication
+        let result = matrix.map(row => row.map(val => val * k));
+
+        let formatted = "{\n" + result.map(r => "  {" + r.join(", ") + "}").join(",\n") + "\n}";
+        outputDiv.innerHTML = `std::vector futtatás sikeres!<br>Skalár (k) = ${k}<br>Kimeneti vektor:<br><pre class="text-sky-300 font-mono">${formatted}</pre>`;
+      } catch (e) {
+        outputDiv.innerHTML = `<span class="text-red-400">Hiba a formátumban! Ellenőrizd a megadott értékeket.</span>`;
+      }
+    }
+
+    // Initialize application on load
+    window.onload = function() {
+      initMatrixInputs();
+    };
+  </script>
+
+
+</body></html>
