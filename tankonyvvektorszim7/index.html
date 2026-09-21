@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)file:///D:/tankonyv/jatek.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Sort - Rugalmas Vektor Pakolás Szimuláció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .main-container {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .panel {
+            flex: 1;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .panel-header {
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+        .game-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .tube-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .tube-label {
+            font-size: 0.8rem;
+            color: #38bdf8;
+            font-family: monospace;
+        }
+        .tube {
+            width: 45px;
+            height: 160px;
+            border: 3px solid #64748b;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 4px;
+            gap: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .tube:hover {
+            transform: translateY(-4px);
+        }
+        .tube.selected {
+            border-color: #f43f5e;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.6);
+        }
+        .tube.valid-target {
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+            animation: pulse 1.5s infinite;
+        }
+        .tube.invalid-target {
+            border-color: #ef4444;
+            opacity: 0.7;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        .segment {
+            width: 100%;
+            height: 34px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+            pointer-events: none;
+        }
+        .status-msg {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid #334155;
+        }
+        button.action-btn {
+            margin-top: 15px;
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: center;
+        }
+        button.action-btn:hover { background: #0ea5e9; }
+        pre {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #38bdf8;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            border: 1px solid #334155;
+        }
+        .debug-box {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            height: 110px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #10b981;
+            border: 1px solid #334155;
+        }
+        .analysis-box {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #334155;
+            font-size: 0.8rem;
+            min-height: 50px;
+            color: #cbd5e1;
+        }
+        .info-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Magic Sort: Rugalmas Vektor Pakolás Szimuláció</h1>
+
+    <div class="main-container">
+        <!-- BAL PANEL: Interaktív Játék -->
+        <div class="panel">
+            <div class="panel-header">🎮 1. Vektorok Kezelése (Szabályozott / Rugalmas Nézet)</div>
+            <p class="info-text">Kattints egy forrás vektorra: üres helyre vagy azonos színre minden további nélkül pakolhatsz!</p>
+            
+            <div class="game-container" id="tubeContainerGame"><div class="tube-wrapper"><div class="tube-label">vektorok[0]</div><div class="tube"><div class="segment" style="background-color: rgb(239, 68, 68);"><span style="font-size:0.6rem; opacity:0.8;">[0]</span> <b>érték:1</b></div><div class="segment" style="background-color: rgb(59, 130, 246);"><span style="font-size:0.6rem; opacity:0.8;">[1]</span> <b>érték:2</b></div><div class="segment" style="background-color: rgb(16, 185, 129);"><span style="font-size:0.6rem; opacity:0.8;">[2]</span> <b>érték:3</b></div><div class="segment" style="background-color: rgb(239, 68, 68);"><span style="font-size:0.6rem; opacity:0.8;">[3]</span> <b>érték:1</b></div></div></div><div class="tube-wrapper"><div class="tube-label">vektorok[1]</div><div class="tube"><div class="segment" style="background-color: rgb(59, 130, 246);"><span style="font-size:0.6rem; opacity:0.8;">[0]</span> <b>érték:2</b></div><div class="segment" style="background-color: rgb(239, 68, 68);"><span style="font-size:0.6rem; opacity:0.8;">[1]</span> <b>érték:1</b></div><div class="segment" style="background-color: rgb(16, 185, 129);"><span style="font-size:0.6rem; opacity:0.8;">[2]</span> <b>érték:3</b></div><div class="segment" style="background-color: rgb(59, 130, 246);"><span style="font-size:0.6rem; opacity:0.8;">[3]</span> <b>érték:2</b></div></div></div><div class="tube-wrapper"><div class="tube-label">vektorok[2]</div><div class="tube"><div class="segment" style="background-color: rgb(16, 185, 129);"><span style="font-size:0.6rem; opacity:0.8;">[0]</span> <b>érték:3</b></div><div class="segment" style="background-color: rgb(16, 185, 129);"><span style="font-size:0.6rem; opacity:0.8;">[1]</span> <b>érték:3</b></div><div class="segment" style="background-color: rgb(239, 68, 68);"><span style="font-size:0.6rem; opacity:0.8;">[2]</span> <b>érték:1</b></div><div class="segment" style="background-color: rgb(59, 130, 246);"><span style="font-size:0.6rem; opacity:0.8;">[3]</span> <b>érték:2</b></div></div></div><div class="tube-wrapper"><div class="tube-label">vektorok[3]</div><div class="tube"></div></div></div>
+            
+            <div class="status-msg" id="statusMessage">Alaphelyzetbe állítva.</div>
+            <button class="action-btn" onclick="resetGame()">Alaphelyzet</button>
+        </div>
+
+        <!-- JOBB PANEL: Adatszerkezet & Elágazás Elemzés -->
+        <div class="panel">
+            <div class="panel-header">💻 2. Algoritmikus Validáció &amp; Vektorok</div>
+            
+            <p class="info-text">Aktuális forrás kiválasztás pakolási elemzése:</p>
+            <div class="analysis-box" id="analysisOutput"><b>Kiválasztott forrás:</b> Nincs<br>Kattints egy vektorra a pakolási lehetőségek vizsgálatához.</div>
+
+            <p class="info-text">A konstans <code>vektorok vektora</code> logikai struktúrája:</p>
+            <pre id="matrixRepresentation">// Vektorok vektora adatszerkezet (vector&lt;vector&lt;int&gt;&gt;):<br>const vector&lt;vector&lt;int&gt;&gt; tubes = {<br>  {1, 2, 3, 1}, // vektorok[0]<br>  {2, 1, 3, 2}, // vektorok[1]<br>  {3, 3, 1, 2}, // vektorok[2]<br>  {0, 0, 0, 0}, // vektorok[3]<br>};</pre>
+
+            <p class="info-text">Műveleti napló (Debugger):</p>
+            <div class="debug-box" id="debugLog">[20:39:18] Kísérlet üres vektorok[3] kiválasztására.<br>[20:39:19] Kiválasztás: vektorok[2]<br>[20:39:19] Átmozgatás: vektorok[2].pop() -&gt; vektorok[3].push(2)<br>[20:39:22] Kiválasztás: vektorok[1]<br>[20:39:22] Átmozgatás: vektorok[1].pop() -&gt; vektorok[3].push(2)<br>[20:39:28] Játék újraindítva.</div>
+            
+            <p style="margin-top: 10px; font-size: 0.9rem;"><b>Részösszeg:</b> <span id="winProgress" style="color: #38bdf8;">0 / 3 homogén vektor kész</span></p>
+        </div>
+    </div>
+
+<script>
+    const DATA_DICTIONARY = {
+        1: { value: 1, name: "Alpha", hex: "#ef4444" },
+        2: { value: 2, name: "Beta",  hex: "#3b82f6" },
+        3: { value: 3, name: "Gamma", hex: "#10b981" }
+    };
+
+    const INITIAL_TUBES = [
+        [1, 2, 3, 1],
+        [2, 1, 3, 2],
+        [3, 3, 1, 2],
+        [0, 0, 0, 0]
+    ];
+
+    let tubes = JSON.parse(JSON.stringify(INITIAL_TUBES));
+    let selectedTubeIndex = null;
+    let logHistory = [];
+
+    function updateAll() {
+        renderGame();
+        updateMatrixView();
+        updateDebuggerView();
+        checkWinCondition();
+    }
+
+    function getTopElement(vector) {
+        for (let i = vector.length - 1; i >= 0; i--) {
+            if (vector[i] !== 0) return { value: vector[i], index: i };
+        }
+        return null;
+    }
+
+    function canMove(fromIdx, toIdx) {
+        if (fromIdx === toIdx) return { valid: false, reason: "Ugyanaz a vektor." };
+        
+        let fromVec = tubes[fromIdx];
+        let toVec = tubes[toIdx];
+
+        let topFrom = getTopElement(fromVec);
+        if (!topFrom) return { valid: false, reason: "A forrás vektor üres." };
+
+        let hasSpace = toVec.some(v => v === 0);
+        if (!hasSpace) return { valid: false, reason: "A cél vektor tele van (kapacitás: 4)." };
+
+        let topTo = getTopElement(toVec);
+        // 1. Feltétel: Ha a cél vektor üres, BÁRMIKOR szabad ide önteni!
+        if (!topTo) return { valid: true, reason: "A cél vektor üres, szabad a pakolás." };
+
+        // 2. Feltétel: Ha az elemek értéke megegyezik, szabad önteni.
+        if (topTo.value === topFrom.value) {
+            return { valid: true, reason: `A legfelső elemek egyeznek (${topFrom.value}).` };
+        } 
+
+        // 3. Opcionális kiegészítés: Ha szeretnéd, hogy eltérő színre is lehessen pakolni (pl. szabad szerkesztés), 
+        // itt engedélyezheted. Jelenleg a klasszikus logikát követi, de átállíthatod true-ra is, ha a diák bármire pakolhat.
+        // Például: alább engedjük, ha a cél vektorban van még hely, függetlenül a színtől:
+        return { valid: true, reason: `Rugalmas pakolás: eltérő értékre (${topTo.value} <- ${topFrom.value}) helyezés engedélyezve.` };
+    }
+
+    function renderGame() {
+        const container = document.getElementById('tubeContainerGame');
+        container.innerHTML = '';
+
+        let analysisText = "<b>Kiválasztott forrás:</b> Nincs<br>Kattints egy vektorra a pakolási lehetőségek vizsgálatához.";
+
+        tubes.forEach((vector, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'tube-wrapper';
+
+            const label = document.createElement('div');
+            label.className = 'tube-label';
+            label.innerText = `vektorok[${index}]`;
+            wrapper.appendChild(label);
+
+            const tubeEl = document.createElement('div');
+            let tubeClass = 'tube';
+            
+            if (selectedTubeIndex === index) {
+                tubeClass += ' selected';
+            } else if (selectedTubeIndex !== null) {
+                let check = canMove(selectedTubeIndex, index);
+                if (check.valid) {
+                    tubeClass += ' valid-target';
+                } else {
+                    tubeClass += ' invalid-target';
+                }
+            }
+
+            tubeEl.className = tubeClass;
+            tubeEl.onclick = () => handleTubeClick(index);
+
+            vector.forEach((val, innerIndex) => {
+                if (val !== 0) {
+                    const seg = document.createElement('div');
+                    seg.className = 'segment';
+                    seg.style.backgroundColor = DATA_DICTIONARY[val].hex;
+                    seg.innerHTML = `<span style="font-size:0.6rem; opacity:0.8;">[${innerIndex}]</span> <b>érték:${val}</b>`;
+                    tubeEl.appendChild(seg);
+                }
+            });
+
+            wrapper.appendChild(tubeEl);
+            container.appendChild(wrapper);
+        });
+
+        if (selectedTubeIndex !== null) {
+            let top = getTopElement(tubes[selectedTubeIndex]);
+            analysisText = `<b>Forrás:</b> vektorok[${selectedTubeIndex}] (Kivett elem értéke: <b>${top ? top.value : 'nincs'}</b>)<br>`;
+            analysisText += `<b>Pakolási lehetőségek (Validáció):</b><ul>`;
+            
+            tubes.forEach((_, targetIdx) => {
+                if (targetIdx !== selectedTubeIndex) {
+                    let check = canMove(selectedTubeIndex, targetIdx);
+                    let color = check.valid ? '#10b981' : '#ef4444';
+                    let icon = check.valid ? '✅' : '❌';
+                    analysisText += `<li style="color: ${color};">vektorok[${targetIdx}]: ${icon} ${check.reason}</li>`;
+                }
+            });
+            analysisText += `</ul>`;
+        }
+        document.getElementById('analysisOutput').innerHTML = analysisText;
+    }
+
+    function handleTubeClick(index) {
+        if (selectedTubeIndex === null) {
+            if (tubes[index].every(val => val === 0)) {
+                document.getElementById('statusMessage').innerText = `Hiba: vektorok[${index}] üres!`;
+                addLog(`Kísérlet üres vektorok[${index}] kiválasztására.`);
+                return;
+            }
+            selectedTubeIndex = index;
+            document.getElementById('statusMessage').innerText = `Forrás kiválasztva: vektorok[${index}]. Nézd a jobb oldali elemzést!`;
+            addLog(`Kiválasztás: vektorok[${index}]`);
+        } else {
+            if (selectedTubeIndex === index) {
+                selectedTubeIndex = null;
+                document.getElementById('statusMessage').innerText = "Kiválasztás visszavonva.";
+                addLog("Kiválasztás törölve.");
+            } else {
+                let check = canMove(selectedTubeIndex, index);
+                if (check.valid) {
+                    moveElement(selectedTubeIndex, index);
+                    selectedTubeIndex = null;
+                } else {
+                    if (tubes[index].every(val => val === 0)) {
+                        document.getElementById('statusMessage').innerText = `Szabálytalan lépés: ${check.reason}`;
+                        addLog(`Elutasított lépés: ${check.reason}`);
+                    } else {
+                        selectedTubeIndex = index;
+                        document.getElementById('statusMessage').innerText = `Forrás átváltva ide: vektorok[${index}]`;
+                        addLog(`Forrás megváltoztatva újra: vektorok[${index}]`);
+                    }
+                }
+            }
+        }
+        updateAll();
+    }
+
+    function moveElement(fromIdx, toIdx) {
+        let fromVector = tubes[fromIdx];
+        let toVector = tubes[toIdx];
+
+        let topFrom = getTopElement(fromVector);
+        let targetSlotIndex = -1;
+        for (let i = 0; i < toVector.length; i++) {
+            if (toVector[i] === 0) { targetSlotIndex = i; break; }
+        }
+
+        fromVector[topFrom.index] = 0;
+        toVector[targetSlotIndex] = topFrom.value;
+        
+        document.getElementById('statusMessage').innerText = `Sikeres átöntés: vektorok[${fromIdx}] -> vektorok[${toIdx}]`;
+        addLog(`Átmozgatás: vektorok[${fromIdx}].pop() -> vektorok[${toIdx}].push(${topFrom.value})`);
+    }
+
+    function updateMatrixView() {
+        let text = "// Vektorok vektora adatszerkezet (vector<vector<int>>):\nconst vector<vector<int>> tubes = {\n";
+        tubes.forEach((vector, i) => {
+            text += `  {${vector.join(', ')}}, // vektorok[${i}]\n`;
+        });
+        text += "};";
+        document.getElementById('matrixRepresentation').innerText = text;
+    }
+
+    function addLog(message) {
+        const time = new Date().toLocaleTimeString();
+        logHistory.push(`[${time}] ${message}`);
+        if (logHistory.length > 15) logHistory.shift();
+    }
+
+    function updateDebuggerView() {
+        document.getElementById('debugLog').innerText = logHistory.join('\n');
+        const debugBox = document.getElementById('debugLog');
+        debugBox.scrollTop = debugBox.scrollHeight;
+    }
+
+    function checkWinCondition() {
+        let homogeneousCount = 0;
+        tubes.forEach(vector => {
+            const nonZero = vector.filter(v => v !== 0);
+            if (nonZero.length === 4 && nonZero.every(v => v === nonZero[0])) {
+                homogeneousCount++;
+            }
+        });
+        document.getElementById('winProgress').innerText = `${homogeneousCount} / 3 homogén vektor kész`;
+    }
+
+    function resetGame() {
+        tubes = JSON.parse(JSON.stringify(INITIAL_TUBES));
+        selectedTubeIndex = null;
+        document.getElementById('statusMessage').innerText = "Alaphelyzetbe állítva.";
+        addLog("Játék újraindítva.");
+        updateAll();
+    }
+
+    updateAll();
+</script>
+
+
+</body></html>
