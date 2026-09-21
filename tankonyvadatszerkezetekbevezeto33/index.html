@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<!-- saved from url=(0158)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/M%C3%A1trixszorz%C3%A1s%20Interakt%C3%ADv%20Szimul%C3%A1ci%C3%B3%20%C3%A9s%20Gyakorl%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrixszorzás Interaktív Szimuláció és Gyakorló</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="./index_files/saved_resource"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="./index_files/css2" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    colors: {
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b',
+                        accentA: '#38bdf8', // Cyan
+                        accentB: '#f43f5e', // Rose
+                        accentC: '#10b981', // Emerald
+                        highlight: '#f59e0b' // Amber
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .matrix-cell {
+            transition: all 0.3s ease;
+        }
+
+        .highlight-a {
+            background-color: rgba(56, 189, 248, 0.25) !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+        }
+
+        .highlight-b {
+            background-color: rgba(244, 63, 94, 0.25) !important;
+            border-color: #f43f5e !important;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.5);
+        }
+
+        .highlight-active-a {
+            background-color: rgba(56, 189, 248, 0.6) !important;
+            color: #ffffff !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.9);
+        }
+
+        .highlight-active-b {
+            background-color: rgba(244, 63, 94, 0.6) !important;
+            color: #ffffff !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 18px rgba(244, 63, 94, 0.9);
+        }
+
+        .highlight-c {
+            background-color: rgba(16, 185, 129, 0.3) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+            transform: scale(1.05);
+        }
+
+        #svg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .arrow-line {
+            stroke-dasharray: 8;
+            animation: dash 1s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -16;
+            }
+        }
+
+        .matrix-container {
+            position: relative;
+            padding: 10px 14px;
+        }
+        .matrix-container::before, .matrix-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            border: 3px solid #64748b;
+        }
+        .matrix-container::before {
+            left: 0;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+        }
+        .matrix-container::after {
+            right: 0;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid #38bdf8;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .cell-correct {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10b981 !important;
+            color: #34d399 !important;
+        }
+
+        .cell-incorrect {
+            background-color: rgba(244, 63, 94, 0.2) !important;
+            border-color: #f43f5e !important;
+            color: #fb7185 !important;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:Fira Code, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-1{margin-left:0.25rem;margin-right:0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mr-1\.5{margin-right:0.375rem}.mt-12{margin-top:3rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-6{height:1.5rem}.h-12{height:3rem}.min-h-\[40px\]{min-height:40px}.min-h-screen{min-height:100vh}.w-1\/2{width:50%}.w-10{width:2.5rem}.w-12{width:3rem}.w-20{width:5rem}.w-full{width:100%}.w-px{width:1px}.max-w-7xl{max-width:80rem}.flex-grow{flex-grow:1}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-emerald-600\/50{border-color:rgb(5 150 105 / 0.5)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.border-amber-500\/50{border-color:rgb(245 158 11 / 0.5)}.bg-cardbg{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-cyan-500\/20{background-color:rgb(6 182 212 / 0.2)}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/40{background-color:rgb(2 44 34 / 0.4)}.bg-rose-500\/20{background-color:rgb(244 63 94 / 0.2)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/40{background-color:rgb(15 23 42 / 0.4)}.bg-slate-900\/60{background-color:rgb(15 23 42 / 0.6)}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-800\/80{background-color:rgb(30 41 59 / 0.8)}.bg-amber-500\/20{background-color:rgb(245 158 11 / 0.2)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-cyan-400{--tw-gradient-from:#22d3ee var(--tw-gradient-from-position);--tw-gradient-to:rgb(34 211 238 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-cyan-500{--tw-gradient-from:#06b6d4 var(--tw-gradient-from-position);--tw-gradient-to:rgb(6 182 212 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-rose-400{--tw-gradient-to:rgb(251 113 133 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fb7185 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-rose-500{--tw-gradient-to:rgb(244 63 94 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f43f5e var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-500{--tw-gradient-to:#10b981 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.pb-12{padding-bottom:3rem}.pb-4{padding-bottom:1rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.font-mono{font-family:Fira Code, monospace}.font-sans{font-family:Inter, sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249 / var(--tw-text-opacity, 1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175 / var(--tw-text-opacity, 1))}.accent-cyan-400{accent-color:#22d3ee}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-emerald-900\/40{--tw-shadow-color:rgb(6 78 59 / 0.4);--tw-shadow:var(--tw-shadow-colored)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-amber-400:focus{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.focus\:border-cyan-400:focus{--tw-border-opacity:1;border-color:rgb(34 211 238 / var(--tw-border-opacity, 1))}.focus\:border-rose-400:focus{--tw-border-opacity:1;border-color:rgb(251 113 133 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:h-12{height:3rem}.sm\:w-12{width:3rem}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}}@media (min-width: 1024px){.lg\:col-span-1{grid-column:span 1 / span 1}.lg\:col-span-3{grid-column:span 3 / span 3}.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:flex-row{flex-direction:row}}</style></head>
+<body class="min-h-screen flex flex-col font-sans pb-12">
+
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-gradient-to-tr from-cyan-500 via-rose-500 to-emerald-500 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-border-all text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold bg-gradient-to-r from-cyan-400 via-rose-400 to-emerald-400 bg-clip-text text-transparent">
+                        Interaktív Mátrixszorzás Szimulátor &amp; Gyakorló
+                    </h1>
+                    <p class="text-xs text-slate-400">Vizualizált lépésről lépésre útmutató, tesztelő feladatsor és kódgenerátor</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2">
+                <button onclick="downloadCode('html')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg border border-slate-700 flex items-center gap-2 transition">
+                    <i class="fa-solid fa-code text-cyan-400"></i> HTML Letöltés
+                </button>
+                <button onclick="downloadCode('python')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs rounded-lg border border-slate-700 flex items-center gap-2 transition">
+                    <i class="fa-brands fa-python text-amber-400"></i> Python (.py)
+                </button>
+                <button onclick="downloadCode('cpp')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 text-xs rounded-lg border border-slate-700 flex items-center gap-2 transition">
+                    <i class="fa-solid fa-file-code text-blue-400"></i> C++ (.cpp)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 mt-6 flex-grow space-y-8">
+
+        <section class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+            <h2 class="text-lg font-bold text-slate-100 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-cyan-400"></i> 1. Dimenziók beállítása és Szabályok
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <!-- Dimension Controls -->
+                <div class="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-cyan-400">A Mátrix (M × K):</span>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="dimM" min="1" max="5" value="2" class="w-12 bg-slate-800 text-center text-white border border-slate-700 rounded p-1 text-sm">
+                            <span class="text-slate-400">×</span>
+                            <input type="number" id="dimK_A" min="1" max="5" value="3" class="w-12 bg-slate-800 text-center text-white border border-slate-700 rounded p-1 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-rose-400">B Mátrix (K × N):</span>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="dimK_B" min="1" max="5" value="3" class="w-12 bg-slate-800 text-center text-white border border-slate-700 rounded p-1 text-sm">
+                            <span class="text-slate-400">×</span>
+                            <input type="number" id="dimN" min="1" max="5" value="2" class="w-12 bg-slate-800 text-center text-white border border-slate-700 rounded p-1 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex gap-2">
+                        <button onclick="randomizeMatrices()" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg font-medium border border-slate-700 transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-dice"></i> Véletlenszerű
+                        </button>
+                        <button onclick="resetValues()" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg font-medium border border-slate-700 transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> Alaphelyzet
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dimension Matching Rule Visual Explanation -->
+                <div class="md:col-span-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex flex-col justify-center">
+                    <h3 class="text-sm font-bold text-slate-200 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-amber-400"></i> Miért kell megegyezzen a belső dimenzió (K)?
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                        Két mátrix csak akkor szorozható össze, ha az <strong>A mátrix oszlopainak száma</strong> (K) megegyezik a <strong>B mátrix sorainak számával</strong> (K). Ennek oka, hogy a skaláris szorzáshoz az A sorának minden elemét párba kell állítani a B oszlopának megfelelő elemével.
+                    </p>
+
+                    <div id="dimension-status-box" class="p-3 rounded-lg flex items-center justify-between bg-emerald-950/40 border border-emerald-600/50">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono bg-slate-800 px-2 py-1 rounded text-slate-200">
+                                A(<span id="statusM" class="text-cyan-400">2</span> × <span id="statusKA" class="text-amber-400 font-bold">3</span>) × B(<span id="statusKB" class="text-amber-400 font-bold">3</span> × <span id="statusN" class="text-rose-400">2</span>) = C(<span id="statusM_res" class="text-cyan-400">2</span> × <span id="statusN_res" class="text-rose-400">2</span>)
+                            </span>
+                        </div>
+                        <span id="status-text" class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check"></i> Helyes dimenziók!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl relative overflow-hidden">
+            <div id="svg-container" class="absolute inset-0 pointer-events-none z-10">
+                <svg id="svg-overlay"></svg>
+            </div>
+
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6 mb-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-play text-emerald-400"></i> 2. Vizualizáció és Animált Szimuláció
+                    </h2>
+                    <p class="text-xs text-slate-400">Módosítsd az értékeket a cellákban, majd indítsd el a lépésről lépésre szimulációt!</p>
+                </div>
+
+                <!-- Simulation Controls -->
+                <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2 rounded-xl border border-slate-800 z-20">
+                    <button id="btnPrev" onclick="prevStep()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs transition">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button id="btnPlay" onclick="togglePlay()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/40">
+                        <i class="fa-solid fa-play" id="playIcon"></i> <span id="playText">Lejátszás</span>
+                    </button>
+                    <button id="btnNext" onclick="nextStep()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs transition">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button id="btnReset" onclick="resetSimulation()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs transition">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+
+                    <div class="h-6 w-px bg-slate-700 mx-1"></div>
+
+                    <div class="flex items-center gap-2 px-2">
+                        <i class="fa-solid fa-gauge-high text-xs text-slate-400"></i>
+                        <input type="range" id="speedSlider" min="300" max="2500" value="1200" class="w-20 accent-cyan-400 cursor-pointer" dir="rtl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matrices Display Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center justify-center my-4 z-20 relative">
+                
+                <!-- Matrix A -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-cyan-400 mb-2 tracking-wider">A MÁTRIX (<span id="lblM">2</span>×<span id="lblK_A">3</span>)</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="matrixA-grid" class="grid gap-2" style="grid-template-columns: repeat(3, minmax(0px, 1fr));"><input type="number" id="cell-A-0-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400"><input type="number" id="cell-A-0-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400"><input type="number" id="cell-A-0-2" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400"><input type="number" id="cell-A-1-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400 highlight-a"><input type="number" id="cell-A-1-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400 highlight-a"><input type="number" id="cell-A-1-2" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400 highlight-a"></div>
+                    </div>
+                </div>
+
+                <!-- Multiplication Symbol -->
+                <div class="lg:col-span-1 flex justify-center text-slate-500 font-bold text-2xl">
+                    <i class="fa-solid fa-xmark text-slate-600"></i>
+                </div>
+
+                <!-- Matrix B -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-rose-400 mb-2 tracking-wider">B MÁTRIX (<span id="lblK_B">3</span>×<span id="lblN">2</span>)</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="matrixB-grid" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><input type="number" id="cell-B-0-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400"><input type="number" id="cell-B-0-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400 highlight-b"><input type="number" id="cell-B-1-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400"><input type="number" id="cell-B-1-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400 highlight-b"><input type="number" id="cell-B-2-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400"><input type="number" id="cell-B-2-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400 highlight-b"></div>
+                    </div>
+                </div>
+
+                <!-- Equals Symbol -->
+                <div class="lg:col-span-1 flex justify-center text-slate-500 font-bold text-2xl">
+                    <i class="fa-solid fa-equals text-slate-600"></i>
+                </div>
+
+                <!-- Matrix C (Result) -->
+                <div class="lg:col-span-4 flex flex-col items-center">
+                    <span class="text-xs font-bold text-emerald-400 mb-2 tracking-wider">C EREDMÉNYMÁTRIX (<span id="lblM_C">2</span>×<span id="lblN_C">2</span>)</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="matrixC-grid" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><div id="cell-C-0-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/80 text-emerald-400 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base flex items-center justify-center">31</div><div id="cell-C-0-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/80 text-emerald-400 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base flex items-center justify-center">19</div><div id="cell-C-1-0" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/80 text-emerald-400 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base flex items-center justify-center">85</div><div id="cell-C-1-1" class="matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/80 text-emerald-400 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base flex items-center justify-center highlight-c">55</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-slate-900/80 rounded-xl p-4 border border-slate-800 text-center">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold block mb-2">Aktuális Számítási Lépés Részletezése</span>
+                <div id="formula-display" class="font-mono text-sm sm:text-base text-slate-200 min-h-[40px] flex items-center justify-center flex-wrap gap-2"><span class="text-emerald-400 font-bold">C[2][2] KÉSZ!</span> = 32 + 5 + 18 = <span class="text-emerald-400 font-extrabold text-xl">55</span></div>
+            </div>
+        </section>
+
+        <section class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-amber-400"></i> 3. Interaktív Gyakorló &amp; Tesztelő Feladat
+                    </h2>
+                    <p class="text-xs text-slate-400">Teszteld a tudásodat! Számítsd ki az eredménymátrix hiányzó elemeit, majd ellenőrizd a válaszaidat!</p>
+                </div>
+
+                <!-- Quiz Difficulty Preset Controls -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs text-slate-400 font-medium">Nehézség:</span>
+                    <button onclick="generatePracticeTask('easy')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs rounded-lg border border-slate-700 transition">
+                        Könnyű (2x2)
+                    </button>
+                    <button onclick="generatePracticeTask('medium')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs rounded-lg border border-slate-700 transition">
+                        Közepes (2x3 × 3x2)
+                    </button>
+                    <button onclick="generatePracticeTask('hard')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-rose-400 text-xs rounded-lg border border-slate-700 transition">
+                        Nehéz (3x3)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center justify-center my-4">
+                
+                <!-- Practice Matrix A -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-cyan-400 mb-2">A MÁTRIX</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="quizA-grid" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><div class="w-10 h-10 bg-slate-800 text-cyan-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">3</div><div class="w-10 h-10 bg-slate-800 text-cyan-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">1</div><div class="w-10 h-10 bg-slate-800 text-cyan-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">4</div><div class="w-10 h-10 bg-slate-800 text-cyan-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">2</div></div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 flex justify-center text-slate-500 font-bold text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+
+                <!-- Practice Matrix B -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-rose-400 mb-2">B MÁTRIX</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="quizB-grid" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><div class="w-10 h-10 bg-slate-800 text-rose-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">8</div><div class="w-10 h-10 bg-slate-800 text-rose-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">2</div><div class="w-10 h-10 bg-slate-800 text-rose-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">5</div><div class="w-10 h-10 bg-slate-800 text-rose-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm">8</div></div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 flex justify-center text-slate-500 font-bold text-xl">
+                    <i class="fa-solid fa-equals"></i>
+                </div>
+
+                <!-- Student Answer Matrix C -->
+                <div class="lg:col-span-4 flex flex-col items-center">
+                    <span class="text-xs font-bold text-amber-400 mb-2">TÍRD BE A VÁLASZAIDAT (C MÁTRIX)</span>
+                    <div class="matrix-container bg-slate-900/40">
+                        <div id="quizC-grid" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><input type="number" placeholder="?" id="quiz-input-0-0" class="w-12 h-12 bg-slate-800 text-amber-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-amber-400"><input type="number" placeholder="?" id="quiz-input-0-1" class="w-12 h-12 bg-slate-800 text-amber-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-amber-400"><input type="number" placeholder="?" id="quiz-input-1-0" class="w-12 h-12 bg-slate-800 text-amber-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-amber-400"><input type="number" placeholder="?" id="quiz-input-1-1" class="w-12 h-12 bg-slate-800 text-amber-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-amber-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Action Bar -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 pt-4 border-t border-slate-800/80">
+                <div class="flex items-center gap-3">
+                    <button onclick="checkStudentAnswers()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-900/40 flex items-center gap-2 transition">
+                        <i class="fa-solid fa-check-double"></i> Ellenőrzés
+                    </button>
+                    <button onclick="toggleHint()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-400 font-medium text-xs rounded-xl border border-slate-700 flex items-center gap-2 transition">
+                        <i class="fa-solid fa-lightbulb"></i> Segítség (Hint)
+                    </button>
+                </div>
+
+                <div id="quiz-score-badge" class="hidden text-xs font-bold px-4 py-2 rounded-xl border"></div>
+            </div>
+
+            <!-- Hint & Error Feedback Box -->
+            <div id="quiz-feedback-box" class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs font-mono hidden">
+            </div>
+        </section>
+
+        <section class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-code text-amber-400"></i> 4. Programkód Implementációk
+                    </h2>
+                    <p class="text-xs text-slate-400">Nézd meg, hogyan valósítható meg a mátrixszorzás Python-ban és C++-ban!</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-700">
+                    <button class="tab-btn active px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white" onclick="switchTab('python')">
+                        <i class="fa-brands fa-python text-amber-400 mr-1.5"></i> Python
+                    </button>
+                    <button class="tab-btn px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white" onclick="switchTab('cpp')">
+                        <i class="fa-solid fa-file-code text-blue-400 mr-1.5"></i> C++
+                    </button>
+                </div>
+            </div>
+
+            <!-- Code Content: Python -->
+            <div id="tab-python" class="tab-content">
+                <pre class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto"><code><span class="text-slate-500"># Mátrixszorzás megvalósítása Python nyelven (Három egymásba ágyazott ciklussal)</span>
+
+<span class="text-purple-400">def</span> <span class="text-blue-400">matrix_multiply</span>(A, B):
+    M = <span class="text-yellow-400">len</span>(A)        <span class="text-slate-500"># A sorainak száma</span>
+    K = <span class="text-yellow-400">len</span>(A[<span class="text-cyan-400">0</span>])     <span class="text-slate-500"># A oszlopainak (és B sorainak) száma</span>
+    N = <span class="text-yellow-400">len</span>(B[<span class="text-cyan-400">0</span>])     <span class="text-slate-500"># B oszlopainak száma</span>
+    
+    <span class="text-slate-500"># Eredménymátrix inicializálása nullákkal (M x N dimenzió)</span>
+    C = [[<span class="text-cyan-400">0</span> <span class="text-purple-400">for</span> _ <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(N)] <span class="text-purple-400">for</span> _ <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(M)]
+    
+    <span class="text-slate-500"># 1. Külső ciklus (i): A sorain megy végig</span>
+    <span class="text-purple-400">for</span> i <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(M):
+        <span class="text-slate-500"># 2. Középső ciklus (j): B oszlopain megy végig</span>
+        <span class="text-purple-400">for</span> j <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(N):
+            <span class="text-slate-500"># 3. Belső ciklus (k): Skaláris szorzat összegzése</span>
+            <span class="text-purple-400">for</span> k <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(K):
+                C[i][j] += A[i][k] * B[k][j]
+                
+    <span class="text-purple-400">return</span> C
+
+<span class="text-slate-500"># Példa használat:</span>
+matrix_A = [[<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>, <span class="text-cyan-400">3</span>], [<span class="text-cyan-400">4</span>, <span class="text-cyan-400">5</span>, <span class="text-cyan-400">6</span>]]
+matrix_B = [[<span class="text-cyan-400">7</span>, <span class="text-cyan-400">8</span>], [<span class="text-cyan-400">9</span>, <span class="text-cyan-400">1</span>], [<span class="text-cyan-400">2</span>, <span class="text-cyan-400">3</span>]]
+eredmeny = matrix_multiply(matrix_A, matrix_B)
+<span class="text-yellow-400">print</span>(<span class="text-green-400">"Eredmény:"</span>, eredmeny)</code></pre>
+            </div>
+
+            <!-- Code Content: C++ -->
+            <div id="tab-cpp" class="tab-content hidden">
+                <pre class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto"><code><span class="text-slate-500">// Mátrixszorzás megvalósítása C++ nyelven (std::vector használatával)</span>
+<span class="text-purple-400">#include</span> <span class="text-green-400">&lt;iostream&gt;</span>
+<span class="text-purple-400">#include</span> <span class="text-green-400">&lt;vector&gt;</span>
+
+<span class="text-blue-400">using namespace</span> std;
+
+vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt; matrixMultiply(<span class="text-blue-400">const</span> vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt;&amp; A, <span class="text-blue-400">const</span> vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt;&amp; B) {
+    <span class="text-blue-400">int</span> M = A.size();
+    <span class="text-blue-400">int</span> K = A[<span class="text-cyan-400">0</span>].size();
+    <span class="text-blue-400">int</span> N = B[<span class="text-cyan-400">0</span>].size();
+
+    <span class="text-slate-500">// M x N dimenziójú eredménymátrix létrehozása 0 értékekkel</span>
+    vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt; C(M, vector&lt;<span class="text-blue-400">int</span>&gt;(N, <span class="text-cyan-400">0</span>));
+
+    <span class="text-slate-500">// Három egymásba ágyazott ciklus (i, j, k)</span>
+    <span class="text-purple-400">for</span> (<span class="text-blue-400">int</span> i = <span class="text-cyan-400">0</span>; i &lt; M; ++i) {
+        <span class="text-purple-400">for</span> (<span class="text-blue-400">int</span> j = <span class="text-cyan-400">0</span>; j &lt; N; ++j) {
+            <span class="text-purple-400">for</span> (<span class="text-blue-400">int</span> k = <span class="text-cyan-400">0</span>; k &lt; K; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    <span class="text-purple-400">return</span> C;
+}
+
+<span class="text-blue-400">int</span> main() {
+    vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt; A = {{<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>, <span class="text-cyan-400">3</span>}, {<span class="text-cyan-400">4</span>, <span class="text-cyan-400">5</span>, <span class="text-cyan-400">6</span>}};
+    vector&lt;vector&lt;<span class="text-blue-400">int</span>&gt;&gt; B = {{<span class="text-cyan-400">7</span>, <span class="text-cyan-400">8</span>}, {<span class="text-cyan-400">9</span>, <span class="text-cyan-400">1</span>}, {<span class="text-cyan-400">2</span>, <span class="text-cyan-400">3</span>}};
+    
+    auto C = matrixMultiply(A, B);
+    <span class="text-purple-400">return</span> <span class="text-cyan-400">0</span>;
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+                <div class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center text-lg mb-3">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-100 mb-2">Skaláris Szorzat</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    A $C[i][j]$ elem kiszámítása az <strong>A mátrix i-edik sorának</strong> és a <strong>B mátrix j-edik oszlopának</strong> skaláris szorzata (dot product). Minden párosított elemet megszorzunk, majd az eredményeket összeadjuk.
+                </p>
+            </div>
+
+            <div class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+                <div class="w-10 h-10 bg-rose-500/20 text-rose-400 rounded-lg flex items-center justify-center text-lg mb-3">
+                    <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-100 mb-2">Műveletigény &amp; Algoritmus</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    A klasszikus mátrixszorzás időkomplexitása <strong>$\mathcal{O}(M \times K \times N)$</strong>. Ha mindhárom dimenzió $N$, akkor ez $\mathcal{O}(N^3)$ lépést jelent. Nagyobb mátrixoknál speciális algoritmusokat (pl. Strassen-algoritmus) használnak.
+                </p>
+            </div>
+
+            <div class="bg-cardbg rounded-2xl p-6 border border-slate-800 shadow-xl">
+                <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center text-lg mb-3">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-100 mb-2">Gyakorlati Alkalmazások</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Mátrixszorzást használnak a <strong>3D grafika</strong> (transzformációk, forgatások), a <strong>Mesterséges Intelligencia / Mélytanulás</strong> (súlyok szorzása neurális hálókban), és a <strong>fizikai szimulációk</strong> során.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-12 text-center text-xs text-slate-500 py-6 border-t border-slate-800">
+        <p>Interaktív Mátrixszorzás Szimulátor • Készült oktatási és demonstrációs célból</p>
+    </footer>
+
+    <script>
+        // Interactive Simulator State
+        let matrixA = [
+            [1, 2, 3],
+            [4, 5, 6]
+        ];
+        let matrixB = [
+            [7, 8],
+            [9, 1],
+            [2, 3]
+        ];
+
+        let dimM = 2;
+        let dimK = 3;
+        let dimN = 2;
+
+        let steps = [];
+        let currentStepIndex = -1;
+        let isPlaying = false;
+        let timer = null;
+
+        // Quiz State
+        let quizA = [];
+        let quizB = [];
+        let quizExpectedC = [];
+        let quizM = 2;
+        let quizK = 2;
+        let quizN = 2;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setupDimensionListeners();
+            updateMatricesFromInputs();
+            generatePracticeTask('easy');
+            window.addEventListener('resize', drawArrows);
+        });
+
+        function setupDimensionListeners() {
+            document.getElementById('dimM').addEventListener('change', handleDimensionChange);
+            document.getElementById('dimK_A').addEventListener('change', (e) => {
+                document.getElementById('dimK_B').value = e.target.value;
+                handleDimensionChange();
+            });
+            document.getElementById('dimK_B').addEventListener('change', (e) => {
+                document.getElementById('dimK_A').value = e.target.value;
+                handleDimensionChange();
+            });
+            document.getElementById('dimN').addEventListener('change', handleDimensionChange);
+        }
+
+        function handleDimensionChange() {
+            const m = parseInt(document.getElementById('dimM').value) || 1;
+            const kA = parseInt(document.getElementById('dimK_A').value) || 1;
+            const kB = parseInt(document.getElementById('dimK_B').value) || 1;
+            const n = parseInt(document.getElementById('dimN').value) || 1;
+
+            dimM = Math.min(Math.max(m, 1), 5);
+            dimK = Math.min(Math.max(kA, 1), 5);
+            dimN = Math.min(Math.max(n, 1), 5);
+
+            document.getElementById('statusM').innerText = dimM;
+            document.getElementById('statusKA').innerText = kA;
+            document.getElementById('statusKB').innerText = kB;
+            document.getElementById('statusN').innerText = dimN;
+            document.getElementById('statusM_res').innerText = dimM;
+            document.getElementById('statusN_res').innerText = dimN;
+
+            const statusBox = document.getElementById('dimension-status-box');
+            const statusText = document.getElementById('status-text');
+
+            if (kA !== kB) {
+                statusBox.className = "p-3 rounded-lg flex items-center justify-between bg-rose-950/40 border border-rose-600/50";
+                statusText.className = "text-xs font-semibold text-rose-400 flex items-center gap-1";
+                statusText.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Nem szorozható össze! (K_A ≠ K_B)`;
+                return;
+            } else {
+                statusBox.className = "p-3 rounded-lg flex items-center justify-between bg-emerald-950/40 border border-emerald-600/50";
+                statusText.className = "text-xs font-semibold text-emerald-400 flex items-center gap-1";
+                statusText.innerHTML = `<i class="fa-solid fa-circle-check"></i> Helyes dimenziók!`;
+            }
+
+            matrixA = resizeArray(matrixA, dimM, dimK);
+            matrixB = resizeArray(matrixB, dimK, dimN);
+
+            renderGrids();
+            generateSteps();
+            resetSimulation();
+        }
+
+        function resizeArray(arr, rows, cols) {
+            const newArr = [];
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < cols; j++) {
+                    if (arr[i] && arr[i][j] !== undefined) {
+                        row.push(arr[i][j]);
+                    } else {
+                        row.push(Math.floor(Math.random() * 9) + 1);
+                    }
+                }
+                newArr.push(row);
+            }
+            return newArr;
+        }
+
+        function randomizeMatrices() {
+            for (let i = 0; i < dimM; i++) {
+                for (let j = 0; j < dimK; j++) {
+                    matrixA[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            for (let i = 0; i < dimK; i++) {
+                for (let j = 0; j < dimN; j++) {
+                    matrixB[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            renderGrids();
+            generateSteps();
+            resetSimulation();
+        }
+
+        function resetValues() {
+            document.getElementById('dimM').value = 2;
+            document.getElementById('dimK_A').value = 3;
+            document.getElementById('dimK_B').value = 3;
+            document.getElementById('dimN').value = 2;
+            
+            matrixA = [
+                [1, 2, 3],
+                [4, 5, 6]
+            ];
+            matrixB = [
+                [7, 8],
+                [9, 1],
+                [2, 3]
+            ];
+            handleDimensionChange();
+        }
+
+        function updateMatricesFromInputs() {
+            renderGrids();
+            generateSteps();
+            resetSimulation();
+        }
+
+        function renderGrids() {
+            document.getElementById('lblM').innerText = dimM;
+            document.getElementById('lblK_A').innerText = dimK;
+            document.getElementById('lblK_B').innerText = dimK;
+            document.getElementById('lblN').innerText = dimN;
+            document.getElementById('lblM_C').innerText = dimM;
+            document.getElementById('lblN_C').innerText = dimN;
+
+            const gridA = document.getElementById('matrixA-grid');
+            gridA.style.gridTemplateColumns = `repeat(${dimK}, minmax(0, 1fr))`;
+            gridA.innerHTML = '';
+            for (let i = 0; i < dimM; i++) {
+                for (let j = 0; j < dimK; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = matrixA[i][j];
+                    input.id = `cell-A-${i}-${j}`;
+                    input.className = 'matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-cyan-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-cyan-400';
+                    input.addEventListener('change', (e) => {
+                        matrixA[i][j] = parseInt(e.target.value) || 0;
+                        generateSteps();
+                        resetSimulation();
+                    });
+                    gridA.appendChild(input);
+                }
+            }
+
+            const gridB = document.getElementById('matrixB-grid');
+            gridB.style.gridTemplateColumns = `repeat(${dimN}, minmax(0, 1fr))`;
+            gridB.innerHTML = '';
+            for (let i = 0; i < dimK; i++) {
+                for (let j = 0; j < dimN; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = matrixB[i][j];
+                    input.id = `cell-B-${i}-${j}`;
+                    input.className = 'matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 text-rose-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base focus:outline-none focus:border-rose-400';
+                    input.addEventListener('change', (e) => {
+                        matrixB[i][j] = parseInt(e.target.value) || 0;
+                        generateSteps();
+                        resetSimulation();
+                    });
+                    gridB.appendChild(input);
+                }
+            }
+
+            const gridC = document.getElementById('matrixC-grid');
+            gridC.style.gridTemplateColumns = `repeat(${dimN}, minmax(0, 1fr))`;
+            gridC.innerHTML = '';
+            for (let i = 0; i < dimM; i++) {
+                for (let j = 0; j < dimN; j++) {
+                    const cell = document.createElement('div');
+                    cell.id = `cell-C-${i}-${j}`;
+                    cell.innerText = '?';
+                    cell.className = 'matrix-cell w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/80 text-emerald-400 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm sm:text-base flex items-center justify-center';
+                    gridC.appendChild(cell);
+                }
+            }
+        }
+
+        function generateSteps() {
+            steps = [];
+            for (let i = 0; i < dimM; i++) {
+                for (let j = 0; j < dimN; j++) {
+                    let terms = [];
+                    let runningSum = 0;
+
+                    for (let k = 0; k < dimK; k++) {
+                        const valA = matrixA[i][k];
+                        const valB = matrixB[k][j];
+                        const prod = valA * valB;
+                        runningSum += prod;
+
+                        terms.push({
+                            k: k,
+                            valA: valA,
+                            valB: valB,
+                            prod: prod,
+                            accumulated: runningSum
+                        });
+
+                        steps.push({
+                            i: i,
+                            j: j,
+                            k: k,
+                            type: 'element',
+                            terms: [...terms],
+                            currentValA: valA,
+                            currentValB: valB,
+                            prod: prod,
+                            runningSum: runningSum
+                        });
+                    }
+
+                    steps.push({
+                        i: i,
+                        j: j,
+                        type: 'cell-complete',
+                        terms: [...terms],
+                        finalSum: runningSum
+                    });
+                }
+            }
+        }
+
+        function renderCurrentStep() {
+            if (currentStepIndex < 0 || currentStepIndex >= steps.length) {
+                clearHighlights();
+                document.getElementById('formula-display').innerHTML = `<span class="text-slate-500 italic">Nyomj a "Lejátszás" vagy "Következő" gombra a szimulációhoz!</span>`;
+                return;
+            }
+
+            const step = steps[currentStepIndex];
+            clearHighlights();
+
+            for (let k = 0; k < dimK; k++) {
+                const el = document.getElementById(`cell-A-${step.i}-${k}`);
+                if (el) el.classList.add('highlight-a');
+            }
+
+            for (let k = 0; k < dimK; k++) {
+                const el = document.getElementById(`cell-B-${k}-${step.j}`);
+                if (el) el.classList.add('highlight-b');
+            }
+
+            const cellC = document.getElementById(`cell-C-${step.i}-${step.j}`);
+            if (cellC) cellC.classList.add('highlight-c');
+
+            if (step.type === 'element') {
+                const activeA = document.getElementById(`cell-A-${step.i}-${step.k}`);
+                const activeB = document.getElementById(`cell-B-${step.k}-${step.j}`);
+                if (activeA) activeA.classList.add('highlight-active-a');
+                if (activeB) activeB.classList.add('highlight-active-b');
+
+                let formulaHTML = `<span class="text-cyan-400 font-bold">C[${step.i + 1}][${step.j + 1}]</span> = `;
+                
+                const termsArr = step.terms.map((t, idx) => {
+                    const isCurrent = idx === step.terms.length - 1;
+                    const style = isCurrent ? "bg-amber-500/20 text-amber-300 border border-amber-500/50 px-1.5 py-0.5 rounded" : "text-slate-300";
+                    return `<span class="${style}">(${t.valA} × ${t.valB})</span>`;
+                });
+
+                formulaHTML += termsArr.join(' + ');
+                const sumTerms = step.terms.map(t => t.prod).join(' + ');
+                formulaHTML += ` = ${sumTerms} = <span class="text-emerald-400 font-bold text-lg">${step.runningSum}</span>`;
+
+                document.getElementById('formula-display').innerHTML = formulaHTML;
+                if (cellC) cellC.innerText = step.runningSum;
+
+            } else if (step.type === 'cell-complete') {
+                let formulaHTML = `<span class="text-emerald-400 font-bold">C[${step.i + 1}][${step.j + 1}] KÉSZ!</span> = `;
+                formulaHTML += step.terms.map(t => `${t.prod}`).join(' + ');
+                formulaHTML += ` = <span class="text-emerald-400 font-extrabold text-xl">${step.finalSum}</span>`;
+
+                document.getElementById('formula-display').innerHTML = formulaHTML;
+                if (cellC) cellC.innerText = step.finalSum;
+            }
+
+            drawArrows();
+        }
+
+        function drawArrows() {
+            const svg = document.getElementById('svg-overlay');
+            svg.innerHTML = '';
+
+            if (currentStepIndex < 0 || currentStepIndex >= steps.length) return;
+
+            const step = steps[currentStepIndex];
+            if (step.type !== 'element') return;
+
+            const elemA = document.getElementById(`cell-A-${step.i}-${step.k}`);
+            const elemB = document.getElementById(`cell-B-${step.k}-${step.j}`);
+            const elemC = document.getElementById(`cell-C-${step.i}-${step.j}`);
+
+            if (!elemA || !elemB || !elemC) return;
+
+            const rectA = elemA.getBoundingClientRect();
+            const rectB = elemB.getBoundingClientRect();
+            const rectC = elemC.getBoundingClientRect();
+            const containerRect = document.getElementById('svg-container').getBoundingClientRect();
+
+            const posA = {
+                x: rectA.left + rectA.width / 2 - containerRect.left,
+                y: rectA.top + rectA.height / 2 - containerRect.top
+            };
+            const posB = {
+                x: rectB.left + rectB.width / 2 - containerRect.left,
+                y: rectB.top + rectB.height / 2 - containerRect.top
+            };
+            const posC = {
+                x: rectC.left + rectC.width / 2 - containerRect.left,
+                y: rectC.top + rectC.height / 2 - containerRect.top
+            };
+
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            defs.innerHTML = `
+                <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                    <polygon points="0 0, 8 4, 0 8" fill="#f59e0b" />
+                </marker>
+            `;
+            svg.appendChild(defs);
+
+            createCurvePath(svg, posA, posC, '#38bdf8');
+            createCurvePath(svg, posB, posC, '#f43f5e');
+        }
+
+        function createCurvePath(svg, start, end, color) {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const cx = start.x + dx / 2;
+            const cy = start.y + dy / 2 - 40;
+
+            const d = `M ${start.x} ${start.y} Q ${cx} ${cy} ${end.x} ${end.y}`;
+            path.setAttribute('d', d);
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', color);
+            path.setAttribute('stroke-width', '2.5');
+            path.setAttribute('class', 'arrow-line');
+            path.setAttribute('marker-end', 'url(#arrowhead)');
+
+            svg.appendChild(path);
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.matrix-cell').forEach(cell => {
+                cell.classList.remove('highlight-a', 'highlight-b', 'highlight-c', 'highlight-active-a', 'highlight-active-b');
+            });
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseSimulation();
+            } else {
+                startSimulation();
+            }
+        }
+
+        function startSimulation() {
+            if (currentStepIndex >= steps.length - 1) {
+                currentStepIndex = -1;
+            }
+            isPlaying = true;
+            document.getElementById('playIcon').className = 'fa-solid fa-pause';
+            document.getElementById('playText').innerText = 'Szünet';
+            
+            runTimer();
+        }
+
+        function runTimer() {
+            if (!isPlaying) return;
+
+            nextStep();
+
+            if (currentStepIndex >= steps.length - 1) {
+                pauseSimulation();
+                return;
+            }
+
+            const speed = parseInt(document.getElementById('speedSlider').value);
+            timer = setTimeout(runTimer, speed);
+        }
+
+        function pauseSimulation() {
+            isPlaying = false;
+            clearTimeout(timer);
+            document.getElementById('playIcon').className = 'fa-solid fa-play';
+            document.getElementById('playText').innerText = 'Lejátszás';
+        }
+
+        function nextStep() {
+            if (currentStepIndex < steps.length - 1) {
+                currentStepIndex++;
+                renderCurrentStep();
+            }
+        }
+
+        function prevStep() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                renderCurrentStep();
+            }
+        }
+
+        function resetSimulation() {
+            pauseSimulation();
+            currentStepIndex = -1;
+            
+            for (let i = 0; i < dimM; i++) {
+                for (let j = 0; j < dimN; j++) {
+                    const cellC = document.getElementById(`cell-C-${i}-${j}`);
+                    if (cellC) cellC.innerText = '?';
+                }
+            }
+
+            renderCurrentStep();
+        }
+
+        /* -------------------------------------------------------------
+           QUIZ / PRACTICE TASK ENGINE
+        ------------------------------------------------------------- */
+        function generatePracticeTask(difficulty) {
+            if (difficulty === 'easy') {
+                quizM = 2; quizK = 2; quizN = 2;
+            } else if (difficulty === 'medium') {
+                quizM = 2; quizK = 3; quizN = 2;
+            } else if (difficulty === 'hard') {
+                quizM = 3; quizK = 3; quizN = 3;
+            }
+
+            quizA = generateRandomMatrix(quizM, quizK);
+            quizB = generateRandomMatrix(quizK, quizN);
+            quizExpectedC = multiplyMatrices(quizA, quizB);
+
+            renderQuizGrids();
+
+            // Reset quiz UI state
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            feedbackBox.classList.add('hidden');
+            const scoreBadge = document.getElementById('quiz-score-badge');
+            scoreBadge.classList.add('hidden');
+        }
+
+        function generateRandomMatrix(rows, cols) {
+            let res = [];
+            for (let i = 0; i < rows; i++) {
+                let row = [];
+                for (let j = 0; j < cols; j++) {
+                    row.push(Math.floor(Math.random() * 8) + 1);
+                }
+                res.push(row);
+            }
+            return res;
+        }
+
+        function multiplyMatrices(A, B) {
+            let M = A.length;
+            let K = A[0].length;
+            let N = B[0].length;
+            let C = Array.from({ length: M }, () => Array(N).fill(0));
+
+            for (let i = 0; i < M; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let k = 0; k < K; k++) {
+                        C[i][j] += A[i][k] * B[k][j];
+                    }
+                }
+            }
+            return C;
+        }
+
+        function renderQuizGrids() {
+            // Matrix A Quiz Grid
+            const gridA = document.getElementById('quizA-grid');
+            gridA.style.gridTemplateColumns = `repeat(${quizK}, minmax(0, 1fr))`;
+            gridA.innerHTML = '';
+            for (let i = 0; i < quizM; i++) {
+                for (let j = 0; j < quizK; j++) {
+                    const cell = document.createElement('div');
+                    cell.innerText = quizA[i][j];
+                    cell.className = 'w-10 h-10 bg-slate-800 text-cyan-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm';
+                    gridA.appendChild(cell);
+                }
+            }
+
+            // Matrix B Quiz Grid
+            const gridB = document.getElementById('quizB-grid');
+            gridB.style.gridTemplateColumns = `repeat(${quizN}, minmax(0, 1fr))`;
+            gridB.innerHTML = '';
+            for (let i = 0; i < quizK; i++) {
+                for (let j = 0; j < quizN; j++) {
+                    const cell = document.createElement('div');
+                    cell.innerText = quizB[i][j];
+                    cell.className = 'w-10 h-10 bg-slate-800 text-rose-300 font-mono font-bold flex items-center justify-center border border-slate-700 rounded-lg text-sm';
+                    gridB.appendChild(cell);
+                }
+            }
+
+            // Student Matrix C Answer Grid
+            const gridC = document.getElementById('quizC-grid');
+            gridC.style.gridTemplateColumns = `repeat(${quizN}, minmax(0, 1fr))`;
+            gridC.innerHTML = '';
+            for (let i = 0; i < quizM; i++) {
+                for (let j = 0; j < quizN; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = '?';
+                    input.id = `quiz-input-${i}-${j}`;
+                    input.className = 'w-12 h-12 bg-slate-800 text-amber-300 font-mono font-bold text-center border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-amber-400';
+                    gridC.appendChild(input);
+                }
+            }
+        }
+
+        function checkStudentAnswers() {
+            let correctCount = 0;
+            let totalCount = quizM * quizN;
+            let errorDetails = [];
+
+            for (let i = 0; i < quizM; i++) {
+                for (let j = 0; j < quizN; j++) {
+                    const input = document.getElementById(`quiz-input-${i}-${j}`);
+                    const val = parseInt(input.value);
+                    const expected = quizExpectedC[i][j];
+
+                    input.classList.remove('cell-correct', 'cell-incorrect');
+
+                    if (val === expected) {
+                        correctCount++;
+                        input.classList.add('cell-correct');
+                    } else {
+                        input.classList.add('cell-incorrect');
+                        
+                        // Construct detailed step-by-step math for error feedback
+                        let terms = [];
+                        for (let k = 0; k < quizK; k++) {
+                            terms.push(`${quizA[i][k]}×${quizB[k][j]}`);
+                        }
+                        errorDetails.push(`• <strong>C[${i+1}][${j+1}]</strong>: Helyes érték: <strong>${expected}</strong> (Kiszámítása: ${terms.join(' + ')} = ${expected}). Te írtad: ${isNaN(val) ? 'üres' : val}`);
+                    }
+                }
+            }
+
+            // Score calculation
+            const scoreBadge = document.getElementById('quiz-score-badge');
+            scoreBadge.classList.remove('hidden', 'bg-emerald-950/80', 'border-emerald-600', 'text-emerald-400', 'bg-rose-950/80', 'border-rose-600', 'text-rose-400');
+            
+            if (correctCount === totalCount) {
+                scoreBadge.classList.add('bg-emerald-950/80', 'border-emerald-600', 'text-emerald-400');
+                scoreBadge.innerHTML = `<i class="fa-solid fa-trophy mr-1"></i> Hibátlan! ${correctCount}/${totalCount} helyes (100%)`;
+            } else {
+                scoreBadge.classList.add('bg-rose-950/80', 'border-rose-600', 'text-rose-400');
+                scoreBadge.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> Eredmény: ${correctCount}/${totalCount} helyes (${Math.round((correctCount/totalCount)*100)}%)`;
+            }
+
+            // Show feedback
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            if (correctCount === totalCount) {
+                feedbackBox.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Gratulálunk! Minden számítást pontosan elvégeztél!</span>`;
+            } else {
+                feedbackBox.innerHTML = `
+                    <div class="text-rose-400 font-bold mb-2"><i class="fa-solid fa-triangle-exclamation"></i> Néhány válasz hibás volt. Nézd meg a javítást:</div>
+                    <div class="space-y-1 text-slate-300">${errorDetails.join('<br>')}</div>
+                `;
+            }
+        }
+
+        function toggleHint() {
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            let hints = [];
+            for (let i = 0; i < quizM; i++) {
+                for (let j = 0; j < quizN; j++) {
+                    let terms = [];
+                    for (let k = 0; k < quizK; k++) {
+                        terms.push(`(A[${i+1}][${k+1}] × B[${k+1}][${j+1}])`);
+                    }
+                    hints.push(`• C[${i+1}][${j+1}] képlete = ${terms.join(' + ')}`);
+                }
+            }
+
+            feedbackBox.innerHTML = `
+                <div class="text-amber-400 font-bold mb-2"><i class="fa-solid fa-lightbulb"></i> Képlet segítség a feladathoz:</div>
+                <div class="text-slate-300 space-y-1">${hints.join('<br>')}</div>
+            `;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            if (tab === 'python') {
+                event.currentTarget.classList.add('active');
+                document.getElementById('tab-python').classList.remove('hidden');
+            } else if (tab === 'cpp') {
+                event.currentTarget.classList.add('active');
+                document.getElementById('tab-cpp').classList.remove('hidden');
+            }
+        }
+
+        function downloadCode(type) {
+            let content = "";
+            let filename = "";
+            let mime = "text/plain";
+
+            if (type === 'html') {
+                content = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                filename = "matrix_multiplication_simulator.html";
+                mime = "text/html";
+            } else if (type === 'python') {
+                content = `# Mátrixszorzás Python nyelven
+
+def matrix_multiply(A, B):
+    M, K, N = len(A), len(A[0]), len(B[0])
+    C = [[0 for _ in range(N)] for _ in range(M)]
+    
+    for i in range(M):
+        for j in range(N):
+            for k in range(K):
+                C[i][j] += A[i][k] * B[k][j]
+    return C
+
+if __name__ == "__main__":
+    A = ${JSON.stringify(matrixA)}
+    B = ${JSON.stringify(matrixB)}
+    
+    print("A mátrix:", A)
+    print("B mátrix:", B)
+    result = matrix_multiply(A, B)
+    print("Eredmény (C):", result)
+`;
+                filename = "matrix_multiply.py";
+            } else if (type === 'cpp') {
+                content = `// Mátrixszorzás C++ nyelven
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<vector<int>> matrixMultiply(const vector<vector<int>>& A, const vector<vector<int>>& B) {
+    int M = A.size();
+    int K = A[0].size();
+    int N = B[0].size();
+
+    vector<vector<int>> C(M, vector<int>(N, 0));
+
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            for (int k = 0; k < K; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    return C;
+}
+
+int main() {
+    vector<vector<int>> A = ${formatCppMatrix(matrixA)};
+    vector<vector<int>> B = ${formatCppMatrix(matrixB)};
+
+    auto C = matrixMultiply(A, B);
+
+    cout << "Eredmeny matrix (C):" << endl;
+    for (const auto& row : C) {
+        for (int val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+`;
+                filename = "matrix_multiply.cpp";
+            }
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:' + mime + ';charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function formatCppMatrix(arr) {
+            let str = "{\n";
+            for (let i = 0; i < arr.length; i++) {
+                str += "        {" + arr[i].join(", ") + "}";
+                if (i < arr.length - 1) str += ",";
+                str += "\n";
+            }
+            str += "    }";
+            return str;
+        }
+    </script>
+
+</body></html>
