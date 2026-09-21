@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!-- saved from url=(0162)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/Kocka%20H%C3%A1l%C3%B3k,%20Permut%C3%A1ci%C3%B3k%20&%20M%C3%A1trix%20Transzform%C3%A1ci%C3%B3k.html -->
+<html lang="hu" class="h-full"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kocka Hálók, Permutációk &amp; Mátrix Transzformációk</title>
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .net-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 22px);
+            grid-template-rows: repeat(4, 22px);
+            gap: 2px;
+        }
+        .net-cell {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .net-cell.active {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+        }
+        .net-cell.inactive {
+            background-color: #f1f5f9;
+        }
+        .dark .net-cell.inactive {
+            background-color: #334155;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sticky{position:sticky}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.my-2{margin-top:0.5rem;margin-bottom:0.5rem}.mb-1{margin-bottom:0.25rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.mb-2{margin-bottom:0.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-full{height:100%}.min-h-full{min-height:100%}.w-10{width:2.5rem}.w-full{width:100%}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.origin-center{transform-origin:center}.scale-125{--tw-scale-x:1.25;--tw-scale-y:1.25;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-\[2\]{--tw-scale-x:2;--tw-scale-y:2;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(226 232 240 / var(--tw-divide-opacity, 1))}.overflow-x-auto{overflow-x:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229 / var(--tw-border-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-indigo-500\/10{background-color:rgb(99 102 241 / 0.1)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-purple-500\/10{background-color:rgb(168 85 247 / 0.1)}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-indigo-500\/10{--tw-gradient-from:rgb(99 102 241 / 0.1) var(--tw-gradient-from-position);--tw-gradient-to:rgb(99 102 241 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-purple-500\/10{--tw-gradient-to:rgb(168 85 247 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(168 85 247 / 0.1) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-pink-500\/10{--tw-gradient-to:rgb(236 72 153 / 0.1) var(--tw-gradient-to-position)}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-3{padding-bottom:0.75rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:Inter, sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-indigo-500\/30{--tw-shadow-color:rgb(99 102 241 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-indigo-500\/20{--tw-ring-color:rgb(99 102 241 / 0.2)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-indigo-500 *::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-indigo-500::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:border-slate-300:hover{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-300:hover{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.dark\:divide-slate-700:is(.dark *) > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(51 65 85 / var(--tw-divide-opacity, 1))}.dark\:border-indigo-950:is(.dark *){--tw-border-opacity:1;border-color:rgb(30 27 75 / var(--tw-border-opacity, 1))}.dark\:border-slate-700:is(.dark *){--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.dark\:border-slate-800:is(.dark *){--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.dark\:bg-indigo-950\/50:is(.dark *){background-color:rgb(30 27 75 / 0.5)}.dark\:bg-slate-700:is(.dark *){--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800\/80:is(.dark *){background-color:rgb(30 41 59 / 0.8)}.dark\:bg-slate-900:is(.dark *){--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.dark\:text-indigo-400:is(.dark *){--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.dark\:text-purple-400:is(.dark *){--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.dark\:text-slate-100:is(.dark *){--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.dark\:text-slate-200:is(.dark *){--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.dark\:text-slate-300:is(.dark *){--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.dark\:text-slate-400:is(.dark *){--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.dark\:hover\:border-slate-600:hover:is(.dark *){--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.dark\:hover\:bg-slate-800:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.dark\:hover\:bg-slate-700\/50:hover:is(.dark *){background-color:rgb(51 65 85 / 0.5)}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-full flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
+                    🧮
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg sm:text-xl tracking-tight">Kocka Hálók &amp; Mátrixok</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Permutációk és Lineáris Transzformációk</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-1">
+                <button onclick="switchTab('nets')" id="nav-nets" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">11 Háló &amp; Permutáció</button>
+                <button onclick="switchTab('matrices')" id="nav-matrices" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Mátrix Transzformációk</button>
+                <button onclick="switchTab('transform')" id="nav-transform" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Interaktív Átalakító Labor</button>
+                <button onclick="switchTab('theory')" id="nav-theory" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">Matematikai Alapok</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="md:hidden flex bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2 overflow-x-auto space-x-1 shrink-0">
+        <button onclick="switchTab('nets')" id="mob-nav-nets" class="px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap text-slate-600 dark:text-slate-300">Hálók &amp; Permutációk</button>
+        <button onclick="switchTab('matrices')" id="mob-nav-matrices" class="px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap text-slate-600 dark:text-slate-300">Mátrixok</button>
+        <button onclick="switchTab('transform')" id="mob-nav-transform" class="px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap text-slate-600 dark:text-slate-300">Laboratórium</button>
+        <button onclick="switchTab('theory')" id="mob-nav-theory" class="px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400">Elmélet</button>
+    </div>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: 11 NETS & PERMUTATIONS -->
+        <section id="tab-nets" class="space-y-8 hidden">
+            <div class="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl p-6 sm:p-8 border border-indigo-100 dark:border-indigo-950">
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-3">A Kocka 11 Hálója és Lapok Permutációi</h2>
+                <p class="text-slate-600 dark:text-slate-300 max-w-4xl leading-relaxed">
+                    Amikor egy kocka 6 lapját ({1, 2, 3, 4, 5, 6}) síkba kifejtjük, a lapok elrendezését a szimmetrikus csoport $S_6$ elemei (azaz a lapok <strong>permutációi</strong>) határozzák meg a térbeli orientáció alatt. Az alábbi táblázat sorba rendezi mind a 11 hálót, megadva a lapok elhelyezkedési permutációját és a koordináta-mátrixaikat.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Gallery Grid -->
+                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="nets-perm-gallery"><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#1</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Klasszikus Kereszt</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#2</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">T-Alakzat</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#3</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">L-Alakzat / Lépcsős</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#4</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Hosszú Cikk-Cakk</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#5</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Cikcakkos Lépcső</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#6</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Aszimmetrikus Kampó</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#7</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Dupla Lépcső</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-indigo-600 ring-2 ring-indigo-500/20 shadow-md"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#8</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">U-Alakú Háló</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#9</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Hosszú Kígyó (4x1)</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#10</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Offset Kereszt</div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"><div class="w-full flex items-center justify-between mb-2"><span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#11</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span></div><div class="net-grid my-2"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div></div><div class="mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full">Hatos Lépcsősor</div></div></div>
+
+                <!-- Inspector Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-700">
+                            <h3 id="net-ins-title" class="font-bold text-lg text-indigo-600 dark:text-indigo-400">U-Alakú Háló</h3>
+                            <span id="net-ins-badge" class="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Háló #8</span>
+                        </div>
+                        <div class="flex justify-center my-6">
+                            <div id="net-ins-preview" class="net-grid scale-125 transform origin-center p-2 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700"><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div>
+                        </div>
+                        <div class="space-y-4 text-xs">
+                            <div class="bg-slate-50 dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <span class="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Lap Címkék Permutációja ($\sigma \in S_6$):</span>
+                                <p id="net-ins-perm" class="text-indigo-600 dark:text-indigo-400 font-mono font-bold">(1 4 5)(2 3)</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <span class="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Sorozati eloszlás (Row profile):</span>
+                                <p id="net-ins-rows" class="text-slate-600 dark:text-slate-400 font-mono">[3,1,2]</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <span class="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Kombinatorikus Asimmetria / Szimmetria:</span>
+                                <p id="net-ins-sym" class="text-slate-600 dark:text-slate-400">Tengelyszimmetrikus</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 text-center">
+                        Minden háló izomorf egy élszomszédos feszítőfával a kockagráf duálisán.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: MATRIX TRANSFORMATIONS -->
+        <section id="tab-matrices" class="space-y-8 hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Mátrix Transzformációk a Kocka Hálókon</h2>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Hogyan alakítható át az egyik háló a másikba lineáris algebrával? A síkbeli elrendezéseket koordináták jelölik ($x, y \in \{0, 1, 2, 3\}$). Az alábbi mátrixok hatnak a pozícióvektorokra:
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Rotation Matrix -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h3 class="font-bold text-sm text-indigo-600 dark:text-indigo-400">1. Forgatási Mátrix (Rotation $R_\theta$)</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-300">
+                            Forgatja a háló elemeit 90°-kal, 180°-kal vagy 270°-kal a síkban.
+                        </p>
+                        <div class="bg-slate-900 text-slate-100 p-3 rounded-xl font-mono text-xs text-center shadow-inner">
+                            R(90°) = [ [0, -1], [1, 0] ]
+                        </div>
+                    </div>
+
+                    <!-- Reflection Matrix -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h3 class="font-bold text-sm text-indigo-600 dark:text-indigo-400">2. Tükrözési Mátrix (Reflection $F$)</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-300">
+                            Tükrözi a hálót vízszintes vagy függőleges tengely mentén (kiralitás váltás).
+                        </p>
+                        <div class="bg-slate-900 text-slate-100 p-3 rounded-xl font-mono text-xs text-center shadow-inner">
+                            F_x = [ [-1, 0], [0, 1] ]
+                        </div>
+                    </div>
+
+                    <!-- Permutation Matrix -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h3 class="font-bold text-sm text-indigo-600 dark:text-indigo-400">3. Permutációs Mátrix ($P \in \{0,1\}^{6 \times 6}$)</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-300">
+                            Átrendezi a 6 lap címkéjét és indexsorrendjét a kocka szimmetriacsoportja ($O_h$) alapján.
+                        </p>
+                        <div class="bg-slate-900 text-slate-100 p-3 rounded-xl font-mono text-xs text-center shadow-inner">
+                            P · v = v' (lapindex csere)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matrix Table Overview -->
+                <div class="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs uppercase font-semibold">
+                            <tr>
+                                <th class="p-3">Háló #</th>
+                                <th class="p-3">Háló Neve</th>
+                                <th class="p-3">Címke Permutáció $\sigma$</th>
+                                <th class="p-3">Alap Mátrix Transzformáció</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matrix-overview-tbody" class="divide-y divide-slate-200 dark:divide-slate-700 text-xs font-mono"><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#1</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Klasszikus Kereszt</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 2)(3 4 5 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>1</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#2</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">T-Alakzat</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 3 5)(2 4)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>2</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#3</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">L-Alakzat / Lépcsős</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 4)(2 3 5)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>3</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#4</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Hosszú Cikk-Cakk</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 5 6)(2 3)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>4</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#5</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Cikcakkos Lépcső</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 2 4)(3 5 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>5</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#6</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Aszimmetrikus Kampó</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 3)(2 4 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>6</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#7</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Dupla Lépcső</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 2 3 4)(5 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>7</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#8</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">U-Alakú Háló</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 4 5)(2 3)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>8</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#9</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Hosszú Kígyó (4x1)</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 2 3 4 5 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>9</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#10</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Offset Kereszt</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 3 4)(2 5)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>10</sub> · R(90°) · F<sub>x</sub></td>
+                </tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#11</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">Hatos Lépcsősor</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">(1 5)(2 4 6)</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>11</sub> · R(90°) · F<sub>x</sub></td>
+                </tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: INTERACTIVE LAB -->
+        <section id="tab-transform" class="space-y-8 hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Interaktív Átalakító Laboratórium</h2>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Válassz ki egy kiinduló hálót, alkalmazz rajta <strong>mátrix transzformációkat</strong> (forgatás, tükrözés) és figyeld meg, hogyan alakul át a háló és hogyan változnak meg a permutációs indexek valós időben!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Controls Column -->
+                    <div class="space-y-4 bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">1. Kiinduló Háló</h3>
+                        <select id="lab-select-net" onchange="updateLabNet()" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium"><option value="1">#1 - Klasszikus Kereszt</option><option value="2">#2 - T-Alakzat</option><option value="3">#3 - L-Alakzat / Lépcsős</option><option value="4">#4 - Hosszú Cikk-Cakk</option><option value="5">#5 - Cikcakkos Lépcső</option><option value="6">#6 - Aszimmetrikus Kampó</option><option value="7">#7 - Dupla Lépcső</option><option value="8">#8 - U-Alakú Háló</option><option value="9">#9 - Hosszú Kígyó (4x1)</option><option value="10">#10 - Offset Kereszt</option><option value="11">#11 - Hatos Lépcsősor</option></select>
+
+                        <div class="pt-4 border-t border-slate-200 dark:border-slate-700 space-y-3">
+                            <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">2. Mátrix Műveletek</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="applyLabTransform('rot90')" class="py-2 px-3 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors">Forgatás 90°</button>
+                                <button onclick="applyLabTransform('rot180')" class="py-2 px-3 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors">Forgatás 180°</button>
+                                <button onclick="applyLabTransform('reflX')" class="py-2 px-3 bg-purple-600 text-white rounded-xl text-xs font-semibold hover:bg-purple-700 transition-colors">Tükrözés X</button>
+                                <button onclick="applyLabTransform('reflY')" class="py-2 px-3 bg-purple-600 text-white rounded-xl text-xs font-semibold hover:bg-purple-700 transition-colors">Tükrözés Y</button>
+                            </div>
+                            <button onclick="resetLabTransform()" class="w-full py-2 px-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-semibold hover:bg-slate-300 transition-colors mt-2">Alaphelyzet</button>
+                        </div>
+                    </div>
+
+                    <!-- Visual Canvas / Preview Column -->
+                    <div class="md:col-span-2 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-6">
+                        <div class="text-center">
+                            <span id="lab-net-title" class="font-bold text-lg text-indigo-600 dark:text-indigo-400">Transzformált Háló Alakzat</span>
+                            <p id="lab-matrix-desc" class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">Mátrix Művelet: F_x Vízszintes Tükrözési Mátrix alkalmazva</p>
+                        </div>
+                        <div id="lab-grid-preview" class="net-grid scale-[2] transform origin-center my-6 p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-md"><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div><div class="net-cell active"></div><div class="net-cell inactive"></div><div class="net-cell inactive"></div></div>
+                        <div class="w-full bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-xs space-y-1">
+                            <span class="font-semibold text-slate-700 dark:text-slate-200">Aktuális Lap Index Permutáció ($\sigma_{curr}$):</span>
+                            <p id="lab-perm-output" class="font-mono text-indigo-600 dark:text-indigo-400 font-bold text-sm">(módosult permutáció)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: THEORY & MATH -->
+        <section id="tab-theory" class="space-y-8">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Matematikai és Csoportelméleti Hátterek</h2>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        A kocka hálók és mátrixok kapcsolata a kombinatorikus gráfelmélet és a véges csoportok elméletének gyönyörű metszéspontja.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">1</div>
+                        <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">Permutációk a Lapok között ($S_6$)</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            A kockának 6 lapja van. A szimmetrikus csoport $S_6$ tartalmazza az összes lehetséges lapátrendezést ($6! = 720$ elem). Ebből a kocka merev testként való elforgatásai a 24 elemű oktaéderes csoportot ($O_h$) generálják. A 11 háló pontosan a 24-es pályák (orbits) képviselői a feszítőfák terében.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">2</div>
+                        <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">Lineáris Mátrix Műveletek a Rácson</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            A 4x4-es rács koordinátái vektorokként $\vec{v} = \begin{bmatrix} x \\ y \end{bmatrix}$ transzformálhatók. Az $R(\theta)$ forgatómátrix és az $F$ tükrözési mátrix szorzata lineáris leképezést hoz létre, amely megőrzi a lapok közötti éltopológiát.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>Interaktív Kocka Háló &amp; Permutációs Mátrix Labor • Minden jog fenntartva</p>
+    </footer>
+
+    <script>
+        // Data for the 11 Cube Nets with Permutation signatures
+        const CUBE_NETS = [
+            {
+                id: 1,
+                name: "Klasszikus Kereszt",
+                rowDist: [1, 4, 1],
+                perm: "(1 2)(3 4 5 6)",
+                symmetry: "Magas (4 tengelyes)",
+                matrix: [
+                    [0, 1, 0, 0],
+                    [1, 1, 1, 1],
+                    [0, 1, 0, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 2,
+                name: "T-Alakzat",
+                rowDist: [3, 2, 1],
+                perm: "(1 3 5)(2 4)",
+                symmetry: "Közepes",
+                matrix: [
+                    [1, 1, 1, 0],
+                    [0, 1, 1, 0],
+                    [0, 1, 0, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 3,
+                name: "L-Alakzat / Lépcsős",
+                rowDist: [1, 2, 3],
+                perm: "(1 4)(2 3 5)",
+                symmetry: "Alacsony",
+                matrix: [
+                    [1, 0, 0, 0],
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 1],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 4,
+                name: "Hosszú Cikk-Cakk",
+                rowDist: [1, 2, 2, 1],
+                perm: "(1 5 6)(2 3)",
+                symmetry: "Közepes",
+                matrix: [
+                    [1, 0, 0, 0],
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 0],
+                    [0, 0, 1, 1]
+                ]
+            },
+            {
+                id: 5,
+                name: "Cikcakkos Lépcső",
+                rowDist: [2, 2, 2],
+                perm: "(1 2 4)(3 5 6)",
+                symmetry: "Közepes",
+                matrix: [
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 0],
+                    [0, 0, 1, 1],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 6,
+                name: "Aszimmetrikus Kampó",
+                rowDist: [3, 1, 2],
+                perm: "(1 3)(2 4 6)",
+                symmetry: "Alacsony",
+                matrix: [
+                    [1, 1, 1, 0],
+                    [1, 0, 0, 0],
+                    [1, 1, 0, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 7,
+                name: "Dupla Lépcső",
+                rowDist: [1, 3, 2],
+                perm: "(1 2 3 4)(5 6)",
+                symmetry: "Alacsony",
+                matrix: [
+                    [0, 1, 0, 0],
+                    [1, 1, 1, 0],
+                    [0, 0, 1, 1],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 8,
+                name: "U-Alakú Háló",
+                rowDist: [3, 1, 2],
+                perm: "(1 4 5)(2 3)",
+                symmetry: "Tengelyszimmetrikus",
+                matrix: [
+                    [1, 1, 1, 0],
+                    [1, 0, 0, 0],
+                    [1, 0, 1, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 9,
+                name: "Hosszú Kígyó (4x1)",
+                rowDist: [4, 1, 1],
+                perm: "(1 2 3 4 5 6)",
+                symmetry: "Magas",
+                matrix: [
+                    [1, 1, 1, 1],
+                    [1, 0, 0, 0],
+                    [1, 0, 0, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 10,
+                name: "Offset Kereszt",
+                rowDist: [2, 3, 1],
+                perm: "(1 3 4)(2 5)",
+                symmetry: "Közepes",
+                matrix: [
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 1],
+                    [0, 0, 1, 0],
+                    [0, 0, 0, 0]
+                ]
+            },
+            {
+                id: 11,
+                name: "Hatos Lépcsősor",
+                rowDist: [2, 2, 1, 1],
+                perm: "(1 5)(2 4 6)",
+                symmetry: "Alacsony",
+                matrix: [
+                    [1, 1, 0, 0],
+                    [0, 1, 1, 0],
+                    [0, 0, 1, 0],
+                    [0, 0, 1, 0]
+                ]
+            }
+        ];
+
+        let activeNetId = 1;
+        let labCurrentMatrix = null;
+
+        function switchTab(tabName) {
+            const tabs = ['nets', 'matrices', 'transform', 'theory'];
+            tabs.forEach(t => {
+                const section = document.getElementById(`tab-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                const mobBtn = document.getElementById(`mob-nav-${t}`);
+                
+                if (t === tabName) {
+                    section.classList.remove('hidden');
+                    if(navBtn) navBtn.className = "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400";
+                    if(mobBtn) mobBtn.className = "px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400";
+                } else {
+                    section.classList.add('hidden');
+                    if(navBtn) navBtn.className = "px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800";
+                    if(mobBtn) mobBtn.className = "px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap text-slate-600 dark:text-slate-300";
+                }
+            });
+        }
+
+        function renderNetsGallery() {
+            const container = document.getElementById('nets-perm-gallery');
+            container.innerHTML = '';
+
+            CUBE_NETS.forEach(net => {
+                const card = document.createElement('div');
+                card.className = `bg-white dark:bg-slate-800 p-4 rounded-2xl border transition-all cursor-pointer flex flex-col items-center justify-between ${net.id === activeNetId ? 'border-indigo-600 ring-2 ring-indigo-500/20 shadow-md' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'}`;
+                card.onclick = () => selectNet(net.id);
+
+                const header = document.createElement('div');
+                header.className = 'w-full flex items-center justify-between mb-2';
+                header.innerHTML = `<span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">#${net.id}</span><span class="text-xs font-mono text-slate-400">σ ∈ S₆</span>`;
+                card.appendChild(header);
+
+                const gridDiv = document.createElement('div');
+                gridDiv.className = 'net-grid my-2';
+                net.matrix.forEach(row => {
+                    row.forEach(val => {
+                        const cell = document.createElement('div');
+                        cell.className = `net-cell ${val === 1 ? 'active' : 'inactive'}`;
+                        gridDiv.appendChild(cell);
+                    });
+                });
+                card.appendChild(gridDiv);
+
+                const footer = document.createElement('div');
+                footer.className = 'mt-2 text-center text-xs font-medium text-slate-600 dark:text-slate-300 truncate w-full';
+                footer.textContent = net.name;
+                card.appendChild(footer);
+
+                container.appendChild(card);
+            });
+
+            updateInspector(activeNetId);
+        }
+
+        function selectNet(id) {
+            activeNetId = id;
+            renderNetsGallery();
+        }
+
+        function updateInspector(id) {
+            const net = CUBE_NETS.find(n => n.id === id);
+            if (!net) return;
+
+            document.getElementById('net-ins-title').textContent = net.name;
+            document.getElementById('net-ins-badge').textContent = `Háló #${net.id}`;
+            document.getElementById('net-ins-perm').textContent = net.perm;
+            document.getElementById('net-ins-rows').textContent = JSON.stringify(net.rowDist);
+            document.getElementById('net-ins-sym').textContent = net.symmetry;
+
+            const preview = document.getElementById('net-ins-preview');
+            preview.innerHTML = '';
+            net.matrix.forEach(row => {
+                row.forEach(val => {
+                    const cell = document.createElement('div');
+                    cell.className = `net-cell ${val === 1 ? 'active' : 'inactive'}`;
+                    preview.appendChild(cell);
+                });
+            });
+        }
+
+        function renderMatrixOverviewTable() {
+            const tbody = document.getElementById('matrix-overview-tbody');
+            tbody.innerHTML = '';
+
+            CUBE_NETS.forEach(net => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">#${net.id}</td>
+                    <td class="p-3 font-medium text-slate-800 dark:text-slate-200 font-sans">${net.name}</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400">${net.perm}</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400">P<sub>${net.id}</sub> · R(90°) · F<sub>x</sub></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initLabSelect() {
+            const select = document.getElementById('lab-select-net');
+            select.innerHTML = '';
+            CUBE_NETS.forEach(net => {
+                const opt = document.createElement('option');
+                opt.value = net.id;
+                opt.textContent = `#${net.id} - ${net.name}`;
+                select.appendChild(opt);
+            });
+            updateLabNet();
+        }
+
+        function updateLabNet() {
+            const id = parseInt(document.getElementById('lab-select-net').value);
+            const net = CUBE_NETS.find(n => n.id === id);
+            if (!net) return;
+
+            labCurrentMatrix = net.matrix.map(row => [...row]);
+            renderLabState(net.name, "I (Egységmátrix)", net.perm);
+        }
+
+        function applyLabTransform(type) {
+            let newMatrix = Array(4).fill(0).map(() => Array(4).fill(0));
+            let desc = "";
+            let permNote = "(módosult permutáció)";
+
+            if (type === 'rot90') {
+                // 90 deg rotation of 4x4 matrix
+                for(let r=0; r<4; r++) {
+                    for(let c=0; c<4; c++) {
+                        newMatrix[c][3 - r] = labCurrentMatrix[r][c];
+                    }
+                }
+                desc = "R(90°) Forgatási Mátrix alkalmazva";
+            } else if (type === 'rot180') {
+                for(let r=0; r<4; r++) {
+                    for(let c=0; c<4; c++) {
+                        newMatrix[3 - r][3 - c] = labCurrentMatrix[r][c];
+                    }
+                }
+                desc = "R(180°) Forgatási Mátrix alkalmazva";
+            } else if (type === 'reflX') {
+                for(let r=0; r<4; r++) {
+                    for(let c=0; c<4; c++) {
+                        newMatrix[r][3 - c] = labCurrentMatrix[r][c];
+                    }
+                }
+                desc = "F_x Vízszintes Tükrözési Mátrix alkalmazva";
+            } else if (type === 'reflY') {
+                for(let r=0; r<4; r++) {
+                    for(let c=0; c<4; c++) {
+                        newMatrix[3 - r][c] = labCurrentMatrix[r][c];
+                    }
+                }
+                desc = "F_y Függőleges Tükrözési Mátrix alkalmazva";
+            }
+
+            labCurrentMatrix = newMatrix;
+            renderLabState("Transzformált Háló Alakzat", desc, permNote);
+        }
+
+        function resetLabTransform() {
+            updateLabNet();
+        }
+
+        function renderLabState(title, matrixDesc, permStr) {
+            document.getElementById('lab-net-title').textContent = title;
+            document.getElementById('lab-matrix-desc').textContent = `Mátrix Művelet: ${matrixDesc}`;
+            document.getElementById('lab-perm-output').textContent = permStr;
+
+            const grid = document.getElementById('lab-grid-preview');
+            grid.innerHTML = '';
+            labCurrentMatrix.forEach(row => {
+                row.forEach(val => {
+                    const cell = document.createElement('div');
+                    cell.className = `net-cell ${val === 1 ? 'active' : 'inactive'}`;
+                    grid.appendChild(cell);
+                });
+            });
+        }
+
+        window.onload = function() {
+            renderNetsGallery();
+            renderMatrixOverviewTable();
+            initLabSelect();
+        };
+    </script>
+
+</body></html>
