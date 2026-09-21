@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<!-- saved from url=(0134)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/Interakt%C3%ADv%20M%C3%A1trixszorz%C3%A1s%20Vizualiz%C3%A1ci%C3%B3.html -->
+<html lang="hu" class="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Mátrixszorzás Vizualizáció</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="./index_files/saved_resource"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="./index_files/lucide@latest"></script>
+    <style>
+        /* custom style for dynamic SVGs and smooth matrix transitions */
+        .matrix-cell {
+            transition: all 0.25s ease-in-out;
+        }
+        .cell-highlight-a {
+            background-color: rgba(59, 130, 246, 0.25) !important;
+            border-color: #3b82f6 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+        .cell-highlight-b {
+            background-color: rgba(168, 85, 247, 0.25) !important;
+            border-color: #a855f7 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+        .cell-highlight-c {
+            background-color: rgba(34, 197, 94, 0.25) !important;
+            border-color: #22c55e !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
+        }
+        .manual-selected {
+            ring: 3px solid #f59e0b;
+            background-color: rgba(245, 158, 11, 0.3) !important;
+        }
+        /* Connection lines styling */
+        .connection-line {
+            stroke-dasharray: 8;
+            animation: dash 1s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -16;
+            }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-2{margin-bottom:0.5rem}.ml-2{margin-left:0.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-3{height:0.75rem}.h-4{height:1rem}.h-full{height:100%}.h-12{height:3rem}.min-h-\[420px\]{min-height:420px}.min-h-screen{min-height:100vh}.w-3{width:0.75rem}.w-4{width:1rem}.w-full{width:100%}.w-12{width:3rem}.w-14{width:3.5rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-items-center{justify-items:center}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-amber-800\/50{border-color:rgb(146 64 14 / 0.5)}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.border-blue-800\/40{border-color:rgb(30 64 175 / 0.4)}.border-emerald-800\/40{border-color:rgb(6 95 70 / 0.4)}.border-purple-800\/40{border-color:rgb(107 33 168 / 0.4)}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-blue-500\/30{border-color:rgb(59 130 246 / 0.3)}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-purple-500\/30{border-color:rgb(168 85 247 / 0.3)}.bg-amber-950\/40{background-color:rgb(69 26 3 / 0.4)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-blue-950\/30{background-color:rgb(23 37 84 / 0.3)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/30{background-color:rgb(2 44 34 / 0.3)}.bg-purple-950\/30{background-color:rgb(59 7 100 / 0.3)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-700\/60{background-color:rgb(51 65 85 / 0.6)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/50{background-color:rgb(30 41 59 / 0.5)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/60{background-color:rgb(2 6 23 / 0.6)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgb(96 165 250 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-2xl{font-size:1.5rem;line-height:2rem}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.accent-blue-500{accent-color:#3b82f6}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:text-slate-200:hover{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}.focus\:ring-purple-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(168 85 247 / var(--tw-ring-opacity, 1))}@media (min-width: 768px){.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:p-6{padding:1.5rem}}@media (min-width: 1024px){.lg\:col-span-1{grid-column:span 1 / span 1}.lg\:col-span-3{grid-column:span 3 / span 3}.lg\:grid-cols-11{grid-template-columns:repeat(11, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans transition-colors duration-200" id="bodyElement">
+
+    <header class="border-b border-slate-800 bg-slate-950/60 backdrop-blur sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-blue-600 rounded-lg text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="grid" aria-hidden="true" class="lucide lucide-grid"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                        Mátrixszorzás Interaktív Vizualizáció
+                    </h1>
+                    <p class="text-xs text-slate-400">Lépésről lépésre szemléltetés &amp; Manual összekötés</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- Theme toggle button -->
+                <button id="themeToggleBtn" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Téma váltása">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sun" aria-hidden="true" id="sunIcon" class="lucide lucide-sun hidden"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="moon" aria-hidden="true" id="moonIcon" class="lucide lucide-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+        
+        <!-- Tab selector -->
+        <div class="flex border-b border-slate-800 overflow-x-auto">
+            <button onclick="switchTab('anim')" id="tab-anim" class="px-6 py-3 font-semibold text-blue-400 border-b-2 border-blue-500 flex items-center gap-2 whitespace-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play-circle" aria-hidden="true" class="lucide lucide-play-circle w-4 h-4"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"></path><circle cx="12" cy="12" r="10"></circle></svg> Interaktív Animáció
+            </button>
+            <button onclick="switchTab('python')" id="tab-python" class="px-6 py-3 font-semibold text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="code" aria-hidden="true" class="lucide lucide-code w-4 h-4"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg> Python Kód
+            </button>
+            <button onclick="switchTab('cpp')" id="tab-cpp" class="px-6 py-3 font-semibold text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="terminal" aria-hidden="true" class="lucide lucide-terminal w-4 h-4"><path d="M12 19h8"></path><path d="m4 17 6-6-6-6"></path></svg> C++ Kód
+            </button>
+            <button onclick="switchTab('html')" id="tab-html" class="px-6 py-3 font-semibold text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-code" aria-hidden="true" class="lucide lucide-file-code w-4 h-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 12.5 8 15l2 2.5"></path><path d="m14 12.5 2 2.5-2 2.5"></path></svg> Web App (HTML/JS)
+            </button>
+        </div>
+
+        <div id="content-anim" class="space-y-6">
+            
+            <!-- Controls Bar: Dimension & Values Config -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <!-- Dimension Selector -->
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders" aria-hidden="true" class="lucide lucide-sliders w-4 h-4"><path d="M10 8h4"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M17 16h4"></path><path d="M19 12V3"></path><path d="M19 21v-5"></path><path d="M3 14h4"></path><path d="M5 10V3"></path><path d="M5 21v-7"></path></svg> Mátrix Méretek
+                    </h3>
+                    <div class="flex items-center gap-2 text-sm">
+                        <span>A:</span>
+                        <select id="aRows" onchange="resetMatrices()" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200">
+                            <option value="2" selected="">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <span>x</span>
+                        <select id="aCols" onchange="updateBRows()" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200">
+                            <option value="2">2</option>
+                            <option value="3" selected="">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        
+                        <span class="ml-2">B:</span>
+                        <span id="bRowsLabel" class="bg-slate-900 border border-slate-700 px-2 py-1 rounded text-blue-400 font-mono">3</span>
+                        <span>x</span>
+                        <select id="bCols" onchange="resetMatrices()" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200">
+                            <option value="2" selected="">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Az A oszlopainak száma automatikusan megegyezik B soraival!</p>
+                </div>
+
+                <!-- Mode and Actions -->
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings" aria-hidden="true" class="lucide lucide-settings w-4 h-4"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg> Üzemmód
+                    </h3>
+                    <div class="flex gap-2">
+                        <button id="modeAutoBtn" onclick="setMode('auto')" class="flex-1 py-1.5 px-3 rounded-lg text-sm bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
+                            Automatikus / Lépésenkénti
+                        </button>
+                        <button id="modeManualBtn" onclick="setMode('manual')" class="flex-1 py-1.5 px-3 rounded-lg text-sm bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors">
+                            Kézi Összekötés
+                        </button>
+                    </div>
+                    <button onclick="randomizeValues()" class="mt-2 w-full py-1 text-xs bg-slate-700/60 hover:bg-slate-700 text-slate-300 rounded border border-slate-600 transition-colors flex items-center justify-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shuffle" aria-hidden="true" class="lucide lucide-shuffle w-3 h-3"><path d="m18 14 4 4-4 4"></path><path d="m18 2 4 4-4 4"></path><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"></path><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"></path><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"></path></svg> Véletlenszerű értékek
+                    </button>
+                </div>
+
+                <!-- Animation Controls -->
+                <div id="animControlsContainer">
+                    <h3 class="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" aria-hidden="true" class="lucide lucide-play w-4 h-4"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg> Animáció Vezérlése
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <button onclick="stepPrev()" class="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200" title="Előző lépés">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="skip-back" aria-hidden="true" class="lucide lucide-skip-back w-4 h-4"><path d="M17.971 4.285A2 2 0 0 1 21 6v12a2 2 0 0 1-3.029 1.715l-9.997-5.998a2 2 0 0 1-.003-3.432z"></path><path d="M3 20V4"></path></svg>
+                        </button>
+                        <button id="playPauseBtn" onclick="togglePlay()" class="p-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-white font-bold flex-1 flex items-center justify-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" aria-hidden="true" id="playIcon" class="lucide lucide-play w-4 h-4"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+                            <span id="playText">Lejátszás</span>
+                        </button>
+                        <button onclick="stepNext()" class="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200" title="Következő lépés">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="skip-forward" aria-hidden="true" class="lucide lucide-skip-forward w-4 h-4"><path d="M21 4v16"></path><path d="M6.029 4.285A2 2 0 0 0 3 6v12a2 2 0 0 0 3.029 1.715l9.997-5.998a2 2 0 0 0 .003-3.432z"></path></svg>
+                        </button>
+                        <button onclick="resetAnim()" class="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200" title="Újraindítás">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" aria-hidden="true" class="lucide lucide-rotate-ccw w-4 h-4"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="text-xs text-slate-400">Sebesség:</span>
+                        <input type="range" id="speedSlider" min="500" max="3000" step="250" value="1500" class="w-full accent-blue-500 cursor-pointer" onchange="updateSpeed()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative bg-slate-950 rounded-2xl p-6 border border-slate-800 shadow-2xl overflow-hidden min-h-[420px] flex flex-col justify-between">
+                
+                <!-- SVG Canvas Layer for Linking Lines -->
+                <svg id="svgCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"><path d="M 125.68030738830566 159.60000038146973 C 296.7268810272217 159.60000038146973, 296.7268810272217 144.79998207092285, 467.7734546661377 144.79998207092285" stroke="#3b82f6" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path><path d="M 608.5390796661377 144.79998207092285 C 810.635591506958 144.79998207092285, 810.635591506958 159.5999879837036, 1012.7321033477783 159.5999879837036" stroke="#10b981" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path><path d="M 220.39283180236816 159.60000038146973 C 344.08314323425293 159.60000038146973, 344.08314323425293 174.39998817443848, 467.7734546661377 174.39998817443848" stroke="#3b82f6" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path><path d="M 608.5390796661377 174.39998817443848 C 810.635591506958 174.39998817443848, 810.635591506958 159.5999879837036, 1012.7321033477783 159.5999879837036" stroke="#10b981" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path><path d="M 315.10532569885254 159.60000038146973 C 391.4393901824951 159.60000038146973, 391.4393901824951 204.00002479553223, 467.7734546661377 204.00002479553223" stroke="#3b82f6" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path><path d="M 608.5390796661377 204.00002479553223 C 810.635591506958 204.00002479553223, 810.635591506958 159.5999879837036, 1012.7321033477783 159.5999879837036" stroke="#10b981" stroke-width="2.5" stroke-opacity="0.7" fill="none" class="connection-line"></path></svg>
+
+                <!-- Matrices Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-11 gap-6 items-center justify-items-center relative z-20 my-auto">
+                    
+                    <!-- Matrix A -->
+                    <div class="lg:col-span-3 flex flex-col items-center">
+                        <span class="text-blue-400 font-bold mb-2 flex items-center gap-1">
+                            A Mátrix <span id="aDimLabel" class="text-xs text-slate-400 font-normal">(2x3)</span>
+                        </span>
+                        <div id="matrixAContainer" class="p-3 bg-blue-950/30 rounded-xl border border-blue-800/40 grid gap-2" style="grid-template-columns: repeat(3, minmax(0px, 1fr));"><input type="number" id="cell-A-0-0" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell cell-highlight-a"><input type="number" id="cell-A-0-1" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell cell-highlight-a"><input type="number" id="cell-A-0-2" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell cell-highlight-a"><input type="number" id="cell-A-1-0" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell"><input type="number" id="cell-A-1-1" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell"><input type="number" id="cell-A-1-2" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell"></div>
+                    </div>
+
+                    <!-- Operator * -->
+                    <div class="lg:col-span-1 text-2xl font-bold text-slate-500">
+                        ×
+                    </div>
+
+                    <!-- Matrix B -->
+                    <div class="lg:col-span-3 flex flex-col items-center">
+                        <span class="text-purple-400 font-bold mb-2 flex items-center gap-1">
+                            B Mátrix <span id="bDimLabel" class="text-xs text-slate-400 font-normal">(3x2)</span>
+                        </span>
+                        <div id="matrixBContainer" class="p-3 bg-purple-950/30 rounded-xl border border-purple-800/40 grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><input type="number" id="cell-B-0-0" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell cell-highlight-b"><input type="number" id="cell-B-0-1" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell"><input type="number" id="cell-B-1-0" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell cell-highlight-b"><input type="number" id="cell-B-1-1" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell"><input type="number" id="cell-B-2-0" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell cell-highlight-b"><input type="number" id="cell-B-2-1" class="w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell"></div>
+                    </div>
+
+                    <!-- Operator = -->
+                    <div class="lg:col-span-1 text-2xl font-bold text-slate-500">
+                        =
+                    </div>
+
+                    <!-- Matrix C (Result) -->
+                    <div class="lg:col-span-3 flex flex-col items-center">
+                        <span class="text-emerald-400 font-bold mb-2 flex items-center gap-1">
+                            C Mátrix <span id="cDimLabel" class="text-xs text-slate-400 font-normal">(2x2)</span>
+                        </span>
+                        <div id="matrixCContainer" class="p-3 bg-emerald-950/30 rounded-xl border border-emerald-800/40 grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><div id="cell-C-0-0" class="w-14 h-12 flex items-center justify-center font-bold text-sm rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-400 matrix-cell cursor-pointer select-none cell-highlight-c">107</div><div id="cell-C-0-1" class="w-14 h-12 flex items-center justify-center font-bold text-sm rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-400 matrix-cell cursor-pointer select-none">0</div><div id="cell-C-1-0" class="w-14 h-12 flex items-center justify-center font-bold text-sm rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-400 matrix-cell cursor-pointer select-none">0</div><div id="cell-C-1-1" class="w-14 h-12 flex items-center justify-center font-bold text-sm rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-400 matrix-cell cursor-pointer select-none">0</div></div>
+                    </div>
+
+                </div>
+
+                <!-- Explanation / Formula Box -->
+                <div class="mt-6 p-4 rounded-xl bg-slate-900 border border-slate-800 relative z-20">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold block">Számítási Magyarázat</span>
+                            <div id="formulaExplanation" class="text-base font-mono text-slate-200 mt-1">
+                <span class="text-emerald-400 font-bold">C[1][1]</span> = 
+                (<span class="text-blue-400">7</span> × <span class="text-purple-400">5</span>) + (<span class="text-blue-400">8</span> × <span class="text-purple-400">4</span>) + (<span class="text-blue-400">5</span> × <span class="text-purple-400">8</span>) = <span class="text-emerald-400 font-bold text-lg">107</span>
+            </div>
+                        </div>
+                        <div id="manualFeedback" class="hidden text-sm text-amber-400 bg-amber-950/40 px-3 py-1.5 rounded-lg border border-amber-800/50">
+                            Kézi mód: Kattints egy A elemre, majd a vele megszorzandó B elemre!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="content-python" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <div>
+                    <h3 class="font-bold text-slate-200">Python Implementáció</h3>
+                    <p class="text-xs text-slate-400">Tiszta Python ciklusokkal és NumPy könyvtár használatával</p>
+                </div>
+                <button onclick="downloadCode('python')" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download w-4 h-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg> Letöltés (.py)
+                </button>
+            </div>
+            <pre class="bg-slate-950 p-4 rounded-xl text-slate-200 font-mono text-sm overflow-x-auto border border-slate-800 leading-relaxed"><code id="pythonCodeBlock"># Python Mátrixszorzás példa
+
+import numpy as np
+
+# 1. Megvalósítás tiszta Python ciklusokkal (beépített listákkal)
+def matrix_multiply_custom(A, B):
+    rows_A = len(A)
+    cols_A = len(A[0])
+    rows_B = len(B)
+    cols_B = len(B[0])
+
+    # Ellenőrzés: Az A oszlopainak száma meg kell egyezzen B soraival
+    if cols_A != rows_B:
+        raise ValueError("Nem szorozható össze: A oszlopai != B sorai")
+
+    # Eredmény mátrix inicializálása 0-kkal (rows_A x cols_B)
+    C = [[0 for _ in range(cols_B)] for _ in range(rows_A)]
+
+    # Mátrixszorzás 3 egymásba ágyazott ciklussal
+    for i in range(rows_A):
+        for j in range(cols_B):
+            for k in range(cols_A):
+                C[i][j] += A[i][k] * B[k][j]
+
+    return C
+
+# 2. Megvalósítás NumPy könyvtárral (ipari sztenderd, optimális)
+def matrix_multiply_numpy(A, B):
+    np_A = np.array(A)
+    np_B = np.array(B)
+    return np.dot(np_A, np_B) # Vagy: np_A @ np_B
+
+# Tesztelés
+if __name__ == "__main__":
+    A = [
+        [1, 2, 3],
+        [4, 5, 6]
+    ]
+    
+    B = [
+        [7, 8],
+        [9, 1],
+        [2, 3]
+    ]
+
+    print("--- Tiszta Python eredmény ---")
+    result_custom = matrix_multiply_custom(A, B)
+    for row in result_custom:
+        print(row)
+
+    print("\n--- NumPy eredmény ---")
+    result_np = matrix_multiply_numpy(A, B)
+    print(result_np)
+</code></pre>
+        </div>
+
+        <div id="content-cpp" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <div>
+                    <h3 class="font-bold text-slate-200">C++ Implementáció</h3>
+                    <p class="text-xs text-slate-400">Dinamikus méretű 2D std::vector használatával</p>
+                </div>
+                <button onclick="downloadCode('cpp')" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download w-4 h-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg> Letöltés (.cpp)
+                </button>
+            </div>
+            <pre class="bg-slate-950 p-4 rounded-xl text-slate-200 font-mono text-sm overflow-x-auto border border-slate-800 leading-relaxed"><code id="cppCodeBlock">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;iomanip&gt;
+
+using Matrix = std::vector&lt;std::vector&lt;int&gt;&gt;;
+
+// Mátrixszorzó függvény C++-ban
+Matrix multiplyMatrices(const Matrix&amp; A, const Matrix&amp; B) {
+    int rowsA = A.size();
+    int colsA = A[0].size();
+    int rowsB = B.size();
+    int colsB = B[0].size();
+
+    // Ellenőrzés: A oszlopai == B sorai
+    if (colsA != rowsB) {
+        std::cerr &lt;&lt; "Hiba: A mátrixok mérete nem megfelelő a szorzáshoz!" &lt;&lt; std::endl;
+        return {};
+    }
+
+    // Eredmény C mátrix inicializálása (rowsA x colsB) csupa 0 értékkel
+    Matrix C(rowsA, std::vector&lt;int&gt;(colsB, 0));
+
+    // Mátrixszorzás elvégzése
+    for (int i = 0; i &lt; rowsA; ++i) {
+        for (int j = 0; j &lt; colsB; ++j) {
+            for (int k = 0; k &lt; colsA; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    return C;
+}
+
+// Mátrix kiíratása a konzolra
+void printMatrix(const Matrix&amp; mat) {
+    for (const auto&amp; row : mat) {
+        for (int val : row) {
+            std::cout &lt;&lt; std::setw(5) &lt;&lt; val &lt;&lt; " ";
+        }
+        std::cout &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    // 2x3-as A mátrix
+    Matrix A = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    // 3x2-es B mátrix
+    Matrix B = {
+        {7, 8},
+        {9, 1},
+        {2, 3}
+    };
+
+    std::cout &lt;&lt; "A Mátrix:" &lt;&lt; std::endl;
+    printMatrix(A);
+
+    std::cout &lt;&lt; "\nB Mátrix:" &lt;&lt; std::endl;
+    printMatrix(B);
+
+    Matrix C = multiplyMatrices(A, B);
+
+    std::cout &lt;&lt; "\nEredmény C Mátrix (A * B):" &lt;&lt; std::endl;
+    printMatrix(C);
+
+    return 0;
+}
+</code></pre>
+        </div>
+
+        <div id="content-html" class="hidden space-y-4">
+            <div class="flex justify-between items-center bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <div>
+                    <h3 class="font-bold text-slate-200">Teljes HTML / JS Vizualizációs Kód</h3>
+                    <p class="text-xs text-slate-400">Az önállóan futtatható teljes webes alkalmazás forráskódja</p>
+                </div>
+                <button onclick="downloadCode('html')" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download w-4 h-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg> Letöltés (.html)
+                </button>
+            </div>
+            <p class="text-xs text-slate-400">Ez a letölthető fájl tartalmazza a teljes felületet, az SVG vonalak kirajzolási logikáját és az interaktív funkciókat.</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Matrix Data & Dimensions
+        let matrixA = [
+            [1, 2, 3],
+            [4, 5, 6]
+        ];
+        let matrixB = [
+            [7, 8],
+            [9, 1],
+            [2, 3]
+        ];
+        let matrixC = [];
+
+        // Animation state
+        let currentStep = 0;
+        let totalSteps = 0;
+        let isPlaying = false;
+        let animInterval = null;
+        let animSpeed = 1500;
+        let currentMode = 'auto'; // 'auto' or 'manual'
+
+        // Manual mode selections
+        let selectedA = null; // {r, c}
+        let selectedB = null; // {r, c}
+        let manualLines = []; // manual connections
+
+        window.onload = function() {
+            lucide.createIcons();
+            updateBRows();
+            recalculateMatrixC();
+            renderMatrices();
+            window.addEventListener('resize', drawConnectingLines);
+        };
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const bodyElement = document.getElementById('bodyElement');
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                bodyElement.classList.remove('bg-slate-900', 'text-slate-100');
+                bodyElement.classList.add('bg-slate-100', 'text-slate-800');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                bodyElement.classList.remove('bg-slate-100', 'text-slate-800');
+                bodyElement.classList.add('bg-slate-900', 'text-slate-100');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+            setTimeout(drawConnectingLines, 50);
+        });
+
+        function switchTab(tabName) {
+            ['anim', 'python', 'cpp', 'html'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                const content = document.getElementById(`content-${t}`);
+                if (t === tabName) {
+                    btn.classList.add('text-blue-400', 'border-b-2', 'border-blue-500');
+                    btn.classList.remove('text-slate-400');
+                    content.classList.remove('hidden');
+                } else {
+                    btn.classList.remove('text-blue-400', 'border-b-2', 'border-blue-500');
+                    btn.classList.add('text-slate-400');
+                    content.classList.add('hidden');
+                }
+            });
+            if (tabName === 'anim') {
+                setTimeout(drawConnectingLines, 50);
+            }
+        }
+
+        function updateBRows() {
+            const aCols = parseInt(document.getElementById('aCols').value);
+            document.getElementById('bRowsLabel').textContent = aCols;
+            resetMatrices();
+        }
+
+        function resetMatrices() {
+            pauseAnim();
+            currentStep = 0;
+            const aRows = parseInt(document.getElementById('aRows').value);
+            const aCols = parseInt(document.getElementById('aCols').value);
+            const bRows = aCols;
+            const bCols = parseInt(document.getElementById('bCols').value);
+
+            // Re-generate Matrix A
+            matrixA = [];
+            for (let i = 0; i < aRows; i++) {
+                let row = [];
+                for (let j = 0; j < aCols; j++) {
+                    row.push(Math.floor(Math.random() * 9) + 1);
+                }
+                matrixA.push(row);
+            }
+
+            // Re-generate Matrix B
+            matrixB = [];
+            for (let i = 0; i < bRows; i++) {
+                let row = [];
+                for (let j = 0; j < bCols; j++) {
+                    row.push(Math.floor(Math.random() * 9) + 1);
+                }
+                matrixB.push(row);
+            }
+
+            recalculateMatrixC();
+            renderMatrices();
+            resetAnim();
+        }
+
+        function randomizeValues() {
+            for (let i = 0; i < matrixA.length; i++) {
+                for (let j = 0; j < matrixA[0].length; j++) {
+                    matrixA[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            for (let i = 0; i < matrixB.length; i++) {
+                for (let j = 0; j < matrixB[0].length; j++) {
+                    matrixB[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            recalculateMatrixC();
+            renderMatrices();
+            updateStepState();
+        }
+
+        function recalculateMatrixC() {
+            const aRows = matrixA.length;
+            const aCols = matrixA[0].length;
+            const bCols = matrixB[0].length;
+
+            matrixC = [];
+            for (let i = 0; i < aRows; i++) {
+                let row = new Array(bCols).fill(0);
+                matrixC.push(row);
+            }
+
+            totalSteps = aRows * bCols;
+            
+            // Labels
+            document.getElementById('aDimLabel').textContent = `(${aRows}x${aCols})`;
+            document.getElementById('bDimLabel').textContent = `(${aCols}x${bCols})`;
+            document.getElementById('cDimLabel').textContent = `(${aRows}x${bCols})`;
+        }
+
+        function updateCellValue(matrixName, r, c, val) {
+            const parsed = parseInt(val) || 0;
+            if (matrixName === 'A') matrixA[r][c] = parsed;
+            if (matrixName === 'B') matrixB[r][c] = parsed;
+            
+            recalculateMatrixC();
+            updateStepState();
+        }
+
+        function renderMatrices() {
+            const containerA = document.getElementById('matrixAContainer');
+            const containerB = document.getElementById('matrixBContainer');
+            const containerC = document.getElementById('matrixCContainer');
+
+            // Render A
+            containerA.style.gridTemplateColumns = `repeat(${matrixA[0].length}, minmax(0, 1fr))`;
+            containerA.innerHTML = '';
+            for (let r = 0; r < matrixA.length; r++) {
+                for (let c = 0; c < matrixA[0].length; c++) {
+                    const cell = document.createElement('input');
+                    cell.type = 'number';
+                    cell.value = matrixA[r][c];
+                    cell.id = `cell-A-${r}-${c}`;
+                    cell.className = 'w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-blue-500/30 text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 matrix-cell';
+                    cell.oninput = (e) => updateCellValue('A', r, c, e.target.value);
+                    cell.onclick = () => handleCellClick('A', r, c);
+                    containerA.appendChild(cell);
+                }
+            }
+
+            // Render B
+            containerB.style.gridTemplateColumns = `repeat(${matrixB[0].length}, minmax(0, 1fr))`;
+            containerB.innerHTML = '';
+            for (let r = 0; r < matrixB.length; r++) {
+                for (let c = 0; c < matrixB[0].length; c++) {
+                    const cell = document.createElement('input');
+                    cell.type = 'number';
+                    cell.value = matrixB[r][c];
+                    cell.id = `cell-B-${r}-${c}`;
+                    cell.className = 'w-12 h-12 text-center font-semibold text-sm rounded-lg bg-slate-900 border border-purple-500/30 text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 matrix-cell';
+                    cell.oninput = (e) => updateCellValue('B', r, c, e.target.value);
+                    cell.onclick = () => handleCellClick('B', r, c);
+                    containerB.appendChild(cell);
+                }
+            }
+
+            // Render C
+            containerC.style.gridTemplateColumns = `repeat(${matrixB[0].length}, minmax(0, 1fr))`;
+            containerC.innerHTML = '';
+            for (let r = 0; r < matrixA.length; r++) {
+                for (let c = 0; c < matrixB[0].length; c++) {
+                    const cell = document.createElement('div');
+                    cell.id = `cell-C-${r}-${c}`;
+                    cell.className = 'w-14 h-12 flex items-center justify-center font-bold text-sm rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-400 matrix-cell cursor-pointer select-none';
+                    cell.textContent = '0';
+                    cell.onclick = () => handleCellClick('C', r, c);
+                    containerC.appendChild(cell);
+                }
+            }
+
+            updateStepState();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            pauseAnim();
+            const autoBtn = document.getElementById('modeAutoBtn');
+            const manualBtn = document.getElementById('modeManualBtn');
+            const manualFeedback = document.getElementById('manualFeedback');
+            const animControls = document.getElementById('animControlsContainer');
+
+            if (mode === 'manual') {
+                autoBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-sm bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors';
+                manualBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-sm bg-amber-600 text-white font-medium hover:bg-amber-500 transition-colors';
+                manualFeedback.classList.remove('hidden');
+                animControls.classList.add('opacity-40', 'pointer-events-none');
+                clearHighlights();
+                manualLines = [];
+                drawConnectingLines();
+                document.getElementById('formulaExplanation').innerHTML = "<b>Kézi mód aktív:</b> Kattints egy 'A' elemre, majd a vele megszorzandó 'B' elemre az összekötéshez!";
+            } else {
+                autoBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-sm bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors';
+                manualBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-sm bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors';
+                manualFeedback.classList.add('hidden');
+                animControls.classList.remove('opacity-40', 'pointer-events-none');
+                selectedA = null;
+                selectedB = null;
+                manualLines = [];
+                updateStepState();
+            }
+        }
+
+        function handleCellClick(mat, r, c) {
+            if (currentMode !== 'manual') return;
+
+            if (mat === 'A') {
+                // Select A
+                if (selectedA) {
+                    document.getElementById(`cell-A-${selectedA.r}-${selectedA.c}`).classList.remove('manual-selected');
+                }
+                selectedA = { r, c };
+                document.getElementById(`cell-A-${r}-${c}`).classList.add('manual-selected');
+            } else if (mat === 'B') {
+                if (!selectedA) {
+                    alert("Először válassz ki egy elemet az A mátrixból!");
+                    return;
+                }
+                selectedB = { r, c };
+
+                // Add connection line
+                manualLines.push({ a: { ...selectedA }, b: { ...selectedB } });
+
+                // Reset selection highlights
+                document.getElementById(`cell-A-${selectedA.r}-${selectedA.c}`).classList.remove('manual-selected');
+                
+                const valA = matrixA[selectedA.r][selectedA.c];
+                const valB = matrixB[selectedB.r][selectedB.c];
+                const prod = valA * valB;
+
+                document.getElementById('formulaExplanation').innerHTML = 
+                    `<span class="text-blue-400">A[${selectedA.r + 1}][${selectedA.c + 1}] (${valA})</span> &times; <span class="text-purple-400">B[${selectedB.r + 1}][${selectedB.c + 1}] (${valB})</span> = <span class="text-amber-400 font-bold">${prod}</span>`;
+
+                selectedA = null;
+                selectedB = null;
+
+                drawConnectingLines();
+            }
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseAnim();
+            } else {
+                startAnim();
+            }
+        }
+
+        function startAnim() {
+            if (currentStep >= totalSteps) currentStep = 0;
+            isPlaying = true;
+            document.getElementById('playText').textContent = 'Szünet';
+            document.getElementById('playIcon').setAttribute('data-lucide', 'pause');
+            lucide.createIcons();
+
+            animInterval = setInterval(() => {
+                currentStep++;
+                if (currentStep >= totalSteps) {
+                    updateStepState();
+                    pauseAnim();
+                } else {
+                    updateStepState();
+                }
+            }, animSpeed);
+        }
+
+        function pauseAnim() {
+            isPlaying = false;
+            if (animInterval) clearInterval(animInterval);
+            document.getElementById('playText').textContent = 'Lejátszás';
+            document.getElementById('playIcon').setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+        }
+
+        function stepNext() {
+            pauseAnim();
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                updateStepState();
+            }
+        }
+
+        function stepPrev() {
+            pauseAnim();
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepState();
+            }
+        }
+
+        function resetAnim() {
+            pauseAnim();
+            currentStep = 0;
+            updateStepState();
+        }
+
+        function updateSpeed() {
+            animSpeed = parseInt(document.getElementById('speedSlider').value);
+            if (isPlaying) {
+                pauseAnim();
+                startAnim();
+            }
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.matrix-cell').forEach(el => {
+                el.classList.remove('cell-highlight-a', 'cell-highlight-b', 'cell-highlight-c', 'manual-selected');
+            });
+        }
+
+        function updateStepState() {
+            if (currentMode === 'manual') return;
+
+            clearHighlights();
+
+            if (!matrixA || !matrixA.length || !matrixA[0] || !matrixB || !matrixB.length || !matrixB[0]) return;
+
+            const aRows = matrixA.length;
+            const aCols = matrixA[0].length;
+            const bCols = matrixB[0].length;
+
+            totalSteps = aRows * bCols;
+            if (currentStep >= totalSteps) {
+                currentStep = Math.max(0, totalSteps - 1);
+            }
+
+            const targetRow = Math.floor(currentStep / bCols);
+            const targetCol = currentStep % bCols;
+
+            if (targetRow < 0 || targetRow >= aRows || !matrixA[targetRow]) return;
+
+            // Highlight Target C Cell
+            const cellC = document.getElementById(`cell-C-${targetRow}-${targetCol}`);
+            if (cellC) cellC.classList.add('cell-highlight-c');
+
+            // Compute current cell value & accumulate partial calculations
+            let currentSum = 0;
+            let termsFormula = [];
+            let activePairs = [];
+
+            for (let k = 0; k < aCols; k++) {
+                const valA = matrixA[targetRow][k] !== undefined ? matrixA[targetRow][k] : 0;
+                const valB = (matrixB[k] && matrixB[k][targetCol] !== undefined) ? matrixB[k][targetCol] : 0;
+                const prod = valA * valB;
+                currentSum += prod;
+
+                termsFormula.push(`(<span class="text-blue-400">${valA}</span> &times; <span class="text-purple-400">${valB}</span>)`);
+
+                // Highlight A row cells
+                const cellA = document.getElementById(`cell-A-${targetRow}-${k}`);
+                if (cellA) cellA.classList.add('cell-highlight-a');
+
+                // Highlight B col cells
+                const cellB = document.getElementById(`cell-B-${k}-${targetCol}`);
+                if (cellB) cellB.classList.add('cell-highlight-b');
+
+                activePairs.push({
+                    aEl: cellA,
+                    bEl: cellB,
+                    cEl: cellC
+                });
+            }
+
+            // Set evaluated value in C matrix up to current step
+            for (let r = 0; r < aRows; r++) {
+                for (let c = 0; c < bCols; c++) {
+                    const stepIdx = r * bCols + c;
+                    const cElem = document.getElementById(`cell-C-${r}-${c}`);
+                    if (cElem) {
+                        if (stepIdx <= currentStep) {
+                            let sum = 0;
+                            for (let k = 0; k < aCols; k++) {
+                                sum += (matrixA[r] && matrixA[r][k] !== undefined ? matrixA[r][k] : 0) * 
+                                       (matrixB[k] && matrixB[k][c] !== undefined ? matrixB[k][c] : 0);
+                            }
+                            cElem.textContent = sum;
+                        } else {
+                            cElem.textContent = '0';
+                        }
+                    }
+                }
+            }
+
+            // Update Formula Bar
+            const explanationHTML = `
+                <span class="text-emerald-400 font-bold">C[${targetRow + 1}][${targetCol + 1}]</span> = 
+                ${termsFormula.join(' + ')} = <span class="text-emerald-400 font-bold text-lg">${currentSum}</span>
+            `;
+            const formulaElem = document.getElementById('formulaExplanation');
+            if (formulaElem) formulaElem.innerHTML = explanationHTML;
+
+            // Draw links
+            drawConnectingLines(activePairs);
+        }
+
+        function drawConnectingLines(pairs = []) {
+            const svg = document.getElementById('svgCanvas');
+            svg.innerHTML = ''; // Clear SVG
+
+            const svgRect = svg.getBoundingClientRect();
+
+            if (currentMode === 'manual') {
+                // Draw manually created connections
+                manualLines.forEach(line => {
+                    const elA = document.getElementById(`cell-A-${line.a.r}-${line.a.c}`);
+                    const elB = document.getElementById(`cell-B-${line.b.r}-${line.b.c}`);
+                    if (elA && elB) {
+                        const rectA = elA.getBoundingClientRect();
+                        const rectB = elB.getBoundingClientRect();
+
+                        const x1 = rectA.right - svgRect.left;
+                        const y1 = rectA.top + rectA.height / 2 - svgRect.top;
+                        const x2 = rectB.left - svgRect.left;
+                        const y2 = rectB.top + rectB.height / 2 - svgRect.top;
+
+                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        const dx = (x2 - x1) / 2;
+                        const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+                        path.setAttribute('d', d);
+                        path.setAttribute('stroke', '#f59e0b');
+                        path.setAttribute('stroke-width', '3');
+                        path.setAttribute('fill', 'none');
+                        path.setAttribute('class', 'connection-line');
+                        svg.appendChild(path);
+                    }
+                });
+                return;
+            }
+
+            // Auto / Step Mode connecting lines
+            pairs.forEach((pair, idx) => {
+                if (!pair.aEl || !pair.bEl) return;
+
+                const rectA = pair.aEl.getBoundingClientRect();
+                const rectB = pair.bEl.getBoundingClientRect();
+                const rectC = pair.cEl.getBoundingClientRect();
+
+                // Line A -> B
+                const x1 = rectA.right - svgRect.left;
+                const y1 = rectA.top + rectA.height / 2 - svgRect.top;
+                const x2 = rectB.left - svgRect.left;
+                const y2 = rectB.top + rectB.height / 2 - svgRect.top;
+
+                const pathAB = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const dx = (x2 - x1) / 2;
+                const dAB = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+                pathAB.setAttribute('d', dAB);
+                pathAB.setAttribute('stroke', '#3b82f6');
+                pathAB.setAttribute('stroke-width', '2.5');
+                pathAB.setAttribute('stroke-opacity', '0.7');
+                pathAB.setAttribute('fill', 'none');
+                pathAB.setAttribute('class', 'connection-line');
+                svg.appendChild(pathAB);
+
+                // Line B -> C
+                const x3 = rectB.right - svgRect.left;
+                const y3 = rectB.top + rectB.height / 2 - svgRect.top;
+                const x4 = rectC.left - svgRect.left;
+                const y4 = rectC.top + rectC.height / 2 - svgRect.top;
+
+                const pathBC = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const dx2 = (x4 - x3) / 2;
+                const dBC = `M ${x3} ${y3} C ${x3 + dx2} ${y3}, ${x4 - dx2} ${y4}, ${x4} ${y4}`;
+
+                pathBC.setAttribute('d', dBC);
+                pathBC.setAttribute('stroke', '#10b981');
+                pathBC.setAttribute('stroke-width', '2.5');
+                pathBC.setAttribute('stroke-opacity', '0.7');
+                pathBC.setAttribute('fill', 'none');
+                pathBC.setAttribute('class', 'connection-line');
+                svg.appendChild(pathBC);
+            });
+        }
+
+        function downloadCode(type) {
+            let code = '';
+            let filename = '';
+            let mimeType = 'text/plain';
+
+            if (type === 'python') {
+                code = document.getElementById('pythonCodeBlock').textContent;
+                filename = 'matrix_multiplication.py';
+            } else if (type === 'cpp') {
+                code = document.getElementById('cppCodeBlock').textContent;
+                filename = 'matrix_multiplication.cpp';
+            } else if (type === 'html') {
+                code = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                filename = 'matrix_multiplication_interactive.html';
+                mimeType = 'text/html';
+            }
+
+            const blob = new Blob([code], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body></html>
