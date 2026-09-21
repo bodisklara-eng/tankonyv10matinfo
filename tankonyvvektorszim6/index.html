@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)file:///C:/Users/Utilizator/Downloads/water_sort_puzzle_physics_curriculum.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Sort Puzzle &amp; Pedagógiai Szimuláció</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', 'Inter', sans-serif;
+            background: radial-gradient(circle at center, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        /* Cosmic background twinkling dust */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.6); }
+            50% { opacity: 0.9; transform: scale(1.4); box-shadow: 0 0 12px rgba(255, 255, 255, 0.9); }
+        }
+
+        /* Glass Bottle Styles */
+        .tube-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            user-select: none;
+            padding-top: 10px;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7));
+        }
+
+        .tube-container.selected {
+            transform: translateY(-28px) scale(1.08) rotate(-4deg);
+        }
+
+        .tube-container.selected .tube-glass {
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.85), inset 0 0 25px rgba(255, 255, 255, 0.9);
+            border-color: #d8b4fe;
+        }
+
+        .tube-rim {
+            width: 34px;
+            height: 8px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+            border-radius: 4px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), inset 0 1px 2px rgba(255,255,255,1);
+            z-index: 20;
+            position: relative;
+        }
+
+        .tube-neck {
+            width: 24px;
+            height: 20px;
+            border-left: 3.5px solid rgba(216, 180, 254, 0.6);
+            border-right: 3.5px solid rgba(216, 180, 254, 0.6);
+            margin: 0 auto;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+            position: relative;
+            z-index: 15;
+        }
+
+        .tube-shoulder {
+            width: 70px;
+            height: 18px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 15;
+        }
+
+        .tube-shoulder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 18px;
+            border-top: 3.5px solid rgba(216, 180, 254, 0.6);
+            border-left: 3.5px solid rgba(216, 180, 254, 0.6);
+            border-right: 3.5px solid rgba(216, 180, 254, 0.6);
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+        }
+
+        .tube-glass {
+            width: 74px;
+            height: 170px;
+            border-left: 3.5px solid rgba(216, 180, 254, 0.55);
+            border-right: 3.5px solid rgba(216, 180, 254, 0.55);
+            border-bottom: 3.5px solid rgba(216, 180, 254, 0.6);
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.12));
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 16px rgba(255, 255, 255, 0.3), 0 15px 30px rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(3px);
+            margin: 0 auto;
+        }
+
+        /* Tall Test Tube (inspired by screenshot 1) */
+        .tube-glass.tall {
+            height: 240px;
+            width: 54px;
+            border-bottom-left-radius: 26px;
+            border-bottom-right-radius: 26px;
+        }
+        .tube-shoulder.tall { width: 50px; }
+        .tube-rim.tall { width: 26px; }
+        .tube-neck.tall { width: 18px; }
+
+        /* Shopping Bag Container (inspired by screenshot 2) */
+        .bag-container {
+            width: 76px;
+            height: 160px;
+            background: linear-gradient(135deg, #fde047, #ca8a04);
+            border-radius: 16px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.4), 0 10px 25px rgba(0,0,0,0.6);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #facc15;
+        }
+        .bag-handle {
+            position: absolute;
+            top: -18px;
+            left: 20px;
+            right: 20px;
+            height: 18px;
+            border: 4px solid #ca8a04;
+            border-bottom: none;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .fluid-layer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 25%;
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1), bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fluid-layer::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.3) 60%, transparent 100%);
+            border-radius: 50%;
+        }
+
+        .fluid-bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: bubbleRise 2s infinite ease-in;
+            pointer-events: none;
+        }
+
+        @keyframes bubbleRise {
+            0% { transform: translateY(0) scale(0.6); opacity: 0.2; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-35px) scale(1.2); opacity: 0; }
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            border: 2px solid rgba(216, 180, 254, 0.5);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .game-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.8), inset 0 2px 8px rgba(255,255,255,0.6);
+        }
+
+        #pour-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.left-1\/2{left:50%}.top-6{top:1.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-50{z-index:50}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mr-2{margin-right:0.5rem}.mt-12{margin-top:3rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-5{height:1.25rem}.min-h-\[70px\]{min-height:70px}.min-h-screen{min-height:100vh}.w-5{width:1.25rem}.w-full{width:100%}.max-w-4xl{max-width:56rem}.max-w-sm{max-width:24rem}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-items-center{justify-items:center}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-12 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(3rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(3rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252 / var(--tw-border-opacity, 1))}.border-purple-400\/40{border-color:rgb(192 132 252 / 0.4)}.border-purple-400\/50{border-color:rgb(192 132 252 / 0.5)}.border-purple-500\/20{border-color:rgb(168 85 247 / 0.2)}.border-purple-500\/30{border-color:rgb(168 85 247 / 0.3)}.border-purple-500\/40{border-color:rgb(168 85 247 / 0.4)}.border-purple-500\/50{border-color:rgb(168 85 247 / 0.5)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.bg-\[\#0f0c29\]{--tw-bg-opacity:1;background-color:rgb(15 12 41 / var(--tw-bg-opacity, 1))}.bg-\[\#1e1b4b\]\/80{background-color:rgb(30 27 75 / 0.8)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-black\/85{background-color:rgb(0 0 0 / 0.85)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-indigo-950\/70{background-color:rgb(30 27 75 / 0.7)}.bg-pink-600{--tw-bg-opacity:1;background-color:rgb(219 39 119 / var(--tw-bg-opacity, 1))}.bg-purple-900\/60{background-color:rgb(88 28 135 / 0.6)}.bg-purple-950\/95{background-color:rgb(59 7 100 / 0.95)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-300{--tw-gradient-from:#fcd34d var(--tw-gradient-from-position);--tw-gradient-to:rgb(252 211 77 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-400{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 191 36 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-950{--tw-gradient-from:#3b0764 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 7 100 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-white{--tw-gradient-from:#fff var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-indigo-950{--tw-gradient-to:rgb(30 27 75 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #1e1b4b var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-pink-300{--tw-gradient-to:rgb(249 168 212 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f9a8d4 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-purple-200{--tw-gradient-to:rgb(233 213 255 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #e9d5ff var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-500{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.to-pink-200{--tw-gradient-to:#fbcfe8 var(--tw-gradient-to-position)}.to-purple-300{--tw-gradient-to:#d8b4fe var(--tw-gradient-to-position)}.to-slate-950{--tw-gradient-to:#020617 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-6xl{font-size:3.75rem;line-height:1}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}.italic{font-style:italic}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182 / var(--tw-text-opacity, 1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255 / var(--tw-text-opacity, 1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.text-purple-300\/70{color:rgb(216 180 254 / 0.7)}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_60px_rgba\(168\2c 85\2c 247\2c 0\.9\)\]{--tw-shadow:0 0 60px rgba(168,85,247,0.9);--tw-shadow-colored:0 0 60px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-pink-500:hover{--tw-bg-opacity:1;background-color:rgb(236 72 153 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:from-amber-300:hover{--tw-gradient-from:#fcd34d var(--tw-gradient-from-position);--tw-gradient-to:rgb(252 211 77 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:flex-row{flex-direction:row}.md\:gap-8{gap:2rem}.md\:p-8{padding:2rem}}</style></head>
+<body class="min-h-screen flex flex-col items-center py-6 px-4 relative select-none">
+
+    <!-- Starry background container -->
+    <div id="stars-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"><div class="star" style="width: 1.57604px; height: 1.57604px; top: 90.4491%; left: 24.4897%; --duration: 2.5734862321504486s;"></div><div class="star" style="width: 2.71859px; height: 2.71859px; top: 27.9938%; left: 7.11083%; --duration: 4.471123350157978s;"></div><div class="star" style="width: 2.26497px; height: 2.26497px; top: 58.3162%; left: 40.3468%; --duration: 4.365465361005213s;"></div><div class="star" style="width: 2.75948px; height: 2.75948px; top: 63.9481%; left: 20.7919%; --duration: 4.00805153380339s;"></div><div class="star" style="width: 1.56256px; height: 1.56256px; top: 71.4546%; left: 28.4381%; --duration: 1.9188087999439563s;"></div><div class="star" style="width: 2.3306px; height: 2.3306px; top: 52.0088%; left: 9.56294%; --duration: 4.492481444199369s;"></div><div class="star" style="width: 2.64892px; height: 2.64892px; top: 89.5424%; left: 67.2027%; --duration: 1.5230098205760705s;"></div><div class="star" style="width: 3.89776px; height: 3.89776px; top: 8.85102%; left: 17.1227%; --duration: 2.5773237256161092s;"></div><div class="star" style="width: 3.48778px; height: 3.48778px; top: 92.9937%; left: 16.1157%; --duration: 1.9460016211147635s;"></div><div class="star" style="width: 3.73936px; height: 3.73936px; top: 65.4526%; left: 86.2421%; --duration: 2.359351367551364s;"></div><div class="star" style="width: 3.08645px; height: 3.08645px; top: 80.9081%; left: 49.136%; --duration: 2.997881832671637s;"></div><div class="star" style="width: 1.43353px; height: 1.43353px; top: 93.9226%; left: 61.6074%; --duration: 2.6316410627583857s;"></div><div class="star" style="width: 1.84531px; height: 1.84531px; top: 66.181%; left: 47.3653%; --duration: 3.6324390797655552s;"></div><div class="star" style="width: 1.90973px; height: 1.90973px; top: 75.4092%; left: 57.7015%; --duration: 1.7188686622787872s;"></div><div class="star" style="width: 1.93664px; height: 1.93664px; top: 35.2998%; left: 15.2165%; --duration: 2.369724356444343s;"></div><div class="star" style="width: 1.13009px; height: 1.13009px; top: 31.234%; left: 82.6219%; --duration: 1.8332418335020026s;"></div><div class="star" style="width: 1.88781px; height: 1.88781px; top: 88.7602%; left: 30.013%; --duration: 2.9903091063604195s;"></div><div class="star" style="width: 1.09562px; height: 1.09562px; top: 23.8711%; left: 68.6444%; --duration: 1.5803214158136336s;"></div><div class="star" style="width: 2.6341px; height: 2.6341px; top: 56.8644%; left: 18.2094%; --duration: 1.5405743382535735s;"></div><div class="star" style="width: 1.44061px; height: 1.44061px; top: 8.09537%; left: 5.51063%; --duration: 4.322374980054143s;"></div><div class="star" style="width: 2.09892px; height: 2.09892px; top: 71.4823%; left: 25.1359%; --duration: 4.428180171943831s;"></div><div class="star" style="width: 2.21126px; height: 2.21126px; top: 75.4524%; left: 18.8442%; --duration: 2.4522828304672784s;"></div><div class="star" style="width: 3.21806px; height: 3.21806px; top: 9.48394%; left: 73.2446%; --duration: 4.486870110661809s;"></div><div class="star" style="width: 1.54516px; height: 1.54516px; top: 40.8213%; left: 27.0355%; --duration: 2.670630466522773s;"></div><div class="star" style="width: 2.54135px; height: 2.54135px; top: 9.33669%; left: 7.52618%; --duration: 3.2398631625641237s;"></div><div class="star" style="width: 1.44708px; height: 1.44708px; top: 58.387%; left: 55.0963%; --duration: 3.9954890179932305s;"></div><div class="star" style="width: 3.34055px; height: 3.34055px; top: 96.3864%; left: 21.8625%; --duration: 1.9281399489588564s;"></div><div class="star" style="width: 1.46285px; height: 1.46285px; top: 8.13017%; left: 36.8397%; --duration: 1.9512300726108882s;"></div><div class="star" style="width: 2.07449px; height: 2.07449px; top: 44.4221%; left: 99.7604%; --duration: 3.298905209479773s;"></div><div class="star" style="width: 3.12026px; height: 3.12026px; top: 64.9708%; left: 70.406%; --duration: 2.475413430736645s;"></div><div class="star" style="width: 3.79595px; height: 3.79595px; top: 99.0523%; left: 30.4175%; --duration: 2.1813878456617357s;"></div><div class="star" style="width: 1.22177px; height: 1.22177px; top: 33.4189%; left: 61.3326%; --duration: 2.911649349033726s;"></div><div class="star" style="width: 1.59781px; height: 1.59781px; top: 14.8425%; left: 32.9032%; --duration: 3.133538044361475s;"></div><div class="star" style="width: 3.00233px; height: 3.00233px; top: 67.9769%; left: 56.9791%; --duration: 1.5995332032344016s;"></div><div class="star" style="width: 2.42176px; height: 2.42176px; top: 44.8062%; left: 6.64489%; --duration: 4.44707606592857s;"></div><div class="star" style="width: 3.97817px; height: 3.97817px; top: 5.46135%; left: 57.8953%; --duration: 2.646660231965662s;"></div><div class="star" style="width: 2.53603px; height: 2.53603px; top: 66.8936%; left: 10.5733%; --duration: 4.029398315434725s;"></div><div class="star" style="width: 1.12961px; height: 1.12961px; top: 86.241%; left: 57.5242%; --duration: 2.6668549134051736s;"></div><div class="star" style="width: 1.72707px; height: 1.72707px; top: 54.882%; left: 22.7121%; --duration: 2.9438395348348565s;"></div><div class="star" style="width: 2.76612px; height: 2.76612px; top: 15.1888%; left: 98.6903%; --duration: 2.7784482996917084s;"></div><div class="star" style="width: 3.56357px; height: 3.56357px; top: 91.1169%; left: 38.3635%; --duration: 2.458900557274152s;"></div><div class="star" style="width: 1.11739px; height: 1.11739px; top: 37.7331%; left: 71.8616%; --duration: 3.0555774394683s;"></div><div class="star" style="width: 3.15631px; height: 3.15631px; top: 85.3283%; left: 89.9565%; --duration: 2.0914038710829526s;"></div><div class="star" style="width: 3.47844px; height: 3.47844px; top: 71.4315%; left: 9.90538%; --duration: 3.085215426565594s;"></div><div class="star" style="width: 3.2135px; height: 3.2135px; top: 62.2984%; left: 21.0596%; --duration: 1.6127535746544899s;"></div></div>
+
+    <!-- Fluid Pour Simulation Canvas Overlay -->
+    <canvas id="pour-canvas"></canvas>
+
+    <!-- Header Navigation & Actions -->
+    <header class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center z-10 px-4 py-3 bg-[#1e1b4b]/80 border border-purple-500/40 rounded-3xl shadow-2xl backdrop-blur-md mb-8 gap-4">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🧪</span>
+            <div>
+                <h1 class="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200">Water Sort &amp; Physics Lab</h1>
+                <p class="text-xs text-purple-300">Interaktív Folyadékrendező Játék &amp; Tananyag</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="flex items-center bg-[#0f0c29] border border-purple-500/50 rounded-full px-4 py-1.5 shadow-inner">
+                <span class="text-amber-400 text-xl mr-2">🪙</span>
+                <span id="coin-count" class="font-bold text-amber-200">2150</span>
+            </div>
+            <button onclick="downloadCurriculum()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 text-slate-950 font-bold px-4 py-2 rounded-2xl shadow-lg transition text-xs flex items-center gap-2">
+                <span>📥 HTML Letöltés</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="w-full max-w-4xl z-10 space-y-12">
+
+        <!-- PART 1: The Water Sort Puzzle Game Board -->
+        <section class="bg-indigo-950/70 border border-purple-500/30 rounded-3xl p-6 md:p-8 backdrop-blur-md shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-purple-500/20 pb-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🏆</span>
+                    <h2 class="text-xl font-bold text-white">Vízrendező Puzzle &amp; Különleges Edények</h2>
+                </div>
+                <div class="flex items-center gap-2 bg-purple-900/60 px-4 py-1.5 rounded-full border border-purple-400/50">
+                    <button onclick="prevLevel()" class="text-purple-300 hover:text-white font-bold px-1">◀</button>
+                    <span id="level-display" class="font-bold text-purple-200 text-sm">Level 1</span>
+                    <button onclick="nextLevel()" class="text-purple-300 hover:text-white font-bold px-1">▶</button>
+                </div>
+            </div>
+
+            <!-- Tubes Container Grid -->
+            <div class="flex flex-col items-center space-y-8 my-6">
+                <div id="top-row" class="grid grid-cols-4 gap-4 md:gap-8 justify-items-center w-full"><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"><div class="fluid-layer" style="bottom: 0%; height: 25%; background: linear-gradient(135deg, rgb(244, 63, 94), rgb(190, 18, 60));"></div><div class="fluid-layer" style="bottom: 25%; height: 25%; background: linear-gradient(135deg, rgb(6, 182, 212), rgb(14, 116, 144));"></div><div class="fluid-layer" style="bottom: 50%; height: 25%; background: linear-gradient(135deg, rgb(34, 197, 94), rgb(21, 128, 61));"></div><div class="fluid-layer" style="bottom: 75%; height: 25%; background: linear-gradient(135deg, rgb(244, 63, 94), rgb(190, 18, 60));"></div></div></div><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"><div class="fluid-layer" style="bottom: 0%; height: 25%; background: linear-gradient(135deg, rgb(34, 197, 94), rgb(21, 128, 61));"></div><div class="fluid-layer" style="bottom: 25%; height: 25%; background: linear-gradient(135deg, rgb(168, 85, 247), rgb(126, 34, 206));"></div><div class="fluid-layer" style="bottom: 50%; height: 25%; background: linear-gradient(135deg, rgb(6, 182, 212), rgb(14, 116, 144));"></div><div class="fluid-layer" style="bottom: 75%; height: 25%; background: linear-gradient(135deg, rgb(249, 115, 22), rgb(194, 65, 12));"></div></div></div><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"><div class="fluid-layer" style="bottom: 0%; height: 25%; background: linear-gradient(135deg, rgb(249, 115, 22), rgb(194, 65, 12));"></div><div class="fluid-layer" style="bottom: 25%; height: 25%; background: linear-gradient(135deg, rgb(244, 63, 94), rgb(190, 18, 60));"></div><div class="fluid-layer" style="bottom: 50%; height: 25%; background: linear-gradient(135deg, rgb(168, 85, 247), rgb(126, 34, 206));"></div><div class="fluid-layer" style="bottom: 75%; height: 25%; background: linear-gradient(135deg, rgb(34, 197, 94), rgb(21, 128, 61));"></div></div></div><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"><div class="fluid-layer" style="bottom: 0%; height: 25%; background: linear-gradient(135deg, rgb(168, 85, 247), rgb(126, 34, 206));"></div><div class="fluid-layer" style="bottom: 25%; height: 25%; background: linear-gradient(135deg, rgb(249, 115, 22), rgb(194, 65, 12));"></div><div class="fluid-layer" style="bottom: 50%; height: 25%; background: linear-gradient(135deg, rgb(6, 182, 212), rgb(14, 116, 144));"></div><div class="fluid-layer" style="bottom: 75%; height: 25%; background: linear-gradient(135deg, rgb(244, 63, 94), rgb(190, 18, 60));"></div></div></div></div>
+                <div id="bottom-row" class="grid grid-cols-3 gap-4 md:gap-8 justify-items-center w-full pt-4 border-t border-purple-500/20"><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"></div></div><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"></div></div><div class="tube-container flex flex-col items-center "><div class="tube-rim"></div><div class="tube-neck"></div><div class="tube-shoulder"></div><div class="tube-glass"></div></div></div>
+            </div>
+
+            <!-- Game Control Buttons -->
+            <div class="flex flex-wrap justify-center items-center gap-3 pt-4">
+                <button onclick="undoMove()" class="game-btn relative px-5 py-2.5 rounded-2xl flex items-center gap-2 text-white font-bold text-xs shadow-xl">
+                    <span>↩️ Visszavonás</span>
+                    <span id="undo-badge" class="bg-rose-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                </button>
+                <button onclick="restartLevel()" class="game-btn px-5 py-2.5 rounded-2xl flex items-center gap-2 text-white font-bold text-xs shadow-xl">
+                    <span>🔄 Újraindítás</span>
+                </button>
+                <button onclick="addExtraTube()" class="game-btn px-5 py-2.5 rounded-2xl flex items-center gap-2 text-white font-bold text-xs shadow-xl">
+                    <span>🧪+ Extra Üveg (50🪙)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- PART 2: Cat Container & Continuous Particle Simulation -->
+        <section class="bg-indigo-950/70 border border-purple-500/30 rounded-3xl p-6 md:p-8 backdrop-blur-md shadow-2xl">
+            <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-3">
+                <span class="text-2xl">🐱</span>
+                Macska Alakú Edény &amp; Folytonos Részecske Szimuláció
+            </h2>
+            <p class="text-purple-200 text-xs mb-6">Speciális geometriájú edények térfogatszámítása változó méretű részecskékkel és futó összeggel (running sum).</p>
+
+            <div class="bg-slate-950 rounded-2xl p-5 border border-purple-500/20 shadow-inner flex flex-col items-center">
+                <div class="w-full flex justify-between items-center mb-3 text-xs">
+                    <span class="text-pink-400 font-mono">Folytonos Részecske Dinamika</span>
+                    <div class="flex gap-4">
+                        <span>Részecskék: <strong id="stat-count" class="text-amber-400">15</strong></span>
+                        <span>Teljes Térfogat (Sum): <strong id="stat-volume" class="text-emerald-400">2726</strong> egység</span>
+                    </div>
+                </div>
+
+                <canvas id="sim-canvas" width="600" height="200" class="w-full bg-slate-900 rounded-xl border border-slate-800 shadow-inner"></canvas>
+
+                <div class="flex flex-wrap gap-3 mt-4 justify-center">
+                    <button onclick="addParticleBatch('small')" class="bg-pink-600 hover:bg-pink-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">Kicsi adag (r = 4)</button>
+                    <button onclick="addParticleBatch('mixed')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">Vegyes méret</button>
+                    <button onclick="addParticleBatch('large')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">Nagy adag (r = 10)</button>
+                    <button onclick="resetSimulation()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-2 rounded-xl text-xs transition">Törlés</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PART 3: Interactive Pedagogical Q&A Curriculum -->
+        <section class="bg-indigo-950/70 border border-purple-500/30 rounded-3xl p-6 md:p-8 backdrop-blur-md shadow-2xl">
+            <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-3">
+                <span class="text-2xl">🤖</span>
+                Interaktív Pedagogikus Q&amp;A Modul
+            </h2>
+            <p class="text-purple-200 text-xs mb-4">Hogyan tanítsuk meg a diákokat önállóan rájönni a szabályokra? Válasszon az alábbi kérdések közül!</p>
+
+            <div class="space-y-4">
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="askQuestion(1)" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-400/40 px-3.5 py-2 rounded-xl text-xs font-semibold transition">1. Mi történik, ha a felső színek nem egyeznek?</button>
+                    <button onclick="askQuestion(2)" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-400/40 px-3.5 py-2 rounded-xl text-xs font-semibold transition">2. Hány üres üveg szükséges a deadlock elkerüléséhez?</button>
+                    <button onclick="askQuestion(3)" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-400/40 px-3.5 py-2 rounded-xl text-xs font-semibold transition">3. Miért fontos a részösszeg változó méretnél?</button>
+                </div>
+
+                <div id="qa-output" class="bg-slate-900/80 border border-purple-500/30 p-4 rounded-2xl text-xs text-purple-100 min-h-[70px] flex items-center">
+                    <span class="text-purple-400 italic">Kattintson fenti kérdések egyikére az iteratív magyarázat megjelenítéséhez...</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Victory Modal -->
+    <div id="victory-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center hidden">
+        <div class="bg-gradient-to-b from-purple-950 via-indigo-950 to-slate-950 border-2 border-purple-400 p-8 rounded-3xl max-w-sm w-full text-center shadow-[0_0_60px_rgba(168,85,247,0.9)]">
+            <div class="text-6xl mb-3 animate-bounce">🌟</div>
+            <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-300 to-purple-300 mb-2">Szint Teljesítve!</h2>
+            <p class="text-purple-200 mb-6 font-semibold">+150 Érme jóváírva!</p>
+            <button onclick="nextLevel()" class="w-full py-3.5 px-6 game-btn rounded-2xl font-bold text-lg text-white shadow-2xl">
+                Következő Szint 🚀
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="msg-popup" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-purple-950/95 border-2 border-purple-400 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 transition-all duration-300 opacity-0 pointer-events-none flex items-center gap-3">
+        <span id="msg-icon" class="text-2xl">💡</span>
+        <span id="msg-text" class="font-semibold text-xs">Üzenet</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 py-6 text-xs text-purple-300/70 border-t border-purple-500/20 z-10">
+        Water Sort &amp; Physics Curriculum • Önállóan Felfedező Oktatási Anyag
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const FLUID_COLORS = {
+            crimson: { bg: 'linear-gradient(135deg, #f43f5e, #be123c)', glow: 'rgba(244, 63, 94, 0.85)' },
+            electric: { bg: 'linear-gradient(135deg, #06b6d4, #0e7490)', glow: 'rgba(6, 182, 212, 0.85)' },
+            neonlime: { bg: 'linear-gradient(135deg, #22c55e, #15803d)', glow: 'rgba(34, 197, 94, 0.85)' },
+            sundown: { bg: 'linear-gradient(135deg, #f97316, #c2410c)', glow: 'rgba(249, 115, 22, 0.85)' },
+            amethyst: { bg: 'linear-gradient(135deg, #a855f7, #7e22ce)', glow: 'rgba(168, 85, 247, 0.85)' },
+            goldburst: { bg: 'linear-gradient(135deg, #eab308, #a16207)', glow: 'rgba(234, 179, 8, 0.85)' }
+        };
+
+        const CAPACITY = 4;
+        let currentLevel = 1;
+        let coins = 2150;
+        let tubes = [];
+        let historyStates = [];
+        let selectedTubeIdx = null;
+        let isPouring = false;
+
+        const LEVELS_DATA = {
+            1: [
+                ['crimson', 'electric', 'neonlime', 'crimson'],
+                ['neonlime', 'amethyst', 'electric', 'sundown'],
+                ['sundown', 'crimson', 'amethyst', 'neonlime'],
+                ['amethyst', 'sundown', 'electric', 'crimson'],
+                [], [], []
+            ],
+            2: [
+                ['goldburst', 'amethyst', 'electric', 'goldburst'],
+                ['amethyst', 'sundown', 'sundown', 'electric'],
+                ['sundown', 'goldburst', 'amethyst', 'goldburst'],
+                ['electric', 'sundown', 'amethyst', 'goldburst'],
+                ['amethyst', 'electric', 'amethyst', 'sundown'],
+                [], []
+            ]
+        };
+
+        function initStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 45; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 1.5}s`);
+                container.appendChild(star);
+            }
+        }
+
+        function loadLevel(lvl) {
+            if (lvl > 2) lvl = 1;
+            currentLevel = lvl;
+            document.getElementById('level-display').innerText = `Level ${lvl}`;
+            selectedTubeIdx = null;
+            historyStates = [];
+            tubes = JSON.parse(JSON.stringify(LEVELS_DATA[lvl] || LEVELS_DATA[1]));
+            renderBoard();
+        }
+
+        function nextLevel() {
+            document.getElementById('victory-modal').classList.add('hidden');
+            coins += 150;
+            document.getElementById('coin-count').innerText = coins;
+            loadLevel(currentLevel + 1);
+            showToast('Következő szint betöltve!', '🚀');
+        }
+
+        function prevLevel() {
+            loadLevel(currentLevel - 1);
+        }
+
+        function restartLevel() {
+            loadLevel(currentLevel);
+            showToast('Szint újrakezdve!', '🔄');
+        }
+
+        function renderBoard() {
+            const topRowEl = document.getElementById('top-row');
+            const bottomRowEl = document.getElementById('bottom-row');
+            topRowEl.innerHTML = '';
+            bottomRowEl.innerHTML = '';
+
+            const splitIdx = Math.ceil(tubes.length / 2);
+
+            tubes.forEach((tube, idx) => {
+                const isSelected = selectedTubeIdx === idx;
+                const container = document.createElement('div');
+                container.className = `tube-container flex flex-col items-center ${isSelected ? 'selected' : ''}`;
+                container.onclick = () => selectTube(idx);
+
+                // Special container variations (Shopping Bag for idx 0 in certain levels, Tall test tube for idx 1)
+                if (idx === 0 && currentLevel === 2) {
+                    // Shopping bag style
+                    const bag = document.createElement('div');
+                    bag.className = 'bag-container';
+                    const handle = document.createElement('div');
+                    handle.className = 'bag-handle';
+                    bag.appendChild(handle);
+                    
+                    for (let l = 0; l < CAPACITY; l++) {
+                        if (tube[l]) {
+                            const layer = document.createElement('div');
+                            layer.className = 'fluid-layer';
+                            layer.style.bottom = `${l * 25}%`;
+                            layer.style.height = '25%';
+                            layer.style.background = FLUID_COLORS[tube[l]].bg;
+                            bag.appendChild(layer);
+                        }
+                    }
+                    container.appendChild(bag);
+                } else if (idx === 1 && currentLevel === 2) {
+                    // Tall test tube style
+                    const rim = document.createElement('div');
+                    rim.className = 'tube-rim tall';
+                    const neck = document.createElement('div');
+                    neck.className = 'tube-neck tall';
+                    const shoulder = document.createElement('div');
+                    shoulder.className = 'tube-shoulder tall';
+                    const glass = document.createElement('div');
+                    glass.className = 'tube-glass tall';
+
+                    for (let l = 0; l < CAPACITY; l++) {
+                        if (tube[l]) {
+                            const layer = document.createElement('div');
+                            layer.className = 'fluid-layer';
+                            layer.style.bottom = `${l * 25}%`;
+                            layer.style.height = '25%';
+                            layer.style.background = FLUID_COLORS[tube[l]].bg;
+                            glass.appendChild(layer);
+                        }
+                    }
+                    container.appendChild(rim);
+                    container.appendChild(neck);
+                    container.appendChild(shoulder);
+                    container.appendChild(glass);
+                } else {
+                    // Standard curved glass tube
+                    const rim = document.createElement('div');
+                    rim.className = 'tube-rim';
+                    const neck = document.createElement('div');
+                    neck.className = 'tube-neck';
+                    const shoulder = document.createElement('div');
+                    shoulder.className = 'tube-shoulder';
+                    const glass = document.createElement('div');
+                    glass.className = 'tube-glass';
+
+                    for (let l = 0; l < CAPACITY; l++) {
+                        if (tube[l]) {
+                            const layer = document.createElement('div');
+                            layer.className = 'fluid-layer';
+                            layer.style.bottom = `${l * 25}%`;
+                            layer.style.height = '25%';
+                            layer.style.background = FLUID_COLORS[tube[l]].bg;
+                            glass.appendChild(layer);
+                        }
+                    }
+                    container.appendChild(rim);
+                    container.appendChild(neck);
+                    container.appendChild(shoulder);
+                    container.appendChild(glass);
+                }
+
+                if (idx < splitIdx) {
+                    topRowEl.appendChild(container);
+                } else {
+                    bottomRowEl.appendChild(container);
+                }
+            });
+        }
+
+        function selectTube(idx) {
+            if (isPouring) return;
+            if (selectedTubeIdx === null) {
+                if (tubes[idx].length === 0) {
+                    showToast('Üres edényt nem választhatsz ki!', '⚠️');
+                    return;
+                }
+                selectedTubeIdx = idx;
+                renderBoard();
+            } else if (selectedTubeIdx === idx) {
+                selectedTubeIdx = null;
+                renderBoard();
+            } else {
+                const fromIdx = selectedTubeIdx;
+                const toIdx = idx;
+                selectedTubeIdx = null;
+                renderBoard();
+                attemptPour(fromIdx, toIdx);
+            }
+        }
+
+        function attemptPour(fromIdx, toIdx) {
+            const fromTube = tubes[fromIdx];
+            const toTube = tubes[toIdx];
+
+            if (fromTube.length === 0) return;
+            const topColor = fromTube[fromTube.length - 1];
+
+            if (toTube.length >= CAPACITY) {
+                showToast('Ez az edény teljesen tele van!', '🚫');
+                return;
+            }
+
+            const destTop = toTube.length > 0 ? toTube[toTube.length - 1] : null;
+            if (destTop && destTop !== topColor) {
+                showToast('Csak azonos színű folyadék önthető rá!', '🎨');
+                return;
+            }
+
+            historyStates.push(JSON.parse(JSON.stringify(tubes)));
+
+            let pourCount = 0;
+            for (let i = fromTube.length - 1; i >= 0; i--) {
+                if (fromTube[i] === topColor) pourCount++;
+                else break;
+            }
+            let space = CAPACITY - toTube.length;
+            let actualPour = Math.min(pourCount, space);
+
+            isPouring = true;
+            triggerPourCanvasEffect(fromIdx, toIdx, topColor, () => {
+                for (let i = 0; i < actualPour; i++) {
+                    fromTube.pop();
+                    toTube.push(topColor);
+                }
+                isPouring = false;
+                renderBoard();
+                checkVictory();
+            });
+        }
+
+        function triggerPourCanvasEffect(fromIdx, toIdx, colorKey, callback) {
+            const canvas = document.getElementById('pour-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const fromEl = document.querySelectorAll('.tube-container')[fromIdx];
+            const toEl = document.querySelectorAll('.tube-container')[toIdx];
+            if (!fromEl || !toEl) { callback(); return; }
+
+            const r1 = fromEl.getBoundingClientRect();
+            const r2 = toEl.getBoundingClientRect();
+            const startX = r1.left + r1.width / 2;
+            const startY = r1.top + 20;
+            const endX = r2.left + r2.width / 2;
+            const endY = r2.top + 20;
+
+            const glow = FLUID_COLORS[colorKey].glow;
+            let progress = 0;
+
+            function animateStream() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                progress += 0.08;
+
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.quadraticCurveTo((startX + endX) / 2, Math.min(startY, endY) - 50, endX, endY);
+                ctx.strokeStyle = glow;
+                ctx.lineWidth = 8;
+                ctx.stroke();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateStream);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    callback();
+                }
+            }
+            animateStream();
+        }
+
+        function checkVictory() {
+            let won = true;
+            for (let tube of tubes) {
+                if (tube.length === 0) continue;
+                if (tube.length < CAPACITY) { won = false; break; }
+                const first = tube[0];
+                for (let c of tube) { if (c !== first) { won = false; break; } }
+                if (!won) break;
+            }
+            if (won) {
+                document.getElementById('victory-modal').classList.remove('hidden');
+            }
+        }
+
+        function undoMove() {
+            if (historyStates.length === 0) {
+                showToast('Nincs visszavonható lépés!', '↩️');
+                return;
+            }
+            tubes = historyStates.pop();
+            selectedTubeIdx = null;
+            renderBoard();
+            showToast('Lépés visszavonva!', '🔄');
+        }
+
+        function addExtraTube() {
+            if (coins < 50) {
+                showToast('Nincs elég érméd (50 🪙)', '🪙');
+                return;
+            }
+            coins -= 50;
+            document.getElementById('coin-count').innerText = coins;
+            tubes.push([]);
+            renderBoard();
+            showToast('Extra üveg hozzáadva! 🧪+', '🎉');
+        }
+
+        function showToast(text, icon = '💡') {
+            const popup = document.getElementById('msg-popup');
+            document.getElementById('msg-text').innerText = text;
+            document.getElementById('msg-icon').innerText = icon;
+            popup.style.opacity = '1';
+            popup.style.transform = 'translate(-50%, 15px)';
+            setTimeout(() => { popup.style.opacity = '0'; popup.style.transform = 'translate(-50%, -20px)'; }, 2500);
+        }
+
+        // Particle Simulation
+        const simCanvas = document.getElementById('sim-canvas');
+        const simCtx = simCanvas.getContext('2d');
+        let particles = [];
+
+        function addParticleBatch(type) {
+            for (let i = 0; i < 15; i++) {
+                let radius = type === 'large' ? 10 : (type === 'mixed' ? 3 + Math.random() * 8 : 4);
+                particles.push({
+                    x: 220 + Math.random() * 160,
+                    y: 20 + Math.random() * 30,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: Math.random() * 2 + 1,
+                    radius: radius,
+                    color: '#f43f5e'
+                });
+            }
+            updateStats();
+        }
+
+        function resetSimulation() {
+            particles = [];
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('stat-count').innerText = particles.length;
+            let totalVol = particles.reduce((sum, p) => sum + (Math.PI * p.radius * p.radius), 0);
+            document.getElementById('stat-volume').innerText = Math.round(totalVol);
+        }
+
+        function animateSimulation() {
+            simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+
+            // Cat container shape outline
+            simCtx.strokeStyle = '#a855f7';
+            simCtx.lineWidth = 3;
+            simCtx.beginPath();
+            simCtx.moveTo(250, 160);
+            simCtx.lineTo(230, 90);
+            simCtx.lineTo(270, 120);
+            simCtx.lineTo(330, 120);
+            simCtx.lineTo(370, 90);
+            simCtx.lineTo(350, 160);
+            simCtx.arc(300, 160, 60, 0, Math.PI, false);
+            simCtx.stroke();
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                let floorY = 160 + Math.sqrt(Math.max(0, 60*60 - Math.pow(p.x - 300, 2))) * 0.5;
+                if (p.y + p.radius > floorY) {
+                    p.y = floorY - p.radius;
+                    p.vy = 0;
+                    p.vx *= 0.9;
+                } else {
+                    p.vy += 0.2;
+                }
+
+                simCtx.beginPath();
+                simCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                simCtx.fillStyle = p.color;
+                simCtx.shadowColor = '#f43f5e';
+                simCtx.shadowBlur = 8;
+                simCtx.fill();
+                simCtx.shadowBlur = 0;
+            });
+
+            requestAnimationFrame(animateSimulation);
+        }
+
+        // Q&A Answers
+        const qaData = {
+            1: "Ha az üveg tetején lévő szín nem egyezik a célüveg felső rétegével, a fizikai szimuláció elutasítja az öntést. Ez a molekuláris taszítást és a folyadékok elkülönülését modellezi.",
+            2: "A deadlock (holtpont) elkerüléséhez legalább 1 vagy 2 teljesen üres üvegre van szükség mint pufferterületre. Ha minden edény részben tele van eltérő színekkel és nincs üres edény, újat kell kérni.",
+            3: "Változó méretű részecskék esetén a darabszám nem elegendő a térfogat mérésére. A futó összeg (running sum) folyamatosan összeadja az egyes részecskék területét ($\\pi r^2$), biztosítva a pontos tömegmegmaradást."
+        };
+
+        function askQuestion(id) {
+            document.getElementById('qa-output').innerHTML = `<span class="font-semibold text-purple-100">${qaData[id]}</span>`;
+        }
+
+        function downloadCurriculum() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'water_sort_physics_curriculum.html';
+            document.body.appendChild(label = a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Tananyag sikeresen letöltve!', '📥');
+        }
+
+        window.onload = function() {
+            initStars();
+            loadLevel(1);
+            addParticleBatch('mixed');
+            animateSimulation();
+        };
+    </script>
+
+</body></html>

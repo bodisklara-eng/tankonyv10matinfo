@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1789896533936.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folyadékdinamika és Részecskeszimuláció - Interaktív Tananyag</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary: #2563eb;
+            --accent: #0ea5e9;
+            --border: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .header-banner {
+            background: linear-gradient(135deg, #31105e, #1e1b4b);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .header-banner h1 { margin: 0 0 5px 0; font-size: 1.8rem; }
+        .header-banner p { margin: 0; font-size: 0.9rem; opacity: 0.85; }
+        .download-btn {
+            background: #fbbf24;
+            color: #1e293b;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .download-btn:hover { transform: scale(1.03); background: #f59e0b; }
+
+        .section-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .info-box {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .info-box strong { color: #0f172a; }
+
+        /* Simulation Canvas Area */
+        .sim-container {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        canvas {
+            background: #090d16;
+            border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+        }
+        .sim-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .ctrl-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .ctrl-btn:hover { background: #1d4ed8; }
+
+        /* Floating Pipe Popup */
+        #sim-popup {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 340px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 3px solid #3b82f6;
+            border-radius: 30px; /* Cső / pipe forma */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #sim-header {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 12px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .window-controls button:hover { color: #facc15; }
+        #sim-body {
+            padding: 12px;
+            font-size: 0.8rem;
+        }
+        .popup-stats {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div>
+                <h1>Folyadékdinamika és Részecskeszimuláció</h1>
+                <p>Oktatási modul: Folyadékrendezési szabályok, macska alakú edények fizikai számításai, változó méretű részecskék és futó részösszegek (running sums).</p>
+            </div>
+            <button class="download-btn" onclick="downloadHTML()">HTML Letöltése</button>
+        </div>
+
+        <!-- Section 1: Rules & Üres üvegek -->
+        <div class="section-card">
+            <h2>✏️ 1. Folyadékrendezési Szabályok és Üres Üvegek Menedzsmentje</h2>
+            <div class="grid-2">
+                <div class="info-box">
+                    <strong>Mi történik, ha a felső színek nem egyeznek?</strong><br>
+                    Ha a forrásüveg legfelső folyadékrétege nem egyezik a célüveg legfelső rétegével, az átöntési művelet <em>megszakad és elutasításra kerül</em>.
+                </div>
+                <div class="info-box">
+                    <strong>Hány üres üveg kell, és mikor kell kérni?</strong><br>
+                    A logikai minimum a biztonságos buborék-átfolyáshoz legalább <strong>1 vagy 2 üres üveg</strong>. Ha minden üveg részekben tele van eltérő színekkel és nincs szabad tárolóedény, a játék holtpontra fut.
+                </div>
+            </div>
+            <p style="margin-top: 12px; font-size: 0.85rem;"><a href="file:///C:/Users/Utilizator/Downloads/gemini-code-1789896533936.html#" onclick="openPopup(); return false;" style="color: var(--primary); font-weight: bold;">🔗 Kattintson ide a Cső Szimuláció &amp; Futó Részösszegek Pop-up megnyitásához!</a></p>
+        </div>
+
+        <!-- Section 2: Main Simulation -->
+        <div class="section-card">
+            <h2>🐱 2. Fantasztikus Forgatókönyv: Piros Folyadék Gyűjtése Macska Alakú Edényben</h2>
+            <p style="font-size: 0.9rem;">Vizsgáljuk meg, hogy egy szabályos henger helyett egy bonyolult geometriájú, <strong>macska alakú edénybe</strong> gyűjtjük a piros neonszínű folyadékot. A vászon alatt valós időben futnak a részecskevektorok és a futó részösszegek!</p>
+            
+            <div class="sim-container">
+                <div style="font-size: 0.85rem; margin-bottom: 5px;">Folyamatos Részecske Szimuláció (Vektor Index + Változó Méret)</div>
+                <canvas id="mainCanvas" width="700" height="240"></canvas>
+                <div id="main-stats" style="font-family: monospace; font-size: 0.8rem; color: #38bdf8; margin-top: 5px;">Vektor Indexek: [0..44] | Futó Részösszeg (Σ Vol): <strong>676.6</strong> egység</div>
+                <div class="sim-controls">
+                    <button class="ctrl-btn" onclick="setRadius(2)">Kicsi Részecskék (r = 2)</button>
+                    <button class="ctrl-btn" onclick="setRadius(6)">Vegyes Méretűek (r = 6)</button>
+                    <button class="ctrl-btn" onclick="setRadius(10)">Nagy Részecskék (r = 10)</button>
+                    <button class="ctrl-btn" onclick="resetSim()" style="background: #ef4444;">Újraindítás</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Interactive Q&A -->
+        <div class="section-card">
+            <h2>🤖 3. Interaktív Iteratív Q&amp;A Szimulációs Csomag</h2>
+            <div class="info-box">
+                Tesztelje tudását a dinamikus kérdés-válasz iteráció segítségével! Válasszon egy kérdést, és a rendszer valós időben kiértékeli a fizikai választ.
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                <button class="ctrl-btn" onclick="answerQA(1)">1. Miért akad el a folyadék, ha a színek nem egyeznek?</button>
+                <button class="ctrl-btn" onclick="answerQA(2)">2. Hogyan számolható ki a macska alakú edény térfogata?</button>
+                <button class="ctrl-btn" onclick="answerQA(3)">3. Mi a szerepe a részösszeg-számításnak futó részvonalnál?</button>
+            </div>
+            <div id="qa-result" style="margin-top: 12px; background: white; padding: 10px; border-radius: 6px; border-left: 4px solid var(--primary); font-size: 0.85rem; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Floating Pipe Popup Window -->
+    <div id="sim-popup">
+        <div id="sim-header">
+            <span>🧪 Cső Pop-up &amp; Futó Részösszegek</span>
+            <div class="window-controls">
+                <button onclick="toggleMinimize()" title="Kicsinyítés/Nagyítás">_</button>
+                <button onclick="closePopup()" title="Bezárás">✕</button>
+            </div>
+        </div>
+        <div id="sim-body">
+            <p style="margin: 0 0 6px 0;">Macska Edény &amp; Futó Részösszeg Monitor:</p>
+            <canvas id="popupCanvas" width="370" height="150" style="background:#090d16; border-radius:6px; display:block; margin: 0 auto;"></canvas>
+            <div class="popup-stats" id="popup-stats">Vektorok: [0..24] | Részösszeg: 182.2 egység</div>
+            <div style="display: flex; gap: 5px; margin-top: 8px;">
+                <button class="ctrl-btn" style="font-size: 0.75rem; padding: 4px 8px;" onclick="setPopupSize('small')">Kicsi</button>
+                <button class="ctrl-btn" style="font-size: 0.75rem; padding: 4px 8px;" onclick="setPopupSize('medium')">Közepes</button>
+                <button class="ctrl-btn" style="font-size: 0.75rem; padding: 4px 8px;" onclick="setPopupSize('large')">Nagy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Drag and Drop for Popup ---
+        const popup = document.getElementById('sim-popup');
+        const header = document.getElementById('sim-header');
+        let isDragging = false, startX, startY, initialX, initialY;
+
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = popup.offsetLeft;
+            initialY = popup.offsetTop;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        function onMouseMove(e) {
+            if (!isDragging) return;
+            popup.style.left = `${initialX + (e.clientX - startX)}px`;
+            popup.style.top = `${initialY + (e.clientY - startY)}px`;
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        function closePopup() { popup.style.display = 'none'; }
+        function openPopup() { popup.style.display = 'flex'; }
+        let isMinimized = false;
+        function toggleMinimize() {
+            isMinimized = !isMinimized;
+            document.getElementById('sim-body').style.display = isMinimized ? 'none' : 'block';
+        }
+
+        // --- Physics & Particle Simulation ---
+        let pRadius = 6;
+        let particles = [];
+        let popupParticles = [];
+        let totalRunningSum = 0;
+
+        function initParticles(arr, count, width, height) {
+            arr.length = 0;
+            for(let i=0; i<count; i++) {
+                arr.push({
+                    x: width / 2 + (Math.random() - 0.5) * 200,
+                    y: height - 40 - Math.random() * 80,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 1,
+                    radius: pRadius + (Math.random() * 2 - 1),
+                    index: i
+                });
+            }
+        }
+
+        const mainCanvas = document.getElementById('mainCanvas');
+        const mainCtx = mainCanvas.getContext('2d');
+        const popupCanvas = document.getElementById('popupCanvas');
+        const popupCtx = popupCanvas.getContext('2d');
+
+        function setRadius(r) {
+            pRadius = r;
+            initParticles(particles, 45, mainCanvas.width, mainCanvas.height);
+        }
+
+        function resetSim() {
+            initParticles(particles, 45, mainCanvas.width, mainCanvas.height);
+            initParticles(popupParticles, 20, popupCanvas.width, popupCanvas.height);
+        }
+
+        function setPopupSize(size) {
+            if(size === 'small') popupCanvas.width = 250;
+            if(size === 'medium') popupCanvas.width = 310;
+            if(size === 'large') popupCanvas.width = 370;
+            initParticles(popupParticles, 25, popupCanvas.width, popupCanvas.height);
+        }
+
+        resetSim();
+
+        function drawCatContour(ctx, w, h) {
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            // Macska edény kontúr fülekkel
+            let cx = w / 2, cy = h / 2 + 10;
+            ctx.moveTo(cx - 70, cy + 40);
+            ctx.lineTo(cx - 90, cy - 20); // Bal fül
+            ctx.lineTo(cx - 50, cy);
+            ctx.lineTo(cx - 30, cy - 40); // Fej teteje / nyak
+            ctx.lineTo(cx + 30, cy - 40);
+            ctx.lineTo(cx + 50, cy);
+            ctx.lineTo(cx + 90, cy - 20); // Jobb fül
+            ctx.lineTo(cx + 70, cy + 40);
+            ctx.quadraticCurveTo(cx, cy + 70, cx - 70, cy + 40);
+            ctx.stroke();
+        }
+
+        function updateAndRender() {
+            // Main canvas
+            mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+            drawCatContour(mainCtx, mainCanvas.width, mainCanvas.height);
+
+            let sum = 0;
+            particles.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                // Határok (egyszerűsített doboz)
+                if (p.x < 120 || p.x > mainCanvas.width - 120) p.vx *= -1;
+                if (p.y > mainCanvas.height - 30 || p.y < 70) p.vy *= -1;
+
+                sum += p.radius * 1.5;
+
+                mainCtx.fillStyle = '#ef4444';
+                mainCtx.beginPath();
+                mainCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                mainCtx.fill();
+
+                // Index kiírása
+                mainCtx.fillStyle = '#ffffff';
+                mainCtx.font = '9px monospace';
+                mainCtx.fillText(`[${idx}]`, p.x - 6, p.y - p.radius - 3);
+            });
+
+            totalRunningSum = sum.toFixed(1);
+            document.getElementById('main-stats').innerHTML = 
+                `Vektor Indexek: [0..${particles.length-1}] | Futó Részösszeg (Σ Vol): <strong>${totalRunningSum}</strong> egység`;
+
+            // Popup canvas
+            popupCtx.clearRect(0, 0, popupCanvas.width, popupCanvas.height);
+            drawCatContour(popupCtx, popupCanvas.width, popupCanvas.height);
+
+            let popSum = 0;
+            popupParticles.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 40 || p.x > popupCanvas.width - 40) p.vx *= -1;
+                if (p.y > popupCanvas.height - 20 || p.y < 30) p.vy *= -1;
+
+                popSum += p.radius * 1.2;
+
+                popupCtx.fillStyle = '#f43f5e';
+                popupCtx.beginPath();
+                popupCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                popupCtx.fill();
+            });
+
+            document.getElementById('popup-stats').innerHTML = 
+                `Vektorok: [0..${popupParticles.length-1}] | Részösszeg: ${popSum.toFixed(1)} egység`;
+
+            requestAnimationFrame(updateAndRender);
+        }
+
+        requestAnimationFrame(updateAndRender);
+
+        function answerQA(id) {
+            const res = document.getElementById('qa-result');
+            res.style.display = 'block';
+            if(id === 1) res.innerHTML = "<strong>1. Válasz:</strong> A folyadékdinamikai szabályok miatt különböző színű rétegek nem keveredhetnek össze ugyanabban a folytonos sávban; a program az indexek eltérése miatt megakadályozza az érvénytelen keveredést.";
+            if(id === 2) res.innerHTML = "<strong>2. Válasz:</strong> A macska alakú edény térfogata a hengerintegrálok és a geometriai kontúr koordinátáinak (vektorok) összegeként számítható ki, figyelembe véve a fül és a fej vonalait.";
+            if(id === 3) res.innerHTML = "<strong>3. Válasz:</strong> A futó részösszeg (running sum) folyamatosan méri a betöltött részecskék össztérfogatát, így megelőzhető az edény túlcsordulása még változó részecskeméretek esetén is.";
+        }
+
+        function downloadHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'folyadekdinamika_reszecskeszimulacio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body></html>

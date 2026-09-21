@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1789897507353.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komplex Cső- és Részecskeméret Szimuláció - 10. Osztály</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary: #2563eb;
+            --accent: #0ea5e9;
+            --border: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .header-banner {
+            background: linear-gradient(135deg, #31105e, #1e1b4b);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .header-banner h1 { margin: 0 0 5px 0; font-size: 1.8rem; }
+        .header-banner p { margin: 0; font-size: 0.9rem; opacity: 0.85; }
+        .download-btn {
+            background: #fbbf24;
+            color: #1e293b;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .download-btn:hover { transform: scale(1.03); background: #f59e0b; }
+
+        .section-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .chemistry-note {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            font-size: 0.85rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 10px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            align-items: end;
+        }
+        .vessel-card {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            text-align: center;
+            border: 2px solid #3b82f6;
+        }
+        .vessel-card h3 { margin: 0 0 6px 0; font-size: 0.95rem; color: #38bdf8; }
+        canvas {
+            background: #090d16;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto 8px auto;
+        }
+        .stats-text {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .ctrl-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .ctrl-btn:hover { background: #1d4ed8; }
+
+        /* Floating Pipe Popup */
+        #sim-popup {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 360px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 3px solid #3b82f6;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #sim-header {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 12px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .window-controls button:hover { color: #facc15; }
+        #sim-body { padding: 12px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div>
+                <h1>Komplex Cső- és Részecskeméret Szimuláció</h1>
+                <p>Oktatási modul: Változó csőméretek, homogén vs. vegyes méretű részecskék és fázisok.</p>
+            </div>
+            <button class="download-btn" onclick="downloadHTML()">HTML Letöltése</button>
+        </div>
+
+        <!-- Section 1: Theory & Mode Selector -->
+        <div class="section-card">
+            <h2>✏️ 1. Alapelvek és Módválasztó</h2>
+            <p style="font-size: 0.9rem;">A számítástechnikában a tárolóedények (csövek) és a bennük lévő adatok mérete többféleképpen kombinálódhat. <a href="file:///C:/Users/Utilizator/Downloads/gemini-code-1789897507353.html#" onclick="openPopup(); return false;" style="color: var(--primary); font-weight: bold;">🔗 Lebegő Cső Pop-up megnyitása</a></p>
+            
+            <div class="mode-selector">
+                <button class="mode-btn" id="btnHomo" onclick="setMode('homo')">Azonos Típusú &amp; Méretű (Homogén)</button>
+                <button class="mode-btn" id="btnHeteroSize" onclick="setMode('heteroSize')">Eltérő Részecskeméret</button>
+                <button class="mode-btn active" id="btnChemPhase" onclick="setMode('chemPhase')">Kémia: Nem Keveredő Fázisok</button>
+            </div>
+
+            <div class="chemistry-note" id="chemNote"><strong>Kémiai Háttér (Nem keveredő fázisok):</strong> Két különböző kémiai típusú folyadék (pl. víz és olaj). Az eltérő polaritás miatt elkülönülnek egymástól.</div>
+        </div>
+
+        <!-- Section 2: Standard Multi-Size Simulation Grid -->
+        <div class="section-card">
+            <h2>🧪 2. Fő Csövecske Elemzés</h2>
+            <div class="grid-4">
+                <!-- Kicsi -->
+                <div class="vessel-card">
+                    <h3>Kicsi Cső</h3>
+                    <canvas id="canvasSmall" width="130" height="170"></canvas>
+                    <div class="stats-text" id="stats-small">Indexek: [0..2]<br>Σ Vol: <strong>14.4</strong><br>Fázisok</div>
+                </div>
+                <!-- Közepes -->
+                <div class="vessel-card">
+                    <h3>Közepes Cső</h3>
+                    <canvas id="canvasMed" width="160" height="200"></canvas>
+                    <div class="stats-text" id="stats-med">Indexek: [0..4]<br>Σ Vol: <strong>30.0</strong><br>Fázisok</div>
+                </div>
+                <!-- Vegyes -->
+                <div class="vessel-card">
+                    <h3>Vegyes Cső</h3>
+                    <canvas id="canvasMix" width="190" height="230"></canvas>
+                    <div class="stats-text" id="stats-mix">Indexek: [0..5]<br>Σ Vol: <strong>39.6</strong><br>Fázisok</div>
+                </div>
+                <!-- Nagy -->
+                <div class="vessel-card" style="border-color: #f43f5e;">
+                    <h3 style="color: #fb7185;">Nagy (Macska) Cső</h3>
+                    <canvas id="canvasLarge" width="220" height="260"></canvas>
+                    <div class="stats-text" id="stats-large">Indexek: [0..7]<br>Σ Vol: <strong>76.8</strong><br>Fázisok</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="ctrl-btn" onclick="resetSims()">Szimuláció Újraindítása</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Bottom Exact Match Combinations -->
+        <div class="section-card" style="border: 2px dashed var(--primary); background: #ffffff;">
+            <h2>✨ 3. Szigorú Méret-Kombinációk (Kicsi-kicsi, Közepes-közepes, Vegyes-vegyes, Nagy-nagy)</h2>
+            <p style="font-size: 0.85rem; color: #475569;">Itt látható, amikor a kicsi csőben kicsi, a közepesben közepes, a **vegyesben változó/vegyes méretű**, a nagyban pedig óriási részecskék találhatók.</p>
+            
+            <div class="grid-4">
+                <!-- Csak Kicsi a Kicsiben -->
+                <div class="vessel-card">
+                    <h3>Kicsi Cső + Apró</h3>
+                    <canvas id="canvasStrictSmall" width="130" height="160"></canvas>
+                    <div class="stats-text" id="stats-strict-small">Mérték: SMALL<br>Σ Vol: <strong>10.8</strong></div>
+                </div>
+                <!-- Csak Közepes a Közepesben -->
+                <div class="vessel-card">
+                    <h3>Közepes Cső + Közép</h3>
+                    <canvas id="canvasStrictMed" width="160" height="190"></canvas>
+                    <div class="stats-text" id="stats-strict-med">Mérték: MEDIUM<br>Σ Vol: <strong>36.0</strong></div>
+                </div>
+                <!-- Vegyes cső és ténylegesen vegyes részecskék -->
+                <div class="vessel-card">
+                    <h3>Vegyes Cső + Vegyes Méret</h3>
+                    <canvas id="canvasStrictMix" width="190" height="220"></canvas>
+                    <div class="stats-text" id="stats-strict-mix">Mérték: MIX<br>Σ Vol: <strong>39.6</strong></div>
+                </div>
+                <!-- Csak Nagy a Nagyban -->
+                <div class="vessel-card" style="border-color: #f43f5e;">
+                    <h3 style="color: #fb7185;">Nagy Cső + Óriás</h3>
+                    <canvas id="canvasStrictLarge" width="220" height="250"></canvas>
+                    <div class="stats-text" id="stats-strict-large">Mérték: LARGE<br>Σ Vol: <strong>115.2</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Pipe Popup Window -->
+    <div id="sim-popup" style="left: 883px; top: 80px; display: none;">
+        <div id="sim-header">
+            <span>🧪 Cső Pop-up &amp; Fázis Monitor</span>
+            <div class="window-controls">
+                <button onclick="toggleMinimize()" title="Kicsinyítés/Nagyítás">_</button>
+                <button onclick="closePopup()" title="Bezárás">✕</button>
+            </div>
+        </div>
+        <div id="sim-body">
+            <p style="margin: 0 0 6px 0;">Kiemelt Csövecske Elemzés:</p>
+            <canvas id="popupCanvas" width="310" height="160" style="background:#090d16; border-radius:6px; display:block; margin: 0 auto;"></canvas>
+            <div style="background: #f1f5f9; border: 1px solid var(--border); padding: 8px; border-radius: 6px; font-family: monospace; font-size: 0.75rem; margin-top: 8px;" id="popup-stats">Indexek: [0..5] | Részösszeg: 36.0</div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'homo'; // 'homo', 'heteroSize', 'chemPhase'
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btnHomo').classList.toggle('active', mode === 'homo');
+            document.getElementById('btnHeteroSize').classList.toggle('active', mode === 'heteroSize');
+            document.getElementById('btnChemPhase').classList.toggle('active', mode === 'chemPhase');
+
+            const note = document.getElementById('chemNote');
+            if (mode === 'homo') {
+                note.innerHTML = '<strong>Kémiai Háttér:</strong> Homogén rendszer – az összes részecske azonos fizikai mérettel és kémiai tulajdonsággal bír.';
+            } else if (mode === 'heteroSize') {
+                note.innerHTML = '<strong>Fizikai Háttér:</strong> Eltérő méretű részecskék egy csövön belül.';
+            } else {
+                note.innerHTML = '<strong>Kémiai Háttér (Nem keveredő fázisok):</strong> Két különböző kémiai típusú folyadék (pl. víz és olaj). Az eltérő polaritás miatt elkülönülnek egymástól.';
+            }
+            resetSims();
+        }
+
+        // --- Drag and Drop for Popup ---
+        const popup = document.getElementById('sim-popup');
+        const header = document.getElementById('sim-header');
+        let isDragging = false, startX, startY, initialX, initialY;
+
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = popup.offsetLeft;
+            initialY = popup.offsetTop;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        function onMouseMove(e) {
+            if (!isDragging) return;
+            popup.style.left = `${initialX + (e.clientX - startX)}px`;
+            popup.style.top = `${initialY + (e.clientY - startY)}px`;
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        function closePopup() { popup.style.display = 'none'; }
+        function openPopup() { popup.style.display = 'flex'; }
+        let isMinimized = false;
+        function toggleMinimize() {
+            isMinimized = !isMinimized;
+            document.getElementById('sim-body').style.display = isMinimized ? 'none' : 'block';
+        }
+
+        // --- Simulation Systems ---
+        function createParticles(count, baseRadius, width, height, isMixedContainer = false) {
+            let parts = [];
+            for(let i=0; i<count; i++) {
+                let r = baseRadius;
+                let chemType = 0;
+
+                if (isMixedContainer) {
+                    // Itt ténylegesen vegyes (kicsi, közepes, nagy) méretek váltakoznak
+                    let sizes = [3, 6, 9, 4.5, 7.5];
+                    r = sizes[i % sizes.length];
+                } else if (currentMode === 'heteroSize') {
+                    r = (i % 2 === 0) ? baseRadius * 0.6 : baseRadius * 1.5;
+                } else if (currentMode === 'chemPhase') {
+                    chemType = (i < count / 2) ? 0 : 1;
+                    r = baseRadius;
+                }
+
+                parts.push({
+                    x: width / 2 + (Math.random() - 0.5) * (width * 0.4),
+                    y: 30 + Math.random() * (height - 60),
+                    vx: (Math.random() - 0.5) * 1.2,
+                    vy: (Math.random() - 0.5) * 1.2,
+                    radius: r,
+                    chemType: chemType,
+                    index: i
+                });
+            }
+            return parts;
+        }
+
+        // Fő szimulációs adatok (a vegyes csőnél bekapcsolva a vegyes méret)
+        let smallParts = createParticles(3, 4, 130, 170, false);
+        let medParts = createParticles(5, 5, 160, 200, false);
+        let mixParts = createParticles(6, 5, 190, 230, true); // <--- Itt a vegyes csőben vegyes méretek vannak
+        let largeParts = createParticles(8, 8, 220, 260, false);
+        let popupParts = createParticles(6, 5, 310, 160, false);
+
+        // Szigorú alsó kombinációs adatok (a vegyesnél itt is ténylegesen vegyes méretek)
+        let strictSmall = createParticles(3, 3, 130, 160, false);
+        let strictMed = createParticles(5, 6, 160, 190, false);
+        let strictMix = createParticles(6, 5, 190, 220, true); // <--- Itt is vegyes méretkeverék
+        let strictLarge = createParticles(8, 12, 220, 250, false);
+
+        function drawVesselContour(ctx, w, h, type) {
+            ctx.strokeStyle = type === 'large' ? '#fb7185' : '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            if (type === 'large') {
+                let cx = w / 2, cy = h / 2;
+                ctx.moveTo(cx - 50, cy + 75);
+                ctx.lineTo(cx - 75, cy - 20);
+                ctx.lineTo(cx - 35, cy + 5);
+                ctx.lineTo(cx - 25, cy - 55);
+                ctx.lineTo(cx + 25, cy - 55);
+                ctx.lineTo(cx + 35, cy + 5);
+                ctx.lineTo(cx + 75, cy - 20);
+                ctx.lineTo(cx + 50, cy + 75);
+                ctx.quadraticCurveTo(cx, cy + 95, cx - 50, cy + 75);
+            } else {
+                let marginW = w * 0.25;
+                ctx.roundRect(marginW, 15, w - (marginW * 2), h - 30, 20);
+            }
+            ctx.stroke();
+        }
+
+        function updateCanvas(canvasId, statsId, parts, type, isStrict = false) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawVesselContour(ctx, canvas.width, canvas.height, type);
+
+            let modeToUse = isStrict ? 'homo' : currentMode;
+
+            if (modeToUse === 'chemPhase') {
+                parts.forEach(p => {
+                    let targetY = p.chemType === 0 ? canvas.height * 0.3 : canvas.height * 0.7;
+                    p.vy += (targetY - p.y) * 0.02;
+                    p.vy *= 0.85;
+                });
+            }
+
+            let sum = 0;
+            let marginW = canvas.width * 0.28;
+            parts.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < marginW || p.x > canvas.width - marginW) p.vx *= -1;
+                if (p.y < 25 || p.y > canvas.height - 25) p.vy *= -1;
+
+                sum += p.radius * 1.2;
+
+                if (modeToUse === 'chemPhase') {
+                    ctx.fillStyle = p.chemType === 0 ? '#38bdf8' : '#f59e0b';
+                } else if (type === 'mix' || type === 'strictMix') {
+                    // Vegyes csőben külön színekkel is kiemeljük a különböző méreteket
+                    ctx.fillStyle = p.radius > 7 ? '#10b981' : (p.radius > 4 ? '#fbbf24' : '#6366f1');
+                } else if (currentMode === 'heteroSize') {
+                    ctx.fillStyle = p.radius > 5 ? '#10b981' : '#6366f1';
+                } else {
+                    ctx.fillStyle = type === 'large' ? '#f43f5e' : '#3b82f6';
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '8px monospace';
+                ctx.fillText(`[${idx}]`, p.x - 6, p.y - p.radius - 2);
+            });
+
+            if (isStrict) {
+                document.getElementById(statsId).innerHTML = `Mérték: ${type.toUpperCase()}<br>Σ Vol: <strong>${sum.toFixed(1)}</strong>`;
+            } else {
+                let modeDesc = currentMode === 'homo' ? 'Homogén' : (currentMode === 'heteroSize' ? 'Eltérő' : 'Fázisok');
+                document.getElementById(statsId).innerHTML = `Indexek: [0..${parts.length-1}]<br>Σ Vol: <strong>${sum.toFixed(1)}</strong><br>${modeDesc}`;
+            }
+        }
+
+        function resetSims() {
+            smallParts = createParticles(3, 4, 130, 170, false);
+            medParts = createParticles(5, 5, 160, 200, false);
+            mixParts = createParticles(6, 5, 190, 230, true);
+            largeParts = createParticles(8, 8, 220, 260, false);
+            popupParts = createParticles(6, 5, 310, 160, false);
+
+            strictSmall = createParticles(3, 3, 130, 160, false);
+            strictMed = createParticles(5, 6, 160, 190, false);
+            strictMix = createParticles(6, 5, 190, 220, true);
+            strictLarge = createParticles(8, 12, 220, 250, false);
+        }
+
+        function loop() {
+            updateCanvas('canvasSmall', 'stats-small', smallParts, 'small');
+            updateCanvas('canvasMed', 'stats-med', medParts, 'medium');
+            updateCanvas('canvasMix', 'stats-mix', mixParts, 'mix');
+            updateCanvas('canvasLarge', 'stats-large', largeParts, 'large');
+
+            updateCanvas('canvasStrictSmall', 'stats-strict-small', strictSmall, 'small', true);
+            updateCanvas('canvasStrictMed', 'stats-strict-med', strictMed, 'medium', true);
+            updateCanvas('canvasStrictMix', 'stats-strict-mix', strictMix, 'mix', true);
+            updateCanvas('canvasStrictLarge', 'stats-strict-large', strictLarge, 'large', true);
+
+            // Popup canvas update
+            const popCanvas = document.getElementById('popupCanvas');
+            const popCtx = popCanvas.getContext('2d');
+            popCtx.clearRect(0, 0, popCanvas.width, popCanvas.height);
+            drawVesselContour(popCtx, popCanvas.width, popCanvas.height, 'popup');
+
+            if (currentMode === 'chemPhase') {
+                popupParts.forEach(p => {
+                    let targetY = p.chemType === 0 ? popCanvas.height * 0.3 : popCanvas.height * 0.7;
+                    p.vy += (targetY - p.y) * 0.02;
+                    p.vy *= 0.85;
+                });
+            }
+
+            let popSum = 0;
+            popupParts.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 45 || p.x > popCanvas.width - 45) p.vx *= -1;
+                if (p.y < 25 || p.y > popCanvas.height - 25) p.vy *= -1;
+                popSum += p.radius * 1.2;
+
+                popCtx.fillStyle = '#0ea5e9';
+                popCtx.beginPath();
+                popCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                popCtx.fill();
+            });
+
+            document.getElementById('popup-stats').innerHTML = `Indexek: [0..${popupParts.length-1}] | Részösszeg: ${popSum.toFixed(1)}`;
+
+            requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+
+        function downloadHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'komplex_cso_reszecske_szimulacio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body></html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1789909446649.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Cor Feszítési Rendszer, Vektor Indexelés &amp; Szétválogatási Animáció</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary: #2563eb;
+            --border: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #1e1b4b, #3b82f6);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-banner h1 { margin: 0 0 5px 0; font-size: 1.3rem; }
+        .header-banner p { margin: 0; font-size: 0.85rem; opacity: 0.85; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        canvas {
+            background: #0f172a;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        .stats-text {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #334155;
+            background: #e2e8f0;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .btn.secondary { background: #059669; }
+        .btn.secondary:hover { background: #047857; }
+
+        .code-box {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.75rem;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Fejléc -->
+        <div class="header-banner">
+            <div>
+                <h1>Le Cor Feszítési Rendszer: Vektor Indexelés &amp; Animált Kategóriák</h1>
+                <p>10. Osztályos Vektortanulási Szimuláció (Fizikai modellezés és tömbműveletek)</p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- 1. Kártya: A Feszítési Szerkezet & Elemek Indexelése -->
+            <div class="card">
+                <h2>🧱 1. Szerkezeti Edény (Fő Vektor)</h2>
+                <p style="font-size: 0.8rem;">A 6 rúd és a 4 támasztó kő mint indexelt objektumtömb. Minden elem egy erővektort képvisel.</p>
+                <canvas id="cvMainStructure" width="340" height="220"></canvas>
+                <div class="stats-text" id="stMain">Tömb méret: 6 | Összesített feszítőerő: 54N</div>
+            </div>
+
+            <!-- 2. Kártya: Animált Szétválogatás Cél Edényekbe -->
+            <div class="card">
+                <h2>🔀 2. Animált Kategóriák (Szűrés &amp; Részösszegek)</h2>
+                <p style="font-size: 0.8rem;">A részecskék értékük szerint átrendeződnek a cél edényekbe (pl. Érték ≤ 8 és Érték &gt; 8).</p>
+                <canvas id="cvAnimation" width="340" height="220"></canvas>
+                <div class="stats-text" id="stAnim">Készen áll az animációra</div>
+                <div class="btn-group">
+                    <button class="btn" onclick="startSortingAnimation()">▶️ Szétválogatás indítása</button>
+                    <button class="btn secondary" onclick="resetSimulation()">🔄 Újraindítás</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elméleti magyarázat -->
+        <div class="card">
+            <h2>💡 Vektortanulási &amp; Fizikai Összefüggések</h2>
+            <p style="font-size: 0.85rem;">
+                A fizikai modellben minden rúd egy <b>pozícióvektorral</b> és egy <b>irányvektorral</b> bír. A rudak indexei (`rudak[0]` ... `rudak[5]`) meghatározzák a terheléselosztási sorrendet. 
+                Amikor a tűz ég alatta, a hőtágulás miatt a belső feszültség-vektorok nagysága változik, amit a szimulációban a tömbelemek dinamikus szűrésével és részösszegzésével fejezünk ki.
+            </p>
+            <div class="code-box">
+// Python / C++ logikai alap a szétválogatáshoz:
+vector = [4, 12, 7, 3, 15, 8]  # A rudak feszítési értékei
+alacsony_feszultseg = [x for x in vector if x &lt;= 8]  # 1. Cél edény
+magas_feszultseg   = [x for x in vector if x &gt; 8]   # 2. Cél edény
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Adatszerkezet inicializálása
+        let mainElements = [
+            { id: 0, val: 5, name: "Rúd_1", x: 100, y: 70, targetX: 80, targetY: 170, category: 1 },
+            { id: 1, val: 12, name: "Rúd_2", x: 170, y: 70, targetX: 260, targetY: 80, category: 2 },
+            { id: 2, val: 7, name: "Rúd_3", x: 240, y: 70, targetX: 80, targetY: 110, category: 1 },
+            { id: 3, val: 14, name: "Rúd_4", x: 100, y: 140, targetX: 260, targetY: 140, category: 2 },
+            { id: 4, val: 6, name: "Rúd_5", x: 170, y: 140, targetX: 140, targetY: 170, category: 1 },
+            { id: 5, val: 10, name: "Rúd_6", x: 240, y: 140, targetX: 260, targetY: 200, category: 2 }
+        ];
+
+        let animProgress = 0; // 0 és 1 között
+        let isAnimating = false;
+
+        function drawMainStructure() {
+            const canvas = document.getElementById('cvMainStructure');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Kövek és rudak vázlatos rajzolása a háttérben
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 4;
+            // Külső keret (kövek szimulációja)
+            ctx.strokeRect(30, 30, 280, 160);
+
+            // Elemek rajzolása indexekkel
+            mainElements.forEach((el, index) => {
+                ctx.fillStyle = el.val <= 8 ? '#3b82f6' : '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(el.x, el.y, 18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 9px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`[${index}]`, el.x, el.y - 4);
+                ctx.fillText(`${el.val}N`, el.x, el.y + 6);
+            });
+
+            let sum = mainElements.reduce((acc, curr) => acc + curr.val, 0);
+            document.getElementById('stMain').innerText = `Tömb méret: ${mainElements.length} | Összesített feszítőerő: ${sum}N`;
+        }
+
+        function drawAnimationCanvas() {
+            const canvas = document.getElementById('cvAnimation');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Cél edények kirajzolása
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(30, 40, 120, 150);
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('1. Cél Edény (≤ 8N)', 90, 25);
+
+            ctx.strokeStyle = '#f59e0b';
+            ctx.strokeRect(190, 40, 120, 150);
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillText('2. Cél Edény (> 8N)', 250, 25);
+
+            // Elemek animált mozgása
+            mainElements.forEach((el, index) => {
+                // Intervallum szerinti pozíció interpoláció
+                let startX = 170;
+                let startY = 110;
+                let targetX = el.category === 1 ? 90 : 250;
+                let targetY = el.category === 1 ? (60 + index * 30) : (60 + index * 30);
+
+                let currX = startX + (targetX - startX) * animProgress;
+                let currY = startY + (targetY - startY) * animProgress;
+
+                ctx.fillStyle = el.val <= 8 ? '#3b82f6' : '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(currX, currY, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 8px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`v[${index}]`, currX, currY);
+            });
+        }
+
+        function startSortingAnimation() {
+            if (isAnimating) return;
+            isAnimating = true;
+            animProgress = 0;
+
+            let startTime = performance.now();
+            let duration = 1200; // 1.2 másodperc
+
+            function animate(currentTime) {
+                let elapsed = currentTime - startTime;
+                animProgress = Math.min(elapsed / duration, 1);
+                
+                // Easing (simább lefutás)
+                animProgress = animProgress < 0.5 ? 2 * animProgress * animProgress : -1 + (4 - 2 * animProgress) * animProgress;
+
+                drawAnimationCanvas();
+
+                if (elapsed < duration) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isAnimating = false;
+                    let sub1Sum = mainElements.filter(e => e.category === 1).reduce((a,b) => a + b.val, 0);
+                    let sub2Sum = mainElements.filter(e => e.category === 2).reduce((a,b) => a + b.val, 0);
+                    document.getElementById('stAnim').innerText = `Szétválogatva! 1. Részösszeg: ${sub1Sum}N | 2. Részösszeg: ${sub2Sum}N`;
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function resetSimulation() {
+            animProgress = 0;
+            isAnimating = false;
+            drawAnimationCanvas();
+            document.getElementById('stAnim').innerText = "Készen áll az animációra";
+        }
+
+        // Kezdeti kirajzolás
+        drawMainStructure();
+        drawAnimationCanvas();
+    </script>
+
+</body></html>

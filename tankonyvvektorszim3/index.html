@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1789898054930.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akusztikus és Valódi Üveg Alakú Cső-Szimuláció - 10. Osztály</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary: #2563eb;
+            --accent: #0ea5e9;
+            --border: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .header-banner {
+            background: linear-gradient(135deg, #31105e, #1e1b4b);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .header-banner h1 { margin: 0 0 5px 0; font-size: 1.7rem; }
+        .header-banner p { margin: 0; font-size: 0.85rem; opacity: 0.85; }
+        .download-btn {
+            background: #fbbf24;
+            color: #1e293b;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .download-btn:hover { transform: scale(1.03); background: #f59e0b; }
+
+        .section-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .chemistry-note {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            font-size: 0.85rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            align-items: end;
+        }
+        .vessel-card {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            text-align: center;
+            border: 2px solid #3b82f6;
+        }
+        .vessel-card h3 { margin: 0 0 6px 0; font-size: 0.95rem; color: #38bdf8; }
+        canvas {
+            background: #090d16;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto 8px auto;
+        }
+        .stats-text {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .ctrl-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .ctrl-btn:hover { background: #1d4ed8; }
+
+        .audio-toggle {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .audio-toggle.muted { background: #64748b; }
+
+        /* Floating Pipe Popup */
+        #sim-popup {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 360px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 3px solid #3b82f6;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #sim-header {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 12px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .window-controls button:hover { color: #facc15; }
+        #sim-body { padding: 12px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div>
+                <h1>Akusztikus és Valódi Üveg Alakú Szimuláció</h1>
+                <p>Laboratóriumi üvegedények (kémcső, főzőpohár, lombik, henger) üvegkoccanás és csobogás hanghatásokkal.</p>
+            </div>
+            <button class="download-btn" onclick="downloadHTML()">HTML Letöltése</button>
+        </div>
+
+        <!-- Section 1: Theory & Mode Selector -->
+        <div class="section-card">
+            <h2>✏️ 1. Alapelvek és Hangvezérlés</h2>
+            <p style="font-size: 0.9rem;">A szimuláció valós idejű Web Audio API hangokat generál az üvegfal-koccanásokhoz és a folyadékok áramlásához. <a href="file:///C:/Users/Utilizator/Downloads/gemini-code-1789898054930.html#" onclick="openPopup(); return false;" style="color: var(--primary); font-weight: bold;">🔗 Lebegő Cső Pop-up megnyitása</a></p>
+            
+            <div class="mode-selector">
+                <button class="mode-btn active" id="btnHomo" onclick="setMode('homo')">Azonos Típusú &amp; Méretű (Homogén)</button>
+                <button class="mode-btn" id="btnHeteroSize" onclick="setMode('heteroSize')">Eltérő Részecskeméret</button>
+                <button class="mode-btn" id="btnChemPhase" onclick="setMode('chemPhase')">Kémia: Nem Keveredő Fázisok</button>
+            </div>
+
+            <div class="chemistry-note" id="chemNote">
+                <span><strong>Homogén Mód:</strong> Azonos méretű részecskék teljes keveredése üveg koccanásokkal.</span>
+                <button class="audio-toggle muted" id="audioBtn" onclick="toggleAudio()">🔇 Némítva</button>
+            </div>
+        </div>
+
+        <!-- Section 2: Standard Multi-Size Simulation Grid with Real Glass Shapes -->
+        <div class="section-card">
+            <h2>🧪 2. Fő Laboratóriumi Edények (Valódi Üvegformák)</h2>
+            <div class="grid-4">
+                <!-- Kicsi: Kémcső -->
+                <div class="vessel-card">
+                    <h3>Kémcső (Apró)</h3>
+                    <canvas id="canvasSmall" width="130" height="180"></canvas>
+                    <div class="stats-text" id="stats-small">Indexek: [0..2]<br>Σ Vol: <strong>14.4</strong><br>Homogén</div>
+                </div>
+                <!-- Közepes: Főzőpohár -->
+                <div class="vessel-card">
+                    <h3>Főzőpohár (Közép)</h3>
+                    <canvas id="canvasMed" width="160" height="180"></canvas>
+                    <div class="stats-text" id="stats-med">Indexek: [0..4]<br>Σ Vol: <strong>30.0</strong><br>Homogén</div>
+                </div>
+                <!-- Vegyes: Lombik -->
+                <div class="vessel-card">
+                    <h3>Lombik (Vegyes Méret)</h3>
+                    <canvas id="canvasMix" width="190" height="180"></canvas>
+                    <div class="stats-text" id="stats-mix">Indexek: [0..5]<br>Σ Vol: <strong>42.0</strong><br>Homogén</div>
+                </div>
+                <!-- Nagy: Mérőhenger -->
+                <div class="vessel-card" style="border-color: #f43f5e;">
+                    <h3 style="color: #fb7185;">Mérőhenger (Óriás)</h3>
+                    <canvas id="canvasLarge" width="200" height="180"></canvas>
+                    <div class="stats-text" id="stats-large">Indexek: [0..7]<br>Σ Vol: <strong>76.8</strong><br>Homogén</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="ctrl-btn" onclick="resetSims()">Szimuláció Újraindítása &amp; Csobogás</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Strict Size Combinations with Glass Shapes -->
+        <div class="section-card" style="border: 2px dashed var(--primary); background: #ffffff;">
+            <h2>✨ 3. Szigorú Méret-Kombinációk (Edényformához igazítva)</h2>
+            <p style="font-size: 0.85rem; color: #475569;">A kémcsőben apró részecskék, főzőpohárban közepesek, a lombikban változatos méretűek, a mérőhengerben pedig nagy méretű részecskék találhatók.</p>
+            
+            <div class="grid-4">
+                <div class="vessel-card">
+                    <h3>Kémcső + Apró</h3>
+                    <canvas id="canvasStrictSmall" width="130" height="180"></canvas>
+                    <div class="stats-text" id="stats-strict-small">Σ Vol: <strong>10.8</strong></div>
+                </div>
+                <div class="vessel-card">
+                    <h3>Főzőpohár + Közép</h3>
+                    <canvas id="canvasStrictMed" width="160" height="180"></canvas>
+                    <div class="stats-text" id="stats-strict-med">Σ Vol: <strong>36.0</strong></div>
+                </div>
+                <div class="vessel-card">
+                    <h3>Lombik + Vegyes Méret</h3>
+                    <canvas id="canvasStrictMix" width="190" height="180"></canvas>
+                    <div class="stats-text" id="stats-strict-mix">Σ Vol: <strong>42.0</strong></div>
+                </div>
+                <div class="vessel-card" style="border-color: #f43f5e;">
+                    <h3 style="color: #fb7185;">Henger + Óriás</h3>
+                    <canvas id="canvasStrictLarge" width="200" height="180"></canvas>
+                    <div class="stats-text" id="stats-strict-large">Σ Vol: <strong>105.6</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Pipe Popup Window -->
+    <div id="sim-popup" style="display: none; left: 883px; top: 80px;">
+        <div id="sim-header">
+            <span>🧪 Üveg &amp; Hang Monitor</span>
+            <div class="window-controls">
+                <button onclick="toggleMinimize()" title="Kicsinyítés">_</button>
+                <button onclick="closePopup()" title="Bezárás">✕</button>
+            </div>
+        </div>
+        <div id="sim-body">
+            <p style="margin: 0 0 6px 0;">Kiemelt Lombik Elemzés:</p>
+            <canvas id="popupCanvas" width="310" height="150" style="background:#090d16; border-radius:6px; display:block; margin: 0 auto;"></canvas>
+            <div style="background: #f1f5f9; border: 1px solid var(--border); padding: 8px; border-radius: 6px; font-family: monospace; font-size: 0.75rem; margin-top: 8px;" id="popup-stats">Indexek: [0..5] | Részösszeg: 42.0</div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'homo';
+        let audioEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById('audioBtn');
+            btn.classList.toggle('muted', !audioEnabled);
+            btn.textContent = audioEnabled ? '🔊 Hang Be/Ki' : '🔇 Némítva';
+            if (audioEnabled) {
+                initAudio();
+                playBubbleSound();
+            }
+        }
+
+        // Üveg koccanás hang generálása (kristályos csengés)
+        function playGlassClink() {
+            if (!audioEnabled) return;
+            initAudio();
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1800 + Math.random() * 800, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch(e) {}
+        }
+
+        // Folyadék csobogás / csicsogás hang
+        function playBubbleSound() {
+            if (!audioEnabled) return;
+            initAudio();
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btnHomo').classList.toggle('active', mode === 'homo');
+            document.getElementById('btnHeteroSize').classList.toggle('active', mode === 'heteroSize');
+            document.getElementById('btnChemPhase').classList.toggle('active', mode === 'chemPhase');
+
+            const note = document.getElementById('chemNote');
+            if (mode === 'homo') {
+                note.querySelector('span').innerHTML = '<strong>Homogén Mód:</strong> Azonos méretű részecskék teljes keveredése üveg koccanásokkal.';
+            } else if (mode === 'heteroSize') {
+                note.querySelector('span').innerHTML = '<strong>Fizikai Méret Mód:</strong> Eltérő méretű molekulák az üvegekben.';
+            } else {
+                note.querySelector('span').innerHTML = '<strong>Kémiai Fázisok:</strong> Nem keveredő folyadékok rétegződése.';
+            }
+            playBubbleSound();
+            resetSims();
+        }
+
+        // --- Drag and Drop for Popup ---
+        const popup = document.getElementById('sim-popup');
+        const header = document.getElementById('sim-header');
+        let isDragging = false, startX, startY, initialX, initialY;
+
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = popup.offsetLeft;
+            initialY = popup.offsetTop;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        function onMouseMove(e) {
+            if (!isDragging) return;
+            popup.style.left = `${initialX + (e.clientX - startX)}px`;
+            popup.style.top = `${initialY + (e.clientY - startY)}px`;
+        }
+        function onMouseUp() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        function closePopup() { popup.style.display = 'none'; }
+        function openPopup() { popup.style.display = 'flex'; playBubbleSound(); }
+        let isMinimized = false;
+        function toggleMinimize() {
+            isMinimized = !isMinimized;
+            document.getElementById('sim-body').style.display = isMinimized ? 'none' : 'block';
+        }
+
+        // --- Particle Generator ---
+        function createParticles(count, baseRadius, width, height, isMixedContainer = false) {
+            let parts = [];
+            for(let i=0; i<count; i++) {
+                let r = baseRadius;
+                let chemType = 0;
+
+                if (isMixedContainer) {
+                    let sizes = [3, 6, 9, 4.5, 7.5, 5];
+                    r = sizes[i % sizes.length];
+                } else if (currentMode === 'heteroSize') {
+                    r = (i % 2 === 0) ? baseRadius * 0.6 : baseRadius * 1.5;
+                } else if (currentMode === 'chemPhase') {
+                    chemType = (i < count / 2) ? 0 : 1;
+                    r = baseRadius;
+                }
+
+                parts.push({
+                    x: width / 2 + (Math.random() - 0.5) * 40,
+                    y: 40 + Math.random() * (height - 80),
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5,
+                    radius: r,
+                    chemType: chemType,
+                    index: i
+                });
+            }
+            return parts;
+        }
+
+        let smallParts = createParticles(3, 4, 130, 180, false);
+        let medParts = createParticles(5, 5, 160, 180, false);
+        let mixParts = createParticles(6, 5, 190, 180, true);
+        let largeParts = createParticles(8, 8, 200, 180, false);
+        let popupParts = createParticles(6, 5, 310, 150, true);
+
+        let strictSmall = createParticles(3, 3, 130, 180, false);
+        let strictMed = createParticles(5, 6, 160, 180, false);
+        let strictMix = createParticles(6, 5, 190, 180, true);
+        let strictLarge = createParticles(8, 11, 200, 180, false);
+
+        // Valódi laboratóriumi üveg alakzatok rajzolása
+        function drawGlassVessel(ctx, w, h, type) {
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3.5;
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.05)';
+            ctx.beginPath();
+
+            let cx = w / 2;
+
+            if (type === 'small') {
+                // Kémcső (lekerekített aljú cső)
+                let radius = 22;
+                ctx.moveTo(cx - radius, 20);
+                ctx.lineTo(cx - radius, h - 45);
+                ctx.arc(cx, h - 45, radius, Math.PI, 0, false);
+                ctx.lineTo(cx + radius, 20);
+                // Perem
+                ctx.rect(cx - radius - 4, 15, (radius * 2) + 8, 5);
+            } 
+            else if (type === 'medium') {
+                // Főzőpohár (Becker) kiöntőcsőrrel
+                let bw = 70;
+                ctx.moveTo(cx - bw, 25);
+                ctx.lineTo(cx - bw + 8, h - 20);
+                ctx.quadraticCurveTo(cx, h - 10, cx + bw - 8, h - 20);
+                ctx.lineTo(cx + bw, 25);
+                // Kiöntőcsőr
+                ctx.lineTo(cx + bw + 6, 20);
+                ctx.lineTo(cx + bw - 5, 25);
+                ctx.closePath();
+            } 
+            else if (type === 'mix' || type === 'popup') {
+                // Erlenmeyer lombik (szűk nyak, széles kúp alakú alj)
+                ctx.moveTo(cx - 15, 20);
+                ctx.lineTo(cx - 15, 55);
+                ctx.lineTo(cx - 65, h - 25);
+                ctx.quadraticCurveTo(cx, h - 10, cx + 65, h - 25);
+                ctx.lineTo(cx + 15, 55);
+                ctx.lineTo(cx + 15, 20);
+                // Perem
+                ctx.rect(cx - 18, 15, 36, 5);
+            } 
+            else if (type === 'large') {
+                // Mérőhenger (magas, egyenes falú henger talpazattal)
+                let hw = 30;
+                ctx.moveTo(cx - hw, 25);
+                ctx.lineTo(cx - hw, h - 35);
+                ctx.lineTo(cx - hw - 15, h - 25);
+                ctx.lineTo(cx + hw + 15, h - 25);
+                ctx.lineTo(cx + hw, h - 35);
+                ctx.lineTo(cx + hw, 25);
+                // Perem és skálavonalak
+                ctx.rect(cx - hw - 3, 20, (hw * 2) + 6, 5);
+                ctx.stroke();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+                for(let sy = 50; sy < h - 45; sy += 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(cx - hw + 5, sy);
+                    ctx.lineTo(cx - hw + 15, sy);
+                    ctx.stroke();
+                }
+                return;
+            }
+
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function updateCanvas(canvasId, statsId, parts, type, isStrict = false) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGlassVessel(ctx, canvas.width, canvas.height, type);
+
+            let modeToUse = isStrict ? 'homo' : currentMode;
+
+            if (modeToUse === 'chemPhase') {
+                parts.forEach(p => {
+                    let targetY = p.chemType === 0 ? canvas.height * 0.35 : canvas.height * 0.65;
+                    p.vy += (targetY - p.y) * 0.02;
+                    p.vy *= 0.85;
+                });
+            }
+
+            let sum = 0;
+            let cx = canvas.width / 2;
+            let halfW = type === 'small' ? 20 : (type === 'medium' ? 62 : (type === 'mix' || type === 'popup' ? 55 : 26));
+
+            parts.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Üvegfal ütközés & koccanás hang
+                if (p.x < cx - halfW + p.radius || p.x > cx + halfW - p.radius) {
+                    p.vx *= -1;
+                    playGlassClink();
+                }
+                if (p.y < 35 || p.y > canvas.height - 35) {
+                    p.vy *= -1;
+                    playGlassClink();
+                }
+
+                sum += p.radius * 1.2;
+
+                if (modeToUse === 'chemPhase') {
+                    ctx.fillStyle = p.chemType === 0 ? '#38bdf8' : '#f59e0b';
+                } else if (type === 'mix' || type === 'strictMix' || type === 'popup') {
+                    ctx.fillStyle = p.radius > 7 ? '#10b981' : (p.radius > 4 ? '#fbbf24' : '#6366f1');
+                } else if (currentMode === 'heteroSize') {
+                    ctx.fillStyle = p.radius > 5 ? '#10b981' : '#6366f1';
+                } else {
+                    ctx.fillStyle = type === 'large' ? '#f43f5e' : '#3b82f6';
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '8px monospace';
+                ctx.fillText(`[${idx}]`, p.x - 6, p.y - p.radius - 2);
+            });
+
+            if (isStrict) {
+                document.getElementById(statsId).innerHTML = `Σ Vol: <strong>${sum.toFixed(1)}</strong>`;
+            } else {
+                let modeDesc = currentMode === 'homo' ? 'Homogén' : (currentMode === 'heteroSize' ? 'Eltérő' : 'Fázisok');
+                document.getElementById(statsId).innerHTML = `Indexek: [0..${parts.length-1}]<br>Σ Vol: <strong>${sum.toFixed(1)}</strong><br>${modeDesc}`;
+            }
+        }
+
+        function resetSims() {
+            smallParts = createParticles(3, 4, 130, 180, false);
+            medParts = createParticles(5, 5, 160, 180, false);
+            mixParts = createParticles(6, 5, 190, 180, true);
+            largeParts = createParticles(8, 8, 200, 180, false);
+            popupParts = createParticles(6, 5, 310, 150, true);
+
+            strictSmall = createParticles(3, 3, 130, 180, false);
+            strictMed = createParticles(5, 6, 160, 180, false);
+            strictMix = createParticles(6, 5, 190, 180, true);
+            strictLarge = createParticles(8, 11, 200, 180, false);
+            playBubbleSound();
+        }
+
+        function loop() {
+            updateCanvas('canvasSmall', 'stats-small', smallParts, 'small');
+            updateCanvas('canvasMed', 'stats-med', medParts, 'medium');
+            updateCanvas('canvasMix', 'stats-mix', mixParts, 'mix');
+            updateCanvas('canvasLarge', 'stats-large', largeParts, 'large');
+
+            updateCanvas('canvasStrictSmall', 'stats-strict-small', strictSmall, 'small', true);
+            updateCanvas('canvasStrictMed', 'stats-strict-med', strictMed, 'medium', true);
+            updateCanvas('canvasStrictMix', 'stats-strict-mix', strictMix, 'mix', true);
+            updateCanvas('canvasStrictLarge', 'stats-strict-large', strictLarge, 'large', true);
+
+            // Popup canvas
+            const popCanvas = document.getElementById('popupCanvas');
+            const popCtx = popCanvas.getContext('2d');
+            popCtx.clearRect(0, 0, popCanvas.width, popCanvas.height);
+            drawGlassVessel(popCtx, popCanvas.width, popCanvas.height, 'popup');
+
+            let popSum = 0;
+            popupParts.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 100 || p.x > 210) { p.vx *= -1; playGlassClink(); }
+                if (p.y < 35 || p.y > popCanvas.height - 35) { p.vy *= -1; playGlassClink(); }
+                popSum += p.radius * 1.2;
+
+                popCtx.fillStyle = p.radius > 7 ? '#10b981' : (p.radius > 4 ? '#fbbf24' : '#6366f1');
+                popCtx.beginPath();
+                popCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                popCtx.fill();
+            });
+            document.getElementById('popup-stats').innerHTML = `Indexek: [0..${popupParts.length-1}] | Részösszeg: ${popSum.toFixed(1)}`;
+
+            requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+
+        function downloadHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'akusztikus_uveg_szimulacio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body></html>
