@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1790008224807.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Négyzetes Mátrix Szimmetriák - Interaktív Szimulátor</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --accent-purple: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            grid-column: 1 / -1;
+            color: #818cf8;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button.secondary {
+            background-color: #334155;
+            color: #e2e8f0;
+            justify-content: center;
+        }
+        button.secondary:hover {
+            background-color: #475569;
+        }
+
+        .size-selector {
+            display: flex;
+            gap: 6px;
+        }
+
+        .size-btn {
+            background-color: #334155;
+            color: #cbd5e1;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .size-btn.active {
+            background-color: var(--accent-purple);
+            color: white;
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .matrix-container-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            min-height: 380px;
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px dashed var(--card-border);
+            overflow: hidden;
+        }
+
+        /* SVG réteg FELÜL (z-index: 3), hogy a lila vonal mindig előtérben legyen */
+        svg.connections-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cell {
+            width: 48px;
+            height: 48px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: #1e293b;
+            color: white;
+            border: 2px solid var(--card-border);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cell:focus, .cell.selected {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4);
+            background-color: #312e81;
+        }
+
+        .cell.main-diag-cell {
+            border-color: #f87171;
+            background-color: rgba(248, 113, 113, 0.15);
+        }
+
+        .cell.anti-diag-cell {
+            border-color: #60a5fa;
+            background-color: rgba(96, 165, 250, 0.15);
+        }
+
+        @keyframes shimmerGlow {
+            0% { stroke-opacity: 0.5; stroke-width: 2.5px; filter: drop-shadow(0 0 2px rgba(139, 92, 246, 0.4)); }
+            50% { stroke-opacity: 1; stroke-width: 5px; filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.95)); }
+            100% { stroke-opacity: 0.5; stroke-width: 2.5px; filter: drop-shadow(0 0 2px rgba(139, 92, 246, 0.4)); }
+        }
+
+        .animated-line {
+            animation: shimmerGlow 1.6s infinite ease-in-out;
+        }
+
+        .info-box {
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            align-items: center;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .badge.success { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .badge.error { background-color: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+        .theory-content {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .theory-content h4 {
+            color: #a5b4fc;
+            margin: 12px 0 4px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hint-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-layout">
+    <h1>Négyzetes Mátrix Szimmetriák - Interaktív Szimulátor</h1>
+
+    <!-- BAL OSZLOP: Mátrix és vezérlők -->
+    <div class="card">
+        <div class="section-title">
+            <span>Szimmetria Típus Generálása:</span>
+            <div class="size-selector">
+                <button class="size-btn" onclick="changeSize(3)">3x3</button>
+                <button class="size-btn" onclick="changeSize(4)">4x4</button>
+                <button class="size-btn" onclick="changeSize(5)">5x5</button>
+                <button class="size-btn active" onclick="changeSize(6)">6x6</button>
+            </div>
+        </div>
+
+        <div class="controls-grid">
+            <button onclick="generateMatrix('main-sym')"><span>Főátló Szimmetrikus</span> <span style="font-size:0.7rem; opacity:0.8;">A = A^T</span></button>
+            <button onclick="generateMatrix('main-anti')"><span>Főátló Antiszimmetrikus</span> <span style="font-size:0.7rem; opacity:0.8;">A = -A^T</span></button>
+            <button onclick="generateMatrix('anti-sym')"><span>Mellékátló Szimmetrikus</span> <span style="font-size:0.7rem; opacity:0.8;">a[i,j]=a[i',j']</span></button>
+            <button onclick="generateMatrix('anti-anti')"><span>Mellékátló Antiszimmetrikus</span> <span style="font-size:0.7rem; opacity:0.8;">a[i,j]=-a[i',j']</span></button>
+        </div>
+        <button class="secondary" style="width: 100%; margin-bottom: 20px;" onclick="generateMatrix('random')">Véletlenszerű (Nem szimmetrikus) Mátrix</button>
+
+        <div class="section-title">Vizuális Segédvonalak:</div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="showMainLine" checked="" onchange="updateView()"> Főátló</label>
+            <label><input type="checkbox" id="showAntiLine" checked="" onchange="updateView()"> Mellékátló</label>
+            <label><input type="checkbox" id="showPairLine" checked="" onchange="updateView()"> Csillogó Párosító (Előtérben)</label>
+        </div>
+
+        <div class="matrix-container-wrapper" id="wrapper">
+            <svg class="connections-overlay" id="svgOverlay"><line x1="140.80000114440918" y1="37.79998207092285" x2="420.8000011444092" y2="343.800012588501" stroke="#f87171" stroke-width="3" stroke-dasharray="6,4"></line><line x1="420.8000011444092" y1="37.79998207092285" x2="140.80000114440918" y2="343.800012588501" stroke="#60a5fa" stroke-width="3" stroke-dasharray="6,4"></line><line x1="420.8000011444092" y1="221.39998817443848" x2="308.8000011444092" y2="343.800012588501" stroke="#c084fc" stroke-width="4" class="animated-line"></line></svg>
+            <div id="matrixGrid" class="matrix-grid" style="grid-template-columns: repeat(6, 48px);"><input type="number" class="cell main-diag-cell" data-row="0" data-col="0"><input type="number" class="cell" data-row="0" data-col="1"><input type="number" class="cell" data-row="0" data-col="2"><input type="number" class="cell" data-row="0" data-col="3"><input type="number" class="cell" data-row="0" data-col="4"><input type="number" class="cell anti-diag-cell" data-row="0" data-col="5"><input type="number" class="cell" data-row="1" data-col="0"><input type="number" class="cell main-diag-cell" data-row="1" data-col="1"><input type="number" class="cell" data-row="1" data-col="2"><input type="number" class="cell" data-row="1" data-col="3"><input type="number" class="cell anti-diag-cell" data-row="1" data-col="4"><input type="number" class="cell" data-row="1" data-col="5"><input type="number" class="cell" data-row="2" data-col="0"><input type="number" class="cell" data-row="2" data-col="1"><input type="number" class="cell main-diag-cell" data-row="2" data-col="2"><input type="number" class="cell anti-diag-cell" data-row="2" data-col="3"><input type="number" class="cell" data-row="2" data-col="4"><input type="number" class="cell" data-row="2" data-col="5"><input type="number" class="cell" data-row="3" data-col="0"><input type="number" class="cell" data-row="3" data-col="1"><input type="number" class="cell anti-diag-cell" data-row="3" data-col="2"><input type="number" class="cell main-diag-cell" data-row="3" data-col="3"><input type="number" class="cell" data-row="3" data-col="4"><input type="number" class="cell selected" data-row="3" data-col="5"><input type="number" class="cell" data-row="4" data-col="0"><input type="number" class="cell anti-diag-cell" data-row="4" data-col="1"><input type="number" class="cell" data-row="4" data-col="2"><input type="number" class="cell" data-row="4" data-col="3"><input type="number" class="cell main-diag-cell" data-row="4" data-col="4"><input type="number" class="cell" data-row="4" data-col="5"><input type="number" class="cell anti-diag-cell" data-row="5" data-col="0"><input type="number" class="cell" data-row="5" data-col="1"><input type="number" class="cell" data-row="5" data-col="2"><input type="number" class="cell" data-row="5" data-col="3"><input type="number" class="cell" data-row="5" data-col="4"><input type="number" class="cell main-diag-cell" data-row="5" data-col="5"></div>
+        </div>
+        <div class="hint-text">Kattintson bármelyik cellára a tükörképének vizsgálatához! A lila vonal mostantól mindig a legfelső rétegben ragyog.</div>
+    </div>
+
+    <!-- JOBB OSZLOP: Elemző és Matematikai Magyarázat -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Cella elemző kártya -->
+        <div class="card">
+            <div class="info-box">
+                <div class="info-row">
+                    <span>Kijelölt cella indexe:</span>
+                    <strong id="selectedCellCoords">a[3, 5]</strong>
+                </div>
+                <div class="info-row">
+                    <span>Tükörkép indexe:</span>
+                    <strong id="mirrorCellCoords">a[5, 3]</strong>
+                </div>
+            </div>
+
+            <div class="section-title">Értékek kapcsolata:</div>
+            <div class="info-box" style="text-align: center; font-size: 1.1rem;" id="valuesRelation">a[3,5] (7)  &lt;==&gt;  a[5,3] (7)</div>
+
+            <div class="section-title">Szimmetria / Feltétel teljesül!</div>
+            <div class="info-box" style="display: flex; align-items: center; gap: 12px;">
+                <span id="conditionBadge" class="badge success">TELJESÜL</span>
+                <span id="conditionText" style="font-size: 0.9rem;">Az elemek (a[3,5] és a[5,3]) pontosan megegyeznek.</span>
+            </div>
+        </div>
+
+        <!-- Részletes Matematikai Magyarázat -->
+        <div class="card">
+            <div class="section-title">📐 Matematikai Háttér és Magyarázat</div>
+            <div class="theory-content">
+                <h4>1. Főátló és Főátlós Szimmetria</h4>
+                <p>A főátló elemeire az <strong>i = j</strong> feltétel teljesül (bal felsőtől a jobb alsó sarokig). Egy mátrix főátlóra nézve akkor szimmetrikus, ha megegyezik a transzponáltjával: <strong>A = A^T</strong>, azaz bármely <em>i</em> és <em>j</em> indexpárra <strong>a[i,j] = a[j,i]</strong>.</p>
+                
+                <h4>2. Antiszimmetrikus Mátrixok Tulajdonságai</h4>
+                <p>Antiszimmetria esetén <strong>A = -A^T</strong>, azaz <strong>a[i,j] = -a[j,i]</strong>. Ebből következik, hogy a főátlóban álló elemeknek önmaguk ellentettjének kell lenniük (a[i,i] = -a[i,i]), ami miatt a főátló minden eleme **kötelezően 0**.</p>
+
+                <h4>3. Mellékátlós Tükröződés</h4>
+                <p>A mellékátlóra (jobb felsőtől bal alsó sarokig) vonatkozó indexösszefüggés: <strong>i + j = n - 1</strong>. Az ehhez tartozó tükörpár indexei: <strong>i' = n - 1 - j</strong> és <strong>j' = n - 1 - i</strong>.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let n = 4;
+    let matrix = [];
+    let selectedRow = 0;
+    let selectedCol = 1;
+
+    function changeSize(newSize) {
+        n = newSize;
+        selectedRow = 0;
+        selectedCol = Math.min(1, n - 1);
+        
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.innerText.includes(`${n}x${n}`));
+        });
+
+        generateMatrix('main-sym');
+    }
+
+    function initMatrix() {
+        generateMatrix('main-sym');
+    }
+
+    function renderGrid() {
+        const grid = document.getElementById('matrixGrid');
+        grid.style.gridTemplateColumns = `repeat(${n}, 48px)`;
+        grid.innerHTML = '';
+
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.value = matrix[i][j];
+                input.className = 'cell';
+                if (i === j) input.classList.add('main-diag-cell');
+                if (i + j === n - 1) input.classList.add('anti-diag-cell');
+                if (i === selectedRow && j === selectedCol) input.classList.add('selected');
+
+                input.dataset.row = i;
+                input.dataset.col = j;
+
+                input.addEventListener('input', (e) => {
+                    matrix[i][j] = parseFloat(e.target.value) || 0;
+                    updateAnalysis();
+                });
+
+                input.addEventListener('click', () => {
+                    selectedRow = i;
+                    selectedCol = j;
+                    updateView();
+                });
+
+                input.addEventListener('mouseenter', () => {
+                    selectedRow = i;
+                    selectedCol = j;
+                    updateView();
+                });
+
+                grid.appendChild(input);
+            }
+        }
+        updateAnalysis();
+        drawOverlayLines();
+    }
+
+    function updateView() {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            const r = parseInt(cell.dataset.row);
+            const c = parseInt(cell.dataset.col);
+            if (r === selectedRow && c === selectedCol) {
+                cell.classList.add('selected');
+            } else {
+                cell.classList.remove('selected');
+            }
+        });
+        updateAnalysis();
+        drawOverlayLines();
+    }
+
+    function updateAnalysis() {
+        document.getElementById('selectedCellCoords').innerText = `a[${selectedRow}, ${selectedCol}]`;
+        
+        const mRow = selectedCol;
+        const mCol = selectedRow;
+        document.getElementById('mirrorCellCoords').innerText = `a[${mRow}, ${mCol}]`;
+
+        const val1 = matrix[selectedRow][selectedCol];
+        const val2 = matrix[mRow][mCol];
+        
+        const relationEl = document.getElementById('valuesRelation');
+        relationEl.innerText = `a[${selectedRow},${selectedCol}] (${val1})  <==>  a[${mRow},${mCol}] (${val2})`;
+
+        const isMatch = (val1 === val2);
+        const badge = document.getElementById('conditionBadge');
+        const text = document.getElementById('conditionText');
+        if (isMatch) {
+            badge.className = 'badge success';
+            badge.innerText = 'TELJESÜL';
+            text.innerText = `Az elemek (a[${selectedRow},${selectedCol}] és a[${mRow},${mCol}]) pontosan megegyeznek.`;
+        } else {
+            badge.className = 'badge error';
+            badge.innerText = 'ELTÉRÉS';
+            text.innerText = `Az elemek értékei eltérnek egymástól.`;
+        }
+    }
+
+    function drawOverlayLines() {
+        const svg = document.getElementById('svgOverlay');
+        svg.innerHTML = '';
+
+        const showPair = document.getElementById('showPairLine').checked;
+        const showMain = document.getElementById('showMainLine').checked;
+        const showAnti = document.getElementById('showAntiLine').checked;
+
+        const wrapperRect = document.getElementById('wrapper').getBoundingClientRect();
+        
+        // Főátló vonal
+        if (showMain && n > 0) {
+            const c1 = document.querySelector('.cell[data-row="0"][data-col="0"]');
+            const c2 = document.querySelector(`.cell[data-row="${n-1}"][data-col="${n-1}"]`);
+            if (c1 && c2) {
+                drawLine(svg, wrapperRect, c1, c2, '#f87171', '3', '6,4', false);
+            }
+        }
+
+        // Mellékátló vonal
+        if (showAnti && n > 0) {
+            const c1 = document.querySelector(`.cell[data-row="0"][data-col="${n-1}"]`);
+            const c2 = document.querySelector(`.cell[data-row="${n-1}"][data-col="0"]`);
+            if (c1 && c2) {
+                drawLine(svg, wrapperRect, c1, c2, '#60a5fa', '3', '6,4', false);
+            }
+        }
+
+        // Csillogó párosító vonal (Garantáltan a legfelső rétegben)
+        if (showPair) {
+            const cell1 = document.querySelector(`.cell[data-row="${selectedRow}"][data-col="${selectedCol}"]`);
+            const cell2 = document.querySelector(`.cell[data-row="${selectedCol}"][data-col="${selectedRow}"]`);
+
+            if (cell1 && cell2 && selectedRow !== selectedCol) {
+                drawLine(svg, wrapperRect, cell1, cell2, '#c084fc', '4', null, true);
+            }
+        }
+    }
+
+    function drawLine(svg, wrapperRect, el1, el2, color, width, dasharray, isAnimated) {
+        const r1 = el1.getBoundingClientRect();
+        const r2 = el2.getBoundingClientRect();
+
+        const x1 = r1.left + r1.width / 2 - wrapperRect.left;
+        const y1 = r1.top + r1.height / 2 - wrapperRect.top;
+        const x2 = r2.left + r2.width / 2 - wrapperRect.left;
+        const y2 = r2.top + r2.height / 2 - wrapperRect.top;
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', color);
+        line.setAttribute('stroke-width', width);
+        if (dasharray) line.setAttribute('stroke-dasharray', dasharray);
+        if (isAnimated) line.setAttribute('class', 'animated-line');
+        svg.appendChild(line);
+    }
+
+    function generateMatrix(type) {
+        matrix = Array(n).fill(0).map(() => Array(n).fill(0));
+        if (type === 'main-sym') {
+            for (let i = 0; i < n; i++) {
+                for (let j = i; j < n; j++) {
+                    let val = Math.floor(Math.random() * 18) - 9;
+                    matrix[i][j] = val;
+                    matrix[j][i] = val;
+                }
+            }
+        } else if (type === 'main-anti') {
+            for (let i = 0; i < n; i++) {
+                matrix[i][i] = 0;
+                for (let j = i + 1; j < n; j++) {
+                    let val = Math.floor(Math.random() * 9) + 1;
+                    matrix[i][j] = val;
+                    matrix[j][i] = -val;
+                }
+            }
+        } else if (type === 'anti-sym') {
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (i + j <= n - 1) {
+                        let val = Math.floor(Math.random() * 18) - 9;
+                        matrix[i][j] = val;
+                        matrix[n - 1 - j][n - 1 - i] = val;
+                    }
+                }
+            }
+        } else if (type === 'anti-anti') {
+            for (let i = 0; i < n; i++) {
+                matrix[i][n - 1 - i] = 0;
+                for (let j = 0; j < n; j++) {
+                    if (i + j < n - 1) {
+                        let val = Math.floor(Math.random() * 9) + 1;
+                        matrix[i][j] = val;
+                        matrix[n - 1 - j][n - 1 - i] = -val;
+                    }
+                }
+            }
+        } else {
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    matrix[i][j] = Math.floor(Math.random() * 20) - 10;
+                }
+            }
+        }
+        renderGrid();
+    }
+
+    window.onload = initMatrix;
+</script>
+
+
+</body></html>
