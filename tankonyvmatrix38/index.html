@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/M%C3%A1trixszorz%C3%A1s%20Mesterkurzus.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrixszorzás Mesterkurzus</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --accent-a: #38bdf8;
+            --accent-b: #f43f5e;
+            --accent-c: #10b981;
+            --warning: #f59e0b;
+            --text-color: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: var(--accent-a);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 950px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a364f;
+        }
+
+        .section-title {
+            color: var(--accent-a);
+            border-bottom: 2px solid #2a364f;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* 1. SZABÁLY SZEKCIÓ */
+        .rule-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 5px solid var(--warning);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .rule-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        /* 2. PÉLDA & ANIMÁCIÓ SZEKCIÓ */
+        .visualizer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .matrix-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .matrix-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .matrix-title.a { color: var(--accent-a); }
+        .matrix-title.b { color: var(--accent-b); }
+        .matrix-title.c { color: var(--accent-c); }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 55px);
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #2a364f;
+        }
+
+        .cell {
+            width: 55px;
+            height: 55px;
+            background-color: #1e293b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cell.highlight-a {
+            background-color: var(--accent-a);
+            color: #000;
+            transform: scale(1.1);
+            box-shadow: 0 0 12px var(--accent-a);
+        }
+
+        .cell.highlight-b {
+            background-color: var(--accent-b);
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 0 12px var(--accent-b);
+        }
+
+        .cell.highlight-c {
+            background-color: var(--accent-c);
+            color: #000;
+            transform: scale(1.15);
+            box-shadow: 0 0 15px var(--accent-c);
+        }
+
+        .operator {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-dim);
+        }
+
+        .explanation-box {
+            background: #0b0f19;
+            border-left: 4px solid var(--accent-c);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            min-height: 70px;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        button {
+            background: #1e293b;
+            color: var(--text-color);
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #334155;
+            transform: translateY(-2px);
+        }
+
+        button.primary {
+            background: var(--accent-a);
+            color: #0b0f19;
+            border: none;
+        }
+
+        button.primary:hover {
+            background: #7dd3fc;
+        }
+
+        /* 3. FELADAT SZEKCIÓ */
+        .quiz-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #2a364f;
+            margin-bottom: 35px;
+        }
+
+        .quiz-input {
+            width: 55px;
+            height: 55px;
+            background: #0b0f19;
+            border: 2px solid var(--accent-a);
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .quiz-input:focus {
+            outline: none;
+            border-color: var(--accent-c);
+            box-shadow: 0 0 10px var(--accent-c);
+        }
+
+        .result-msg {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            min-height: 30px;
+        }
+
+        .result-msg.correct { color: var(--accent-c); }
+        .result-msg.wrong { color: var(--accent-b); }
+
+        /* KÓD SZEKCIÓ */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: #0b0f19;
+            border: 1px solid #334155;
+            color: var(--text-dim);
+        }
+
+        .tab-btn.active {
+            background: #1e293b;
+            color: var(--text-color);
+            border-color: var(--accent-a);
+        }
+
+        pre {
+            background: #0b0f19;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid #2a364f;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        .keyword { color: #f43f5e; }
+        .type { color: #38bdf8; }
+        .function { color: #10b981; }
+        .number { color: #f59e0b; }
+        .comment { color: #64748b; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>Mátrixszorzás Interaktív Tananyag</h1>
+    <p class="subtitle">Iskolai bemutatóhoz és felméréshez tervezve</p>
+
+    <div class="main-card">
+
+        <!-- 1. SZABÁLY -->
+        <h2 class="section-title">1. A Mátrixszorzás Szabálya</h2>
+        <div class="rule-box">
+            <p><strong>Fő szabály:</strong> Két mátrixot csak akkor lehet megszorozni egymással, ha az <strong>első mátrix oszlopainak száma megegyezik a második mátrix sorainak számával</strong>.</p>
+            <ul>
+                <li>Az eredmény <strong>C</strong> mátrix $i$-edik sorának és $j$-edik oszlopának elemét úgy kapjuk meg, hogy az **A** mátrix $i$-edik <strong>sorát</strong> szorozzuk össze a **B** mátrix $j$-edik <strong>oszlopával</strong> (elemenként), majd ezeket az értékeket összeadjuk.</li>
+                <li>Módszer neve: <strong>"Sor × Oszlop" szabály</strong>.</li>
+            </ul>
+        </div>
+
+        <!-- 2. PÉLDA ANIMÁCIÓVAL -->
+        <h2 class="section-title">2. Vizualizáció és Példa (2x2)</h2>
+        <div class="visualizer">
+            <div class="matrix-container">
+                <div class="matrix-title a">A Mátrix</div>
+                <div class="matrix" id="matrixA"><div class="cell highlight-a" id="matrixA-0-0">1</div><div class="cell highlight-a" id="matrixA-0-1">2</div><div class="cell" id="matrixA-1-0">3</div><div class="cell" id="matrixA-1-1">4</div></div>
+            </div>
+            <div class="operator">×</div>
+            <div class="matrix-container">
+                <div class="matrix-title b">B Mátrix</div>
+                <div class="matrix" id="matrixB"><div class="cell" id="matrixB-0-0">5</div><div class="cell highlight-b" id="matrixB-0-1">6</div><div class="cell" id="matrixB-1-0">7</div><div class="cell highlight-b" id="matrixB-1-1">8</div></div>
+            </div>
+            <div class="operator">=</div>
+            <div class="matrix-container">
+                <div class="matrix-title c">C Mátrix (Eredmény)</div>
+                <div class="matrix" id="matrixC"><div class="cell" id="matrixC-0-0">19</div><div class="cell highlight-c" id="matrixC-0-1">22</div><div class="cell" id="matrixC-1-0">43</div><div class="cell" id="matrixC-1-1">50</div></div>
+            </div>
+        </div>
+
+        <div class="explanation-box" id="explanation"><strong>C[1][2]</strong> kiszámítása:<br>(1 × 6) + (2 × 8) = 6 + 16 = <strong>22</strong></div>
+
+        <div class="controls">
+            <button onclick="prevStep()">Előző Lépés</button>
+            <button class="primary" onclick="nextStep()">Következő Lépés</button>
+            <button onclick="resetVis()">Újraindítás</button>
+        </div>
+
+        <!-- 3. TESZT / FELADAT -->
+        <h2 class="section-title">3. Teszteld a tudásod!</h2>
+        <div class="quiz-section">
+            <p style="margin-bottom: 15px;">Oldd meg a szorzást, és írd be az eredményeket a hiányzó cellákba!</p>
+            
+            <div class="visualizer">
+                <!-- Q Matrix A -->
+                <div class="matrix-container">
+                    <div class="matrix" style="grid-template-columns: repeat(2, 45px);">
+                        <div class="cell" style="width:45px;height:45px;">2</div>
+                        <div class="cell" style="width:45px;height:45px;">3</div>
+                        <div class="cell" style="width:45px;height:45px;">1</div>
+                        <div class="cell" style="width:45px;height:45px;">4</div>
+                    </div>
+                </div>
+                <div class="operator">×</div>
+                <!-- Q Matrix B -->
+                <div class="matrix-container">
+                    <div class="matrix" style="grid-template-columns: repeat(2, 45px);">
+                        <div class="cell" style="width:45px;height:45px;">5</div>
+                        <div class="cell" style="width:45px;height:45px;">0</div>
+                        <div class="cell" style="width:45px;height:45px;">1</div>
+                        <div class="cell" style="width:45px;height:45px;">2</div>
+                    </div>
+                </div>
+                <div class="operator">=</div>
+                <!-- Q Matrix C (Inputs) -->
+                <div class="matrix-container">
+                    <div class="matrix" style="grid-template-columns: repeat(2, 55px);">
+                        <input type="number" id="q00" class="quiz-input" placeholder="?">
+                        <input type="number" id="q01" class="quiz-input" placeholder="?">
+                        <input type="number" id="q10" class="quiz-input" placeholder="?">
+                        <input type="number" id="q11" class="quiz-input" placeholder="?">
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="primary" onclick="checkQuiz()">Válaszok Ellenőrzése</button>
+            </div>
+            <div id="quizResult" class="result-msg"></div>
+        </div>
+
+        <!-- 4. PROGRAMKÓDOK -->
+        <h2 class="section-title">4. Megvalósítás Programkódban</h2>
+        <div class="tabs">
+            <button class="tab-btn" onclick="showCode('cpp', this)">C++ Kód</button>
+            <button class="tab-btn active" onclick="showCode('python', this)">Python Kód</button>
+        </div>
+
+        <pre id="cppCode" style="display: none;"><code><span class="comment">// Mátrixszorzás C++ nyelven (2x2 példa)</span>
+<span class="keyword">#include</span> <span class="type">&lt;iostream&gt;</span>
+
+<span class="keyword">using namespace</span> std;
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">int</span> A[<span class="number">2</span>][<span class="number">2</span>] = {{<span class="number">1</span>, <span class="number">2</span>}, {<span class="number">3</span>, <span class="number">4</span>}};
+    <span class="type">int</span> B[<span class="number">2</span>][<span class="number">2</span>] = {{<span class="number">5</span>, <span class="number">6</span>}, {<span class="number">7</span>, <span class="number">8</span>}};
+    <span class="type">int</span> C[<span class="number">2</span>][<span class="number">2</span>] = {<span class="number">0</span>};
+
+    <span class="comment">// Három egymásba ágyazott ciklus a sor-oszlop szorzáshoz</span>
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) {
+        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j++) {
+            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    <span class="comment">// Eredmény kiírása</span>
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) {
+        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j++) {
+            cout &lt;&lt; C[i][j] &lt;&lt; <span class="string">" "</span>;
+        }
+        cout &lt;&lt; endl;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+
+        <pre id="pythonCode" style="display: block;"><code><span class="comment"># Mátrixszorzás Python nyelven (2x2 példa)</span>
+
+A = [
+    [<span class="number">1</span>, <span class="number">2</span>],
+    [<span class="number">3</span>, <span class="number">4</span>]
+]
+
+B = [
+    [<span class="number">5</span>, <span class="number">6</span>],
+    [<span class="number">7</span>, <span class="number">8</span>]
+]
+
+<span class="comment"># Eredmény mátrix inicializálása nullákkal</span>
+C = [[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>]]
+
+<span class="comment"># Sor-oszlop szorzás ciklusokkal</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">2</span>):
+    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">2</span>):
+        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">2</span>):
+            C[i][j] += A[i][k] * B[k][j]
+
+<span class="comment"># Eredmény kiíratása</span>
+<span class="keyword">for</span> row <span class="keyword">in</span> C:
+    <span class="keyword">print</span>(row)</code></pre>
+
+    </div>
+
+    <script>
+        // Animációs adatmodellek (2x2 példa a tisztább vizualizációért)
+        const matrixAData = [[1, 2], [3, 4]];
+        const matrixBData = [[5, 6], [7, 8]];
+        let matrixCData = [['?', '?'], ['?', '?']];
+
+        let currentStep = -1;
+        const totalSteps = 4;
+
+        function initMatrices() {
+            renderMatrix('matrixA', matrixAData, 2);
+            renderMatrix('matrixB', matrixBData, 2);
+            renderMatrix('matrixC', matrixCData, 2);
+        }
+
+        function renderMatrix(elementId, data, size) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `${elementId}-${i}-${j}`;
+                    cell.innerText = data[i][j];
+                    container.appendChild(cell);
+                }
+            }
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('highlight-a', 'highlight-b', 'highlight-c');
+            });
+        }
+
+        function updateStep(step) {
+            clearHighlights();
+
+            if (step < 0) {
+                document.getElementById('explanation').innerHTML = 'Kattints a <strong>"Következő Lépés"</strong> gombra a levezetéshez!';
+                matrixCData = [['?', '?'], ['?', '?']];
+                renderMatrix('matrixC', matrixCData, 2);
+                return;
+            }
+
+            const row = Math.floor(step / 2);
+            const col = step % 2;
+
+            // Kijelöljük az A sora és B oszlopa elemeit
+            document.getElementById(`matrixA-${row}-0`).classList.add('highlight-a');
+            document.getElementById(`matrixA-${row}-1`).classList.add('highlight-a');
+
+            document.getElementById(`matrixB-0-${col}`).classList.add('highlight-b');
+            document.getElementById(`matrixB-1-${col}`).classList.add('highlight-b');
+
+            // Számítás
+            const v1 = matrixAData[row][0] * matrixBData[0][col];
+            const v2 = matrixAData[row][1] * matrixBData[1][col];
+            const sum = v1 + v2;
+
+            matrixCData[row][col] = sum;
+            const cCell = document.getElementById(`matrixC-${row}-${col}`);
+            cCell.innerText = sum;
+            cCell.classList.add('highlight-c');
+
+            document.getElementById('explanation').innerHTML = 
+                `<strong>C[${row + 1}][${col + 1}]</strong> kiszámítása:<br>` +
+                `(${matrixAData[row][0]} × ${matrixBData[0][col]}) + (${matrixAData[row][1]} × ${matrixBData[1][col]}) = ` +
+                `${v1} + ${v2} = <strong>${sum}</strong>`;
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                updateStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep >= 0) {
+                currentStep--;
+                updateStep(currentStep);
+            }
+        }
+
+        function resetVis() {
+            currentStep = -1;
+            updateStep(currentStep);
+        }
+
+        // TESZT ELLENŐRZŐ LOGIKA
+        function checkQuiz() {
+            // Elvárt helyes válaszok a feladatra:
+            // A = [[2,3],[1,4]], B = [[5,0],[1,2]]
+            // C[0][0] = 2*5 + 3*1 = 13
+            // C[0][1] = 2*0 + 3*2 = 6
+            // C[1][0] = 1*5 + 4*1 = 9
+            // C[1][1] = 1*0 + 4*2 = 8
+            const correctAnswers = {
+                q00: 13,
+                q01: 6,
+                q10: 9,
+                q11: 8
+            };
+
+            let isAllCorrect = true;
+
+            for (let id in correctAnswers) {
+                const inputEl = document.getElementById(id);
+                const val = parseInt(inputEl.value);
+
+                if (val === correctAnswers[id]) {
+                    inputEl.style.borderColor = "var(--accent-c)";
+                } else {
+                    inputEl.style.borderColor = "var(--accent-b)";
+                    isAllCorrect = false;
+                }
+            }
+
+            const resDiv = document.getElementById('quizResult');
+            if (isAllCorrect) {
+                resDiv.className = "result-msg correct";
+                resDiv.innerText = "Szuper! Helyes megoldás, teljesen megértetted a mátrixszorzást!";
+            } else {
+                resDiv.className = "result-msg wrong";
+                resDiv.innerText = "Nem jó! Ellenőrizd a pirossal jelölt mezőket és próbáld újra!";
+            }
+        }
+
+        function showCode(lang, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (lang === 'cpp') {
+                document.getElementById('cppCode').style.display = 'block';
+                document.getElementById('pythonCode').style.display = 'none';
+            } else {
+                document.getElementById('cppCode').style.display = 'none';
+                document.getElementById('pythonCode').style.display = 'block';
+            }
+        }
+
+        // Indítás
+        initMatrices();
+    </script>
+
+</body></html>
