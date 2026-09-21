@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<!-- saved from url=(0174)file:///D:/programe%20scolare/tankonyv/lecke12A%20(2)/lecke12A/M%C3%A1trixszorz%C3%A1s%20Interakt%C3%ADv%20Szimul%C3%A1ci%C3%B3%20%C3%A9s%20Manu%C3%A1lis%20Tesztel%C5%91.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrixszorzás Interaktív Szimuláció és Manuális Tesztelő</title>
+    <script src="./index_files/saved_resource"></script>
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1329;
+            color: #f8fafc;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Bracket Styling for Matrices */
+        .matrix-container {
+            position: relative;
+            padding: 8px 12px;
+        }
+        .matrix-container::before, .matrix-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            border: 2px solid #64748b;
+        }
+        .matrix-container::before {
+            left: 0;
+            border-right: none;
+            border-radius: 6px 0 0 6px;
+        }
+        .matrix-container::after {
+            right: 0;
+            border-left: none;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .matrix-cell {
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Color-coded highlighting for matrix elements */
+        .highlight-row {
+            background-color: rgba(59, 130, 246, 0.35) !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        .highlight-col {
+            background-color: rgba(168, 85, 247, 0.35) !important;
+            border-color: #a855f7 !important;
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+        }
+
+        .highlight-pair-active {
+            background-color: rgba(234, 179, 8, 0.45) !important;
+            border-color: #eab308 !important;
+            transform: scale(1.1);
+            z-index: 20;
+        }
+
+        .highlight-result {
+            background-color: rgba(34, 197, 94, 0.35) !important;
+            border-color: #22c55e !important;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+        }
+
+        #arrowCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        .input-correct {
+            background-color: rgba(34, 197, 94, 0.3) !important;
+            border-color: #22c55e !important;
+            color: #4ade80 !important;
+        }
+
+        .input-incorrect {
+            background-color: rgba(239, 68, 68, 0.3) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.sticky{position:sticky}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mt-1{margin-top:0.25rem}.mt-12{margin-top:3rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-2\.5{height:0.625rem}.h-10{height:2.5rem}.min-h-screen{min-height:100vh}.w-2\.5{width:0.625rem}.w-24{width:6rem}.w-full{width:100%}.w-10{width:2.5rem}.max-w-7xl{max-width:80rem}.flex-grow{flex-grow:1}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-blue-500\/30{border-color:rgb(59 130 246 / 0.3)}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-purple-500\/30{border-color:rgb(168 85 247 / 0.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/60{border-color:rgb(30 41 59 / 0.6)}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-500\/20{background-color:rgb(245 158 11 / 0.2)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-blue-500\/20{background-color:rgb(59 130 246 / 0.2)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/40{background-color:rgb(2 44 34 / 0.4)}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-purple-500\/20{background-color:rgb(168 85 247 / 0.2)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/60{background-color:rgb(15 23 42 / 0.6)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/40{background-color:rgb(2 6 23 / 0.4)}.bg-slate-950\/50{background-color:rgb(2 6 23 / 0.5)}.bg-slate-950\/60{background-color:rgb(2 6 23 / 0.6)}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-slate-950\/90{background-color:rgb(2 6 23 / 0.9)}.bg-opacity-90{--tw-bg-opacity:0.9}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-blue-600{--tw-gradient-from:#2563eb var(--tw-gradient-from-position);--tw-gradient-to:rgb(37 99 235 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.accent-blue-500{accent-color:#3b82f6}.accent-purple-500{accent-color:#a855f7}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:from-blue-500:hover{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-indigo-500:hover{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-blue-500:focus{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}}@media (min-width: 768px){.md\:h-12{height:3rem}.md\:w-12{width:3rem}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:col-span-1{grid-column:span 1 / span 1}.lg\:col-span-3{grid-column:span 3 / span 3}.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:w-1\/3{width:33.333333%}.lg\:w-2\/3{width:66.666667%}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:flex-row{flex-direction:row}.lg\:items-center{align-items:center}}</style></head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation Bar -->
+    <header class="bg-slate-900 border-b border-slate-800 py-4 px-6 shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-square-root-variable text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-white tracking-wide">Mátrixszorzás Lab &amp; Interaktív Szimulátor</h1>
+                    <p class="text-xs text-slate-400">Vizuális lépésenkénti levezetés, manuális tesztelés &amp; kódgenerátor</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="scrollToId('dim-section')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">Dimenziók</button>
+                <button onclick="scrollToId('sim-section')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-md transition">Szimuláció &amp; Teszt</button>
+                <button onclick="scrollToId('code-section')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">Python &amp; C++ Kódok</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-6 flex-grow w-full space-y-8">
+
+        <!-- Dimension & Mode Selection Card -->
+        <section id="dim-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                
+                <!-- Dimension Adjusters -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full lg:w-2/3">
+                    <!-- Matrix A Dims -->
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-blue-500/30 shadow-inner space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-blue-400 tracking-wider uppercase"><i class="fa-solid fa-matrix-a mr-1"></i> A Mátrix (N × M)</span>
+                            <span id="lblA_dim" class="text-xs font-mono bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">2 × 3</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[11px] text-slate-400 block mb-1">Sorok (N): <span id="valA_r" class="font-bold text-white">2</span></label>
+                                <input type="range" id="dimA_r" min="1" max="4" value="2" class="w-full accent-blue-500 cursor-pointer" oninput="onDimensionChange()">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-slate-400 block mb-1">Oszlopok (M): <span id="valA_c" class="font-bold text-white">3</span></label>
+                                <input type="range" id="dimA_c" min="1" max="4" value="3" class="w-full accent-blue-500 cursor-pointer" oninput="onDimensionChange()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Matrix B Dims -->
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-purple-500/30 shadow-inner space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-purple-400 tracking-wider uppercase"><i class="fa-solid fa-matrix-b mr-1"></i> B Mátrix (K × L)</span>
+                            <span id="lblB_dim" class="text-xs font-mono bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">3 × 2</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[11px] text-slate-400 block mb-1">Sorok (K): <span id="valB_r" class="font-bold text-white">3</span></label>
+                                <input type="range" id="dimB_r" min="1" max="4" value="3" class="w-full accent-purple-500 cursor-pointer" oninput="onDimensionChange()">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-slate-400 block mb-1">Oszlopok (L): <span id="valB_c" class="font-bold text-white">2</span></label>
+                                <input type="range" id="dimB_c" min="1" max="4" value="2" class="w-full accent-purple-500 cursor-pointer" oninput="onDimensionChange()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode Switcher & Quick Actions -->
+                <div class="flex flex-col gap-3 w-full lg:w-1/3 bg-slate-950/50 p-4 rounded-xl border border-slate-800">
+                    <span class="text-xs font-semibold text-slate-300">Interakciós Mód:</span>
+                    <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-lg border border-slate-800">
+                        <button id="btnModeAuto" onclick="switchInteractivityMode('auto')" class="py-1.5 px-3 text-xs font-bold rounded-md bg-blue-600 text-white shadow transition">
+                            <i class="fa-solid fa-play mr-1"></i> Animált Szimuláció
+                        </button>
+                        <button id="btnModeManual" onclick="switchInteractivityMode('manual')" class="py-1.5 px-3 text-xs font-bold rounded-md text-slate-400 hover:text-white transition">
+                            <i class="fa-solid fa-pen-to-square mr-1"></i> Manuális Kvíz
+                        </button>
+                    </div>
+
+                    <div class="flex gap-2 mt-1">
+                        <button onclick="randomizeMatrices()" class="w-full py-1.5 px-3 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-dice text-amber-400"></i> Veletlen számok
+                        </button>
+                        <button onclick="resetMatricesToDefault()" class="py-1.5 px-3 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition" title="Alaphelyzet">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dimension Compatibility Status Bar / Mismatch Warning -->
+            <div id="dimStatusContainer" class="mt-4 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div id="dimStatusIcon" class="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg"><i class="fa-solid fa-circle-check text-sm"></i></div>
+                    <div>
+                        <span id="dimStatusTitle" class="text-xs font-bold text-emerald-400 block">Belső Dimenziók Megegyeznek! (A oszlopai = B sorai)</span>
+                        <span id="dimStatusDesc" class="text-[11px] text-slate-300">A szorzás elvégezhető. Az eredmény mátrix (C) mérete: <b id="lblC_dim" class="text-amber-400 font-mono">2 × 2</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Explanation Collapsible -->
+            <div class="mt-3 text-xs text-slate-400 bg-slate-950/40 p-3 rounded-lg border border-slate-800/60">
+                <p><b>Miért kell a belső értéknek megegyeznie?</b> Az eredmény $C_{i,j}$ eleme az $A$ mátrix $i$-edik sorának és a $B$ mátrix $j$-edik oszlopának <i>skaláris szorzata</i> (páronkénti szorzás összege). Ha az $A$ sorában lévő elemek száma (oszlopok) nem egyezik meg a $B$ oszlopában lévő elemek számával (sorok), akkor bizonyos elemeknek nem lenne szorzópárjuk.</p>
+            </div>
+        </section>
+
+        <!-- Main Interactive Visualization Section -->
+        <section id="sim-section" class="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl overflow-hidden">
+            
+            <!-- Dynamic Arrow Drawing Canvas -->
+            <canvas id="arrowCanvas" width="1234" height="608"></canvas>
+
+            <!-- Interactive Toolbar & Controls -->
+            <div id="autoControls" class="flex flex-wrap items-center justify-between gap-4 mb-6 bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                <div class="flex items-center gap-2">
+                    <button onclick="resetSim()" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition" title="Elejére">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                    <button onclick="stepBack()" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition" title="Lépés Vissza">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button id="btnPlay" onclick="togglePlay()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-lg flex items-center gap-2 shadow-lg transition">
+                        <i id="playIcon" class="fa-solid fa-play"></i> <span id="playText">Indítás</span>
+                    </button>
+                    <button onclick="stepForward()" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition" title="Lépés Előre">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-slate-400">Sebesség:</span>
+                    <input type="range" id="speedRange" min="400" max="2500" value="1200" class="accent-blue-500 w-24 cursor-pointer" onchange="updateSpeed()">
+                    <span id="speedVal" class="text-xs font-mono text-blue-400">1.2s</span>
+                </div>
+
+                <div class="text-xs font-semibold text-slate-300 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-700">
+                    Lépés: <span id="currentStepText" class="text-amber-400 font-mono">4</span> / <span id="totalStepsText" class="font-mono">4</span>
+                </div>
+            </div>
+
+            <!-- Manual Practice Toolbar (Hidden in Auto Mode) -->
+            <div id="manualControls" class="hidden flex flex-wrap items-center justify-between gap-4 mb-6 bg-slate-950/80 p-3 rounded-xl border border-amber-500/30">
+                <div class="flex items-center gap-2 text-xs text-amber-300">
+                    <i class="fa-solid fa-pen-ruler text-amber-400 text-base"></i>
+                    <span><b>Gyakorló mód:</b> Számold ki és írd be a zöld C mátrix hiányzó elemeit, majd kattints az ellenőrzésre!</span>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkManualAnswers()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-check-double"></i> Válaszok Ellenőrzése
+                    </button>
+                    <button onclick="revealAllAnswers()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg border border-slate-700 transition">
+                        Megoldások Mutatása
+                    </button>
+                </div>
+            </div>
+
+            <!-- Matrices Visual Board -->
+            <div id="matrixBoard" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center justify-center my-6">
+                
+                <!-- Matrix A -->
+                <div class="lg:col-span-4 flex flex-col items-center">
+                    <span class="text-xs font-bold text-blue-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> "A" Mátrix (<span id="boardDimA">2×3</span>)
+                    </span>
+                    <div class="matrix-container bg-slate-950/60 rounded-xl p-3 border border-slate-800 shadow-inner">
+                        <div id="containerA" class="grid gap-2" style="grid-template-columns: repeat(3, minmax(0px, 1fr));"><input type="number" id="cell_A_0_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_A_0_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_A_0_2" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_A_1_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-row"><input type="number" id="cell_A_1_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-row"><input type="number" id="cell_A_1_2" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-row"></div>
+                    </div>
+                </div>
+
+                <!-- Operator Dot/Cross -->
+                <div class="lg:col-span-1 flex justify-center items-center">
+                    <span class="text-3xl font-extrabold text-slate-600">✕</span>
+                </div>
+
+                <!-- Matrix B -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-purple-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> "B" Mátrix (<span id="boardDimB">3×2</span>)
+                    </span>
+                    <div class="matrix-container bg-slate-950/60 rounded-xl p-3 border border-slate-800 shadow-inner">
+                        <div id="containerB" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><input type="number" id="cell_B_0_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_B_0_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-col"><input type="number" id="cell_B_1_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_B_1_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-col"><input type="number" id="cell_B_2_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner"><input type="number" id="cell_B_2_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner highlight-col"></div>
+                    </div>
+                </div>
+
+                <!-- Equals Sign -->
+                <div class="lg:col-span-1 flex justify-center items-center">
+                    <span class="text-3xl font-extrabold text-slate-600">=</span>
+                </div>
+
+                <!-- Matrix C (Result) -->
+                <div class="lg:col-span-3 flex flex-col items-center">
+                    <span class="text-xs font-bold text-emerald-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> "C" Eredmény Mátrix (<span id="boardDimC">2×2</span>)
+                    </span>
+                    <div class="matrix-container bg-slate-950/60 rounded-xl p-3 border border-slate-800 shadow-inner">
+                        <div id="containerC" class="grid gap-2" style="grid-template-columns: repeat(2, minmax(0px, 1fr));"><div id="cell_C_0_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner">31</div><div id="cell_C_0_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner">19</div><div id="cell_C_1_0" class="matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner">85</div><div id="cell_C_1_1" class="matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner highlight-result">55</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Equation & Calculation Panel -->
+            <div id="explanationBox" class="mt-8 bg-slate-950/90 border border-slate-800 rounded-xl p-5 shadow-inner">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-3">
+                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> Lépésről Lépésre Matematikai Levezetés
+                    </h3>
+                    <span id="cellCoordBadge" class="text-xs bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-md font-mono border border-amber-500/30">C[2][2] eleme</span>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Main Formula String -->
+                    <div class="text-sm md:text-base font-mono bg-slate-900 p-3.5 rounded-lg border border-slate-800 text-slate-200 overflow-x-auto">
+                        <span id="formulaText" class="tracking-wide">
+                C[2][2] = (4 × 8) + (5 × 1) + (6 × 3) = <span class="text-emerald-400 font-bold">55</span>
+            </span>
+                    </div>
+
+                    <!-- Component Breakdown -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <span class="text-slate-400 block mb-1 font-semibold flex items-center gap-1">
+                                <i class="fa-solid fa-arrows-split-up-and-left text-blue-400"></i> Páronkénti Szorzatok:
+                            </span>
+                            <div id="partialProductsText" class="font-mono text-blue-300 font-medium">4 × 8 = 32   |   5 × 1 = 5   |   6 × 3 = 18</div>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <span class="text-slate-400 block mb-1 font-semibold flex items-center gap-1">
+                                <i class="fa-solid fa-plus-minus text-emerald-400"></i> Végső Skaláris Összegzés:
+                            </span>
+                            <div id="summationText" class="font-mono text-emerald-400 text-sm font-bold">(4 · 8) + (5 · 1) + (6 · 3) = 55</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Generation & Download Section -->
+        <section id="code-section" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-code text-emerald-400"></i> Letölthető Python és C++ Forráskódok
+                    </h2>
+                    <p class="text-xs text-slate-400">Generált algoritmus tetszőleges dimenziójú mátrixok szorzására.</p>
+                </div>
+
+                <!-- Language Tabs -->
+                <div class="flex gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                    <button id="tabPy" onclick="switchCodeTab('python')" class="px-4 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition">Python (NumPy &amp; Beágyazott Ciklus)</button>
+                    <button id="tabCpp" onclick="switchCodeTab('cpp')" class="px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">C++ (std::vector)</button>
+                </div>
+            </div>
+
+            <!-- Python Snippet Container -->
+            <div id="codePythonArea" class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-slate-400 font-mono">matrix_multiplication.py</span>
+                    <div class="flex gap-2">
+                        <button onclick="copyCode('pythonCode')" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg transition border border-slate-700 flex items-center gap-1">
+                            <i class="fa-solid fa-copy"></i> Másolás
+                        </button>
+                        <button onclick="downloadCode('pythonCode', 'matrix_multiplication.py')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs rounded-lg transition shadow flex items-center gap-1">
+                            <i class="fa-solid fa-download"></i> Letöltés .py
+                        </button>
+                    </div>
+                </div>
+                <pre class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-200 overflow-x-auto leading-relaxed"><code id="pythonCode">import numpy as np
+
+def matrix_multiply(A, B):
+    """
+    Tetszőleges dimenziójú mátrixok szorzása 3-as beágyazott ciklussal.
+    """
+    rows_A = len(A)
+    cols_A = len(A[0])
+    rows_B = len(B)
+    cols_B = len(B[0])
+
+    # 1. Belső dimenziók ellenőrzése
+    if cols_A != rows_B:
+        raise ValueError(f"Hiba: A belső dimenziók nem egyeznek meg! ({cols_A} != {rows_B})")
+
+    # 2. Eredmény mátrix inicializálása nullákkal (N x L)
+    C = [[0 for _ in range(cols_B)] for _ in range(rows_A)]
+
+    # 3. Szorzás elvégzése (Sor-Oszlop skaláris szorzat)
+    for i in range(rows_A):          # A sorai
+        for j in range(cols_B):      # B oszlopai
+            for k in range(cols_A):  # Közös belső dimenzió
+                C[i][j] += A[i][k] * B[k][j]
+
+    return C
+
+# --- TESZTELÉS AZ AKTUÁLIS DINAMIKUS ADATOKKAL ---
+if __name__ == "__main__":
+    A = [
+        [1, 2, 3],
+        [4, 5, 6]
+    ]
+
+    B = [
+        [7, 8],
+        [9, 1],
+        [2, 3]
+    ]
+
+    print("--- Saját algoritmus eredménye ---")
+    result = matrix_multiply(A, B)
+    for row in result:
+        print(row)
+
+    print("\n--- NumPy dot() eredmény ---")
+    np_result = np.dot(np.array(A), np.array(B))
+    print(np_result)
+</code></pre>
+            </div>
+
+            <!-- C++ Snippet Container -->
+            <div id="codeCppArea" class="space-y-3 hidden">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-slate-400 font-mono">matrix_multiplication.cpp</span>
+                    <div class="flex gap-2">
+                        <button onclick="copyCode('cppCode')" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg transition border border-slate-700 flex items-center gap-1">
+                            <i class="fa-solid fa-copy"></i> Másolás
+                        </button>
+                        <button onclick="downloadCode('cppCode', 'matrix_multiplication.cpp')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs rounded-lg transition shadow flex items-center gap-1">
+                            <i class="fa-solid fa-download"></i> Letöltés .cpp
+                        </button>
+                    </div>
+                </div>
+                <pre class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-200 overflow-x-auto leading-relaxed"><code id="cppCode">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+#include &lt;iomanip&gt;
+
+using Matrix = std::vector&lt;std::vector&lt;int&gt;&gt;;
+
+// Generikus Mátrixszorzó Függvény
+Matrix multiplyMatrices(const Matrix&amp; A, const Matrix&amp; B) {
+    size_t rows_A = A.size();
+    size_t cols_A = A[0].size();
+    size_t rows_B = B.size();
+    size_t cols_B = B[0].size();
+
+    // Dimenziók ellenőrzése
+    if (cols_A != rows_B) {
+        throw std::invalid_argument("A belső dimenzióknak meg kell egyezniük!");
+    }
+
+    // Eredmény mátrix inicializálása (N x L) nullákkal
+    Matrix C(rows_A, std::vector&lt;int&gt;(cols_B, 0));
+
+    // Ciklusok
+    for (size_t i = 0; i &lt; rows_A; ++i) {
+        for (size_t j = 0; j &lt; cols_B; ++j) {
+            for (size_t k = 0; k &lt; cols_A; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    return C;
+}
+
+void printMatrix(const Matrix&amp; M) {
+    for (const auto&amp; row : M) {
+        for (int val : row) {
+            std::cout &lt;&lt; std::setw(6) &lt;&lt; val;
+        }
+        std::cout &lt;&lt; "\n";
+    }
+}
+
+int main() {
+    Matrix A = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    Matrix B = {
+        {7, 8},
+        {9, 1},
+        {2, 3}
+    };
+
+    try {
+        Matrix C = multiplyMatrices(A, B);
+        std::cout &lt;&lt; "Eredmeny C Matrix:\n";
+        printMatrix(C);
+    } catch (const std::exception&amp; e) {
+        std::cerr &lt;&lt; "Hiba: " &lt;&lt; e.what() &lt;&lt; std::endl;
+    }
+
+    return 0;
+}
+</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-xs text-slate-500 py-6 border-t border-slate-800/80">
+        Mátrixszorzás Interaktív Oktató és Szimulációs Modul © 2026
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Global Application State ---
+        let matrixA = [
+            [1, 2, 3],
+            [4, 5, 6]
+        ];
+        let matrixB = [
+            [7, 8],
+            [9, 1],
+            [2, 3]
+        ];
+        let matrixC = [];
+
+        let currentStep = 0;
+        let totalSteps = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let animSpeed = 1200;
+        let interactivityMode = 'auto'; // 'auto' or 'manual'
+
+        // --- Window Initialization ---
+        window.onload = function() {
+            onDimensionChange();
+            window.addEventListener('resize', redrawArrows);
+        };
+
+        function scrollToId(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Dimension Adjustment Handler ---
+        function onDimensionChange() {
+            const rA = parseInt(document.getElementById('dimA_r').value);
+            const cA = parseInt(document.getElementById('dimA_c').value);
+            const rB = parseInt(document.getElementById('dimB_r').value);
+            const cB = parseInt(document.getElementById('dimB_c').value);
+
+            // Update numerical labels
+            document.getElementById('valA_r').innerText = rA;
+            document.getElementById('valA_c').innerText = cA;
+            document.getElementById('valB_r').innerText = rB;
+            document.getElementById('valB_c').innerText = cB;
+
+            document.getElementById('lblA_dim').innerText = `${rA} × ${cA}`;
+            document.getElementById('lblB_dim').innerText = `${rB} × ${cB}`;
+            document.getElementById('boardDimA').innerText = `${rA}×${cA}`;
+            document.getElementById('boardDimB').innerText = `${rB}×${cB}`;
+
+            const statusContainer = document.getElementById('dimStatusContainer');
+            const statusIcon = document.getElementById('dimStatusIcon');
+            const statusTitle = document.getElementById('dimStatusTitle');
+            const statusDesc = document.getElementById('dimStatusDesc');
+
+            // Validate inner dimension equality: cA === rB
+            if (cA === rB) {
+                statusContainer.className = "mt-4 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between";
+                statusIcon.className = "p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg";
+                statusIcon.innerHTML = '<i class="fa-solid fa-circle-check text-sm"></i>';
+                statusTitle.className = "text-xs font-bold text-emerald-400 block";
+                statusTitle.innerText = "Belső Dimenziók Megegyeznek! (A oszlopai = B sorai)";
+                statusDesc.innerHTML = `A szorzás elvégezhető. Az eredmény mátrix (C) mérete: <b id="lblC_dim" class="text-amber-400 font-mono">${rA} × ${cB}</b>`;
+                
+                document.getElementById('boardDimC').innerText = `${rA}×${cB}`;
+
+                // Resize matrix structures
+                matrixA = adjustMatrixSize(matrixA, rA, cA);
+                matrixB = adjustMatrixSize(matrixB, rB, cB);
+                
+                recalculateResultMatrix();
+                renderMatrixInputs();
+                resetSim();
+            } else {
+                // Dimensions Mismatch Warning
+                statusContainer.className = "mt-4 p-3 rounded-xl bg-red-950/50 border border-red-500/40 flex items-center justify-between";
+                statusIcon.className = "p-1.5 bg-red-500/20 text-red-400 rounded-lg";
+                statusIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-sm"></i>';
+                statusTitle.className = "text-xs font-bold text-red-400 block";
+                statusTitle.innerText = `DIMENZIÓ HIBA: A belső értékek nem egyeznek! (${cA} ≠ ${rB})`;
+                statusDesc.innerText = "A mátrixszorzás matematikai szabályai miatt az A oszlopszámának meg kell egyeznie a B sorszámával!";
+                
+                // Clear Matrix C render
+                document.getElementById('containerC').innerHTML = '<div class="text-xs text-red-400 p-2 italic text-center col-span-full">A szorzás nem elvégezhető</div>';
+                pauseSim();
+            }
+        }
+
+        function adjustMatrixSize(oldMat, rows, cols) {
+            let newMat = [];
+            for (let i = 0; i < rows; i++) {
+                let row = [];
+                for (let j = 0; j < cols; j++) {
+                    if (oldMat[i] && oldMat[i][j] !== undefined) {
+                        row.push(oldMat[i][j]);
+                    } else {
+                        row.push(Math.floor(Math.random() * 8) + 1);
+                    }
+                }
+                newMat.push(row);
+            }
+            return newMat;
+        }
+
+        function randomizeMatrices() {
+            for (let i = 0; i < matrixA.length; i++) {
+                for (let j = 0; j < matrixA[0].length; j++) {
+                    matrixA[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            for (let i = 0; i < matrixB.length; i++) {
+                for (let j = 0; j < matrixB[0].length; j++) {
+                    matrixB[i][j] = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+            recalculateResultMatrix();
+            renderMatrixInputs();
+            resetSim();
+        }
+
+        function resetMatricesToDefault() {
+            document.getElementById('dimA_r').value = 2;
+            document.getElementById('dimA_c').value = 3;
+            document.getElementById('dimB_r').value = 3;
+            document.getElementById('dimB_c').value = 2;
+
+            matrixA = [
+                [1, 2, 3],
+                [4, 5, 6]
+            ];
+            matrixB = [
+                [7, 8],
+                [9, 1],
+                [2, 3]
+            ];
+            onDimensionChange();
+        }
+
+        function recalculateResultMatrix() {
+            const rA = matrixA.length;
+            const cA = matrixA[0].length;
+            const cB = matrixB[0].length;
+
+            matrixC = [];
+            for (let i = 0; i < rA; i++) {
+                let row = [];
+                for (let j = 0; j < cB; j++) {
+                    let sum = 0;
+                    for (let k = 0; k < cA; k++) {
+                        sum += matrixA[i][k] * matrixB[k][j];
+                    }
+                    row.push(sum);
+                }
+                matrixC.push(row);
+            }
+
+            totalSteps = rA * cB;
+            document.getElementById('totalStepsText').innerText = totalSteps;
+        }
+
+        // --- DOM Rendering for Matrices ---
+        function renderMatrixInputs() {
+            // Matrix A
+            const containerA = document.getElementById('containerA');
+            containerA.style.gridTemplateColumns = `repeat(${matrixA[0].length}, minmax(0, 1fr))`;
+            containerA.innerHTML = '';
+            for (let i = 0; i < matrixA.length; i++) {
+                for (let j = 0; j < matrixA[0].length; j++) {
+                    containerA.appendChild(createCellElement(matrixA[i][j], 'A', i, j, false));
+                }
+            }
+
+            // Matrix B
+            const containerB = document.getElementById('containerB');
+            containerB.style.gridTemplateColumns = `repeat(${matrixB[0].length}, minmax(0, 1fr))`;
+            containerB.innerHTML = '';
+            for (let i = 0; i < matrixB.length; i++) {
+                for (let j = 0; j < matrixB[0].length; j++) {
+                    containerB.appendChild(createCellElement(matrixB[i][j], 'B', i, j, false));
+                }
+            }
+
+            // Matrix C (Result / Practice)
+            renderResultMatrixC();
+        }
+
+        function createCellElement(val, matName, r, c, isResultCell) {
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.id = `cell_${matName}_${r}_${c}`;
+            input.value = val !== undefined ? val : '';
+            input.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-slate-100 rounded-lg font-mono font-semibold text-sm focus:outline-none focus:border-blue-500 shadow-inner';
+            
+            if (!isResultCell) {
+                input.onchange = (e) => {
+                    let v = parseInt(e.target.value) || 0;
+                    if (matName === 'A') matrixA[r][c] = v;
+                    if (matName === 'B') matrixB[r][c] = v;
+                    recalculateResultMatrix();
+                    resetSim();
+                };
+            }
+            return input;
+        }
+
+        function renderResultMatrixC() {
+            const containerC = document.getElementById('containerC');
+            containerC.style.gridTemplateColumns = `repeat(${matrixC[0].length}, minmax(0, 1fr))`;
+            containerC.innerHTML = '';
+
+            for (let i = 0; i < matrixC.length; i++) {
+                for (let j = 0; j < matrixC[0].length; j++) {
+                    if (interactivityMode === 'auto') {
+                        const div = document.createElement('div');
+                        div.id = `cell_C_${i}_${j}`;
+                        div.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner';
+                        div.innerText = '?';
+                        containerC.appendChild(div);
+                    } else {
+                        // Manual Practice Mode: Editable inputs
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.id = `manual_C_${i}_${j}`;
+                        input.placeholder = '?';
+                        input.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 text-center bg-slate-900 border border-slate-700 text-amber-400 rounded-lg font-mono font-bold text-sm focus:outline-none focus:border-amber-500 shadow-inner';
+                        containerC.appendChild(input);
+                    }
+                }
+            }
+        }
+
+        // --- Interaction Mode Switching ---
+        function switchInteractivityMode(mode) {
+            interactivityMode = mode;
+            const btnAuto = document.getElementById('btnModeAuto');
+            const btnManual = document.getElementById('btnModeManual');
+            const autoControls = document.getElementById('autoControls');
+            const manualControls = document.getElementById('manualControls');
+
+            if (mode === 'auto') {
+                btnAuto.className = "py-1.5 px-3 text-xs font-bold rounded-md bg-blue-600 text-white shadow transition";
+                btnManual.className = "py-1.5 px-3 text-xs font-bold rounded-md text-slate-400 hover:text-white transition";
+                autoControls.classList.remove('hidden');
+                manualControls.classList.add('hidden');
+            } else {
+                btnManual.className = "py-1.5 px-3 text-xs font-bold rounded-md bg-amber-600 text-white shadow transition";
+                btnAuto.className = "py-1.5 px-3 text-xs font-bold rounded-md text-slate-400 hover:text-white transition";
+                manualControls.classList.remove('hidden');
+                autoControls.classList.add('hidden');
+            }
+            pauseSim();
+            renderResultMatrixC();
+            resetSim();
+        }
+
+        // --- Practice Mode Evaluation ---
+        function checkManualAnswers() {
+            let correctCount = 0;
+            let total = matrixC.length * matrixC[0].length;
+
+            for (let i = 0; i < matrixC.length; i++) {
+                for (let j = 0; j < matrixC[0].length; j++) {
+                    const inputEl = document.getElementById(`manual_C_${i}_${j}`);
+                    if (inputEl) {
+                        const userVal = parseInt(inputEl.value);
+                        const expectedVal = matrixC[i][j];
+
+                        if (!isNaN(userVal) && userVal === expectedVal) {
+                            inputEl.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 text-center font-mono font-bold text-sm rounded-lg shadow-inner input-correct';
+                            correctCount++;
+                        } else {
+                            inputEl.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 text-center font-mono font-bold text-sm rounded-lg shadow-inner input-incorrect';
+                        }
+                    }
+                }
+            }
+
+            if (correctCount === total) {
+                alert(`Kiváló! Mind a ${total} elemet helyesen számoltad ki! 🎉`);
+            } else {
+                alert(`Eredmény: ${correctCount} / ${total} helyes válasz. Próbáld újra a pirossal jelölt mezőket!`);
+            }
+        }
+
+        function revealAllAnswers() {
+            for (let i = 0; i < matrixC.length; i++) {
+                for (let j = 0; j < matrixC[0].length; j++) {
+                    const inputEl = document.getElementById(`manual_C_${i}_${j}`);
+                    if (inputEl) {
+                        inputEl.value = matrixC[i][j];
+                        inputEl.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 text-center font-mono font-bold text-sm rounded-lg shadow-inner input-correct';
+                    }
+                }
+            }
+        }
+
+        // --- Simulation Playback Control ---
+        function togglePlay() {
+            if (isPlaying) {
+                pauseSim();
+            } else {
+                playSim();
+            }
+        }
+
+        function playSim() {
+            if (currentStep >= totalSteps) {
+                currentStep = 0;
+            }
+            isPlaying = true;
+            document.getElementById('playIcon').className = 'fa-solid fa-pause';
+            document.getElementById('playText').innerText = 'Szünet';
+
+            executeStep();
+            playInterval = setInterval(() => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    executeStep();
+                } else {
+                    pauseSim();
+                }
+            }, animSpeed);
+        }
+
+        function pauseSim() {
+            isPlaying = false;
+            clearInterval(playInterval);
+            document.getElementById('playIcon').className = 'fa-solid fa-play';
+            document.getElementById('playText').innerText = 'Indítás';
+        }
+
+        function resetSim() {
+            pauseSim();
+            currentStep = 0;
+            document.getElementById('currentStepText').innerText = '0';
+            
+            clearHighlights();
+            clearCanvas();
+
+            if (interactivityMode === 'auto') {
+                for (let i = 0; i < matrixC.length; i++) {
+                    for (let j = 0; j < matrixC[0].length; j++) {
+                        const el = document.getElementById(`cell_C_${i}_${j}`);
+                        if (el) {
+                            el.innerText = '?';
+                            el.className = 'matrix-cell w-10 h-10 md:w-12 md:h-12 border border-slate-700 bg-slate-900 rounded-lg flex items-center justify-center font-bold text-sm text-slate-500 font-mono shadow-inner';
+                        }
+                    }
+                }
+            }
+
+            document.getElementById('cellCoordBadge').innerText = 'Készenlétben';
+            document.getElementById('formulaText').innerText = 'Nyomd meg az Indítás gombot vagy lépegess előre!';
+            document.getElementById('partialProductsText').innerText = '-';
+            document.getElementById('summationText').innerText = '-';
+        }
+
+        function stepForward() {
+            pauseSim();
+            if (currentStep < totalSteps) {
+                currentStep++;
+                executeStep();
+            }
+        }
+
+        function stepBack() {
+            pauseSim();
+            if (currentStep > 1) {
+                currentStep--;
+                executeStep();
+            } else if (currentStep === 1) {
+                resetSim();
+            }
+        }
+
+        function updateSpeed() {
+            const val = document.getElementById('speedRange').value;
+            animSpeed = parseInt(val);
+            document.getElementById('speedVal').innerText = (animSpeed / 1000).toFixed(1) + 's';
+            if (isPlaying) {
+                pauseSim();
+                playSim();
+            }
+        }
+
+        // --- Step Execution and Highlights ---
+        function executeStep() {
+            if (currentStep <= 0) return;
+            document.getElementById('currentStepText').innerText = currentStep;
+
+            clearHighlights();
+
+            const colsC = matrixB[0].length;
+            const stepIdx = currentStep - 1;
+
+            const targetRow = Math.floor(stepIdx / colsC);
+            const targetCol = stepIdx % colsC;
+
+            // Highlight A row
+            for (let j = 0; j < matrixA[0].length; j++) {
+                const el = document.getElementById(`cell_A_${targetRow}_${j}`);
+                if (el) el.classList.add('highlight-row');
+            }
+
+            // Highlight B col
+            for (let i = 0; i < matrixB.length; i++) {
+                const el = document.getElementById(`cell_B_${i}_${targetCol}`);
+                if (el) el.classList.add('highlight-col');
+            }
+
+            // Highlight C result cell
+            if (interactivityMode === 'auto') {
+                const resCell = document.getElementById(`cell_C_${targetRow}_${targetCol}`);
+                if (resCell) {
+                    resCell.classList.add('highlight-result');
+                    resCell.innerText = matrixC[targetRow][targetCol];
+                }
+            }
+
+            // Calculations
+            const pairs = [];
+            const partials = [];
+            let sumVal = 0;
+
+            for (let k = 0; k < matrixA[0].length; k++) {
+                const valA = matrixA[targetRow][k];
+                const valB = matrixB[k][targetCol];
+                const prod = valA * valB;
+                pairs.push(`(${valA} × ${valB})`);
+                partials.push(`${valA} × ${valB} = ${prod}`);
+                sumVal += prod;
+            }
+
+            document.getElementById('cellCoordBadge').innerText = `C[${targetRow + 1}][${targetCol + 1}] eleme`;
+            document.getElementById('formulaText').innerHTML = `
+                C[${targetRow + 1}][${targetCol + 1}] = ${pairs.join(' + ')} = <span class="text-emerald-400 font-bold">${sumVal}</span>
+            `;
+            document.getElementById('partialProductsText').innerText = partials.join('   |   ');
+            document.getElementById('summationText').innerText = `${pairs.map(p => p.replace('×', '·')).join(' + ')} = ${sumVal}`;
+
+            // Draw colored connection arrows
+            setTimeout(() => {
+                redrawArrowsForStep(targetRow, targetCol);
+            }, 30);
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.matrix-cell').forEach(el => {
+                el.classList.remove('highlight-row', 'highlight-col', 'highlight-pair-active', 'highlight-result');
+            });
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('arrowCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function redrawArrows() {
+            if (currentStep > 0) {
+                const colsC = matrixB[0].length;
+                const stepIdx = currentStep - 1;
+                redrawArrowsForStep(Math.floor(stepIdx / colsC), stepIdx % colsC);
+            } else {
+                clearCanvas();
+            }
+        }
+
+        // --- Colored Canvas Arrow Drawing ---
+        function redrawArrowsForStep(rA, cB) {
+            const canvas = document.getElementById('arrowCanvas');
+            const simSection = document.getElementById('sim-section');
+
+            canvas.width = simSection.clientWidth;
+            canvas.height = simSection.clientHeight;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const simRect = simSection.getBoundingClientRect();
+            const colors = ['#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#8b5cf6'];
+
+            const len = matrixA[0].length;
+            for (let k = 0; k < len; k++) {
+                const elA = document.getElementById(`cell_A_${rA}_${k}`);
+                const elB = document.getElementById(`cell_B_${k}_${cB}`);
+
+                if (!elA || !elB) continue;
+
+                const rectA = elA.getBoundingClientRect();
+                const rectB = elB.getBoundingClientRect();
+
+                const x1 = rectA.right - simRect.left;
+                const y1 = rectA.top + rectA.height / 2 - simRect.top;
+
+                const x2 = rectB.left - simRect.left;
+                const y2 = rectB.top + rectB.height / 2 - simRect.top;
+
+                const color = colors[k % colors.length];
+                drawCurvedArrow(ctx, x1, y1, x2, y2, color, k);
+            }
+        }
+
+        function drawCurvedArrow(ctx, x1, y1, x2, y2, color, index) {
+            ctx.beginPath();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = color;
+            ctx.setLineDash([5, 4]);
+
+            const dx = x2 - x1;
+            const offsetArc = 35 + index * 12;
+
+            const cx1 = x1 + dx * 0.35;
+            const cy1 = y1 - offsetArc;
+            const cx2 = x1 + dx * 0.65;
+            const cy2 = y2 - offsetArc;
+
+            ctx.moveTo(x1, y1);
+            ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x2, y2);
+            ctx.stroke();
+
+            // Arrow head
+            ctx.setLineDash([]);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x2, y2, 4.5, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        // --- Code Area Switcher & Utilities ---
+        function switchCodeTab(lang) {
+            const pyArea = document.getElementById('codePythonArea');
+            const cppArea = document.getElementById('codeCppArea');
+            const tabPy = document.getElementById('tabPy');
+            const tabCpp = document.getElementById('tabCpp');
+
+            if (lang === 'python') {
+                pyArea.classList.remove('hidden');
+                cppArea.classList.add('hidden');
+                tabPy.className = 'px-4 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition';
+                tabCpp.className = 'px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+            } else {
+                pyArea.classList.add('hidden');
+                cppArea.classList.remove('hidden');
+                tabCpp.className = 'px-4 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition';
+                tabPy.className = 'px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+            }
+        }
+
+        function copyCode(elementId) {
+            const codeText = document.getElementById(elementId).innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            alert('A forráskód sikeresen a vágólapra másolva!');
+        }
+
+        function downloadCode(elementId, filename) {
+            const text = document.getElementById(elementId).innerText;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+    </script>
+
+</body></html>
