@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0147)file:///D:/programe%20scolare/tankonyv/Tordeles/10.%20Oszt%C3%A1lyos%20Informatika%20Tanterv%20%C3%89s%20Dinamikus%20Mell%C3%A9kletkezel%C5%91.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>10. Osztályos Informatika Tanterv És Dinamikus Mellékletkezelő</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 8pt;
+            line-height: 1.2;
+            color: #222;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 15px;
+        }
+        .a4-page {
+            background: #fff;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 20px auto;
+            padding: 10mm 12mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            page-break-after: always;
+            page-break-inside: avoid;
+            position: relative;
+        }
+        .top-bar {
+            background: #1a365d;
+            color: #fff;
+            padding: 10px 18px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar button {
+            background: #38a169;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .top-bar button:hover { background: #2f855a; }
+        .top-bar button.btn-insert { background: #3182ce; }
+        .top-bar button.btn-insert:hover { background: #2b6cb0; }
+        .top-bar button.reset-btn { background: #e53e3e; }
+        .top-bar button.reset-btn:hover { background: #c53030; }
+
+        h1 {
+            font-size: 12pt;
+            color: #1a365d;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 3px;
+        }
+        h2 {
+            font-size: 9pt;
+            color: #2b6cb0;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #2b6cb0;
+            padding-bottom: 2px;
+        }
+
+        /* Impresszum */
+        .impressum-section { font-size: 8.5pt; color: #333; }
+        .field-row {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .field-label { font-weight: bold; color: #1a365d; min-width: 160px; }
+        .field-value { font-weight: 600; color: #2d3748; min-width: 50px; }
+        .field-value:empty::before { content: "(üres)"; color: #a0aec0; font-style: italic; }
+        .edit-btn {
+            padding: 1px 5px;
+            font-size: 7pt;
+            background: #cbd5e0;
+            color: #2d3748;
+            border: 1px solid #a0aec0;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .edit-btn:hover { background: #a0aec0; }
+
+        /* Táblázat stílusok */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        th, td { border: 1px solid #cbd5e0; padding: 2px 4px; text-align: left; vertical-align: middle; }
+        th { background-color: #0f172a; color: #ffffff; font-size: 7.5pt; text-transform: uppercase; }
+        th.col-drag { width: 3%; text-align: center; }
+        th.col-ssz { width: 5%; text-align: center; }
+        th.col-tema { width: 28%; }
+        th.col-komp { width: 38%; }
+        th.col-link { width: 18%; }
+        th.col-act { width: 8%; text-align: center; }
+        
+        td.drag-handle { cursor: grab; font-weight: bold; color: #a0aec0; text-align: center; user-select: none; }
+        td.drag-handle:active { cursor: grabbing; }
+        tr.dragging { opacity: 0.4; background-color: #e2e8f0; border: 2px dashed #3182ce; }
+        
+        td.ssz-cell { text-align: center; font-weight: bold; font-size: 7.5pt; }
+        td.tema-cell { font-weight: bold; font-size: 7.5pt; }
+        td.komp-cell { color: #4a5568; font-size: 7pt; line-height: 1.1; }
+        
+        /* Csatolt linkek & Törlésük */
+        .link-container { display: flex; flex-direction: column; gap: 2px; }
+        .link-item-wrapper { display: flex; align-items: center; justify-content: space-between; background: #f1f5f9; padding: 1px 4px; border-radius: 3px; border: 1px solid #e2e8f0; }
+        .link-item { color: #2b6cb0; text-decoration: none; font-weight: bold; font-size: 7pt; word-break: break-all; }
+        .link-item:hover { text-decoration: underline; }
+        .delete-link-btn {
+            color: #e53e3e;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 8pt;
+            margin-left: 4px;
+            line-height: 1;
+            padding: 0 2px;
+        }
+        .delete-link-btn:hover { color: #9b2c2c; }
+
+        .add-link-btn {
+            display: inline-block;
+            margin-top: 2px;
+            padding: 1px 3px;
+            font-size: 6pt;
+            background: #e2e8f0;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .add-link-btn:hover { background: #cbd5e0; }
+        
+        /* Mozgató gombok (Nyilak) */
+        .move-btn {
+            background: #edf2f7;
+            border: 1px solid #cbd5e0;
+            color: #2d3748;
+            padding: 0 3px;
+            font-size: 7pt;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .move-btn:hover { background: #cbd5e0; }
+
+        .delete-row-btn {
+            background: #fed7d7;
+            color: #9b2c2c;
+            border: 1px solid #feb2b2;
+            padding: 1px 3px;
+            font-size: 6.5pt;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .delete-row-btn:hover { background: #feb2b2; }
+
+        /* Módszertan stílusok */
+        .methodology-box { background-color: #f8fafc; border-left: 4px solid #2b6cb0; padding: 6px 10px; margin-bottom: 6px; }
+        .tip-box { background-color: #fefce8; border: 1px solid #fef08a; border-left: 4px solid #eab308; padding: 5px 8px; margin: 6px 0; border-radius: 4px; font-size: 7.5pt; }
+        .code-block { background-color: #0f172a; color: #f8fafc; font-family: 'Consolas', monospace; padding: 6px 10px; border-radius: 4px; font-size: 7.5pt; white-space: pre; line-height: 1.2; }
+
+        /* Dinamikus melléklet A4 stílus */
+        .attachment-page { border-top: 4px solid #3182ce; }
+        .attachment-content { margin-top: 10px; font-size: 8.5pt; line-height: 1.3; color: #1a202c; }
+
+        /* Modal Pop-up */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fff; margin: 8% auto; padding: 16px; border-radius: 8px; width: 420px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .modal-header { font-weight: bold; font-size: 10pt; margin-bottom: 8px; color: #1a365d; }
+        .modal-body label { display: block; font-size: 7.5pt; margin-bottom: 2px; color: #4a5568; }
+        .modal-body input[type="text"], .modal-body input[type="number"], .modal-body input[type="file"], .modal-body select { 
+            width: 100%; padding: 4px; margin-bottom: 8px; box-sizing: border-box; border: 1px solid #cbd5e0; border-radius: 4px; 
+        }
+        .modal-footer { text-align: right; display: flex; gap: 6px; justify-content: flex-end; }
+        .modal-footer button { padding: 4px 8px; font-size: 8pt; border-radius: 3px; border: none; cursor: pointer; }
+        .btn-save { background: #3182ce; color: white; }
+        .btn-cancel { background: #e2e8f0; color: #4a5568; }
+
+        @media print {
+            .top-bar, .edit-btn, .add-link-btn, .delete-row-btn, .delete-link-btn, .move-btn, .col-drag, .col-act, .modal { display: none !important; }
+            body { background: white; padding: 0; }
+            .a4-page { box-shadow: none; width: 100%; margin: 0; padding: 10mm 12mm; }
+            .field-value:empty::before { display: none; }
+            th { background-color: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div><strong>10. Osztályos Informatika Tanterv (Drag &amp; Drop + Linktörlés)</strong></div>
+    <div>
+        <button class="btn-insert" onclick="openInsertModal()">+ Új Témakör Beszúrása</button>
+        <button class="reset-btn" onclick="resetData()">Alaphelyzet</button>
+        <button onclick="window.print()">Nyomtatás / PDF</button>
+    </div>
+</div>
+
+<!-- 1. OLDAL: IMPRESSZUM -->
+<div class="a4-page impressum-section">
+    <h1>MEGJEGYZÉSEK ÉS IMPRESSZUM</h1>
+    <p>Ez a tankönyvprojekt az Oktatási és Kutatási Minisztérium <strong>6 930 / 19.12.2025</strong> számú rendeletével jóváhagyott, <strong>10. osztályos Informatika iskolai tantervvel</strong> összhangban készült.</p>
+
+    <div class="field-row">
+        <span class="field-label">Gyermekbántalmazási vonal:</span>
+        <span class="field-value editable-field" id="val-bantalmazas">119</span>
+        <button class="edit-btn" onclick="openEditModal('val-bantalmazas', 'Gyermekbántalmazási vonal')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Gyermeksegélyvonal:</span>
+        <span class="field-value editable-field" id="val-segelyvonal">116 111</span>
+        <button class="edit-btn" onclick="openEditModal('val-segelyvonal', 'Gyermeksegélyvonal')">Módosítás</button>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #cbd5e0; margin: 8px 0;">
+    <h2>Szakmai És Szerkesztőségi Munkatársak</h2>
+
+    <div class="field-row">
+        <span class="field-label">Tudományos Lektor 1:</span>
+        <span class="field-value editable-field" id="val-lektor1">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-lektor1', 'Tudományos Lektor 1')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Tudományos Lektor 2:</span>
+        <span class="field-value editable-field" id="val-lektor2">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-lektor2', 'Tudományos Lektor 2')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Tudományos Lektor 3:</span>
+        <span class="field-value editable-field" id="val-lektor3">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-lektor3', 'Tudományos Lektor 3')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Szerkesztőségi koordinátor:</span>
+        <span class="field-value editable-field" id="val-koordinator">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-koordinator', 'Szerkesztőségi koordinátor')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Felelős szerkesztő:</span>
+        <span class="field-value editable-field" id="val-szerkeszto">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-szerkeszto', 'Felelős szerkesztő')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Műszaki szerkesztő:</span>
+        <span class="field-value editable-field" id="val-muszaki">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-muszaki', 'Műszaki szerkesztő')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Nyomdai előkészítés:</span>
+        <span class="field-value editable-field" id="val-nyomda">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-nyomda', 'Nyomdai előkészítés')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Borítóterv / Design:</span>
+        <span class="field-value editable-field" id="val-design">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-design', 'Borítóterv')">Módosítás</button>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #cbd5e0; margin: 8px 0;">
+    <h2>Kiadói És Megrendelési Elérhetőségek</h2>
+
+    <div class="field-row">
+        <span class="field-label">Kiadó megnevezése:</span>
+        <span class="field-value editable-field" id="val-kiado">Anonim</span>
+        <button class="edit-btn" onclick="openEditModal('val-kiado', 'Kiadó neve')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Postacím / Terjesztés:</span>
+        <span class="field-value editable-field" id="val-cim"></span>
+        <button class="edit-btn" onclick="openEditModal('val-cim', 'Postacím')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Telefonszám(ok):</span>
+        <span class="field-value editable-field" id="val-telefon"></span>
+        <button class="edit-btn" onclick="openEditModal('val-telefon', 'Telefonszámok')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Fax szám:</span>
+        <span class="field-value editable-field" id="val-fax"></span>
+        <button class="edit-btn" onclick="openEditModal('val-fax', 'Fax')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Weboldal:</span>
+        <span class="field-value editable-field" id="val-web"></span>
+        <button class="edit-btn" onclick="openEditModal('val-web', 'Weboldal')">Módosítás</button>
+    </div>
+    <div class="field-row">
+        <span class="field-label">ISBN szám:</span>
+        <span class="field-value editable-field" id="val-isbn"></span>
+        <button class="edit-btn" onclick="openEditModal('val-isbn', 'ISBN szám')">Módosítás</button>
+    </div>
+</div>
+
+<!-- 2. OLDAL: TELJES TANTERV (1 OLDALON) -->
+<div class="a4-page">
+    <h1>10. OSZTÁLYOS INFORMATIKA TANTERV<br><small style="font-size: 8.5pt; font-weight: normal;">(Matematika-Informatika Szak - Heti 4 óra / 144 óra/év)</small></h1>
+
+    <div id="curriculum-container">
+        <!-- 1. Fejezet -->
+        <div class="chapter-block" data-chapter="1">
+            <h2>1. Fejezet: Összetett Adatszerkezetek (Adatstruktúrák)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-drag">⋮⋮</th>
+                        <th class="col-ssz">Ssz.</th>
+                        <th class="col-tema">Témakör / Tananyag</th>
+                        <th class="col-komp">Specifikus Kompetenciák &amp; Részletek</th>
+                        <th class="col-link">Kapcsolt HTML / Állományok</th>
+                        <th class="col-act">Művelet</th>
+                    </tr>
+                </thead>
+                <tbody class="chapter-tbody">
+                    <tr draggable="true">
+                    <td class="drag-handle">⋮⋮</td>
+                    <td class="ssz-cell">1.1</td>
+                    <td class="tema-cell">Gyűjtsd be a meglátogatott linkeket!</td>
+                    <td class="komp-cell">Tananyag kezelő!</td>
+                    <td>
+                        <div class="link-container" id="links-1-1789927080202"><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/menu1/index.html" class="link-item" target="_blank">Gyűjtő felület!</a><span class="delete-link-btn">×</span></div></div>
+                        <button class="add-link-btn" onclick="openModal('links-1-1789927080202', 'Gyűjtsd be a meglátogatott linkeket!')">+ Link / HTML</button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                        <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                        <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                    </td>
+                </tr><tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">1.2</td>
+                        <td class="tema-cell">Egydimenziós Tömbök és Halmazok (Set)</td>
+                        <td class="komp-cell">CS 1.1: Unió, metszet, különbség, tartozás vizsgálata, elemek elérése.</td>
+                        <td>
+                            <div class="link-container" id="links-1-1">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/1.1_halmazok.html" target="_blank" class="link-item">1.1_halmazok.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            <div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvvektor1/index.html" class="link-item" target="_blank">Bevezető</a><span class="delete-link-btn">×</span></div></div>
+                            <button class="add-link-btn" onclick="openModal('links-1-1', 'Egydimenziós Tömbök és Halmazok')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">1.3</td>
+                        <td class="tema-cell">Kétdimenziós Tömbök (Mátrixok)</td>
+                        <td class="komp-cell">CS 1.1: Deklaráció, soronkénti/oszloponkénti bejárás, főátló és mellékátló, mátrixműveletek.</td>
+                        <td>
+                            <div class="link-container" id="links-1-2">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/1.2_matrixok.html" target="_blank" class="link-item">1.2_matrixok.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            <div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/" class="link-item" target="_blank">Bevezető: Mátrixok!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/meseerdo1/index.html" class="link-item" target="_blank">Meseerdő1: Mátrix elemeinek elérése direkt módon!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/meseerdo2/index.html" class="link-item" target="_blank">Meseerdő2: Konstans mátrix fogalmának tisztázása!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix1/index.html" class="link-item" target="_blank">Mátrixok elemei: Elmélet1</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix2/index.html" class="link-item" target="_blank">Elemek szabály szerinti elhelyezése! Elmélet!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix3/index.html" class="link-item" target="_blank">Mátrix elemeinek feltöltése képlet szerint!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix4/index.html" class="link-item" target="_blank">Elemek tulajdonságát rögzítő interaktiv tananyag!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix5/index.html" class="link-item" target="_blank">Mátrix elemének sor és oszlop indexe! Gyakorló!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix6/index.html" class="link-item" target="_blank">Mátrix elemeinek indexe és az elemek értékének ismétlődése!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix7/index.html" class="link-item" target="_blank">Interaktív gyakorló!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix9/index.html" class="link-item" target="_blank">Négyzetes mátrix tulajdonságai! Itt nincs tárgyalva a szimmetria!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix10/index.html" class="link-item" target="_blank">Ritkamátrix elmélet! Interaktív toll és mesefüzet ötlet alapján!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix11/index.html" class="link-item" target="_blank">Gyors összefoglaló! Elmélet ismétlése, Descartes koordináta rendszer bevezetése!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix12/index.html" class="link-item" target="_blank">Leképezés, absztrahálás!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix13/index.html" class="link-item" target="_blank">Leképezés lépésről lépésre!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix14/index.html" class="link-item" target="_blank">Leképezés: Bottörés!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix15/index.html" class="link-item" target="_blank">Vektor és Mátrix elemreláció!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix16/index.html" class="link-item" target="_blank">Mátrixtranszformációk a Grafikában!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix17/index.html" class="link-item" target="_blank">Projekt mátrixtranszformációra! Interaktiv ceruza és mesefüzet!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix18/index.html" class="link-item" target="_blank">Elmélet a mátrixtranszformációról!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix19/index.html" class="link-item" target="_blank">Ritka mátrix! Ismétlés, összegző!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix20/index.html" class="link-item" target="_blank">Mátrix elemeinek soronkénti bejárása!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix21/index.html" class="link-item" target="_blank">Gyakorlat fő és mellékátló elemeinek elérése iterativan!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix22/index.html" class="link-item" target="_blank">Indexek négyzetes mátrixban!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix24/index.html" class="link-item" target="_blank">Indexek és bejárás táblázatszerű illusztrációval!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix22/index.html" class="link-item" target="_blank">Indexek C++ kóddal!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix25/index.html" class="link-item" target="_blank">Mátrixok összege elemek párosítása nélküli animációval!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix26/index.html" class="link-item" target="_blank">Mátrix és vektor elem reláció! Elmélet a mátrix elemeinek a rendezéséhez!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix27/index.html" class="link-item" target="_blank">Mátrix elemeinek a rendezése1</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix28/index.html" class="link-item" target="_blank">Mátrix elemeinek a rendezése2</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix29/index.html" class="link-item" target="_blank">Rendezési algoritmusok vektorol esetén!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix30/index.html" class="link-item" target="_blank">Mátrix elemeinek a rendezése. Soronkénti konfruntálódás!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix31/index.html" class="link-item" target="_blank">Gyakorlat rendezéssel!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvmatrix32/index.html" class="link-item" target="_blank">Összegzés mátrixrendezés elmélet interaktivan!</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvrekord1/index.html" class="link-item" target="_blank">Ez mátrix vagy nem mátrix?</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvrekord2/index.html" class="link-item" target="_blank">Na és ez?</a><span class="delete-link-btn">×</span></div><div class="link-item-wrapper"><a href="https://tankonyv10matinfo.vercel.app/tankonyvkviz1/index.html" class="link-item" target="_blank">Kvíz</a><span class="delete-link-btn">×</span></div></div>
+                            <button class="add-link-btn" onclick="openModal('links-1-2', 'Kétdimenziós Tömbök (Mátrixok)')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">1.4</td>
+                        <td class="tema-cell">Karaktersorozatok (Stringek)</td>
+                        <td class="komp-cell">CS 1.1: Karakterelérés, összefűzés, keresés, lexikografikus összehasonlítás.</td>
+                        <td>
+                            <div class="link-container" id="links-1-3">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/1.3_stringek.html" target="_blank" class="link-item">1.3_stringek.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-1-3', 'Karaktersorozatok (Stringek)')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">1.5</td>
+                        <td class="tema-cell">Struktúrák / Rekordok (struct)</td>
+                        <td class="komp-cell">CS 1.1: Összetett entitások modellezése, mezők elérése, rekordok tömbje.</td>
+                        <td>
+                            <div class="link-container" id="links-1-4">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/1.4_strukturak.html" target="_blank" class="link-item">1.4_strukturak.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-1-4', 'Struktúrák / Rekordok')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">1.6</td>
+                        <td class="tema-cell">Asszociatív Struktúrák (Szótárak)</td>
+                        <td class="komp-cell">CS 1.1: Kulcs-érték párok tárolása, gyors keresés (hashing), szótárak használata.</td>
+                        <td>
+                            <div class="link-container" id="links-1-5">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/1.5_szotarak.html" target="_blank" class="link-item">1.5_szotarak.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-1-5', 'Asszociatív Struktúrák (Szótárak)')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Fejezet -->
+        <div class="chapter-block" data-chapter="2">
+            <h2>2. Fejezet: Alprogramok, Függvények és Rekurzió</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-drag">⋮⋮</th>
+                        <th class="col-ssz">Ssz.</th>
+                        <th class="col-tema">Témakör / Tananyag</th>
+                        <th class="col-komp">Specifikus Kompetenciák &amp; Részletek</th>
+                        <th class="col-link">Kapcsolt HTML / Állományok</th>
+                        <th class="col-act">Művelet</th>
+                    </tr>
+                </thead>
+                <tbody class="chapter-tbody">
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">2.1</td>
+                        <td class="tema-cell">Alprogramok és Modularitás</td>
+                        <td class="komp-cell">CS 2.1: Függvények, eljárások, visszatérési értékek, lokális és globális hatókörök.</td>
+                        <td>
+                            <div class="link-container" id="links-2-1">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/2.1_alprogramok.html" target="_blank" class="link-item">2.1_alprogramok.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-2-1', 'Alprogramok és Modularitás')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">2.2</td>
+                        <td class="tema-cell">Paraméterátadási Mechanizmusok</td>
+                        <td class="komp-cell">CS 2.1: Érték szerinti és referencia szerinti (cím szerinti) paraméterátadás.</td>
+                        <td>
+                            <div class="link-container" id="links-2-2">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/2.2_parameteratadas.html" target="_blank" class="link-item">2.2_parameter.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-2-2', 'Paraméterátadási Mechanizmusok')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">2.3</td>
+                        <td class="tema-cell">Rekurzió és Rekurzív Algoritmusok</td>
+                        <td class="komp-cell">CS 2.2: Direkt/indirekt rekurzió, veremmemória (stack), Hanoi tornyai, Fibonacci.</td>
+                        <td>
+                            <div class="link-container" id="links-2-3">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/2.3_rekurzio.html" target="_blank" class="link-item">2.3_rekurzio.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-2-3', 'Rekurzió és Rekurzív Algoritmusok')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Fejezet -->
+        <div class="chapter-block" data-chapter="3">
+            <h2>3. Fejezet: Algoritmikus Tervezési Stratégiák</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-drag">⋮⋮</th>
+                        <th class="col-ssz">Ssz.</th>
+                        <th class="col-tema">Témakör / Tananyag</th>
+                        <th class="col-komp">Specifikus Kompetenciák &amp; Részletek</th>
+                        <th class="col-link">Kapcsolt HTML / Állományok</th>
+                        <th class="col-act">Művelet</th>
+                    </tr>
+                </thead>
+                <tbody class="chapter-tbody">
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">3.1</td>
+                        <td class="tema-cell">Keresés és Rendezés</td>
+                        <td class="komp-cell">CS 3.1: Bináris keresés, QuickSort, MergeSort és komplexitás.</td>
+                        <td>
+                            <div class="link-container" id="links-3-1">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/3.1_rendezesek.html" target="_blank" class="link-item">3.1_rendezes.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-3-1', 'Keresés és Rendezés')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">3.2</td>
+                        <td class="tema-cell">Mohó Algoritmusok (Greedy)</td>
+                        <td class="komp-cell">CS 3.2: Helyi optimális döntések, érmeváltási feladat, hátizsák-probléma.</td>
+                        <td>
+                            <div class="link-container" id="links-3-2">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/3.2_moho.html" target="_blank" class="link-item">3.2_moho.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-3-2', 'Mohó Algoritmusok (Greedy)')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">3.3</td>
+                        <td class="tema-cell">Dinamikus Programozás</td>
+                        <td class="komp-cell">CS 3.3: Részproblémák átfedése, optimális részstruktúra, memoizáció.</td>
+                        <td>
+                            <div class="link-container" id="links-3-3">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/3.3_dinamikus.html" target="_blank" class="link-item">3.3_dinamikus.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-3-3', 'Dinamikus Programozás')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">3.4</td>
+                        <td class="tema-cell">Visszalépéses Keresés</td>
+                        <td class="komp-cell">CS 3.4: Backtracking elve, megoldási tér bejárása és vágási feltételek.</td>
+                        <td>
+                            <div class="link-container" id="links-3-4">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/3.4_backtracking.html" target="_blank" class="link-item">3.4_backtrack.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-3-4', 'Visszalépéses Keresés')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. Fejezet -->
+        <div class="chapter-block" data-chapter="4">
+            <h2>4. Fejezet: Szoftverfejlesztés, Modellek és Projektek</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-drag">⋮⋮</th>
+                        <th class="col-ssz">Ssz.</th>
+                        <th class="col-tema">Témakör / Tananyag</th>
+                        <th class="col-komp">Specifikus Kompetenciák &amp; Részletek</th>
+                        <th class="col-link">Kapcsolt HTML / Állományok</th>
+                        <th class="col-act">Művelet</th>
+                    </tr>
+                </thead>
+                <tbody class="chapter-tbody">
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">4.1</td>
+                        <td class="tema-cell">Koncepcionális Modellek</td>
+                        <td class="komp-cell">CS 4.1: Szoftverfejlesztési életciklus, specifikációk meghatározása.</td>
+                        <td>
+                            <div class="link-container" id="links-4-1">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/4.1_modellek.html" target="_blank" class="link-item">4.1_modellek.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-4-1', 'Koncepcionális Modellek')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">4.2</td>
+                        <td class="tema-cell">Hozzáférési Modellek</td>
+                        <td class="komp-cell">CS 4.2: Szerepkör alapú hozzáférés (RBAC), adatvédelem.</td>
+                        <td>
+                            <div class="link-container" id="links-4-2">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/4.2_hozzaferes.html" target="_blank" class="link-item">4.2_hozzaferes.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-4-2', 'Hozzáférési Modellek')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                    <tr draggable="true">
+                        <td class="drag-handle">⋮⋮</td>
+                        <td class="ssz-cell">4.3</td>
+                        <td class="tema-cell">Projektmunka és Tesztelés</td>
+                        <td class="komp-cell">CS 4.3: Egységtesztelés, hibakeresés (debugging), kód dokumentálás.</td>
+                        <td>
+                            <div class="link-container" id="links-4-3">
+                                <div class="link-item-wrapper">
+                                    <a href="file:///C:/Users/Utilizator/Downloads/4.3_projekt.html" target="_blank" class="link-item">4.3_projekt.html</a>
+                                    <span class="delete-link-btn" onclick="deleteSingleLink(this)">×</span>
+                                </div>
+                            </div>
+                            <button class="add-link-btn" onclick="openModal('links-4-3', 'Projektmunka és Tesztelés')">+ Link / HTML</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                            <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                            <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 3. OLDAL: MÓDSZERTANI ÚTMUTATÓ ÉS FELADATLAP -->
+<div class="a4-page">
+    <h1>FELFEDEZÉSES OKTATÁS A PROGRAMOZÁSBAN</h1>
+    <p style="text-align: center; color: #475569; font-weight: bold; margin-top: -6px; font-size: 8pt;">
+        Módszertani Útmutató pedagógusok számára • Interaktív logikai játékok alkalmazása
+    </p>
+
+    <h2>1. Alapelv: Miért a "Maguktól rájöjjenek" megközelítés?</h2>
+    <p style="margin-bottom: 5px;">
+        Ahelyett, hogy a tanár készen átadná az algoritmusokat vagy a megoldási lépéseket, a vezérelt felfedezés (guided discovery) módszere arra ösztönzi a diákokat, hogy próbálgatással, teszteléssel és hibaelemzéssel maguk fedezzék fel a szabályokat.
+    </p>
+
+    <div class="methodology-box">
+        <strong>A pedagógiai folyamat 4 fázisa:</strong>
+        <ol style="margin: 2px 0 0 12px; padding: 0;">
+            <li><strong>Fázis 1: Problémafelvetés</strong> – Mutassunk be egy működő interaktív szimulációt (pl. folyadékrendező logikai játék). Ne magyarázzuk el a nyerési stratégiát, csak a szabályokat.</li>
+            <li><strong>Fázis 2: Hipotézisalkotás</strong> – A diákok önállóan vagy párokban kísérleteznek, és feltevéseket gyártanak arról, hogy melyik lépés vezet eredményre.</li>
+            <li><strong>Fázis 3: Vezérelt Kérdések</strong> – Ha elakadnak, ne adjuk meg a választ! Sokratészi módszerrel kérdezzünk: <em>"Mi történik, ha az üveg tetején lévő szín nem egyezik?"</em></li>
+            <li><strong>Fázis 4: Generalizálás</strong> – A tapasztalatok összegzése: a diákok saját szavaikkal fogalmazzák meg a logikai algoritmust.</li>
+        </ol>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 Pedagógusi Tipp:</strong> A kudarc itt nem hiba, hanem a tanulási folyamat szerves része. A visszavonás (undo) funkció biztonságérzetet ad a tanulóknak a merészebb kísérletekhez.
+    </div>
+
+    <h2>Gyakorlati Feladatlap: Kódkiegészítés &amp; Logika</h2>
+    <p style="font-size: 7.5pt; color: #475569; margin-bottom: 4px;">
+        Töltse ki az alábbi hiányos táblázatot és programkódrészletet a fizikai szimuláció szabályai alapján!
+    </p>
+
+    <strong style="font-size: 7.5pt;">1. Feladat: Szabályok és Feltételek Táblázata</strong>
+    <table style="margin-top: 3px;">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Interakció</th>
+                <th style="width: 35%;">Feltétel (Mit kell vizsgálni?)</th>
+                <th style="width: 40%;">Következmény / Eredmény</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="font-weight: bold;">Üveg kiválasztása</td>
+                <td><code>tubes[idx].length &gt; 0</code></td>
+                <td>[ Írja be ide a diák: pl. Az üveg kiemelődik ]</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Folyadék átöntés</td>
+                <td>Célüveg üres VAGY felső szín egyezik</td>
+                <td>[ Írja be ide a diák: ....................................... ]</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Szint teljesítése</td>
+                <td>Minden üveg egyszínű és tele van (vagy üres)</td>
+                <td>Győzelmi ablak és jutalom érmék</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <strong style="font-size: 7.5pt;">2. Feladat: Kódkiegészítés (JavaScript Logika)</strong>
+    <p style="font-size: 7pt; color: #475569; margin: 2px 0;">
+        Egészítse ki az alábbi függvényt a hiányzó feltétellel, amely ellenőrzi, hogy egy adott üveg teljesen tele van-e azonos színű folyadékokkal!
+    </p>
+
+    <div class="code-block">function isTubeComplete(tube) {
+  if (tube.length &lt; CAPACITY) return false;
+  let firstColor = tube[0];
+  for (let color of tube) {
+    // HIÁNYZÓ KÓD: Írja be a feltételt, ha eltér a szín!
+    if ([ Írja be ide a hiányzó feltételt ]) return false;
+  }
+  return true;
+}</div>
+</div>
+
+<!-- CSATOLT A4-ES MELLÉKLETEK CONTAINER (FELTÖLTÖTT A4 OLDALAK) -->
+<div id="attachments-container"></div>
+
+<!-- GENERAL POPUP MODAL -->
+<div id="generalModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header" id="modalTitle">Új Hivatkozás vagy HTML Fájl Csatolása</div>
+        <div class="modal-body" id="modalBody">
+            <label for="linkText">1. Megjelenő Cím / Megnevezés:</label>
+            <input type="text" id="linkText" placeholder="pl. 1.2_matrixok.html">
+            
+            <label for="fileInput" style="font-weight: bold; color: #2b6cb0;">2. HTML Állomány Feltöltése (A4 mellékletként fűzi be):</label>
+            <input type="file" id="fileInput" accept=".html,.htm,.txt">
+            
+            <hr style="border: 0; border-top: 1px solid #cbd5e0; margin: 10px 0;">
+            <label for="linkUrl">VAGY 3. Hálózati URL megadása:</label>
+            <input type="text" id="linkUrl" placeholder="https://pelda.hu/tananyag.html">
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeModal()">Mégse</button>
+            <button class="btn-save" onclick="saveModal()">Mentés / Végrehajtás</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let mode = ''; 
+    let activeTargetId = '';
+    let activeTopicTitle = '';
+
+    window.onload = function() {
+        loadSavedData();
+        renumberCurriculum();
+        initDragAndDrop();
+    };
+
+    function renumberCurriculum() {
+        const chapters = document.querySelectorAll('.chapter-block');
+        chapters.forEach(chapter => {
+            const chapterNum = chapter.getAttribute('data-chapter');
+            const rows = chapter.querySelectorAll('.chapter-tbody tr');
+            rows.forEach((row, index) => {
+                const sszCell = row.querySelector('.ssz-cell');
+                if (sszCell) {
+                    sszCell.textContent = `${chapterNum}.${index + 1}`;
+                }
+            });
+        });
+    }
+
+    // Egyedi hivatkozás / feltöltött fájl törlése
+    function deleteSingleLink(btn) {
+        const wrapper = btn.closest('.link-item-wrapper');
+        const anchor = wrapper.querySelector('a');
+        const href = anchor ? anchor.getAttribute('href') : '';
+
+        // Ha belső A4 mellékletre mutat, töröljük az A4-es oldalt is
+        if (href && href.startsWith('#att-')) {
+            const attPage = document.querySelector(href);
+            if (attPage) attPage.remove();
+        }
+
+        wrapper.remove();
+        saveData();
+    }
+
+    // Sorok mozgatása nyilakkal (▲ / ▼)
+    function moveRow(btn, direction) {
+        const row = btn.closest('tr');
+        const tbody = row.parentElement;
+        if (direction === -1 && row.previousElementSibling) {
+            tbody.insertBefore(row, row.previousElementSibling);
+        } else if (direction === 1 && row.nextElementSibling) {
+            tbody.insertBefore(row.nextElementSibling, row);
+        }
+        renumberCurriculum();
+        saveData();
+    }
+
+    // Drag & Drop átrendezés
+    let draggedRow = null;
+
+    function initDragAndDrop() {
+        const tbodies = document.querySelectorAll('.chapter-tbody');
+        tbodies.forEach(tbody => {
+            tbody.addEventListener('dragstart', e => {
+                draggedRow = e.target.closest('tr');
+                if (draggedRow) draggedRow.classList.add('dragging');
+            });
+
+            tbody.addEventListener('dragend', e => {
+                if (draggedRow) draggedRow.classList.remove('dragging');
+                draggedRow = null;
+                renumberCurriculum();
+                saveData();
+            });
+
+            tbody.addEventListener('dragover', e => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(tbody, e.clientY);
+                if (draggedRow) {
+                    if (afterElement == null) {
+                        tbody.appendChild(draggedRow);
+                    } else {
+                        tbody.insertBefore(draggedRow, afterElement);
+                    }
+                }
+            });
+        });
+    }
+
+    function getDragAfterElement(tbody, y) {
+        const draggableElements = [...tbody.querySelectorAll('tr:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function openInsertModal() {
+        mode = 'insertRow';
+        document.getElementById('modalTitle').textContent = 'Új Témakör Beszúrása Megadott Helyre';
+        
+        const chapters = document.querySelectorAll('.chapter-block');
+        let chapterOptions = '';
+        chapters.forEach(c => {
+            const cNum = c.getAttribute('data-chapter');
+            chapterOptions += `<option value="${cNum}">${cNum}. Fejezet</option>`;
+        });
+
+        document.getElementById('modalBody').innerHTML = `
+            <label for="insChapter">Melyik fejezetbe kíván beszúrni?</label>
+            <select id="insChapter">${chapterOptions}</select>
+            
+            <label for="insIndex">Beszúrás Helye (Sorszám, pl. 1 = az elejére):</label>
+            <input type="number" id="insIndex" value="1" min="1">
+            
+            <label for="insTitle">Témakör Címe:</label>
+            <input type="text" id="insTitle" placeholder="pl. Új algoritmikus témakör">
+            
+            <label for="insDetails">Kompetenciák & Részletek:</label>
+            <input type="text" id="insDetails" placeholder="CS X.X: Specifikációk leírása">
+        `;
+        document.getElementById('generalModal').style.display = 'block';
+    }
+
+    function openEditModal(targetId, title) {
+        mode = 'editField';
+        activeTargetId = targetId;
+        document.getElementById('modalTitle').textContent = title + ' módosítása';
+        const currentValue = document.getElementById(targetId).textContent;
+        document.getElementById('modalBody').innerHTML = `
+            <label for="modalInput">Adja meg az új értéket:</label>
+            <input type="text" id="modalInput" value="${currentValue}">
+        `;
+        document.getElementById('generalModal').style.display = 'block';
+    }
+
+    function openModal(containerId, topicTitle) {
+        mode = 'addLink';
+        activeTargetId = containerId;
+        activeTopicTitle = topicTitle;
+        document.getElementById('modalTitle').textContent = 'Új Hivatkozás vagy HTML Fájl Csatolása';
+        
+        document.getElementById('modalBody').innerHTML = `
+            <label for="linkText">1. Megjelenő Cím / Megnevezés:</label>
+            <input type="text" id="linkText" placeholder="pl. 1.2_matrixok.html">
+            
+            <label for="fileInput" style="font-weight: bold; color: #2b6cb0;">2. HTML Állomány Feltöltése (A4 mellékletként fűzi be):</label>
+            <input type="file" id="fileInput" accept=".html,.htm,.txt">
+            
+            <hr style="border: 0; border-top: 1px solid #cbd5e0; margin: 10px 0;">
+            <label for="linkUrl">VAGY 3. Hálózati URL megadása:</label>
+            <input type="text" id="linkUrl" placeholder="https://pelda.hu/tananyag.html">
+        `;
+        document.getElementById('generalModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('generalModal').style.display = 'none';
+    }
+
+    function saveModal() {
+        if (mode === 'insertRow') {
+            const chapNum = document.getElementById('insChapter').value;
+            const targetIdx = parseInt(document.getElementById('insIndex').value) - 1;
+            const title = document.getElementById('insTitle').value.trim() || 'Új Témakör';
+            const details = document.getElementById('insDetails').value.trim() || 'CS 1.1: Alapvető ismeretek.';
+
+            const chapterBlock = document.querySelector(`.chapter-block[data-chapter="${chapNum}"]`);
+            if (chapterBlock) {
+                const tbody = chapterBlock.querySelector('.chapter-tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const newLinkId = 'links-' + chapNum + '-' + Date.now();
+
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('draggable', 'true');
+                newRow.innerHTML = `
+                    <td class="drag-handle">⋮⋮</td>
+                    <td class="ssz-cell"></td>
+                    <td class="tema-cell">${title}</td>
+                    <td class="komp-cell">${details}</td>
+                    <td>
+                        <div class="link-container" id="${newLinkId}"></div>
+                        <button class="add-link-btn" onclick="openModal('${newLinkId}', '${title}')">+ Link / HTML</button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button class="move-btn" onclick="moveRow(this, -1)">▲</button>
+                        <button class="move-btn" onclick="moveRow(this, 1)">▼</button>
+                        <button class="delete-row-btn" onclick="deleteRow(this)">Törlés</button>
+                    </td>
+                `;
+
+                if (targetIdx >= 0 && targetIdx < rows.length) {
+                    tbody.insertBefore(newRow, rows[targetIdx]);
+                } else {
+                    tbody.appendChild(newRow);
+                }
+
+                renumberCurriculum();
+                saveData();
+                closeModal();
+            }
+        } else if (mode === 'editField') {
+            const newValue = document.getElementById('modalInput').value.trim();
+            document.getElementById(activeTargetId).textContent = newValue;
+            saveData();
+            closeModal();
+        } else if (mode === 'addLink') {
+            const text = document.getElementById('linkText').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            const fileInput = document.getElementById('fileInput');
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileContent = e.target.result;
+                    const attachmentId = 'att-' + Date.now();
+                    const linkName = text || file.name;
+                    
+                    addLinkToContainer(activeTargetId, linkName, '#' + attachmentId);
+                    createAttachmentPage(attachmentId, linkName, activeTopicTitle, fileContent);
+                    saveData();
+                    closeModal();
+                };
+                reader.readAsText(file);
+            } else if (text) {
+                addLinkToContainer(activeTargetId, text, url || text);
+                saveData();
+                closeModal();
+            }
+        }
+    }
+
+    function deleteRow(btn) {
+        if (confirm('Biztosan törölni szeretné ezt a témakört?')) {
+            const row = btn.closest('tr');
+            row.querySelectorAll('.link-item-wrapper a').forEach(a => {
+                const href = a.getAttribute('href');
+                if (href && href.startsWith('#att-')) {
+                    const attPage = document.querySelector(href);
+                    if (attPage) attPage.remove();
+                }
+            });
+            row.remove();
+            renumberCurriculum();
+            saveData();
+        }
+    }
+
+    function addLinkToContainer(containerId, label, href) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'link-item-wrapper';
+
+            const newAnchor = document.createElement('a');
+            newAnchor.href = href;
+            newAnchor.className = 'link-item';
+            newAnchor.textContent = label;
+            if (href.startsWith('http')) newAnchor.target = '_blank';
+
+            const delBtn = document.createElement('span');
+            delBtn.className = 'delete-link-btn';
+            delBtn.textContent = '×';
+            delBtn.onclick = function() { deleteSingleLink(this); };
+
+            wrapper.appendChild(newAnchor);
+            wrapper.appendChild(delBtn);
+            container.appendChild(wrapper);
+        }
+    }
+
+    function createAttachmentPage(id, title, topic, content) {
+        const attachmentsContainer = document.getElementById('attachments-container');
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'a4-page attachment-page';
+        pageDiv.id = id;
+        
+        pageDiv.innerHTML = `
+            <h1>MELLÉKLET: ${title.toUpperCase()}</h1>
+            <p style="text-align: center; color: #475569; font-weight: bold; margin-top: -6px;">
+                Kapcsolódó Témakör: ${topic}
+            </p>
+            <div class="attachment-content">${content}</div>
+        `;
+        attachmentsContainer.appendChild(pageDiv);
+    }
+
+    function saveData() {
+        const data = {
+            fields: {},
+            curriculumHtml: document.getElementById('curriculum-container').innerHTML,
+            attachments: document.getElementById('attachments-container').innerHTML
+        };
+        
+        document.querySelectorAll('.editable-field').forEach(field => {
+            data.fields[field.id] = field.textContent;
+        });
+
+        localStorage.setItem('inf_tanterv_data_v6', JSON.stringify(data));
+    }
+
+    function loadSavedData() {
+        const saved = localStorage.getItem('inf_tanterv_data_v6');
+        if (!saved) return;
+        try {
+            const data = JSON.parse(saved);
+            if (data.fields) {
+                for (let id in data.fields) {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = data.fields[id];
+                }
+            }
+            if (data.curriculumHtml) {
+                document.getElementById('curriculum-container').innerHTML = data.curriculumHtml;
+            }
+            if (data.attachments) {
+                document.getElementById('attachments-container').innerHTML = data.attachments;
+            }
+        } catch(e) {
+            console.error('Hiba az adatok betöltésekor', e);
+        }
+    }
+
+    function resetData() {
+        if (confirm('Biztosan visszaállítja az eredeti állapotot? Minden egyedi módosítás és feltöltött melléklet törlődik.')) {
+            localStorage.removeItem('inf_tanterv_data_v6');
+            location.reload();
+        }
+    }
+</script>
+
+
+</body></html>
