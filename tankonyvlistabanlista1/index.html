@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)file:///D:/tankonyv/Interakt%C3%ADv%20Sz%C3%BClinapt%C3%A1r.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Szülinaptár</title>
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdfbf7 0%, #eef2f3 100%);
+            min-height: 100vh;
+        }
+        .title-font {
+            font-family: 'Fredoka', cursive;
+        }
+        @keyframes shimmerGlow {
+            0% { box-shadow: 0 0 5px #ffd700, 0 0 10px #ff8c00, inset 0 0 5px #fff; border-color: #f59e0b; }
+            50% { box-shadow: 0 0 15px #ff4500, 0 0 25px #ffdf00, inset 0 0 10px #fffae6; border-color: #ec4899; }
+            100% { box-shadow: 0 0 5px #ffd700, 0 0 10px #ff8c00, inset 0 0 5px #fff; border-color: #f59e0b; }
+        }
+        .shimmer-frame {
+            animation: shimmerGlow 3s infinite ease-in-out;
+        }
+        @keyframes swingChain {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(2deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .chain-item {
+            transform-origin: top center;
+            animation: swingChain 4s infinite ease-in-out;
+        }
+        .chain-item:nth-child(even) {
+            animation-delay: 1.5s;
+        }
+        .wood-board {
+            background: linear-gradient(to bottom, #fff5f5 0%, #ffe3e3 100%);
+            border: 4px solid #e11d48;
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.2), inset 0 2px 5px rgba(255,255,255,0.8);
+        }
+        /* Súgó panel áttetsző tejszín háttér és csillogó keret */
+        .help-popup {
+            background: rgba(255, 253, 240, 0.95);
+            backdrop-filter: blur(8px);
+            animation: shimmerGlow 4s infinite ease-in-out;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.left-6{left:1.5rem}.right-6{right:1.5rem}.top-6{top:1.5rem}.bottom-full{bottom:100%}.right-0{right:0px}.top-0{top:0px}.z-50{z-index:50}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.my-\[-2px\]{margin-top:-2px;margin-bottom:-2px}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-6{margin-top:1.5rem}.mt-1{margin-top:0.25rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-2\.5{height:0.625rem}.h-full{height:100%}.h-12{height:3rem}.h-3{height:0.75rem}.h-5{height:1.25rem}.min-h-\[350px\]{min-height:350px}.min-h-\[200px\]{min-height:200px}.w-2\.5{width:0.625rem}.w-32{width:8rem}.w-full{width:100%}.w-1{width:0.25rem}.w-12{width:3rem}.min-w-\[700px\]{min-width:700px}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.translate-x-full{--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-0\.5{gap:0.125rem}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230 / var(--tw-border-opacity, 1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175 / var(--tw-border-opacity, 1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253 / var(--tw-bg-opacity, 1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-amber-800{--tw-bg-opacity:1;background-color:rgb(146 64 14 / var(--tw-bg-opacity, 1))}.bg-amber-900{--tw-bg-opacity:1;background-color:rgb(120 53 15 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 63 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-pink-500{--tw-gradient-to:#ec4899 var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-0\.5{padding:0.125rem}.p-1{padding:0.25rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.font-bold{font-weight:700}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-cyan-500{--tw-text-opacity:1;color:rgb(6 182 212 / var(--tw-text-opacity, 1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-600{--tw-text-opacity:1;color:rgb(202 138 4 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.file\:mr-4::file-selector-button{margin-right:1rem}.file\:rounded-xl::file-selector-button{border-radius:0.75rem}.file\:border-0::file-selector-button{border-width:0px}.file\:bg-rose-50::file-selector-button{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.file\:px-4::file-selector-button{padding-left:1rem;padding-right:1rem}.file\:py-2::file-selector-button{padding-top:0.5rem;padding-bottom:0.5rem}.file\:text-xs::file-selector-button{font-size:0.75rem;line-height:1rem}.file\:font-semibold::file-selector-button{font-weight:600}.file\:text-rose-700::file-selector-button{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-amber-200:hover{--tw-bg-opacity:1;background-color:rgb(253 230 138 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:bg-red-100:hover{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/30:hover{background-color:rgb(255 255 255 / 0.3)}.hover\:from-rose-600:hover{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgb(225 29 72 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:text-red-600:hover{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.hover\:text-red-700:hover{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.hover\:text-blue-800:hover{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.hover\:file\:bg-rose-100::file-selector-button:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-rose-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(251 113 133 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:flex{display:flex}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:h-14{height:3.5rem}.sm\:w-14{width:3.5rem}.sm\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.sm\:text-xs{font-size:0.75rem;line-height:1rem}}@media (min-width: 768px){.md\:p-8{padding:2rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}@media (min-width: 1024px){.lg\:flex{display:flex}}@media (min-width: 1280px){.xl\:flex-row{flex-direction:row}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-full{bottom:100%}.left-6{left:1.5rem}.right-0{right:0px}.right-6{right:1.5rem}.top-0{top:0px}.top-6{top:1.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.my-\[-2px\]{margin-top:-2px;margin-bottom:-2px}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-2\.5{height:0.625rem}.h-3{height:0.75rem}.h-5{height:1.25rem}.h-full{height:100%}.min-h-\[200px\]{min-height:200px}.min-h-\[350px\]{min-height:350px}.w-1{width:0.25rem}.w-12{width:3rem}.w-2\.5{width:0.625rem}.w-32{width:8rem}.w-full{width:100%}.min-w-\[700px\]{min-width:700px}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.translate-x-full{--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-grab{cursor:grab}.cursor-pointer{cursor:pointer}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:0.125rem}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230 / var(--tw-border-opacity, 1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175 / var(--tw-border-opacity, 1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-800{--tw-bg-opacity:1;background-color:rgb(146 64 14 / var(--tw-bg-opacity, 1))}.bg-amber-900{--tw-bg-opacity:1;background-color:rgb(120 53 15 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253 / var(--tw-bg-opacity, 1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 63 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-pink-500{--tw-gradient-to:#ec4899 var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-0\.5{padding:0.125rem}.p-1{padding:0.25rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-cyan-500{--tw-text-opacity:1;color:rgb(6 182 212 / var(--tw-text-opacity, 1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-600{--tw-text-opacity:1;color:rgb(202 138 4 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.file\:mr-4::file-selector-button{margin-right:1rem}.file\:rounded-xl::file-selector-button{border-radius:0.75rem}.file\:border-0::file-selector-button{border-width:0px}.file\:bg-rose-50::file-selector-button{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.file\:px-4::file-selector-button{padding-left:1rem;padding-right:1rem}.file\:py-2::file-selector-button{padding-top:0.5rem;padding-bottom:0.5rem}.file\:text-xs::file-selector-button{font-size:0.75rem;line-height:1rem}.file\:font-semibold::file-selector-button{font-weight:600}.file\:text-rose-700::file-selector-button{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-amber-200:hover{--tw-bg-opacity:1;background-color:rgb(253 230 138 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:bg-red-100:hover{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/30:hover{background-color:rgb(255 255 255 / 0.3)}.hover\:from-rose-600:hover{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgb(225 29 72 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:text-blue-800:hover{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.hover\:text-red-600:hover{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.hover\:text-red-700:hover{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.hover\:file\:bg-rose-100::file-selector-button:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-rose-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(251 113 133 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:flex{display:flex}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:h-14{height:3.5rem}.sm\:w-14{width:3.5rem}.sm\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.sm\:text-xs{font-size:0.75rem;line-height:1rem}}@media (min-width: 768px){.md\:p-8{padding:2rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}@media (min-width: 1024px){.lg\:flex{display:flex}}@media (min-width: 1280px){.xl\:flex-row{flex-direction:row}}</style></head>
+<body class="p-4 md:p-8 flex flex-col items-center">
+
+    <header class="w-full max-w-7xl mb-6 flex flex-col xl:flex-row justify-between items-center gap-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-md border border-rose-100">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🎈</span>
+            <div>
+                <h2 class="title-font text-lg font-bold text-rose-600">Osztály Szülinaptár Vezérlő</h2>
+                <p class="text-xs text-gray-500">Húzd a korongot a hónapra, vagy add meg űrlapon (kép nem kötelező)!</p>
+            </div>
+        </div>
+        
+        <!-- Hozzáadási Szekció és Akciók -->
+        <div class="flex flex-wrap items-center gap-2">
+            <input type="text" id="quickName" placeholder="Diák neve..." class="px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400">
+            <select id="quickMonth" class="px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400">
+                <option value="0">Január</option><option value="1">Február</option><option value="2">Március</option>
+                <option value="3">Április</option><option value="4">Május</option><option value="5">Június</option>
+                <option value="6">Július</option><option value="7">Augusztus</option><option value="8">Szeptember</option>
+                <option value="9">Október</option><option value="10">November</option><option value="11">December</option>
+            </select>
+            <input type="text" id="quickUrl" placeholder="Kép URL (opcionális)" class="px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 w-32">
+            <label class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold rounded-xl cursor-pointer transition flex items-center gap-1">
+                📁 Fájl
+                <input type="file" id="quickFile" accept="image/*" class="hidden">
+            </label>
+            <button id="addStudentBtn" class="px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white text-sm font-bold rounded-xl shadow hover:from-rose-600 transition">
+                Hozzáadás +
+            </button>
+            <button id="clearAllBtn" class="px-3 py-2 bg-gray-200 hover:bg-red-100 text-gray-700 hover:text-red-700 text-xs font-bold rounded-xl transition">
+                🧹 Letakarítás
+            </button>
+            <button id="helpBtn" class="px-3 py-2 bg-amber-400 hover:bg-amber-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-1">
+                💡 Súgó
+            </button>
+            <div id="draggablePill" draggable="true" class="flex items-center gap-1 px-3 py-1.5 bg-rose-50 border-2 border-dashed border-rose-400 rounded-xl cursor-grab hover:bg-rose-100 transition text-xs font-bold text-rose-700">
+                <span>👤 Húzható</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl">
+        <div class="wood-board rounded-3xl p-6 md:p-8 relative flex flex-col items-center overflow-x-auto">
+            
+            <!-- Bal oldali dekoráció -->
+            <div class="absolute left-6 top-6 hidden lg:flex items-center gap-2 animate-bounce">
+                <div class="text-4xl">🌞</div>
+                <div class="flex gap-1">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-300 inline-block"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-400 inline-block"></span>
+                </div>
+            </div>
+
+            <!-- Színes Szülinaptár felirat -->
+            <h1 class="title-font text-4xl md:text-6xl font-bold tracking-wider flex flex-wrap justify-center gap-1 mb-8">
+                <span class="text-red-500 drop-shadow">S</span>
+                <span class="text-orange-500 drop-shadow">z</span>
+                <span class="text-amber-500 drop-shadow">ü</span>
+                <span class="text-yellow-600 drop-shadow">l</span>
+                <span class="text-green-600 drop-shadow">i</span>
+                <span class="text-emerald-500 drop-shadow">n</span>
+                <span class="text-cyan-500 drop-shadow">a</span>
+                <span class="text-blue-500 drop-shadow">p</span>
+                <span class="text-indigo-500 drop-shadow">t</span>
+                <span class="text-purple-500 drop-shadow">á</span>
+                <span class="text-pink-500 drop-shadow">r</span>
+            </h1>
+
+            <!-- Jobb oldali dekoráció -->
+            <div class="absolute right-6 top-6 hidden lg:flex items-center gap-2 animate-pulse">
+                <div class="text-4xl">🌻</div>
+            </div>
+
+            <!-- Hónapok vízszintes sávja -->
+            <div id="monthsHorizontalContainer" class="w-full grid grid-cols-6 sm:grid-cols-12 gap-2 pb-4 border-b-2 border-rose-300 min-w-[700px]"><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Január</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Február</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Március</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Április</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Május</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Június</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Július</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Augusztus</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Szeptember</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">Október</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">November</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div><div class="bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center">
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">December</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                </div></div>
+            
+            <!-- Lelógó láncok és korongok sávja -->
+            <div id="hangingPendantsContainer" class="w-full grid grid-cols-6 sm:grid-cols-12 gap-2 pt-4 items-start min-h-[350px] min-w-[700px]"><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="0"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="1"><div class="flex flex-col items-center w-full"><div class="w-1 h-5 bg-amber-900 rounded-sm my-[-2px] z-0"></div><div class="chain-item relative group z-10 flex flex-col items-center my-1 cursor-grab" draggable="true" data-student-id="1789841412911">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-amber-400 shimmer-frame overflow-hidden bg-white shadow-md relative flex items-center justify-center transition transform hover:scale-110">
+                            <img src="./index_files/881337" alt="Pista" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/fecdd3/881337?text=Foto'">
+                        </div>
+                        <div class="absolute bottom-full mb-1 hidden group-hover:flex flex-col items-center bg-gray-900 text-white text-[10px] rounded py-1 px-2 z-30 whitespace-nowrap shadow-xl">
+                            <span class="font-bold">Pista</span>
+                        </div>
+                        <div class="absolute top-0 right-0 flex gap-0.5 opacity-0 group-hover:opacity-100 transition z-20 bg-white/90 rounded-full p-0.5 shadow">
+                            <button onclick="openEditModal(1789841412911)" class="text-blue-600 hover:text-blue-800 text-[10px] px-1" title="Szerkesztés">✏️</button>
+                            <button onclick="deleteStudent(1789841412911)" class="text-red-500 hover:text-red-700 text-[10px] px-1" title="Törlés">×</button>
+                        </div>
+                    </div><div class="w-1 h-5 bg-amber-900 rounded-sm my-[-2px] z-0"></div><div class="chain-item relative group z-10 flex flex-col items-center my-1 cursor-grab" draggable="true" data-student-id="1789841459303">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-amber-400 shimmer-frame overflow-hidden bg-white shadow-md relative flex items-center justify-center transition transform hover:scale-110">
+                            <img src="./index_files/881337(1)" alt="Arni" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/fecdd3/881337?text=Foto'">
+                        </div>
+                        <div class="absolute bottom-full mb-1 hidden group-hover:flex flex-col items-center bg-gray-900 text-white text-[10px] rounded py-1 px-2 z-30 whitespace-nowrap shadow-xl">
+                            <span class="font-bold">Arni</span>
+                        </div>
+                        <div class="absolute top-0 right-0 flex gap-0.5 opacity-0 group-hover:opacity-100 transition z-20 bg-white/90 rounded-full p-0.5 shadow">
+                            <button onclick="openEditModal(1789841459303)" class="text-blue-600 hover:text-blue-800 text-[10px] px-1" title="Szerkesztés">✏️</button>
+                            <button onclick="deleteStudent(1789841459303)" class="text-red-500 hover:text-red-700 text-[10px] px-1" title="Törlés">×</button>
+                        </div>
+                    </div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="2"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="3"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="4"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="5"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="6"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="7"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="8"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="9"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="10"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div><div class="flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30" data-month-index="11"><div class="flex flex-col items-center w-full"><div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div></div></div></div>
+        </div>
+    </main>
+
+    <div id="helpModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex justify-end transition-opacity duration-300 hidden">
+        <div id="helpPanel" class="w-full max-w-md h-full help-popup shadow-2xl p-6 md:p-8 flex flex-col justify-between transform transition-transform duration-300 border-l-4 border-amber-400 overflow-y-auto translate-x-full">
+            <div>
+                <div class="flex justify-between items-center mb-6 border-b border-rose-200 pb-3">
+                    <h3 class="title-font text-2xl font-bold text-rose-700 flex items-center gap-2">
+                        <span>💡</span> Súgó &amp; Használati Útmutató
+                    </h3>
+                    <button id="closeHelpBtn" class="text-gray-500 hover:text-red-600 text-2xl font-bold">×</button>
+                </div>
+                <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+                    <div class="bg-white/80 p-3 rounded-xl border border-rose-100 shadow-xs">
+                        <h4 class="font-bold text-rose-600 mb-1">📅 Hogyan adjunk hozzá diákot?</h4>
+                        <p>Írd be a nevet a felső sávba, válaszd ki a hónapot, és kattints a <strong>Hozzáadás +</strong> gombra. A kép megadása <em>nem kötelező</em> – ha üresen hagyod, automatikus monogramos avatárt készít a rendszer!</p>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-xl border border-rose-100 shadow-xs">
+                        <h4 class="font-bold text-rose-600 mb-1">🖱️ Drag and Drop (Húzd és ejtsd)</h4>
+                        <p>A bal felső sarokból a <strong>„👤 Húzható”</strong> dobozt rácseppentheted bármelyik hónap oszlopára, vagy a már meglévő korongokat is átpakolhatod egyik hónap alól a másik alá.</p>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-xl border border-rose-100 shadow-xs">
+                        <h4 class="font-bold text-rose-600 mb-1">✏️ Szerkesztés és Törlés</h4>
+                        <p>Ha a diák korongjára viszed az egeret, megjelenik a ceruza (✏️) ikon a szerkesztéshez, és az (×) ikon a törléshez. Bármikor módosíthatsz nevet, hónapot vagy képet.</p>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-xl border border-rose-100 shadow-xs">
+                        <h4 class="font-bold text-rose-600 mb-1">🧹 Teljes letakarítás</h4>
+                        <p>A vezérlősávban található <strong>Letakarítás</strong> gombbal egy kattintással kiürítheted a teljes táblát.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-rose-200 text-center">
+                <button id="closeHelpBottomBtn" class="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl shadow transition">
+                    Megértettem, bezárás
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-rose-200">
+            <h3 class="title-font text-xl font-bold text-rose-600 mb-4">✏️ Diák szerkesztése</h3>
+            <input type="hidden" id="editId" value="1789841412911">
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">Név:</label>
+                    <input type="text" id="editName" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">Hónap:</label>
+                    <select id="editMonth" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400">
+                        <option value="0">Január</option><option value="1">Február</option><option value="2">Március</option>
+                        <option value="3">Április</option><option value="4">Május</option><option value="5">Június</option>
+                        <option value="6">Július</option><option value="7">Augusztus</option><option value="8">Szeptember</option>
+                        <option value="9">Október</option><option value="10">November</option><option value="11">December</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">Kép URL (vagy hagyd üresen):</label>
+                    <input type="text" id="editUrl" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400" placeholder="https://...">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">Fájl feltöltés (opcionális):</label>
+                    <input type="file" id="editFile" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-6">
+                <button id="closeModalBtn" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-xl transition">Mégse</button>
+                <button id="saveEditBtn" class="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-sm font-bold rounded-xl transition shadow">Mentés</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultStudents = [
+            { id: 1, name: "Péter", month: 0, day: 12, photo: "https://images.unsplash.com/photo-1543332164-6e82f355badc?w=150" },
+            { id: 2, name: "Bence", month: 0, day: 24, photo: "https://images.unsplash.com/photo-1503944583220-7eeec390dffd?w=150" },
+            { id: 3, name: "Lili", month: 5, day: 5, photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150" },
+            { id: 4, name: "Máté", month: 5, day: 18, photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150" },
+            { id: 5, name: "Dávid", month: 5, day: 22, photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" },
+            { id: 6, name: "Luca", month: 5, day: 30, photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" },
+            { id: 7, name: "Noémi", month: 7, day: 10, photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150" },
+            { id: 8, name: "Gergő", month: 7, day: 15, photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" },
+            { id: 9, name: "Katalin", month: 7, day: 22, photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
+            { id: 10, name: "Zalán", month: 8, day: 4, photo: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150" },
+            { id: 11, name: "Hanna", month: 8, day: 19, photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150" },
+            { id: 12, name: "Zsófia", month: 8, day: 28, photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150" }
+        ];
+
+        const monthNames = [
+            "Január", "Február", "Március", "Április", "Május", "Június",
+            "Július", "Augusztus", "Szeptember", "Október", "November", "December"
+        ];
+
+        let students = JSON.parse(localStorage.getItem('birthday_students_v4')) || defaultStudents;
+        let quickBase64File = "";
+        let editBase64File = "";
+
+        // Fájl olvasás segédfüggvény
+        function handleFileRead(fileInput, callback) {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                callback("");
+            }
+        }
+
+        document.getElementById('quickFile').addEventListener('change', function() {
+            handleFileRead(this, (res) => { quickBase64File = res; });
+        });
+
+        document.getElementById('editFile').addEventListener('change', function() {
+            handleFileRead(this, (res) => { editBase64File = res; });
+        });
+
+        function renderCalendar() {
+            const monthHeaderContainer = document.getElementById('monthsHorizontalContainer');
+            const pendantsContainer = document.getElementById('hangingPendantsContainer');
+            
+            monthHeaderContainer.innerHTML = '';
+            pendantsContainer.innerHTML = '';
+
+            monthNames.forEach((mName, mIndex) => {
+                // Hónap doboz
+                const monthBox = document.createElement('div');
+                monthBox.className = 'bg-white border-2 border-rose-300 rounded-lg py-1.5 px-1 text-center shadow-sm flex flex-col items-center';
+                monthBox.innerHTML = `
+                    <span class="title-font text-[11px] sm:text-xs font-bold text-rose-700 truncate w-full">${mName}</span>
+                    <div class="w-1 h-3 bg-amber-800 rounded-full mt-1"></div>
+                `;
+                monthHeaderContainer.appendChild(monthBox);
+
+                // Oszlop a lelógó láncokhoz és korongokhoz
+                const pendantCol = document.createElement('div');
+                pendantCol.className = 'flex flex-col items-center w-full min-h-[200px] relative transition rounded-xl p-1 hover:bg-white/30';
+                pendantCol.dataset.monthIndex = mIndex;
+
+                const monthStudents = students.filter(s => Number(s.month) === mIndex);
+                const chainContainer = document.createElement('div');
+                chainContainer.className = 'flex flex-col items-center w-full';
+
+                monthStudents.forEach((student) => {
+                    // Láncszem
+                    const chainLink = document.createElement('div');
+                    chainLink.className = 'w-1 h-5 bg-amber-900 rounded-sm my-[-2px] z-0';
+                    chainContainer.appendChild(chainLink);
+
+                    // Csillogó keretes korong
+                    const korong = document.createElement('div');
+                    korong.className = 'chain-item relative group z-10 flex flex-col items-center my-1 cursor-grab';
+                    korong.draggable = true;
+                    korong.dataset.studentId = student.id;
+
+                    korong.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({ type: 'existing', id: student.id }));
+                    });
+                    
+                    const avatarSrc = student.photo || `https://placehold.co/100x100/fecdd3/881337?text=${encodeURIComponent(student.name.charAt(0))}`;
+
+                    korong.innerHTML = `
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-amber-400 shimmer-frame overflow-hidden bg-white shadow-md relative flex items-center justify-center transition transform hover:scale-110">
+                            <img src="${avatarSrc}" alt="${student.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/fecdd3/881337?text=Foto'">
+                        </div>
+                        <div class="absolute bottom-full mb-1 hidden group-hover:flex flex-col items-center bg-gray-900 text-white text-[10px] rounded py-1 px-2 z-30 whitespace-nowrap shadow-xl">
+                            <span class="font-bold">${student.name}</span>
+                        </div>
+                        <div class="absolute top-0 right-0 flex gap-0.5 opacity-0 group-hover:opacity-100 transition z-20 bg-white/90 rounded-full p-0.5 shadow">
+                            <button onclick="openEditModal(${student.id})" class="text-blue-600 hover:text-blue-800 text-[10px] px-1" title="Szerkesztés">✏️</button>
+                            <button onclick="deleteStudent(${student.id})" class="text-red-500 hover:text-red-700 text-[10px] px-1" title="Törlés">×</button>
+                        </div>
+                    `;
+                    chainContainer.appendChild(korong);
+                });
+
+                if (monthStudents.length === 0) {
+                    chainContainer.innerHTML += `<div class="text-[10px] text-gray-400 italic mt-4 text-center">Húzd ide!</div>`;
+                }
+
+                pendantCol.appendChild(chainContainer);
+
+                // Drag & Drop fogadása
+                pendantCol.addEventListener('dragover', (e) => e.preventDefault());
+                pendantCol.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const rawData = e.dataTransfer.getData('text/plain');
+                    if (!rawData) return;
+
+                    try {
+                        const data = JSON.parse(rawData);
+                        if (data.type === 'existing') {
+                            const st = students.find(s => s.id === data.id);
+                            if (st) {
+                                st.month = mIndex;
+                                saveAndRender();
+                            }
+                        }
+                    } catch(err) {
+                        const newName = prompt("Add meg az új diák nevét erre a hónapra (" + mName + "):", "Új Diák");
+                        if (newName) {
+                            students.push({
+                                id: Date.now(),
+                                name: newName,
+                                month: mIndex,
+                                day: 1,
+                                photo: ""
+                            });
+                            saveAndRender();
+                        }
+                    }
+                });
+
+                pendantsContainer.appendChild(pendantCol);
+            });
+        }
+
+        // Súgó / Help Popup kezelése (Jobbról csúszik be, tejszín áttetsző háttérrel és csillogó kerettel)
+        const helpModal = document.getElementById('helpModal');
+        const helpPanel = document.getElementById('helpPanel');
+
+        document.getElementById('helpBtn').addEventListener('click', () => {
+            helpModal.classList.remove('hidden');
+            setTimeout(() => {
+                helpPanel.classList.remove('translate-x-full');
+            }, 10);
+        });
+
+        function closeHelp() {
+            helpPanel.classList.add('translate-x-full');
+            setTimeout(() => {
+                helpModal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('closeHelpBtn').addEventListener('click', closeHelp);
+        document.getElementById('closeHelpBottomBtn').addEventListener('click', closeHelp);
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) closeHelp();
+        });
+
+        document.getElementById('addStudentBtn').addEventListener('click', () => {
+            const nameInput = document.getElementById('quickName');
+            const monthSelect = document.getElementById('quickMonth');
+            const urlInput = document.getElementById('quickUrl');
+            
+            if (!nameInput.value.trim()) {
+                alert("Kérlek add meg a diák nevét!");
+                return;
+            }
+
+            const photo = quickBase64File || urlInput.value.trim() || "";
+
+            students.push({
+                id: Date.now(),
+                name: nameInput.value.trim(),
+                month: parseInt(monthSelect.value),
+                day: 1,
+                photo: photo
+            });
+
+            nameInput.value = '';
+            urlInput.value = '';
+            document.getElementById('quickFile').value = '';
+            quickBase64File = "";
+            saveAndRender();
+        });
+
+        document.getElementById('clearAllBtn').addEventListener('click', () => {
+            if (confirm("Biztosan letakarítod a teljes panelt? Minden diák törlődik.")) {
+                students = [];
+                saveAndRender();
+            }
+        });
+
+        window.deleteStudent = function(id) {
+            students = students.filter(s => s.id !== id);
+            saveAndRender();
+        }
+
+        // Szerkesztő Modal kezelése
+        window.openEditModal = function(id) {
+            const st = students.find(s => s.id === id);
+            if (!st) return;
+
+            document.getElementById('editId').value = st.id;
+            document.getElementById('editName').value = st.name;
+            document.getElementById('editMonth').value = st.month;
+            document.getElementById('editUrl').value = st.photo && !st.photo.startsWith('data:') ? st.photo : '';
+            document.getElementById('editFile').value = '';
+            editBase64File = st.photo && st.photo.startsWith('data:') ? st.photo : '';
+
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            document.getElementById('editModal').classList.add('hidden');
+        });
+
+        document.getElementById('saveEditBtn').addEventListener('click', () => {
+            const id = parseInt(document.getElementById('editId').value);
+            const st = students.find(s => s.id === id);
+            if (!st) return;
+
+            st.name = document.getElementById('editName').value.trim() || st.name;
+            st.month = parseInt(document.getElementById('editMonth').value);
+            
+            const urlVal = document.getElementById('editUrl').value.trim();
+            if (editBase64File) {
+                st.photo = editBase64File;
+            } else if (urlVal !== "") {
+                st.photo = urlVal;
+            }
+
+            document.getElementById('editModal').classList.add('hidden');
+            saveAndRender();
+        });
+
+        // Húzható elem beállítása balról
+        const draggablePill = document.getElementById('draggablePill');
+        draggablePill.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', 'new_student_pill');
+        });
+
+        function saveAndRender() {
+            localStorage.setItem('birthday_students_v4', JSON.stringify(students));
+            renderCalendar();
+        }
+
+        window.onload = function() {
+            renderCalendar();
+        }
+    </script>
+
+</body></html>

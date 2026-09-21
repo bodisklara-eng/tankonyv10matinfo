@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///D:/tankonyv/K%C3%A9peslapok%20&%20Adatszerkezetek%20Szimul%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Képeslapok &amp; Adatszerkezetek Szimuláció</title>
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-dark: #9a3412;
+            --text: #1c1917;
+            --bg: #fef3c7;
+            --card-bg: #fffbeb;
+            --border: #d97706;
+            --stack-color: #b45309;
+            --queue-color: #047857;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Georgia', serif; 
+            color: var(--text); 
+            background: #f5f5f4; 
+            padding: 20px 10px; 
+            line-height: 1.6; 
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--border);
+        }
+
+        header {
+            border-bottom: 2px dashed var(--primary);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        header h1 { font-size: 1.8rem; color: var(--primary-dark); }
+        header .subtitle { font-size: 0.95rem; color: #78350f; font-style: italic; }
+
+        /* KÉPESLAP KIALAKÍTÁS */
+        .postcard {
+            width: 90px;
+            height: 60px;
+            background: #ffffff;
+            border: 2px solid #a16207;
+            border-radius: 4px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: sans-serif;
+            font-size: 0.7rem;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            cursor: grab;
+            user-select: none;
+            position: relative;
+        }
+        .postcard::after {
+            content: "✉️";
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* DRAG & DROP TÉR */
+        .drag-playground {
+            background: #fff;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .drag-sources {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            align-items: center;
+            min-height: 90px;
+        }
+
+        .drop-zones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 650px) { .drop-zones { grid-template-columns: 1fr; } }
+
+        .drop-card {
+            background: #fdf8f6;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* TARTÁLYOK */
+        .drop-target-stack {
+            width: 120px;
+            height: 170px;
+            border: 3px solid var(--stack-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 5px;
+            gap: 4px;
+            background: #fff7ed;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .drop-target-queue {
+            width: 100%;
+            height: 80px;
+            border: 3px dashed var(--queue-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            gap: 8px;
+            background: #ecfdf5;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        .status-msg {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-weight: bold;
+            min-height: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <header>
+        <h1>📨 Képeslapok &amp; Adatszerkezetek</h1>
+        <div class="subtitle">Interaktív Postai Szimuláció (LIFO vs FIFO elv)</div>
+    </header>
+
+    <div class="drag-playground">
+        <p style="font-size: 0.9rem; margin-bottom: 12px;">
+            Húzd a megírt képeslapokat a <strong>Postaládába (Sor)</strong> vagy az <strong>Asztalra (Verem)</strong>!
+        </p>
+
+        <!-- KÉPESLAP FORRÁS -->
+        <div class="drag-sources" id="sourceBox">
+            <span style="font-size:0.85rem; font-weight:bold;">Képeslapok:</span>
+            
+            <div class="postcard" draggable="true" ondragstart="drag(event)" id="card1" style="background:#fef2f2;">
+                <strong>Párizs</strong>
+                <span>#1 Lap</span>
+            </div>
+            <div class="postcard" draggable="true" ondragstart="drag(event)" id="card2" style="background:#e0f2fe;">
+                <strong>Róma</strong>
+                <span>#2 Lap</span>
+            </div>
+            <div class="postcard" draggable="true" ondragstart="drag(event)" id="card3" style="background:#f0fdf4;">
+                <strong>Tokió</strong>
+                <span>#3 Lap</span>
+            </div>
+            <div class="postcard" draggable="true" ondragstart="drag(event)" id="card4" style="background:#fefce8;">
+                <strong>London</strong>
+                <span>#4 Lap</span>
+            </div>
+        </div>
+
+        <div class="drop-zones">
+            <!-- VEREM: KÉPESLAP KUPAC -->
+            <div class="drop-card">
+                <h3 style="color:var(--stack-color); font-size:1rem;">Képeslap Kupac az Asztalon (Verem - LIFO)</h3>
+                <p style="font-size:0.75rem; color:#666;">A képeslapokat egymás tetejére gyűjtjük.</p>
+                <div class="drop-target-stack" id="stackDropZone" ondrop="dropToStack(event)" ondragover="allowDrop(event)"></div>
+                <button class="btn-action" style="background:var(--stack-color);" onclick="popStackInter()">Legfelső képeslap elolvasása (Pop)</button>
+                <div class="status-msg" id="stackMsg" style="color:var(--stack-color);"></div>
+            </div>
+
+            <!-- SOR: POSTALÁDA -->
+            <div class="drop-card">
+                <h3 style="color:var(--queue-color); font-size:1rem;">Postahivatali Bedobónyílás (Sor - FIFO)</h3>
+                <p style="font-size:0.75rem; color:#666;">A postás a bedobás sorrendjében kézbesít.</p>
+                <div class="drop-target-queue" id="queueDropZone" ondrop="dropToQueue(event)" ondragover="allowDrop(event)"></div>
+                <button class="btn-action" style="background:var(--queue-color);" onclick="dequeueInter()">Első képeslap kézbesítése (Dequeue)</button>
+                <div class="status-msg" id="queueMsg" style="color:var(--queue-color);"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function allowDrop(ev) { ev.preventDefault(); }
+
+    function drag(ev) { 
+        const parentZone = ev.target.parentElement;
+
+        // TILTÁS: A sor közepéből nem lehet elhúzni képeslapot
+        if (parentZone && parentZone.id === 'queueDropZone') {
+            if (parentZone.firstElementChild !== ev.target) {
+                ev.preventDefault();
+                document.getElementById('queueMsg').innerText = "❌ A postás csak a legeslegutóbb bedobott előtti, legelső lapot dolgozhatja fel!";
+                return false;
+            }
+        }
+
+        // TILTÁS: A verem aljáról nem lehet kirántani a lapot
+        if (parentZone && parentZone.id === 'stackDropZone') {
+            if (parentZone.lastElementChild !== ev.target) {
+                ev.preventDefault();
+                document.getElementById('stackMsg').innerText = "❌ Csak a legfelső képeslapot veheted le a kupacból!";
+                return false;
+            }
+        }
+
+        ev.dataTransfer.setData("text", ev.target.id); 
+    }
+
+    function dropToStack(ev) {
+        ev.preventDefault();
+        const data = ev.dataTransfer.getData("text");
+        if (!data) return;
+        const draggedEl = document.getElementById(data);
+        const zone = document.getElementById('stackDropZone');
+
+        if(zone.children.length < 4) {
+            zone.appendChild(draggedEl);
+            document.getElementById('stackMsg').innerText = `📥 Rátetted a kupac tetejére.`;
+        }
+    }
+
+    function dropToQueue(ev) {
+        ev.preventDefault();
+        const data = ev.dataTransfer.getData("text");
+        if (!data) return;
+        const draggedEl = document.getElementById(data);
+        const zone = document.getElementById('queueDropZone');
+
+        if(zone.children.length < 4) {
+            zone.appendChild(draggedEl);
+            document.getElementById('queueMsg').innerText = `📮 Bedobtad a postaládába.`;
+        }
+    }
+
+    function popStackInter() {
+        const zone = document.getElementById('stackDropZone');
+        const msg = document.getElementById('stackMsg');
+        if(zone.lastElementChild) {
+            document.getElementById('sourceBox').appendChild(zone.lastElementChild);
+            msg.innerText = `📖 Elolvastad a legfelső képeslapot (LIFO)!`;
+        } else {
+            msg.innerText = "⚠️ Üres az asztal!";
+        }
+    }
+
+    function dequeueInter() {
+        const zone = document.getElementById('queueDropZone');
+        const msg = document.getElementById('queueMsg');
+        if(zone.firstElementChild) {
+            document.getElementById('sourceBox').appendChild(zone.firstElementChild);
+            msg.innerText = `🚚 Postás kézbesítette a legrégebbi lapot (FIFO)!`;
+        } else {
+            msg.innerText = "⚠️ Üres a postaláda!";
+        }
+    }
+</script>
+
+
+</body></html>

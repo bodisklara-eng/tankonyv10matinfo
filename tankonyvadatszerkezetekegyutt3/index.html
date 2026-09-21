@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<!-- saved from url=(0103)file:///D:/tankonyv/Adatszerkezetek%20Anim%C3%A1lt%20Szimul%C3%A1ci%C3%B3ja%20(10.%20Oszt%C3%A1ly).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adatszerkezetek Animált Szimulációja (10. Osztály)</title>
+    <style>
+        :root {
+            --bg-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --accent-blue: #0284c7;
+            --accent-green: #16a34a;
+            --accent-purple: #9333ea;
+            --accent-amber: #d97706;
+            --accent-red: #dc2626;
+            --border-color: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); padding: 20px; line-height: 1.5; }
+        .container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+
+        header { background: linear-gradient(135deg, #0284c7, #334155); padding: 20px; border-radius: 12px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        header h1 { font-size: 1.6rem; margin-bottom: 5px; }
+
+        .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 850px) { .sim-grid { grid-template-columns: 1fr; } }
+
+        .sim-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .sim-title { font-size: 1.15rem; font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 6px; }
+        
+        .badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; color: white; font-weight: normal; }
+        .bg-set { background: var(--accent-purple); }
+        .bg-list { background: var(--accent-blue); }
+        .bg-queue { background: var(--accent-green); }
+        .bg-stack { background: var(--accent-amber); }
+
+        .desc { font-size: 0.85rem; color: #475569; margin-bottom: 12px; min-height: 40px; }
+
+        /* ANIMÁCIÓS TERÜLETEK */
+        .stage {
+            height: 160px; background: #f8fafc; border: 2px dashed #94a3b8; border-radius: 8px;
+            display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 10px;
+            position: relative; overflow: hidden;
+        }
+
+        /* ELEMEK STÍLUSA */
+        .item {
+            width: 50px; height: 60px; border-radius: 8px; color: white; font-weight: bold;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15); transition: all 0.3s ease; position: relative;
+        }
+
+        /* ANIMÁCIÓK ÉS VILLOGÁSOK */
+
+        /* 1. Új elem érkezése */
+        .flash-enter {
+            animation: flashGreen 0.6s ease-in-out;
+        }
+        @keyframes flashGreen {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.15); box-shadow: 0 0 20px #22c55e; border: 2px solid #ffffff; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 2. Kilépő / Kiszolgált elem (Animáció) */
+        .flash-exit {
+            animation: flashExitAnim 0.75s ease-in-out forwards;
+        }
+        @keyframes flashExitAnim {
+            0% { transform: scale(1); box-shadow: 0 0 0px transparent; }
+            30% { transform: scale(1.2); background-color: #ef4444 !important; box-shadow: 0 0 25px #ef4444; border: 2px solid #ffffff; }
+            60% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+            100% { transform: scale(0) translateY(-30px); opacity: 0; }
+        }
+
+        /* 3. Duplikált / Elutasított elem (Halmaz) */
+        .flash-reject {
+            animation: flashRedReject 0.5s ease-in-out 2;
+        }
+        @keyframes flashRedReject {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px) scale(1.1); background-color: #dc2626 !important; box-shadow: 0 0 20px #dc2626; }
+            80% { transform: translateX(8px); }
+        }
+
+        /* DEDIKÁLT ELRENDEZÉSEK */
+        .stage-set { flex-wrap: wrap; align-content: center; justify-content: center; }
+        
+        /* VEREM ELRENDEZÉS: A legfelső elem legyen legfelül */
+        .stage-stack { 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            align-items: center; 
+            border-bottom: 4px solid var(--accent-amber);
+        }
+        .stage-stack .item { width: 85%; height: 28px; font-size: 0.85rem; flex-direction: row; gap: 10px; }
+
+        .stage-queue { border-left: 5px solid var(--accent-green); border-right: 5px solid var(--accent-green); }
+
+        /* KONTROLLOK ÉS KÓD */
+        .controls { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .btn { border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; font-size: 0.8rem; transition: opacity 0.2s; }
+        .btn:hover { opacity: 0.85; }
+        
+        .code-box { background: #0f172a; color: #38bdf8; padding: 8px; border-radius: 6px; font-family: monospace; font-size: 0.75rem; margin-top: 10px; }
+        .status { font-size: 0.8rem; font-weight: bold; color: #0284c7; margin-top: 6px; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>⚡ Adatszerkezetek Animált Szimulációja</h1>
+        <p>10. Osztályos Informatika: Pontos LIFO/FIFO animációkkal és vizuális visszajelzésekkel</p>
+    </header>
+
+    <div class="sim-grid">
+
+        <!-- 1. HALMAZ (SET) -->
+        <div class="sim-card">
+            <div>
+                <div class="sim-title">
+                    1. Halmaz (Set)
+                    <span class="badge bg-set">Egyedi elemek</span>
+                </div>
+                <div class="desc">Nincs sorrend, nincs duplikáció. Ha létező elemet adsz hozzá, az <b>pirosan felvillan és megrázkódik</b> (elutasítás).</div>
+                <div class="stage stage-set" id="setStage"></div>
+            </div>
+            <div>
+                <div class="status" id="setStatus">&gt; Próbálj azonos elemet hozzáadni!</div>
+                <div class="controls">
+                    <button class="btn bg-set" onclick="addToSet('🎈')">🎈 Hozzáad</button>
+                    <button class="btn bg-set" onclick="addToSet('🧳')">🧳 Hozzáad</button>
+                    <button class="btn bg-set" onclick="addToSet('🎩')">🎩 Hozzáad</button>
+                    <button class="btn" style="background:#64748b;" onclick="clearSet()">Törlés</button>
+                </div>
+                <div class="code-box">JS: mySet.add('🎈'); // Egyediség ellenőrzése</div>
+            </div>
+        </div>
+
+        <!-- 2. LISTA (LIST / ARRAY) -->
+        <div class="sim-card">
+            <div>
+                <div class="sim-title">
+                    2. Lista (List / Array)
+                    <span class="badge bg-list">Rendezett + Indexelt</span>
+                </div>
+                <div class="desc">Minden új elem zölden felvillanva érkezik a végére. Utolsó törlésekor a legutolsó elem <b>pirosan villogva távozik</b>.</div>
+                <div class="stage" id="listStage"></div>
+            </div>
+            <div>
+                <div class="status" id="listStatus">&gt; Elemek sorszámmal (indexszel) tárolva.</div>
+                <div class="controls">
+                    <button class="btn bg-list" onclick="addToList('🎈')">🎈 Hozzáad</button>
+                    <button class="btn bg-list" onclick="addToList('🧳')">🧳 Hozzáad</button>
+                    <button class="btn" style="background:#be123c;" onclick="removeFromList()">Utolsó törlése</button>
+                </div>
+                <div class="code-box">JS: myList.push('🎈'); myList.pop();</div>
+            </div>
+        </div>
+
+        <!-- 3. VÁRAKOZÁSI SOR (QUEUE) -->
+        <div class="sim-card">
+            <div>
+                <div class="sim-title">
+                    3. Várakozási sor (Queue)
+                    <span class="badge bg-queue">FIFO (Első be, első ki)</span>
+                </div>
+                <div class="desc">A legelöl álló elem (balra) <b>intenzíven felvillan</b>, mielőtt kilépne a sorból. A mögötte lévők előrelépnek!</div>
+                <div class="stage stage-queue" id="queueStage"></div>
+            </div>
+            <div>
+                <div class="status" id="queueStatus">&gt; Lépj be a sorba bal oldalon!</div>
+                <div class="controls">
+                    <button class="btn bg-queue" onclick="enqueue('🧍')">🧍 Belép a sorba (Enqueue)</button>
+                    <button class="btn" style="background:#be123c;" onclick="dequeue()">Kilép elöl (Dequeue)</button>
+                </div>
+                <div class="code-box">JS: queue.push(elem); let elso = queue.shift();</div>
+            </div>
+        </div>
+
+        <!-- 4. VEREM (STACK) -->
+        <div class="sim-card">
+            <div>
+                <div class="sim-title">
+                    4. Verem (Stack)
+                    <span class="badge bg-stack">LIFO (Utolsó be, első ki)</span>
+                </div>
+                <div class="desc">A legfelső elem villan fel leavételkor (Pop). Mindig a <b>legutoljára betett</b> legfelső elem távozik először.</div>
+                <div class="stage stage-stack" id="stackStage"></div>
+            </div>
+            <div>
+                <div class="status" id="stackStatus">&gt; Pakolj elemeket a verem tetejére!</div>
+                <div class="controls">
+                    <button class="btn bg-stack" onclick="pushStack('📦')">📦 Rátesz (Push)</button>
+                    <button class="btn" style="background:#be123c;" onclick="popStack()">Levesz felülről (Pop)</button>
+                </div>
+                <div class="code-box">JS: stack.push(elem); let felso = stack.pop();</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // =========================================================================
+    // 1. HALMAZ (SET)
+    // =========================================================================
+    const mySet = new Set();
+
+    function addToSet(item) {
+        const status = document.getElementById('setStatus');
+        if (mySet.has(item)) {
+            status.innerText = `❌ Duplikáció! '${item}' már benne van a halmazban!`;
+            status.style.color = '#dc2626';
+            
+            const items = document.querySelectorAll('#setStage .item');
+            items.forEach(el => {
+                if(el.dataset.val === item) {
+                    el.classList.remove('flash-reject');
+                    void el.offsetWidth;
+                    el.classList.add('flash-reject');
+                }
+            });
+        } else {
+            mySet.add(item);
+            status.innerText = `✅ '${item}' hozzáadva a halmazhoz.`;
+            status.style.color = '#16a34a';
+            renderSet(item);
+        }
+    }
+
+    function clearSet() {
+        mySet.clear();
+        document.getElementById('setStatus').innerText = "> Halmaz kiürítve.";
+        renderSet();
+    }
+
+    function renderSet(newItem = null) {
+        const stage = document.getElementById('setStage');
+        stage.innerHTML = '';
+        mySet.forEach(val => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.style.background = '#9333ea';
+            div.innerText = val;
+            div.dataset.val = val;
+            if(val === newItem) div.classList.add('flash-enter');
+            stage.appendChild(div);
+        });
+    }
+
+    // =========================================================================
+    // 2. LISTA (LIST / ARRAY)
+    // =========================================================================
+    const myList = [];
+
+    function addToList(item) {
+        myList.push(item);
+        document.getElementById('listStatus').innerText = `✅ '${item}' hozzáadva a ${myList.length - 1}. indexre.`;
+        renderList(myList.length - 1);
+    }
+
+    function removeFromList() {
+        if(myList.length > 0) {
+            const stage = document.getElementById('listStage');
+            const lastChild = stage.lastElementChild;
+            if(lastChild) {
+                lastChild.classList.add('flash-exit');
+                document.getElementById('listStatus').innerText = `🗑️ Utolsó elem eltávolítása...`;
+                setTimeout(() => {
+                    myList.pop();
+                    renderList();
+                    document.getElementById('listStatus').innerText = `🗑️ Elem sikeresen törölve.`;
+                }, 700);
+            }
+        }
+    }
+
+    function renderList(newIdx = -1) {
+        const stage = document.getElementById('listStage');
+        stage.innerHTML = '';
+        myList.forEach((val, idx) => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.style.background = '#0284c7';
+            div.innerHTML = `${val}<span style="position:absolute; bottom:2px; font-size:0.6rem; opacity:0.8;">[${idx}]</span>`;
+            if(idx === newIdx) div.classList.add('flash-enter');
+            stage.appendChild(div);
+        });
+    }
+
+    // =========================================================================
+    // 3. VÁRAKOZÁSI SOR (QUEUE - FIFO)
+    // =========================================================================
+    const myQueue = [];
+
+    function enqueue(item) {
+        if(myQueue.length >= 5) {
+            document.getElementById('queueStatus').innerText = "⚠️ A sor megtelt!";
+            return;
+        }
+        myQueue.push(item);
+        document.getElementById('queueStatus').innerText = `➡️ Új érkező a sor végén. A sor hossza: ${myQueue.length}`;
+        renderQueue(myQueue.length - 1);
+    }
+
+    function dequeue() {
+        if (myQueue.length > 0) {
+            const stage = document.getElementById('queueStage');
+            const firstChild = stage.firstElementChild;
+            
+            if(firstChild) {
+                firstChild.classList.add('flash-exit');
+                document.getElementById('queueStatus').innerText = `⚡ '${myQueue[0]}' kiszolgálása (villogás)...`;
+                
+                setTimeout(() => {
+                    const popped = myQueue.shift();
+                    renderQueue();
+                    document.getElementById('queueStatus').innerText = `⬅️ '${popped}' kiszolgálva és távozott a sorból!`;
+                }, 700);
+            }
+        } else {
+            document.getElementById('queueStatus').innerText = "⚠️ A sor üres!";
+        }
+    }
+
+    function renderQueue(newIdx = -1) {
+        const stage = document.getElementById('queueStage');
+        stage.innerHTML = '';
+        myQueue.forEach((val, idx) => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.style.background = '#16a34a';
+            div.innerText = val;
+            if(idx === newIdx) div.classList.add('flash-enter');
+            stage.appendChild(div);
+        });
+    }
+
+    // =========================================================================
+    // 4. VEREM (STACK - LIFO) PONTOSÍTOTT PUSH/POP LOGIKA
+    // =========================================================================
+    const myStack = [];
+
+    function pushStack(item) {
+        if(myStack.length >= 4) {
+            document.getElementById('stackStatus').innerText = "⚠️ Verem túlcsordulás (Stack Overflow)!";
+            return;
+        }
+        myStack.push(item);
+        document.getElementById('stackStatus').innerText = `⬆️ '${item}' rátéve a verem tetejére.`;
+        renderStack(myStack.length - 1); // Az utolsó (legújabb) elemet jelöljük ki az animációhoz
+    }
+
+    function popStack() {
+        if (myStack.length > 0) {
+            const stage = document.getElementById('stackStage');
+            
+            // Mivel a DOM-ban felülről lefelé rajzolunk (a legfelső elem a legelső DOM gyermeke):
+            const topChild = stage.firstElementChild; 
+            
+            if(topChild) {
+                topChild.classList.add('flash-exit'); // Pontosan a LEGFFELSŐ elem villan fel és tűnik el
+                const topVal = myStack[myStack.length - 1];
+                document.getElementById('stackStatus').innerText = `⚡ Legfelső elem ('${topVal}') leemelése...`;
+                
+                setTimeout(() => {
+                    myStack.pop(); // Utolsó elem törlése
+                    renderStack();
+                    document.getElementById('stackStatus').innerText = `⬇️ '${topVal}' levéve a verem tetejéről!`;
+                }, 700);
+            }
+        } else {
+            document.getElementById('stackStatus').innerText = "⚠️ A verem üres!";
+        }
+    }
+
+    function renderStack(newIdx = -1) {
+        const stage = document.getElementById('stackStage');
+        stage.innerHTML = '';
+        
+        // Visszafelé iterálunk, hogy a LEGÚJABB (legfelső) elem kerüljön legfelülre a nézetben
+        for (let idx = myStack.length - 1; idx >= 0; idx--) {
+            const val = myStack[idx];
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.style.background = '#d97706';
+            div.innerText = `${val} (Szint ${idx + 1})`;
+            if(idx === newIdx) div.classList.add('flash-enter');
+            stage.appendChild(div);
+        }
+    }
+</script>
+
+
+</body></html>
