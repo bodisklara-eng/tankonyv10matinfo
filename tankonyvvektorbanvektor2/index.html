@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<!-- saved from url=(0084)file:///D:/programe%20scolare/tankonyv/Interakt%C3%ADv%20Sz%C3%BClinapt%C3%A1r1.html -->
+<html lang="hu" class="h-full"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Szülinaptár</title>
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <script src="./index_files/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    keyframes: {
+                        flash: {
+                            '0%, 100%': { backgroundColor: '#fef08a', borderColor: '#eab308', transform: 'scale(1)' },
+                            '50%': { backgroundColor: '#fde047', borderColor: '#ca8a04', transform: 'scale(1.05)' }
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '20%, 60%': { transform: 'translateX(-6px) rotate(-2deg)' },
+                            '40%, 80%': { transform: 'translateX(6px) rotate(2deg)' }
+                        },
+                        glitter: {
+                            '0%, 100%': { borderColor: 'rgba(234, 179, 8, 0.4)', boxShadow: '0 0 15px rgba(250, 204, 21, 0.2)' },
+                            '50%': { borderColor: 'rgba(250, 204, 21, 0.9)', boxShadow: '0 0 25px rgba(250, 204, 21, 0.6)' }
+                        },
+                        swing: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        }
+                    },
+                    animation: {
+                        flash: 'flash 0.6s ease-in-out infinite',
+                        shake: 'shake 0.4s ease-in-out infinite',
+                        glitter: 'glitter 3s ease-in-out infinite',
+                        swing: 'swing 3s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); rounded: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); rounded: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Plus Jakarta Sans", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-bottom-10{bottom:-2.5rem}.-right-10{right:-2.5rem}.-right-12{right:-3rem}.-top-12{top:-3rem}.-top-4{top:-1rem}.left-1\/2{left:50%}.top-0{top:0px}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.ml-2{margin-left:0.5rem}.mt-1{margin-top:0.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-2\.5{height:0.625rem}.h-3{height:0.75rem}.h-3\.5{height:0.875rem}.h-36{height:9rem}.h-4{height:1rem}.h-48{height:12rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-9{height:2.25rem}.h-full{height:100%}.h-7{height:1.75rem}.h-8{height:2rem}.max-h-\[65vh\]{max-height:65vh}.min-h-\[140px\]{min-height:140px}.w-10{width:2.5rem}.w-2\.5{width:0.625rem}.w-3{width:0.75rem}.w-3\.5{width:0.875rem}.w-36{width:9rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\[440px\]{width:440px}.w-full{width:100%}.w-0\.5{width:0.125rem}.w-7{width:1.75rem}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes glitter{0%, 100%{border-color:rgba(234, 179, 8, 0.4);box-shadow:0 0 15px rgba(250, 204, 21, 0.2)}50%{border-color:rgba(250, 204, 21, 0.9);box-shadow:0 0 25px rgba(250, 204, 21, 0.6)}}.animate-glitter{animation:glitter 3s ease-in-out infinite}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-1{gap:0.25rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(241 245 249 / var(--tw-divide-opacity, 1))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.rounded{border-radius:0.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-200\/60{border-color:rgb(253 230 138 / 0.6)}.border-amber-200\/80{border-color:rgb(253 230 138 / 0.8)}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200\/80{border-color:rgb(226 232 240 / 0.8)}.bg-\[\#fbf9f5\]{--tw-bg-opacity:1;background-color:rgb(251 249 245 / var(--tw-bg-opacity, 1))}.bg-amber-100\/60{background-color:rgb(254 243 199 / 0.6)}.bg-amber-200\/40{background-color:rgb(253 230 138 / 0.4)}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-100\/70{background-color:rgb(241 245 249 / 0.7)}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/40{background-color:rgb(15 23 42 / 0.4)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-slate-200\/80{background-color:rgb(226 232 240 / 0.8)}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-900{--tw-gradient-from:#312e81 var(--tw-gradient-from-position);--tw-gradient-to:rgb(49 46 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-50{--tw-gradient-from:#f8fafc var(--tw-gradient-from-position);--tw-gradient-to:rgb(248 250 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.to-violet-900{--tw-gradient-to:#4c1d95 var(--tw-gradient-to-position)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-3{padding:0.75rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-12{padding-bottom:3rem}.pl-5{padding-left:1.25rem}.pr-2{padding-right:0.5rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.pb-3{padding-bottom:0.75rem}.pr-3{padding-right:0.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:"JetBrains Mono", monospace}.font-sans{font-family:"Plus Jakarta Sans", sans-serif}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-200\/90{color:rgb(199 210 254 / 0.9)}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-violet-600{--tw-text-opacity:1;color:rgb(124 58 237 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.opacity-80{opacity:0.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-200{--tw-shadow-color:#fde68a;--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-100{--tw-shadow-color:#d1fae5;--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-100{--tw-shadow-color:#e0e7ff;--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-200{--tw-shadow-color:#c7d2fe;--tw-shadow:var(--tw-shadow-colored)}.blur-2xl{--tw-blur:blur(40px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-xl{--tw-blur:blur(24px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:absolute::after{content:var(--tw-content);position:absolute}.after\:left-\[2px\]::after{content:var(--tw-content);left:2px}.after\:top-\[2px\]::after{content:var(--tw-content);top:2px}.after\:h-3::after{content:var(--tw-content);height:0.75rem}.after\:w-3::after{content:var(--tw-content);width:0.75rem}.after\:rounded-full::after{content:var(--tw-content);border-radius:9999px}.after\:border::after{content:var(--tw-content);border-width:1px}.after\:border-gray-300::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.after\:bg-white::after{content:var(--tw-content);--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.after\:transition-all::after{content:var(--tw-content);transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:content-\[\'\'\]::after{--tw-content:'';content:var(--tw-content)}.hover\:border-indigo-300:hover{--tw-border-opacity:1;border-color:rgb(165 180 252 / var(--tw-border-opacity, 1))}.hover\:bg-amber-100\/50:hover{background-color:rgb(254 243 199 / 0.5)}.hover\:bg-amber-600:hover{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-700:hover{--tw-bg-opacity:1;background-color:rgb(180 83 9 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-600:hover{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.hover\:text-amber-900:hover{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.hover\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-indigo-600:hover{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.hover\:text-rose-600:hover{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}.peer:checked ~ .peer-checked\:bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.peer:checked ~ .peer-checked\:after\:translate-x-full::after{content:var(--tw-content);--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.peer:checked ~ .peer-checked\:after\:border-white::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.peer:focus ~ .peer-focus\:outline-none{outline:2px solid transparent;outline-offset:2px}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:p-8{padding:2rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 1024px){.lg\:flex{display:flex}}@media (min-width: 1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Plus Jakarta Sans", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-bottom-10{bottom:-2.5rem}.-right-10{right:-2.5rem}.-top-4{top:-1rem}.left-1\/2{left:50%}.top-0{top:0px}.-right-12{right:-3rem}.-top-12{top:-3rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-4{margin-bottom:1rem}.mb-1{margin-bottom:0.25rem}.mb-5{margin-bottom:1.25rem}.ml-2{margin-left:0.5rem}.mt-1{margin-top:0.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-full{height:100%}.h-10{height:2.5rem}.h-2\.5{height:0.625rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-48{height:12rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-3{height:0.75rem}.h-36{height:9rem}.h-9{height:2.25rem}.max-h-\[65vh\]{max-height:65vh}.min-h-\[140px\]{min-height:140px}.w-0\.5{width:0.125rem}.w-10{width:2.5rem}.w-2\.5{width:0.625rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-full{width:100%}.w-3{width:0.75rem}.w-36{width:9rem}.w-9{width:2.25rem}.w-\[440px\]{width:440px}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}@keyframes glitter{0%, 100%{border-color:rgba(234, 179, 8, 0.4);box-shadow:0 0 15px rgba(250, 204, 21, 0.2)}50%{border-color:rgba(250, 204, 21, 0.9);box-shadow:0 0 25px rgba(250, 204, 21, 0.6)}}.animate-glitter{animation:glitter 3s ease-in-out infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(241 245 249 / var(--tw-divide-opacity, 1))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-3xl{border-radius:1.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-200\/80{border-color:rgb(226 232 240 / 0.8)}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-amber-200\/60{border-color:rgb(253 230 138 / 0.6)}.border-amber-200\/80{border-color:rgb(253 230 138 / 0.8)}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-100\/70{background-color:rgb(241 245 249 / 0.7)}.bg-slate-200\/80{background-color:rgb(226 232 240 / 0.8)}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-\[\#fbf9f5\]{--tw-bg-opacity:1;background-color:rgb(251 249 245 / var(--tw-bg-opacity, 1))}.bg-amber-100\/60{background-color:rgb(254 243 199 / 0.6)}.bg-amber-200\/40{background-color:rgb(253 230 138 / 0.4)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/40{background-color:rgb(15 23 42 / 0.4)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-900{--tw-gradient-from:#312e81 var(--tw-gradient-from-position);--tw-gradient-to:rgb(49 46 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-50{--tw-gradient-from:#f8fafc var(--tw-gradient-from-position);--tw-gradient-to:rgb(248 250 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.to-violet-900{--tw-gradient-to:#4c1d95 var(--tw-gradient-to-position)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pb-12{padding-bottom:3rem}.pb-3{padding-bottom:0.75rem}.pt-4{padding-top:1rem}.pl-5{padding-left:1.25rem}.pr-2{padding-right:0.5rem}.pr-3{padding-right:0.75rem}.pt-3{padding-top:0.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:"JetBrains Mono", monospace}.font-sans{font-family:"Plus Jakarta Sans", sans-serif}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-200\/90{color:rgb(199 210 254 / 0.9)}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-violet-600{--tw-text-opacity:1;color:rgb(124 58 237 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.opacity-80{opacity:0.8}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-emerald-100{--tw-shadow-color:#d1fae5;--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-200{--tw-shadow-color:#c7d2fe;--tw-shadow:var(--tw-shadow-colored)}.shadow-amber-200{--tw-shadow-color:#fde68a;--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-100{--tw-shadow-color:#e0e7ff;--tw-shadow:var(--tw-shadow-colored)}.blur-2xl{--tw-blur:blur(40px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-xl{--tw-blur:blur(24px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:absolute::after{content:var(--tw-content);position:absolute}.after\:left-\[2px\]::after{content:var(--tw-content);left:2px}.after\:top-\[2px\]::after{content:var(--tw-content);top:2px}.after\:h-3::after{content:var(--tw-content);height:0.75rem}.after\:w-3::after{content:var(--tw-content);width:0.75rem}.after\:rounded-full::after{content:var(--tw-content);border-radius:9999px}.after\:border::after{content:var(--tw-content);border-width:1px}.after\:border-gray-300::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.after\:bg-white::after{content:var(--tw-content);--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.after\:transition-all::after{content:var(--tw-content);transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:content-\[\'\'\]::after{--tw-content:'';content:var(--tw-content)}.hover\:border-indigo-300:hover{--tw-border-opacity:1;border-color:rgb(165 180 252 / var(--tw-border-opacity, 1))}.hover\:bg-amber-600:hover{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-600:hover{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-100\/50:hover{background-color:rgb(254 243 199 / 0.5)}.hover\:bg-amber-700:hover{--tw-bg-opacity:1;background-color:rgb(180 83 9 / var(--tw-bg-opacity, 1))}.hover\:text-amber-900:hover{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.hover\:text-indigo-600:hover{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.hover\:text-rose-600:hover{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}.peer:checked ~ .peer-checked\:bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.peer:checked ~ .peer-checked\:after\:translate-x-full::after{content:var(--tw-content);--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.peer:checked ~ .peer-checked\:after\:border-white::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.peer:focus ~ .peer-focus\:outline-none{outline:2px solid transparent;outline-offset:2px}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:p-8{padding:2rem}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 1024px){.lg\:flex{display:flex}}@media (min-width: 1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col overflow-hidden">
+
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0 shadow-sm z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar-heart" aria-hidden="true" class="lucide lucide-calendar-heart w-6 h-6"><path d="M12.127 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v5.125"></path><path d="M14.62 17.8A2.25 2.25 0 1118 14.836a2.25 2.25 0 113.38 2.966l-2.626 2.856a.998.998 0 01-1.507 0z"></path><path d="M16 2v3"></path><path d="M3 9h18"></path><path d="M8 2v3"></path></svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Interaktív Szülinaptár</h1>
+                <p class="text-xs text-slate-500 font-medium">Osztálytermi Függő Lánc Modell (Vector of Vectors)</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <!-- Animation controls -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+                <button id="btnPlay" onclick="startTraversal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" aria-hidden="true" class="lucide lucide-play w-3.5 h-3.5"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg> Bejárás Indítása
+                </button>
+                <button id="btnPause" onclick="pauseTraversal()" class="hidden flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-white shadow-sm hover:bg-amber-600 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pause" aria-hidden="true" class="lucide lucide-pause w-3.5 h-3.5"><rect x="14" y="3" width="5" height="18" rx="1"></rect><rect x="5" y="3" width="5" height="18" rx="1"></rect></svg> Szünet
+                </button>
+                <button onclick="resetTraversal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" aria-hidden="true" class="lucide lucide-rotate-ccw w-3.5 h-3.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg> Vissza
+                </button>
+            </div>
+
+            <!-- View toggle -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+                <button id="btnVisualView" onclick="switchView('visual')" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-indigo-600 shadow-sm transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="git-branch" aria-hidden="true" class="lucide lucide-git-branch w-3.5 h-3.5"><path d="M15 6a9 9 0 0 0-9 9V3"></path><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle></svg> Lánc Nézet
+                </button>
+                <button id="btnListView" onclick="switchView('list')" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="list" aria-hidden="true" class="lucide lucide-list w-3.5 h-3.5"><path d="M3 5h.01"></path><path d="M3 12h.01"></path><path d="M3 19h.01"></path><path d="M8 5h13"></path><path d="M8 12h13"></path><path d="M8 19h13"></path></svg> Lista Nézet
+                </button>
+            </div>
+
+            <button onclick="openAddModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-100 hover:bg-emerald-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user-plus" aria-hidden="true" class="lucide lucide-user-plus w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg> Új Diák
+            </button>
+
+            <button onclick="openHelp()" class="p-2 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 transition shadow-sm" title="Segítség">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="help-circle" aria-hidden="true" class="lucide lucide-help-circle w-5 h-5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+            </button>
+
+            <button onclick="clearAllData()" class="p-2 rounded-xl border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 transition shadow-sm" title="Teljes törlés">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-5 h-5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden">
+        <!-- Left Workspace: Visual / List Canvas & Traversal Log -->
+        <div class="flex-1 flex flex-col bg-slate-100/70 overflow-hidden relative">
+            
+            <!-- Traversal Status Bar -->
+            <div id="traversalStatusBar" class="hidden bg-amber-50 border-b border-amber-200 px-6 py-2.5 flex items-center justify-between text-xs font-medium text-amber-900 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
+                    <span id="traversalMessage">Lépés: Fővektor bejárása...</span>
+                </div>
+                <div class="flex items-center gap-4 font-mono">
+                    <span id="traversalIndexInfo">i: 0, j: -</span>
+                    <button onclick="stopTraversal()" class="text-amber-700 hover:text-amber-900 underline font-sans">Kilépés</button>
+                </div>
+            </div>
+
+            <!-- View Container -->
+            <div class="flex-1 overflow-auto p-6 custom-scrollbar" id="mainCanvasContainer">
+                
+                <!-- VISUAL HANGING CHAIN VIEW -->
+                <div id="visualViewSection" class="space-y-6 pb-12 max-w-7xl mx-auto">
+                    <!-- Vector of Vectors Architecture Explanation Banner -->
+                    <div class="bg-gradient-to-r from-indigo-900 to-violet-900 text-white p-5 rounded-2xl shadow-xl flex items-center justify-between relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+                        <div class="space-y-1.5 z-10">
+                            <div class="flex items-center gap-2 text-indigo-300 text-xs font-semibold tracking-wider uppercase">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cpu" aria-hidden="true" class="lucide lucide-cpu w-4 h-4"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg> Adatszerkezet modell
+                            </div>
+                            <h2 class="text-lg font-bold">`std::vector&lt;std::vector&lt;Student&gt;&gt; calendar(12)`</h2>
+                            <p class="text-xs text-indigo-200/90 max-w-2xl">A külső vektor 12 hónapot tárol index szerint (0. Hónap = Január ... 11. Hónap = December). Minden hónap elem egy dinamikus belső vektor, amely a naphoz tartozó diák függő lánc medálokat lógatja le.</p>
+                        </div>
+                        <div class="hidden lg:flex flex-col gap-2 bg-white/10 backdrop-blur-md p-3.5 rounded-xl border border-white/10 text-xs z-10">
+                            <div class="flex items-center justify-between gap-6">
+                                <span class="text-indigo-200">Memória reprezentáció:</span>
+                                <span class="font-mono text-emerald-300">Heap dinamikus</span>
+                            </div>
+                            <div class="flex items-center justify-between gap-6">
+                                <span class="text-indigo-200">Rejtett láncok:</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="toggleChains" checked="" onchange="toggleChainVisuals(this)" class="sr-only peer">
+                                    <div class="w-8 h-4 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Horizontal Months Container -->
+                    <div id="monthsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-0">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [0]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Január</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">2 medál</span>
+                                <button onclick="openAddModalForMonth(0)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-0-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <img src="./index_files/photo-1539571696357-5a69c17a67c6" alt="Nagy Péter" class="w-10 h-10 rounded-xl object-cover border border-slate-200 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6366f1/ffffff?text=N';">
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Nagy Péter</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Jan. 12.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('0', '1')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('0', '1')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-0-1">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[1]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">VE</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Varga Eszter</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Jan. 25.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('0', '2')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('0', '2')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-1">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [1]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Február</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(1)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-1-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">KB</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Kiss Bence</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Feb. 4.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('1', '3')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('1', '3')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-2">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [2]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Március</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">2 medál</span>
+                                <button onclick="openAddModalForMonth(2)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-2-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <img src="./index_files/photo-1517841905240-472988babdf9" alt="Horváth Lili" class="w-10 h-10 rounded-xl object-cover border border-slate-200 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6366f1/ffffff?text=H';">
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Horváth Lili</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Már. 14.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('2', '4')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('2', '4')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-2-1">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[1]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">SD</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Szabó Dániel</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Már. 29.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('2', '5')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('2', '5')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-3">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [3]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Április</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">0 medál</span>
+                                <button onclick="openAddModalForMonth(3)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                
+                        <div class="my-auto text-center py-6">
+                            <p class="text-[11px] text-slate-400 italic">Nincs még függő medál ebben a hónapban</p>
+                        </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-4">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [4]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Május</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(4)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-4-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">TL</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Tóth Luca</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Máj. 8.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('4', '6')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('4', '6')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-5">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [5]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Június</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">2 medál</span>
+                                <button onclick="openAddModalForMonth(5)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-5-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">MM</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Molnár Máté</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Jún. 19.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('5', '7')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('5', '7')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-5-1">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[1]</span>
+                                    <img src="./index_files/photo-1494790108377-be9c29b29330" alt="Farkas Gréta" class="w-10 h-10 rounded-xl object-cover border border-slate-200 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6366f1/ffffff?text=F';">
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Farkas Gréta</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Jún. 22.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('5', '8')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('5', '8')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-6">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [6]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Július</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">0 medál</span>
+                                <button onclick="openAddModalForMonth(6)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                
+                        <div class="my-auto text-center py-6">
+                            <p class="text-[11px] text-slate-400 italic">Nincs még függő medál ebben a hónapban</p>
+                        </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-7">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [7]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Augusztus</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(7)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-7-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">KM</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Kocsis Milán</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Aug. 3.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('7', '9')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('7', '9')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-8">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [8]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Szeptember</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(8)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-8-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">BZ</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Balogh Zsófia</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Sze. 11.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('8', '10')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('8', '10')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-9">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [9]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">Október</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(9)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-9-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">ML</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Mészáros Levente</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Okt. 17.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('9', '11')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('9', '11')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-10">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [10]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">November</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(10)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-10-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">PH</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Papp Hanna</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Nov. 2.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('10', '12')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('10', '12')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative" id="month-card-11">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [11]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">December</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">1 medál</span>
+                                <button onclick="openAddModalForMonth(11)" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" class="lucide lucide-plus w-3.5 h-3.5"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                <div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div><div class="w-full space-y-3 pt-4"><div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group" id="student-pendant-11-0">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[0]</span>
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">TM</div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">Takács Milán</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">Dec. 24.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('11', '13')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3 w-3.5 h-3.5"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                                    </button>
+                                    <button onclick="deleteStudent('11', '13')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- LIST VIEW -->
+                <div id="listViewSection" class="hidden max-w-5xl mx-auto space-y-4">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-800">Összesített Szülinapi Lista</h3>
+                                <p class="text-xs text-slate-500">Diákok listája időrendben vagy vektor indexek szerint.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select id="sortListBy" onchange="renderListView()" class="text-xs border border-slate-200 rounded-lg px-3 py-1.5 bg-slate-50 font-medium">
+                                    <option value="month">Rendezés Hónap szerint</option>
+                                    <option value="name">Rendezés Név szerint</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-slate-400 font-semibold">
+                                        <th class="py-3 px-4">Index [i][j]</th>
+                                        <th class="py-3 px-4">Diák Neve</th>
+                                        <th class="py-3 px-4">Hónap</th>
+                                        <th class="py-3 px-4">Születésnap</th>
+                                        <th class="py-3 px-4 text-right">Műveletek</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[0][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <img src="./index_files/photo-1539571696357-5a69c17a67c6" class="w-8 h-8 rounded-lg object-cover border border-slate-200">
+                            <span class="font-bold text-slate-800">Nagy Péter</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Január</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">12.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('0', '1')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[0][1]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">VA</div>
+                            <span class="font-bold text-slate-800">Varga Eszter</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Január</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">25.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('0', '2')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[1][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">KI</div>
+                            <span class="font-bold text-slate-800">Kiss Bence</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Február</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">4.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('1', '3')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[2][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <img src="./index_files/photo-1517841905240-472988babdf9" class="w-8 h-8 rounded-lg object-cover border border-slate-200">
+                            <span class="font-bold text-slate-800">Horváth Lili</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Március</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">14.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('2', '4')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[2][1]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">SZ</div>
+                            <span class="font-bold text-slate-800">Szabó Dániel</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Március</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">29.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('2', '5')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[4][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">TÓ</div>
+                            <span class="font-bold text-slate-800">Tóth Luca</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Május</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">8.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('4', '6')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[5][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">MO</div>
+                            <span class="font-bold text-slate-800">Molnár Máté</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Június</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">19.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('5', '7')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[5][1]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <img src="./index_files/photo-1494790108377-be9c29b29330" class="w-8 h-8 rounded-lg object-cover border border-slate-200">
+                            <span class="font-bold text-slate-800">Farkas Gréta</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Június</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">22.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('5', '8')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[7][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">KO</div>
+                            <span class="font-bold text-slate-800">Kocsis Milán</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Augusztus</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">3.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('7', '9')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[8][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">BA</div>
+                            <span class="font-bold text-slate-800">Balogh Zsófia</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Szeptember</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">11.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('8', '10')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[9][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">MÉ</div>
+                            <span class="font-bold text-slate-800">Mészáros Levente</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">Október</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">17.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('9', '11')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[10][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">PA</div>
+                            <span class="font-bold text-slate-800">Papp Hanna</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">November</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('10', '12')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[11][0]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">TA</div>
+                            <span class="font-bold text-slate-800">Takács Milán</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">December</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">24.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('11', '13')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-4 h-4"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Pane: Parallel Python and C++ Code View -->
+        <div class="w-[440px] bg-slate-900 border-l border-slate-800 flex flex-col shrink-0 shadow-2xl">
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    <span class="text-xs font-mono text-slate-400 ml-2">Párhuzamos Forráskód Nézet</span>
+                </div>
+                <div class="flex items-center bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs">
+                    <button id="tabCpp" onclick="switchCodeTab('cpp')" class="px-2.5 py-1 rounded-md bg-indigo-600 text-white font-mono font-semibold transition">C++</button>
+                    <button id="tabPython" onclick="switchCodeTab('python')" class="px-2.5 py-1 rounded-md text-slate-400 font-mono hover:text-white transition">Python</button>
+                </div>
+            </div>
+
+            <!-- Code display box -->
+            <div class="flex-1 overflow-auto p-4 font-mono text-xs text-slate-300 custom-scrollbar leading-relaxed" id="codeEditorContent"><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">1</span><span class="font-mono">#include &lt;iostream&gt;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">2</span><span class="font-mono">#include &lt;vector&gt;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">3</span><span class="font-mono">#include &lt;string&gt;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">4</span><span class="font-mono"></span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">5</span><span class="font-mono">struct Student {</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">6</span><span class="font-mono">    std::string name;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">7</span><span class="font-mono">    int day;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">8</span><span class="font-mono">    std::string photoUrl;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">9</span><span class="font-mono">};</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">10</span><span class="font-mono"></span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">11</span><span class="font-mono">int main() {</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">12</span><span class="font-mono">    // Vektor a vektorban (12 hónap)</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">13</span><span class="font-mono">    std::vector&lt;std::vector&lt;Student&gt;&gt; calendar(12);</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">14</span><span class="font-mono"></span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">15</span><span class="font-mono">    // Adatok betöltése a láncokra</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">16</span><span class="font-mono">    calendar[0].push_back({"Nagy Péter", 12, "url"});</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">17</span><span class="font-mono">    calendar[0].push_back({"Varga Eszter", 25, ""});</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">18</span><span class="font-mono">    calendar[2].push_back({"Horváth Lili", 14, "url"});</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">19</span><span class="font-mono"></span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">20</span><span class="font-mono">    // Külső vektor bejárása (Hónapok)</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">21</span><span class="font-mono">    for(size_t i = 0; i &lt; calendar.size(); i++) {</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">22</span><span class="font-mono">        std::cout &lt;&lt; "Hónap [" &lt;&lt; i &lt;&lt; "]:\n";</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">23</span><span class="font-mono">        // Belső vektor bejárása (Függő medálok)</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">24</span><span class="font-mono">        for(size_t j = 0; j &lt; calendar[i].size(); j++) {</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">25</span><span class="font-mono">            std::cout &lt;&lt; "  └─ [" &lt;&lt; j &lt;&lt; "] " &lt;&lt; calendar[i][j].name &lt;&lt; "\n";</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">26</span><span class="font-mono">        }</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">27</span><span class="font-mono">    }</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">28</span><span class="font-mono">    return 0;</span></div><div class="flex px-2 py-0.5 rounded text-slate-300"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">29</span><span class="font-mono">}</span></div></div>
+
+            <div class="bg-slate-950 px-4 py-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="terminal" aria-hidden="true" class="lucide lucide-terminal w-3.5 h-3.5 text-indigo-400"><path d="M12 19h8"></path><path d="m4 17 6-6-6-6"></path></svg> Valós idejű futási mutató
+                </span>
+                <span id="codeActiveLineIndicator" class="font-mono text-emerald-400">C++ Kód</span>
+            </div>
+        </div>
+    </main>
+
+    
+    <!-- Help Slide-in Popup (Cream with Glittering Border) -->
+    <div id="helpPopup" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-[#fbf9f5] border-2 border-amber-300 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl animate-glitter relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-amber-200/40 rounded-full blur-xl pointer-events-none"></div>
+            
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-md shadow-amber-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sparkles" aria-hidden="true" class="lucide lucide-sparkles w-5 h-5"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-amber-950">Osztálytermi Szülinaptár Segítség</h3>
+                </div>
+                <button onclick="closeHelp()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-amber-100/50 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-slate-700 text-xs md:text-sm leading-relaxed max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar">
+                <div class="bg-amber-100/60 p-3.5 rounded-xl border border-amber-200/80 text-amber-900">
+                    <strong>Mi ez az alkalmazás?</strong> Ez a szoftver egy osztálytermi szülinapi naptárat modellez, amely pontosan bemutatja a programozásban használt <strong>vektor a vektorban</strong> (<code class="font-mono text-indigo-700">std::vector&lt;std::vector&lt;T&gt;&gt;</code>) adatszerkezet működését.
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="git-branch" aria-hidden="true" class="lucide lucide-git-branch w-4 h-4 text-indigo-600"><path d="M15 6a9 9 0 0 0-9 9V3"></path><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle></svg> Hogyan épül fel a struktúra?
+                    </h4>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li><strong>Külső vektor (Hónapok):</strong> Pontosan 12 elemet tartalmaz (0-tól 11-es indexig), amelyek a naptári hónapokat jelképezik.</li>
+                        <li><strong>Belső vektorok (Függő lánc medálok):</strong> Minden hónaphoz tartozik egy dinamikus lista, amely a hónapban született diákok adatait (fotó, név, nap) tartalmazza láncra függesztve.</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play-circle" aria-hidden="true" class="lucide lucide-play-circle w-4 h-4 text-emerald-600"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"></path><circle cx="12" cy="12" r="10"></circle></svg> Bejárási Animáció
+                    </h4>
+                    <p class="text-slate-600">A "Bejárás Indítása" gombra kattintva a program sárgán villogtatja a külső vektort (hónapot), majd sorban végiglépked a belső vektor elemein (medálokon), miközben a jobb oldali panelen valós időben láthatod a C++ és Python kódrészleteket.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="image" aria-hidden="true" class="lucide lucide-image w-4 h-4 text-violet-600"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg> Fotók és Monogramok
+                    </h4>
+                    <p class="text-slate-600">Minden diákhoz beállíthatsz saját fényképet webes URL-en keresztül, vagy használhatod az automatikus stílusos monogram fallback hátteret.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-amber-200/60 flex justify-end">
+                <button onclick="closeHelp()" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-xl shadow-md transition">
+                    Megértettem, indíthatjuk!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Student Modal -->
+    <div id="studentModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative">
+            <div class="flex items-center justify-between mb-5">
+                <h3 id="modalTitle" class="text-base font-bold text-slate-800">Új Diák Hozzáadása</h3>
+                <button onclick="closeStudentModal()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+            </div>
+
+            <form id="studentForm" onsubmit="handleStudentSubmit(event)" class="space-y-4">
+                <input type="hidden" id="editStudentId">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Diák Neve</label>
+                    <input type="text" id="inputName" required="" placeholder="pl. Kovács Anna" class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Hónap [i]</label>
+                        <select id="inputMonth" required="" class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 font-medium">
+                            <option value="0">0 - Január</option>
+                            <option value="1">1 - Február</option>
+                            <option value="2">2 - Március</option>
+                            <option value="3">3 - Április</option>
+                            <option value="4">4 - Május</option>
+                            <option value="5">5 - Június</option>
+                            <option value="6">6 - Július</option>
+                            <option value="7">7 - Augusztus</option>
+                            <option value="8">8 - Szeptember</option>
+                            <option value="9">9 - Október</option>
+                            <option value="10">10 - November</option>
+                            <option value="11">11 - December</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nap</label>
+                        <input type="number" id="inputDay" min="1" max="31" required="" placeholder="15" class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 font-medium">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Fénykép URL (opcionális)</label>
+                    <input type="url" id="inputPhoto" placeholder="https://example.com/photo.jpg" class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 font-medium">
+                    <p class="text-[11px] text-slate-400 mt-1">Ha üresen hagyod, automatikus monogram medál generálódik.</p>
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">Mégse</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-100 transition">Mentés</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure: Vector of 12 vectors (months 0..11)
+        let calendarData = [
+            // Január (0)
+            [
+                { id: '1', name: 'Nagy Péter', day: 12, photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150' },
+                { id: '2', name: 'Varga Eszter', day: 25, photo: '' }
+            ],
+            // Február (1)
+            [
+                { id: '3', name: 'Kiss Bence', day: 4, photo: '' }
+            ],
+            // Március (2)
+            [
+                { id: '4', name: 'Horváth Lili', day: 14, photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150' },
+                { id: '5', name: 'Szabó Dániel', day: 29, photo: '' }
+            ],
+            // Április (3)
+            [],
+            // Május (4)
+            [
+                { id: '6', name: 'Tóth Luca', day: 8, photo: '' }
+            ],
+            // Június (5)
+            [
+                { id: '7', name: 'Molnár Máté', day: 19, photo: '' },
+                { id: '8', name: 'Farkas Gréta', day: 22, photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' }
+            ],
+            // Július (6)
+            [],
+            // Augusztus (7)
+            [
+                { id: '9', name: 'Kocsis Milán', day: 3, photo: '' }
+            ],
+            // Szeptember (8)
+            [
+                { id: '10', name: 'Balogh Zsófia', day: 11, photo: '' }
+            ],
+            // Október (9)
+            [
+                { id: '11', name: 'Mészáros Levente', day: 17, photo: '' }
+            ],
+            // November (10)
+            [
+                { id: '12', name: 'Papp Hanna', day: 2, photo: '' }
+            ],
+            // December (11)
+            [
+                { id: '13', name: 'Takács Milán', day: 24, photo: '' }
+            ]
+        ];
+
+        const monthNames = [
+            "0. Január", "1. Február", "2. Március", "3. Április",
+            "4. Május", "5. Június", "6. Július", "7. Augusztus",
+            "8. Szeptember", "9. Október", "10. November", "11. December"
+        ];
+
+        let currentView = 'visual'; // 'visual' | 'list'
+        let currentCodeTab = 'cpp'; // 'cpp' | 'python'
+        let showChains = true;
+
+        // Traversal state
+        let isTraversing = false;
+        let traversalInterval = null;
+        let activeMonthIndex = -1;
+        let activeStudentIndex = -1;
+
+        // Initialize Lucide icons on load
+        window.onload = function() {
+            lucide.createIcons();
+            renderVisualView();
+            renderListView();
+            updateCodeView();
+        };
+
+        // Switch main views
+        function switchView(view) {
+            currentView = view;
+            const visualSec = document.getElementById('visualViewSection');
+            const listSec = document.getElementById('listViewSection');
+            const btnVisual = document.getElementById('btnVisualView');
+            const btnList = document.getElementById('btnListView');
+
+            if (view === 'visual') {
+                visualSec.classList.remove('hidden');
+                listSec.classList.add('hidden');
+                btnVisual.className = "flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-indigo-600 shadow-sm transition";
+                btnList.className = "flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-200 transition";
+                renderVisualView();
+            } else {
+                visualSec.classList.add('hidden');
+                listSec.classList.remove('hidden');
+                btnList.className = "flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-indigo-600 shadow-sm transition";
+                btnVisual.className = "flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-200 transition";
+                renderListView();
+            }
+            lucide.createIcons();
+        }
+
+        // Toggle chain visuals
+        function toggleChainVisuals(el) {
+            showChains = el.checked;
+            renderVisualView();
+        }
+
+        // Render Visual Hanging Chain View
+        function renderVisualView() {
+            const container = document.getElementById('monthsContainer');
+            if (!container) return;
+
+            let html = '';
+            calendarData.forEach((monthStudents, i) => {
+                const isActiveMonth = (isTraversing && activeMonthIndex === i);
+                const monthCardClasses = isActiveMonth 
+                    ? "bg-amber-50 border-2 border-amber-400 shadow-lg animate-flash rounded-2xl p-4 flex flex-col transition relative"
+                    : "bg-white border border-slate-200/80 shadow-sm hover:shadow-md rounded-2xl p-4 flex flex-col transition relative";
+
+                html += `
+                    <div class="${monthCardClasses}" id="month-card-${i}">
+                        <!-- Month Header with Index badge -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 font-mono font-bold text-xs flex items-center justify-center border border-indigo-100">
+                                    [${i}]
+                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">${monthNames[i].split('. ')[1]}</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[11px] font-semibold text-slate-400 font-mono">${monthStudents.length} medál</span>
+                                <button onclick="openAddModalForMonth(${i})" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition" title="Diák hozzáadása ehhez a hónaphoz">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hanging Chain Pendants Area -->
+                        <div class="flex-1 min-h-[140px] flex flex-col items-center justify-start py-2 relative">
+                `;
+
+                if (showChains && monthStudents.length > 0) {
+                    // Vertical chain spine hanging from top center
+                    html += `<div class="absolute top-0 w-0.5 h-6 bg-slate-300"></div>`;
+                }
+
+                if (monthStudents.length === 0) {
+                    html += `
+                        <div class="my-auto text-center py-6">
+                            <p class="text-[11px] text-slate-400 italic">Nincs még függő medál ebben a hónapban</p>
+                        </div>
+                    `;
+                } else {
+                    html += `<div class="w-full space-y-3 pt-4">`;
+                    monthStudents.forEach((student, j) => {
+                        const isActiveStudent = (isTraversing && activeMonthIndex === i && activeStudentIndex === j);
+                        const pendantClasses = isActiveStudent
+                            ? "bg-amber-100 border-2 border-amber-500 rounded-2xl p-3 flex items-center justify-between shadow-md animate-shake transition relative"
+                            : "bg-gradient-to-r from-slate-50 to-white border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-indigo-300 transition relative group";
+
+                        // Chain link connector to pendant
+                        if (showChains) {
+                            html += `<div class="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-slate-300"></div>`;
+                        }
+
+                        // Avatar or Monogram fallback
+                        let avatarHtml = '';
+                        if (student.photo) {
+                            avatarHtml = `<img src="${student.photo}" alt="${student.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-200 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6366f1/ffffff?text=${encodeURIComponent(student.name.charAt(0))}';">`;
+                        } else {
+                            const initials = student.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                            avatarHtml = `<div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-200 shadow-sm">${initials}</div>`;
+                        }
+
+                        html += `
+                            <div class="${pendantClasses}" id="student-pendant-${i}-${j}">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600">[${j}]</span>
+                                    ${avatarHtml}
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-xs">${student.name}</h4>
+                                        <p class="text-[11px] text-indigo-600 font-medium">${monthNames[i].split('. ')[1].substring(0, 3)}. ${student.day}.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                                    <button onclick="editStudent('${i}', '${student.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition" title="Szerkesztés">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                    <button onclick="deleteStudent('${i}', '${student.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition" title="Törlés">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        // Render List View
+        function renderListView() {
+            const tbody = document.getElementById('listTableBody');
+            const sortBy = document.getElementById('sortListBy')?.value || 'month';
+            if (!tbody) return;
+
+            let allStudents = [];
+            calendarData.forEach((monthStudents, i) => {
+                monthStudents.forEach((student, j) => {
+                    allStudents.push({ ...student, monthIndex: i, studentIndex: j });
+                });
+            });
+
+            if (sortBy === 'name') {
+                allStudents.sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                allStudents.sort((a, b) => a.monthIndex - b.monthIndex || a.day - b.day);
+            }
+
+            if (allStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400 italic">Nincs rögzített diák az adatbázisban.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            allStudents.forEach(st => {
+                let avatarHtml = st.photo 
+                    ? `<img src="${st.photo}" class="w-8 h-8 rounded-lg object-cover border border-slate-200">`
+                    : `<div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center">${st.name.substring(0,2).toUpperCase()}</div>`;
+
+                html += `
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-3 px-4 font-mono text-indigo-600 font-semibold">[${st.monthIndex}][${st.studentIndex}]</td>
+                        <td class="py-3 px-4 flex items-center gap-2.5">
+                            ${avatarHtml}
+                            <span class="font-bold text-slate-800">${st.name}</span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-600">${monthNames[st.monthIndex].split('. ')[1]}</td>
+                        <td class="py-3 px-4 font-mono text-slate-600">${st.day}.</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteStudent('${st.monthIndex}', '${st.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        // Code view tab switching
+        function switchCodeTab(tab) {
+            currentCodeTab = tab;
+            const btnCpp = document.getElementById('tabCpp');
+            const btnPython = document.getElementById('tabPython');
+            if (tab === 'cpp') {
+                btnCpp.className = "px-2.5 py-1 rounded-md bg-indigo-600 text-white font-mono font-semibold transition";
+                btnPython.className = "px-2.5 py-1 rounded-md text-slate-400 font-mono hover:text-white transition";
+            } else {
+                btnPython.className = "px-2.5 py-1 rounded-md bg-indigo-600 text-white font-mono font-semibold transition";
+                btnCpp.className = "px-2.5 py-1 rounded-md text-slate-400 font-mono hover:text-white transition";
+            }
+            updateCodeView();
+        }
+
+        // Update code display with active highlighting
+        function updateCodeView(activeLine = -1) {
+            const editor = document.getElementById('codeEditorContent');
+            const lineIndicator = document.getElementById('codeActiveLineIndicator');
+            if (!editor) return;
+
+            if (currentCodeTab === 'cpp') {
+                lineIndicator.textContent = activeLine !== -1 ? `C++ Sor: ${activeLine}` : 'C++ Kód';
+                editor.innerHTML = formatCppCode(activeLine);
+            } else {
+                lineIndicator.textContent = activeLine !== -1 ? `Python Sor: ${activeLine}` : 'Python Kód';
+                editor.innerHTML = formatPythonCode(activeLine);
+            }
+        }
+
+        function formatCppCode(activeLine) {
+            const lines = [
+                `#include <iostream>`,
+                `#include <vector>`,
+                `#include <string>`,
+                ``,
+                `struct Student {`,
+                `    std::string name;`,
+                `    int day;`,
+                `    std::string photoUrl;`,
+                `};`,
+                ``,
+                `int main() {`,
+                `    // Vektor a vektorban (12 hónap)`,
+                `    std::vector<std::vector<Student>> calendar(12);`,
+                ``,
+                `    // Adatok betöltése a láncokra`,
+                `    calendar[0].push_back({"Nagy Péter", 12, "url"});`,
+                `    calendar[0].push_back({"Varga Eszter", 25, ""});`,
+                `    calendar[2].push_back({"Horváth Lili", 14, "url"});`,
+                ``,
+                `    // Külső vektor bejárása (Hónapok)`,
+                `    for(size_t i = 0; i < calendar.size(); i++) {`,
+                `        std::cout << "Hónap [" << i << "]:\\n";`,
+                `        // Belső vektor bejárása (Függő medálok)`,
+                `        for(size_t j = 0; j < calendar[i].size(); j++) {`,
+                `            std::cout << "  └─ [" << j << "] " << calendar[i][j].name << "\\n";`,
+                `        }`,
+                `    }`,
+                `    return 0;`,
+                `}`
+            ];
+
+            return lines.map((line, idx) => {
+                const lineNum = idx + 1;
+                const isHighlight = (activeLine === lineNum);
+                const bg = isHighlight ? 'bg-indigo-950/80 border-l-2 border-indigo-400 text-indigo-200' : 'text-slate-300';
+                return `<div class="flex px-2 py-0.5 rounded ${bg}"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">${lineNum}</span><span class="font-mono">${escapeHtml(line)}</span></div>`;
+            }).join('');
+        }
+
+        function formatPythonCode(activeLine) {
+            const lines = [
+                `# Vektor a vektorban reprezentáció Pythonban (List of Lists)`,
+                `class Student:`,
+                `    def __init__(self, name, day, photo=""):`,
+                `        self.name = name`,
+                `        self.day = day`,
+                `        self.photo = photo`,
+                ``,
+                `# 12 hónap inicializálása üres belső listákkal`,
+                `calendar = [[] for _ in range(12)]`,
+                ``,
+                `# Függő lánc medálok hozzáadása`,
+                `calendar[0].append(Student("Nagy Péter", 12, "url"))`,
+                `calendar[0].append(Student("Varga Eszter", 25))`,
+                `calendar[2].append(Student("Horváth Lili", 14, "url"))`,
+                ``,
+                `# Fővektor és al-vektorok szekvenciális bejárása`,
+                `for i, month_list in enumerate(calendar):`,
+                `    print(f"Hónap index [{i}]:")`,
+                `    for j, student in enumerate(month_list):`,
+                `        print(f"  └─ Medál [{j}]: {student.name}")`
+            ];
+
+            return lines.map((line, idx) => {
+                const lineNum = idx + 1;
+                const isHighlight = (activeLine === lineNum);
+                const bg = isHighlight ? 'bg-indigo-950/80 border-l-2 border-indigo-400 text-indigo-200' : 'text-slate-300';
+                return `<div class="flex px-2 py-0.5 rounded ${bg}"><span class="w-6 text-slate-600 select-none text-right pr-3 font-mono">${lineNum}</span><span class="font-mono">${escapeHtml(line)}</span></div>`;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // Traversal animation logic
+        function startTraversal() {
+            if (isTraversing) return;
+            if (currentView !== 'visual') switchView('visual');
+
+            isTraversing = true;
+            document.getElementById('btnPlay').classList.add('hidden');
+            document.getElementById('btnPause').classList.remove('hidden');
+            document.getElementById('traversalStatusBar').classList.remove('hidden');
+
+            activeMonthIndex = 0;
+            activeStudentIndex = -1;
+
+            runTraversalStep();
+        }
+
+        function runTraversalStep() {
+            if (!isTraversing) return;
+
+            // Find next valid month with students or advance
+            if (activeMonthIndex >= calendarData.length) {
+                stopTraversal();
+                showNotification("A vektor teljes bejárása sikeresen befejeződött!", "success");
+                return;
+            }
+
+            const monthStudents = calendarData[activeMonthIndex];
+
+            if (activeStudentIndex === -1) {
+                // Just entered month i
+                document.getElementById('traversalMessage').textContent = `Külső vektor bejárása: i = ${activeMonthIndex} (${monthNames[activeMonthIndex].split('. ')[1]})`;
+                document.getElementById('traversalIndexInfo').textContent = `i: ${activeMonthIndex}, j: -`;
+                updateCodeView(currentCodeTab === 'cpp' ? 17 : 17);
+                renderVisualView();
+
+                // Highlight card scroll into view
+                const card = document.getElementById(`month-card-${activeMonthIndex}`);
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                activeStudentIndex = 0;
+                traversalInterval = setTimeout(runTraversalStep, 1200);
+            } else if (activeStudentIndex < monthStudents.length) {
+                // Traversing inner vector j
+                document.getElementById('traversalMessage').textContent = `Belső vektor lánc medál bejárása: calendar[${activeMonthIndex}][${activeStudentIndex}] -> ${monthStudents[activeStudentIndex].name}`;
+                document.getElementById('traversalIndexInfo').textContent = `i: ${activeMonthIndex}, j: ${activeStudentIndex}`;
+                updateCodeView(currentCodeTab === 'cpp' ? 20 : 19);
+                renderVisualView();
+
+                const pendant = document.getElementById(`student-pendant-${activeMonthIndex}-${activeStudentIndex}`);
+                if (pendant) pendant.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                activeStudentIndex++;
+                traversalInterval = setTimeout(runTraversalStep, 1200);
+            } else {
+                // Move to next month
+                activeMonthIndex++;
+                activeStudentIndex = -1;
+                traversalInterval = setTimeout(runTraversalStep, 400);
+            }
+        }
+
+        function pauseTraversal() {
+            isTraversing = false;
+            clearTimeout(traversalInterval);
+            document.getElementById('btnPlay').classList.remove('hidden');
+            document.getElementById('btnPause').classList.add('hidden');
+        }
+
+        function resetTraversal() {
+            stopTraversal();
+            activeMonthIndex = -1;
+            activeStudentIndex = -1;
+            renderVisualView();
+            updateCodeView();
+        }
+
+        function stopTraversal() {
+            isTraversing = false;
+            clearTimeout(traversalInterval);
+            document.getElementById('btnPlay').classList.remove('hidden');
+            document.getElementById('btnPause').classList.add('hidden');
+            document.getElementById('traversalStatusBar').classList.add('hidden');
+            activeMonthIndex = -1;
+            activeStudentIndex = -1;
+            renderVisualView();
+            updateCodeView();
+        }
+
+        // Modal Management
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = "Új Diák Hozzáadása";
+            document.getElementById('editStudentId').value = "";
+            document.getElementById('inputName').value = "";
+            document.getElementById('inputMonth').value = "0";
+            document.getElementById('inputDay').value = "1";
+            document.getElementById('inputPhoto').value = "";
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function openAddModalForMonth(monthIdx) {
+            openAddModal();
+            document.getElementById('inputMonth').value = monthIdx;
+        }
+
+        function editStudent(monthIdx, studentId) {
+            const student = calendarData[monthIdx].find(s => s.id === studentId);
+            if (!student) return;
+
+            document.getElementById('modalTitle').textContent = "Diák Szerkesztése";
+            document.getElementById('editStudentId').value = studentId;
+            document.getElementById('inputName').value = student.name;
+            document.getElementById('inputMonth').value = monthIdx;
+            document.getElementById('inputDay').value = student.day;
+            document.getElementById('inputPhoto').value = student.photo || "";
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function closeStudentModal() {
+            document.getElementById('studentModal').classList.add('hidden');
+        }
+
+        function handleStudentSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editStudentId').value;
+            const name = document.getElementById('inputName').value;
+            const monthIdx = parseInt(document.getElementById('inputMonth').value);
+            const day = parseInt(document.getElementById('inputDay').value);
+            const photo = document.getElementById('inputPhoto').value;
+
+            if (editId) {
+                // Find and remove from old position if month changed, or update in place
+                let foundMonth = -1;
+                let foundIdx = -1;
+                calendarData.forEach((m, mi) => {
+                    m.forEach((s, si) => {
+                        if (s.id === editId) {
+                            foundMonth = mi;
+                            foundIdx = si;
+                        }
+                    });
+                });
+
+                if (foundMonth !== -1) {
+                    calendarData[foundMonth].splice(foundIdx, 1);
+                }
+
+                calendarData[monthIdx].push({ id: editId, name, day, photo });
+                showNotification("Diák adatai sikeresen frissítve!", "success");
+            } else {
+                const newId = 'st_' + Date.now();
+                calendarData[monthIdx].push({ id: newId, name, day, photo });
+                showNotification("Új diák sikeresen hozzáadva a lánchoz!", "success");
+            }
+
+            closeStudentModal();
+            renderVisualView();
+            renderListView();
+        }
+
+        function deleteStudent(monthIdx, studentId) {
+            calendarData[monthIdx] = calendarData[monthIdx].filter(s => s.id !== studentId);
+            renderVisualView();
+            renderListView();
+            showNotification("Diák törölve a vektorból.", "info");
+        }
+
+        function clearAllData() {
+            if (confirm("Biztosan törölni szeretnéd az összes hónap összes diákját?")) {
+                calendarData = Array.from({ length: 12 }, () => []);
+                renderVisualView();
+                renderListView();
+                showNotification("A naptár teljes tartalma törölve lett.", "info");
+            }
+        }
+
+        // Help popup
+        function openHelp() {
+            document.getElementById('helpPopup').classList.remove('hidden');
+        }
+        function closeHelp() {
+            document.getElementById('helpPopup').classList.add('hidden');
+        }
+
+        // Simple toast notification
+        function showNotification(msg, type = 'success') {
+            const toast = document.createElement('div');
+            const bg = type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
+            toast.className = `fixed bottom-6 right-6 z-50 ${bg} text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 transform translate-y-10 opacity-0 transition-all duration-300`;
+            toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> ${msg}`;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+
+</body></html>
