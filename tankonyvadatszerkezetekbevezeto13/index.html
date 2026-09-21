@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<!-- saved from url=(0134)file:///D:/programe%20scolare/tankonyv/Zen%C3%A9l%C5%91%20&%20Villog%C3%B3%20K%C3%A9peslap%20%C3%81ramk%C3%B6ri%20Szimul%C3%A1tor.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenélő &amp; Villogó Képeslap Áramköri Szimulátor</title>
+    <style>
+        :root {
+            --bg-color: #e2e8f0; /* Világos kékesszürke háttér */
+            --card-bg: #ffffff;
+            --primary: #ea580c;
+            --primary-light: #ffedd5;
+            --secondary: #0284c7;
+            --accent-green: #16a34a;
+            --accent-red: #dc2626;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 25px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px dashed var(--primary);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* CONTROLS */
+        .controls-panel {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .switch-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .switch-btn:hover {
+            background: #c2410c;
+        }
+
+        .theory-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theory-btn:hover {
+            background: #0369a1;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-badge.closed {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .status-badge.open {
+            background: rgba(22, 163, 74, 0.15);
+            color: #15803d;
+            border: 1px solid #16a34a;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* CIRCUIT CANVAS SECTION */
+        .circuit-section {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .circuit-title {
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        #circuitCanvas {
+            width: 100%;
+            height: 280px;
+            background: #0f172a;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* GRID PIPELINE */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .box h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        /* SCOPES */
+        canvas.scope {
+            width: 100%;
+            height: 100px;
+            background: #0f172a;
+            border-radius: 6px;
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* ROM GRID */
+        .rom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .rom-cell {
+            border: 1px solid var(--border);
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .rom-cell.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 8px rgba(234, 88, 12, 0.3);
+        }
+
+        .rom-addr { color: var(--text-muted); font-size: 0.7rem; }
+        .rom-val { font-weight: bold; color: var(--text-main); }
+        .rom-leds { color: var(--accent-green); font-size: 0.75rem; font-weight: bold; }
+
+        /* MODAL / POPUP PANEL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: flex-end;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            height: 100%;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            color: #1e293b;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--secondary);
+            font-size: 1.4rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: #e2e8f0;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .theory-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .theory-body h3 {
+            color: var(--primary);
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+        }
+
+        .theory-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .theory-body code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #c2410c;
+        }
+
+        .formula-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--secondary);
+            padding: 10px 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            font-weight: bold;
+            color: #0369a1;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .modal-content, .modal-content * {
+                visibility: visible;
+            }
+            .modal-content {
+                position: absolute;
+                left: 0; top: 0;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                box-shadow: none;
+                padding: 0;
+            }
+            .modal-actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⚡ Zenélő &amp; Villogó Képeslap Áramköri Szimulátor</h1>
+        <p>Mikrokontroller (ATtiny85) + ROM Kotta + PWM Hangszóró + Villogó LED-ek Interaktív Modellje</p>
+    </header>
+
+    <div class="controls-panel">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="switch-btn" onclick="toggleCard()">
+                <span id="btnIcon">📁</span> <span id="btnText">Képeslap Becsukása</span>
+            </button>
+            <span class="status-badge open" id="statusBadge">Kapcsoló: ZÁRVA (3V3 VCC)</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div>
+                <label for="tuneSelect" style="font-size:0.9rem; color: var(--text-muted); margin-right: 8px;">Dallam:</label>
+                <select id="tuneSelect" onchange="changeTune()">
+                    <option value="birthday">Bocsi, bocsi tarka tehén (Ritmusos LED)</option>
+                    <option value="jingle">Jingle Bells (Váltott LED-ek)</option>
+                    <option value="scale">C-Dúr Skála (Stroboszkóp effekt)</option>
+                </select>
+            </div>
+
+            <button class="theory-btn" onclick="openTheory()">
+                📖 Elmélet &amp; Tananyag
+            </button>
+        </div>
+    </div>
+
+    <!-- ÁRAMKÖRI KAPCSOLÁSI RAJZ INTERAKTÍV CANVAS -->
+    <div class="circuit-section">
+        <div class="circuit-title">
+            <span>🔌 Interaktív Áramköri Kapcsolási Rajz (Valós idejű elektronáramlás)</span>
+        </div>
+        <canvas id="circuitCanvas" width="1000" height="280"></canvas>
+    </div>
+
+    <div class="grid-2col">
+        <!-- OSCILLOSCOPES -->
+        <div class="box">
+            <h3>⚡ Kijelző &amp; Logikai Analizátor</h3>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">PB0: PWM Négyszöghullám (Piezo Csipogó)</div>
+            <canvas id="audioScope" class="scope" width="450" height="100"></canvas>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">PB1 &amp; PB2: LED-ek Digitális állapota (High/Low)</div>
+            <canvas id="ledScope" class="scope" width="450" height="100"></canvas>
+        </div>
+
+        <!-- ROM DATA -->
+        <div class="box">
+            <h3>💾 ROM Memória (Kotta + LED Maszk bájtok)</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+                Minden memóriacím tartalmazza a hangjegyet, az időtartamot és a <code>0bXX</code> LED bitmaszkot.
+            </p>
+            <div class="rom-grid" id="romGrid"><div class="rom-cell ">
+                <div class="rom-addr">0x00</div>
+                <div class="rom-val">C4</div>
+                <div class="rom-leds">LED: 0b01</div>
+            </div><div class="rom-cell active">
+                <div class="rom-addr">0x01</div>
+                <div class="rom-val">D4</div>
+                <div class="rom-leds">LED: 0b10</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x02</div>
+                <div class="rom-val">E4</div>
+                <div class="rom-leds">LED: 0b11</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x03</div>
+                <div class="rom-val">C4</div>
+                <div class="rom-leds">LED: 0b00</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x04</div>
+                <div class="rom-val">C4</div>
+                <div class="rom-leds">LED: 0b01</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x05</div>
+                <div class="rom-val">D4</div>
+                <div class="rom-leds">LED: 0b10</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x06</div>
+                <div class="rom-val">E4</div>
+                <div class="rom-leds">LED: 0b11</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x07</div>
+                <div class="rom-val">C4</div>
+                <div class="rom-leds">LED: 0b00</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x08</div>
+                <div class="rom-val">E4</div>
+                <div class="rom-leds">LED: 0b01</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x09</div>
+                <div class="rom-val">F4</div>
+                <div class="rom-leds">LED: 0b10</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x0A</div>
+                <div class="rom-val">G4</div>
+                <div class="rom-leds">LED: 0b11</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x0B</div>
+                <div class="rom-val">E4</div>
+                <div class="rom-leds">LED: 0b01</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x0C</div>
+                <div class="rom-val">F4</div>
+                <div class="rom-leds">LED: 0b10</div>
+            </div><div class="rom-cell ">
+                <div class="rom-addr">0x0D</div>
+                <div class="rom-val">G4</div>
+                <div class="rom-leds">LED: 0b11</div>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP MODAL FOR THEORY -->
+<div class="modal-overlay" id="theoryModal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>📚 Képeslap Áramköri &amp; Dekódolási Elmélet</h2>
+            <div class="modal-actions">
+                <button class="action-btn" onclick="window.print()">🖨️ Nyomtatás</button>
+                <button class="action-btn" onclick="closeTheory()">✕ Bezárás</button>
+            </div>
+        </div>
+        <div class="theory-body">
+            <h3>1. A Videós Képeslapok H.264 Dekódolása</h3>
+            <p>A videós képeslapok a Flash memóriából elindulva valós időben bontják ki a tömörített videót az alábbi lépésekben:</p>
+            <ul>
+                <li><b>Demuxing:</b> Az SPI Flash memóriából beolvasott `.mp4` fájlból szétválik a H.264 videó és az audio folyam.</li>
+                <li><b>Entrópia Dekódolás (CABAC/CAVLC):</b> Tömörített kódok visszaalakítása mozgásvektorokká és transzformációs adatokká.</li>
+                <li><b>Makroblokk Feldolgozás (16x16 pixel):</b> I-frame (teljes képek) és P-frame (különbségi képek) összefűzése.</li>
+                <li><b>Inverz DCT &amp; Mozgáskompenzáció:</b> Frekvenciatartományból térbeli adatok számítása.</li>
+                <li><b>Színkonverzió (YUV ➔ RGB):</b> A tömörített YUV420 formátumot kiszámítja RGB565 formátumba az alábbi képletekkel:</li>
+            </ul>
+
+            <div class="formula-box">
+                R = Y + 1.402 * (V - 128)<br>
+                G = Y - 0.344 * (U - 128) - 0.714 * (V - 128)<br>
+                B = Y + 1.772 * (U - 128)
+            </div>
+
+            <h3>2. A Zenélő Képeslap Mikrokontrolleres Működése</h3>
+            <p>Az olcsó zenélő/villogó képeslapok egyetlen 8 bites mikrokontrollert (pl. ATtiny85) és egy megszakításos ciklust (Timer Interrupt) használnak:</p>
+            <ul>
+                <li><b>Memóriastruktúra (ROM):</b> A memóriában tárolt struktúra: <code>{ Frekvencia (Hz), Időtartam (ms), LED Maszk }</code>.</li>
+                <li><b>PWM Hanggenerálás:</b> A mikrokontroller Timer számlálója négyszöghullámot ad ki a piezo csipogóra a kívánt frekvencián.</li>
+                <li><b>LED Vezérlés Bitmaszkkal:</b> A <code>0b01</code> az 1-es LED-et, a <code>0b10</code> a 2-es LED-et, a <code>0b11</code> mindkettőt bekapcsolja a GPIO regiszterbe írva.</li>
+            </ul>
+
+            <h3>3. Áramköri Méretezés &amp; Ohm Törvénye</h3>
+            <p>A LED-ek túláram elleni védelméhez előtét-ellenállást alkalmazunk:</p>
+
+            <div class="formula-box">
+                R = (V_CC - V_LED) / I_LED<br>
+                R = (3.3V - 2.0V) / 0.01A = 130 Ω ➔ (Szabványos: 150 Ω)
+            </div>
+
+            <h3>4. Csatlakoztatási Pontok (Pinout)</h3>
+            <ul>
+                <li><b>VCC:</b> 3.3V CR2032 Gombelem pozitív pólusa.</li>
+                <li><b>PB0:</b> PWM kimenet a Piezo hangszóróhoz.</li>
+                <li><b>PB1:</b> Digitális kimenet a Zöld LED-hez (150 Ω ellenálláson át).</li>
+                <li><b>PB2:</b> Digitális kimenet a Piros LED-hez (150 Ω ellenálláson át).</li>
+                <li><b>GND:</b> Közös testpont.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const NOTES = {
+        'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+        'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25, 'REST': 0
+    };
+
+    const TUNES = {
+        birthday: [
+            { note: 'C4', dur: 350, mask: 1 }, { note: 'D4', dur: 350, mask: 2 }, 
+            { note: 'E4', dur: 350, mask: 3 }, { note: 'C4', dur: 350, mask: 0 },
+            { note: 'C4', dur: 350, mask: 1 }, { note: 'D4', dur: 350, mask: 2 }, 
+            { note: 'E4', dur: 350, mask: 3 }, { note: 'C4', dur: 350, mask: 0 },
+            { note: 'E4', dur: 350, mask: 1 }, { note: 'F4', dur: 350, mask: 2 }, { note: 'G4', dur: 700, mask: 3 },
+            { note: 'E4', dur: 350, mask: 1 }, { note: 'F4', dur: 350, mask: 2 }, { note: 'G4', dur: 700, mask: 3 }
+        ],
+        jingle: [
+            { note: 'E4', dur: 300, mask: 1 }, { note: 'E4', dur: 300, mask: 2 }, { note: 'E4', dur: 600, mask: 3 },
+            { note: 'E4', dur: 300, mask: 1 }, { note: 'E4', dur: 300, mask: 2 }, { note: 'E4', dur: 600, mask: 3 },
+            { note: 'E4', dur: 300, mask: 1 }, { note: 'G4', dur: 300, mask: 2 }, { note: 'C4', dur: 450, mask: 3 }, { note: 'D4', dur: 150, mask: 0 },
+            { note: 'E4', dur: 1000, mask: 3 }
+        ],
+        scale: [
+            { note: 'C4', dur: 250, mask: 1 }, { note: 'D4', dur: 250, mask: 2 }, { note: 'E4', dur: 250, mask: 1 }, { note: 'F4', dur: 250, mask: 2 },
+            { note: 'G4', dur: 250, mask: 1 }, { note: 'A4', dur: 250, mask: 2 }, { note: 'B4', dur: 250, mask: 1 }, { note: 'C5', dur: 500, mask: 3 }
+        ]
+    };
+
+    let isCardOpen = false;
+    let currentTune = TUNES.birthday;
+    let currentStep = 0;
+    let audioCtx = null;
+    let currentOsc = null;
+    let stepTimer = null;
+
+    let currentFreq = 0;
+    let currentMask = 0;
+    let phase = 0;
+
+    const cCanvas = document.getElementById('circuitCanvas');
+    const cCtx = cCanvas.getContext('2d');
+    const aCanvas = document.getElementById('audioScope');
+    const aCtx = aCanvas.getContext('2d');
+    const lCanvas = document.getElementById('ledScope');
+    const lCtx = lCanvas.getContext('2d');
+
+    function openTheory() {
+        document.getElementById('theoryModal').style.display = 'flex';
+    }
+
+    function closeTheory() {
+        document.getElementById('theoryModal').style.display = 'none';
+    }
+
+    function renderROM() {
+        const grid = document.getElementById('romGrid');
+        grid.innerHTML = '';
+        currentTune.forEach((item, index) => {
+            const hexAddr = '0x' + index.toString(16).padStart(2, '0').toUpperCase();
+            const cell = document.createElement('div');
+            cell.className = `rom-cell ${index === currentStep && isCardOpen ? 'active' : ''}`;
+            cell.innerHTML = `
+                <div class="rom-addr">${hexAddr}</div>
+                <div class="rom-val">${item.note}</div>
+                <div class="rom-leds">LED: 0b${item.mask.toString(2).padStart(2, '0')}</div>
+            `;
+            grid.appendChild(cell);
+        });
+    }
+
+    function toggleCard() {
+        isCardOpen = !isCardOpen;
+        const btnIcon = document.getElementById('btnIcon');
+        const btnText = document.getElementById('btnText');
+        const badge = document.getElementById('statusBadge');
+
+        if (isCardOpen) {
+            btnIcon.innerText = '📁';
+            btnText.innerText = 'Képeslap Becsukása';
+            badge.innerText = 'Kapcsoló: ZÁRVA (3V3 VCC)';
+            badge.className = 'status-badge open';
+
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            currentStep = 0;
+            playNext();
+        } else {
+            btnIcon.innerText = '📂';
+            btnText.innerText = 'Képeslap Kinyitása';
+            badge.innerText = 'Kapcsoló: NYITVA (0V)';
+            badge.className = 'status-badge closed';
+
+            stopAudio();
+            clearTimeout(stepTimer);
+            currentFreq = 0;
+            currentMask = 0;
+            renderROM();
+        }
+    }
+
+    function changeTune() {
+        currentTune = TUNES[document.getElementById('tuneSelect').value];
+        currentStep = 0;
+        if (isCardOpen) {
+            stopAudio();
+            clearTimeout(stepTimer);
+            playNext();
+        } else {
+            renderROM();
+        }
+    }
+
+    function playNext() {
+        if (!isCardOpen) return;
+        renderROM();
+
+        const item = currentTune[currentStep];
+        currentFreq = NOTES[item.note];
+        currentMask = item.mask;
+
+        if (currentFreq > 0) {
+            startSquareWave(currentFreq);
+        } else {
+            stopAudio();
+        }
+
+        stepTimer = setTimeout(() => {
+            currentStep = (currentStep + 1) % currentTune.length;
+            playNext();
+        }, item.dur);
+    }
+
+    function startSquareWave(freq) {
+        stopAudio();
+        if (!audioCtx) return;
+        currentOsc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        currentOsc.type = 'square';
+        currentOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        currentOsc.connect(gain);
+        gain.connect(audioCtx.destination);
+        currentOsc.start();
+    }
+
+    function stopAudio() {
+        if (currentOsc) {
+            try { currentOsc.stop(); } catch(e){}
+            currentOsc.disconnect();
+            currentOsc = null;
+        }
+    }
+
+    function drawCircuit() {
+        cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
+
+        cCtx.lineWidth = 3;
+        cCtx.strokeStyle = isCardOpen ? '#38bdf8' : '#334155';
+
+        cCtx.beginPath();
+        cCtx.moveTo(80, 140); cCtx.lineTo(180, 140);
+        if (isCardOpen) {
+            cCtx.lineTo(300, 140);
+        } else {
+            cCtx.moveTo(220, 140); cCtx.lineTo(300, 140);
+        }
+        cCtx.stroke();
+
+        cCtx.strokeStyle = '#475569';
+        cCtx.beginPath();
+        cCtx.moveTo(80, 200); cCtx.lineTo(900, 200);
+        cCtx.stroke();
+
+        cCtx.strokeStyle = currentFreq > 0 ? '#ea580c' : '#334155';
+        cCtx.beginPath();
+        cCtx.moveTo(450, 110); cCtx.lineTo(600, 110);
+        cCtx.stroke();
+
+        cCtx.strokeStyle = (currentMask & 1) ? '#16a34a' : '#334155';
+        cCtx.beginPath();
+        cCtx.moveTo(450, 140); cCtx.lineTo(750, 140);
+        cCtx.stroke();
+
+        cCtx.strokeStyle = (currentMask & 2) ? '#dc2626' : '#334155';
+        cCtx.beginPath();
+        cCtx.moveTo(450, 170); cCtx.lineTo(750, 170);
+        cCtx.stroke();
+
+        // 1. BATTERY
+        cCtx.fillStyle = '#64748b';
+        cCtx.beginPath(); cCtx.arc(80, 170, 30, 0, Math.PI*2); cCtx.fill();
+        cCtx.fillStyle = '#f8fafc'; cCtx.font = '12px sans-serif'; cCtx.fillText('CR2032', 58, 174);
+
+        // 2. SWITCH
+        cCtx.fillStyle = '#cbd5e1';
+        cCtx.fillRect(180, 130, 10, 20);
+        cCtx.fillRect(210, 130, 10, 20);
+        cCtx.strokeStyle = '#dc2626';
+        cCtx.beginPath();
+        if (isCardOpen) {
+            cCtx.moveTo(185, 140); cCtx.lineTo(215, 140);
+        } else {
+            cCtx.moveTo(185, 140); cCtx.lineTo(210, 115);
+        }
+        cCtx.stroke();
+        cCtx.fillStyle = '#94a3b8'; cCtx.fillText('Nyitás Kapcsoló', 165, 100);
+
+        // 3. MCU
+        cCtx.fillStyle = '#1e293b';
+        cCtx.strokeStyle = '#ea580c';
+        cCtx.fillRect(300, 90, 150, 100);
+        cCtx.strokeRect(300, 90, 150, 100);
+        cCtx.fillStyle = '#f8fafc'; cCtx.font = 'bold 14px monospace';
+        cCtx.fillText('ATtiny85', 345, 135);
+        cCtx.font = '10px monospace'; cCtx.fillStyle = '#94a3b8';
+        cCtx.fillText('MCU (ROM+PWM)', 335, 155);
+
+        // 4. PIEZO
+        cCtx.fillStyle = currentFreq > 0 ? '#ea580c' : '#334155';
+        cCtx.beginPath(); cCtx.arc(600, 110, 20, 0, Math.PI*2); cCtx.fill();
+        cCtx.fillStyle = '#ffffff'; cCtx.fillText('Piezo', 585, 114);
+
+        // 5. LED 1 (GREEN)
+        cCtx.fillStyle = (currentMask & 1) ? '#16a34a' : '#14532d';
+        cCtx.beginPath(); cCtx.arc(750, 140, 12, 0, Math.PI*2); cCtx.fill();
+        if (currentMask & 1) {
+            cCtx.shadowColor = '#16a34a'; cCtx.shadowBlur = 15;
+            cCtx.beginPath(); cCtx.arc(750, 140, 12, 0, Math.PI*2); cCtx.fill();
+            cCtx.shadowBlur = 0;
+        }
+
+        // 6. LED 2 (RED)
+        cCtx.fillStyle = (currentMask & 2) ? '#dc2626' : '#7f1d1d';
+        cCtx.beginPath(); cCtx.arc(750, 170, 12, 0, Math.PI*2); cCtx.fill();
+        if (currentMask & 2) {
+            cCtx.shadowColor = '#dc2626'; cCtx.shadowBlur = 15;
+            cCtx.beginPath(); cCtx.arc(750, 170, 12, 0, Math.PI*2); cCtx.fill();
+            cCtx.shadowBlur = 0;
+        }
+
+        cCtx.strokeStyle = '#475569';
+        cCtx.beginPath();
+        cCtx.moveTo(600, 130); cCtx.lineTo(600, 200);
+        cCtx.moveTo(750, 182); cCtx.lineTo(750, 200);
+        cCtx.moveTo(375, 190); cCtx.lineTo(375, 200);
+        cCtx.stroke();
+    }
+
+    function drawScopes() {
+        aCtx.fillStyle = '#0f172a';
+        aCtx.fillRect(0, 0, aCanvas.width, aCanvas.height);
+        aCtx.strokeStyle = '#ea580c';
+        aCtx.lineWidth = 2;
+        aCtx.beginPath();
+
+        if (currentFreq > 0 && isCardOpen) {
+            phase += currentFreq / 800;
+            for (let x = 0; x < aCanvas.width; x++) {
+                const y = Math.sin(x * 0.08 + phase) > 0 ? 25 : 75;
+                if (x === 0) aCtx.moveTo(x, y); else aCtx.lineTo(x, y);
+            }
+        } else {
+            aCtx.moveTo(0, 75); aCtx.lineTo(aCanvas.width, 75);
+        }
+        aCtx.stroke();
+
+        lCtx.fillStyle = '#0f172a';
+        lCtx.fillRect(0, 0, lCanvas.width, lCanvas.height);
+
+        lCtx.strokeStyle = '#16a34a';
+        lCtx.lineWidth = 2;
+        lCtx.beginPath();
+        const y1 = (currentMask & 1) ? 20 : 45;
+        lCtx.moveTo(0, y1); lCtx.lineTo(lCanvas.width, y1);
+        lCtx.stroke();
+
+        lCtx.strokeStyle = '#dc2626';
+        lCtx.beginPath();
+        const y2 = (currentMask & 2) ? 60 : 85;
+        lCtx.moveTo(0, y2); lCtx.lineTo(lCanvas.width, y2);
+        lCtx.stroke();
+    }
+
+    function loop() {
+        drawCircuit();
+        drawScopes();
+        requestAnimationFrame(loop);
+    }
+
+    renderROM();
+    loop();
+</script>
+
+
+</body></html>

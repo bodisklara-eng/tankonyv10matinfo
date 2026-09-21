@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!-- saved from url=(0152)file:///D:/programe%20scolare/tankonyv/Sz%C3%BCrre%C3%A1lis%20Zen%C3%A9l%C5%91%20K%C3%A9peslap%20%E2%80%94%20STEAM%20Projekt%20(10.%20Oszt%C3%A1ly).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szürreális Zenélő Képeslap — STEAM Projekt (10. Osztály)</title>
+    <style>
+        :root {
+            /* VILÁGOS KÉK-SZÜRKE TÉMA */
+            --bg-color: #e2e8f0;
+            --card-bg: #f1f5f9;
+            --text-color: #1e293b;
+            --accent-red: #be123c;
+            --accent-gold: #d97706;
+            --accent-blue: #0284c7;
+            --code-bg: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+
+        /* FEJLÉC */
+        header { background: linear-gradient(135deg, #0284c7, #475569); padding: 25px; border-radius: 12px; border: 1px solid #94a3b8; box-shadow: 0 10px 20px rgba(0,0,0,0.08); color: white; }
+        header h1 { font-size: 1.8rem; color: #f8fafc; margin-bottom: 8px; }
+        header p { color: #e2e8f0; font-size: 0.95rem; }
+
+        /* LÉPÉS KÁRTYÁK */
+        .step-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .step-title { font-size: 1.25rem; color: #0284c7; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; font-weight: bold; }
+
+        /* KÓD ÉS MAGYARÁZAT GRID */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+        .explanation { font-size: 0.9rem; background: #ffffff; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-blue); border: 1px solid var(--border-color); }
+        pre { background: var(--code-bg); padding: 12px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82rem; color: #0f172a; overflow-x: auto; border: 1px solid var(--border-color); }
+
+        /* ELEM KIEMELÉSEK */
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .badge-py { background: #dbeafe; color: #1e40af; }
+        .badge-cpp { background: #fce7f3; color: #9d174d; }
+
+        /* INTERAKTÍV KÉPESLAP PROTOTÍPUS */
+        .postcard-viewport {
+            width: 100%;
+            height: 380px;
+            /* VILÁGOS KÉK-SZÜRKE GRADIENS HÁTTÉR */
+            background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 50%, #e2e8f0 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #64748b;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* ANIMÁCIÓK: FELHŐK ÉS ZEPPELIN */
+        .cloud {
+            position: absolute; top: 20px; right: -200px; width: 220px; height: 70px;
+            background: rgba(255, 255, 255, 0.7); border-radius: 50px; filter: blur(5px);
+            animation: floatCloud 20s linear infinite;
+        }
+        @keyframes floatCloud { from { transform: translateX(0); } to { transform: translateX(-1000px); } }
+
+        .zeppelin {
+            position: absolute; top: 30px; left: -150px; font-size: 2.5rem; opacity: 0.85;
+            animation: floatZeppelin 25s ease-in-out infinite alternate;
+        }
+        @keyframes floatZeppelin { from { transform: translateX(0) translateY(0); } to { transform: translateX(800px) translateY(20px); } }
+
+        /* LUFIK ANIMÁCIÓJA */
+        .balloon-container { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+        .balloon {
+            position: absolute; bottom: -80px; width: 30px; height: 40px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 8s ease-in infinite;
+        }
+        .balloon::after {
+            content: ''; position: absolute; bottom: -12px; left: 14px;
+            width: 2px; height: 14px; background: #64748b;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-450px) rotate(15deg); opacity: 0.2; }
+        }
+
+        /* EMBERKE (KIRAJZOLT FIGURA) */
+        .person {
+            position: absolute; bottom: 30px; left: 100px;
+            width: 40px; height: 110px; display: flex; flex-direction: column; align-items: center;
+        }
+        .head {
+            width: 24px; height: 24px; background: #fca5a5; border-radius: 50%;
+            border: 2px solid #881337; position: relative;
+        }
+        .goggles {
+            position: absolute; top: 6px; left: 2px; width: 16px; height: 6px;
+            background: #0284c7; border-radius: 4px; border: 1px solid #0f172a;
+        }
+        .body-coat {
+            width: 32px; height: 50px; background: var(--accent-red);
+            border-radius: 6px 6px 0 0; margin-top: 2px; border: 2px solid #881337;
+        }
+        .legs { display: flex; gap: 6px; width: 24px; height: 30px; }
+        .leg { width: 8px; height: 100%; background: #334155; border-radius: 0 0 4px 4px; }
+
+        .suitcases { position: absolute; bottom: 20px; right: 50px; display: flex; gap: 8px; }
+        .suitcase { width: 35px; height: 25px; background: #78350f; border: 2px solid #451a03; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+
+        /* INTERAKTÍV VEZÉRLŐK */
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        .btn { background: var(--accent-blue); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn:hover { background: #0369a1; }
+        .btn-red { background: var(--accent-red); }
+        .btn-red:hover { background: #9f1239; }
+        .btn-gold { background: var(--accent-gold); }
+        .btn-gold:hover { background: #b45309; }
+
+        .console-output { background: #ffffff; color: #0284c7; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; min-height: 40px; margin-top: 10px; border: 1px solid var(--border-color); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🎬 Szürreális Zenélő Képeslap — STEAM Projekt</h1>
+        <p>10. Osztályos Informatika: Adatszerkezetek, Animációk &amp; Világos Témájú Webes Szimuláció</p>
+    </header>
+
+    <!-- 1. LÉPÉS -->
+    <div class="step-card">
+        <div class="step-title">1. Lépés: Képeslap Specifikáció &amp; PDF Dokumentálás</div>
+        <div class="grid">
+            <div class="explanation">
+                <strong>Új Vizuális Koncepció:</strong><br>
+                Világos kék-szürke égbolt felhőkkel, lebegő lufikkal, kirajzolt figurával és vintage bőröndökkel.<br><br>
+                <strong>Feladat:</strong> Az elemek és objektumok dinamikus generálása listákból.
+            </div>
+            <div>
+                <span class="badge badge-py">Python ReportLab</span>
+                <pre># PDF specifikáció generálása
+elements = ["Emberke gurgulával", "Színes Lufik", "Léghajó"]
+for elem in elements:
+    print(f"Képeslap elem: {elem}")
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. LÉPÉS: INTERAKTÍV PROTOTÍPUS -->
+    <div class="step-card">
+        <div class="step-title">2. Lépés: Interaktív Képeslap Emberkékkel és Lufikkal</div>
+        
+        <!-- VILÁGOS KÉK-SZÜRKE KÉPESLAP -->
+        <div class="postcard-viewport" id="viewport">
+            <div class="cloud"></div>
+            <div class="zeppelin">🎈</div>
+
+            <!-- DYNAMIC LUFIK CONTAINER -->
+            <div class="balloon-container" id="balloonContainer"><div class="balloon" style="background-color: rgb(225, 29, 72); left: 20%; animation-duration: 7s;"></div><div class="balloon" style="background-color: rgb(2, 132, 199); left: 50%; animation-duration: 9s;"></div><div class="balloon" style="background-color: rgb(217, 119, 6); left: 75%; animation-duration: 6s;"></div></div>
+            
+            <!-- EMBERKE (KIRAJZOLVA) -->
+            <div class="person" id="person">
+                <div class="head">
+                    <div class="goggles"></div>
+                </div>
+                <div class="body-coat"></div>
+                <div class="legs">
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                </div>
+            </div>
+
+            <!-- BŐRÖNDÖK -->
+            <div class="suitcases" id="suitcaseContainer"><div class="suitcase" style="background-color: rgb(120, 53, 15);"></div><div class="suitcase" style="background-color: rgb(69, 26, 3);"></div></div>
+        </div>
+
+        <!-- VEZÉRLŐ PULT -->
+        <div class="controls">
+            <button class="btn btn-red" onclick="toggleMusic()">🎵 Zene Lejátszása / Leállítása</button>
+            <button class="btn btn-gold" onclick="addBalloon()">🎈 Lufi Hozzáadása (Lista Bővítés)</button>
+            <button class="btn" onclick="addSuitcase()">🧳 Bőrönd Hozzáadása</button>
+        </div>
+
+        <div class="console-output" id="consoleOutput">&gt; [BŐRÖND LISTA] Bőröndök száma: 6</div>
+    </div>
+
+</div>
+
+<script>
+    // =========================================================================
+    // JAVASCRIPT ADATSTRUKTÚRÁK ÉS ANIMÁCIÓK
+    // =========================================================================
+
+    const melodyList = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00]; 
+    let balloonList = [
+        { id: 1, color: '#e11d48', left: '20%', speed: '7s' },
+        { id: 2, color: '#0284c7', left: '50%', speed: '9s' },
+        { id: 3, color: '#d97706', left: '75%', speed: '6s' }
+    ];
+
+    let suitcaseList = [
+        { id: 1, color: '#78350f' },
+        { id: 2, color: '#451a03' }
+    ];
+
+    // LUFIK RENDERELÉSE A LISTÁBÓL
+    function renderBalloons() {
+        const container = document.getElementById('balloonContainer');
+        container.innerHTML = '';
+        balloonList.forEach(b => {
+            const div = document.createElement('div');
+            div.className = 'balloon';
+            div.style.backgroundColor = b.color;
+            div.style.left = b.left;
+            div.style.animationDuration = b.speed;
+            container.appendChild(div);
+        });
+    }
+
+    function addBalloon() {
+        const colors = ['#e11d48', '#0284c7', '#d97706', '#16a34a', '#9333ea'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const randomLeft = Math.floor(Math.random() * 80 + 10) + '%';
+        const randomSpeed = (Math.random() * 4 + 5).toFixed(1) + 's';
+
+        balloonList.push({
+            id: balloonList.length + 1,
+            color: randomColor,
+            left: randomLeft,
+            speed: randomSpeed
+        });
+
+        renderBalloons();
+        logToConsole(`[LUFI LISTA BŐVÍTVE] Új lufi hozzáadva! Összesen: ${balloonList.length} db lufi lebeg.`);
+    }
+
+    // BŐRÖNDÖK RENDERELÉSE
+    function renderSuitcases() {
+        const container = document.getElementById('suitcaseContainer');
+        container.innerHTML = '';
+        suitcaseList.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'suitcase';
+            div.style.backgroundColor = item.color;
+            container.appendChild(div);
+        });
+    }
+
+    function addSuitcase() {
+        suitcaseList.push({ id: suitcaseList.length + 1, color: '#78350f' });
+        renderSuitcases();
+        logToConsole(`[BŐRÖND LISTA] Bőröndök száma: ${suitcaseList.length}`);
+    }
+
+    renderBalloons();
+    renderSuitcases();
+
+    // =========================================================================
+    // AUDIO SZINTETIZÁTOR
+    // =========================================================================
+    let audioCtx = null;
+    let isPlaying = false;
+    let noteIndex = 0;
+    let intervalId = null;
+
+    function playNote(freq) {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.4);
+    }
+
+    function toggleMusic() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        if (isPlaying) {
+            clearInterval(intervalId);
+            isPlaying = false;
+            logToConsole("[AUDIO] Zene leállítva.");
+        } else {
+            isPlaying = true;
+            intervalId = setInterval(() => {
+                const currentFreq = melodyList[noteIndex % melodyList.length];
+                playNote(currentFreq);
+                
+                // Emberke mozgása a ritmusra
+                const person = document.getElementById('person');
+                person.style.transform = `translateY(${(noteIndex % 2) * -6}px)`;
+
+                logToConsole(`[ZENE LEJÁTSZÁS] Frekvencia: ${currentFreq} Hz | Emberke táncol`);
+                noteIndex++;
+            }, 400);
+        }
+    }
+
+    function logToConsole(msg) {
+        document.getElementById('consoleOutput').innerText = `> ${msg}`;
+    }
+</script>
+
+
+</body></html>

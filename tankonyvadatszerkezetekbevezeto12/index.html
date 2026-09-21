@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/Utilizator/Downloads/halmazok%202.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halmazok - Elmélet és Feladatok</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Dinamikus, mozgó háttér */
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #31103f, #0f2b38);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Központi cím */
+        .center-title {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 15px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Kétoldalas konténer (Elmélet vs Feladatok) */
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            height: 65vh;
+            display: flex;
+        }
+
+        .side-zone {
+            position: relative;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .zone-label {
+            position: absolute;
+            top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .left-zone .zone-label { left: 20px; color: #38bdf8; }
+        .right-zone .zone-label { right: 20px; color: #facc15; }
+
+        /* Egyedi buborék */
+        .bubble {
+            position: absolute;
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5), 
+                        0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+
+        .bubble:hover {
+            transform: scale(1.15);
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.9), 
+                        0 0 25px rgba(255, 255, 255, 0.6);
+            z-index: 20;
+        }
+
+        /* Információs panel alul */
+        #info-panel {
+            width: 90%;
+            max-width: 950px;
+            height: 30vh;
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px 15px 0 0;
+            padding: 15px 25px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            margin-bottom: 0;
+        }
+
+        #info-panel h2 {
+            color: #38bdf8;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        #info-panel p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+        }
+
+        .hint {
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .answer-btn {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .answer-btn:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Középső felirat -->
+    <div class="center-title">Halmazok tulajdonságai</div>
+
+    <!-- Kétoldalas mozgó buborékok tere -->
+    <div id="canvas-container">
+        <!-- Bal oldal: Elmélet -->
+        <div class="side-zone left-zone" id="left-zone">
+            <div class="zone-label">📖 Elmélet</div>
+        <div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(255, 118, 117), rgb(214, 48, 49)); left: 59.6577px; top: 353.254px;">Részhalmaz</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(116, 185, 255), rgb(9, 132, 227)); left: 511.726px; top: 167.387px;">Egyenlőség</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(85, 239, 196), rgb(0, 184, 148)); left: 65.5183px; top: 104.204px;">Unió</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(255, 234, 167), rgb(253, 203, 110)); left: 178.86px; top: 253.583px;">Metszet</div></div>
+        <!-- Jobb oldal: Feladatok -->
+        <div class="side-zone right-zone" id="right-zone">
+            <div class="zone-label">✍️ Feladatok</div>
+        <div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(250, 177, 160), rgb(225, 112, 85)); left: 463.782px; top: 373.011px;">1. Feladat: Metszet</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(162, 155, 254), rgb(108, 92, 231)); left: 470.233px; top: 116.617px;">2. Feladat: Unió</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(253, 121, 168), rgb(232, 67, 147)); left: 243.611px; top: 65.3525px;">3. Feladat: Részhalmaz</div><div class="bubble" style="background: radial-gradient(circle at 30% 30%, rgb(253, 203, 110), rgb(225, 112, 85)); left: 119.184px; top: 52.5474px;">4. Feladat: Különbség</div></div>
+    </div>
+
+    <!-- Alsó információs doboz -->
+    <div id="info-panel">
+                    <h2 style="color: #38bdf8;">📖 Elmélet: Egyenlőség</h2>
+                    <p><strong>Definíció:</strong> Két halmaz egyenlő, ha pontosan ugyanazokat az elemeket tartalmazzák ($A = B$). A sorrend nem számít.</p>
+                    <p style="margin-top: 6px; color: #cbd5e1;">Példa: $A = \{1, 2, 3\}$ és $B = \{3, 1, 2\}$ egyenlő halmazok.</p>
+                </div>
+
+    <script>
+        // ELMÉLET ADATOK (Bal oldalra)
+        const elmeletAdatok = [
+            {
+                nev: "Részhalmaz",
+                szin: "radial-gradient(circle at 30% 30%, #ff7675, #d63031)",
+                leiras: "Az A halmaz részhalmaza a B-nek ($A \\subset B$), ha az A minden eleme egyben a B halmaznak is eleme.",
+                pelda: "Példa: Ha $A = \\{2, 4\\}$ és $B = \\{1, 2, 3, 4, 5\\}$, akkor $A$ részhalmaza $B$-nek.",
+                tipus: "elmelet"
+            },
+            {
+                nev: "Egyenlőség",
+                szin: "radial-gradient(circle at 30% 30%, #74b9ff, #0984e3)",
+                leiras: "Két halmaz egyenlő, ha pontosan ugyanazokat az elemeket tartalmazzák ($A = B$). A sorrend nem számít.",
+                pelda: "Példa: $A = \\{1, 2, 3\\}$ és $B = \\{3, 1, 2\\}$ egyenlő halmazok.",
+                tipus: "elmelet"
+            },
+            {
+                nev: "Unió",
+                szin: "radial-gradient(circle at 30% 30%, #55efc4, #00b894)",
+                leiras: "Két halmaz uniója ($A \\cup B$) azok az elemek, amelyek legalább az egyik halmaznak elemei.",
+                pelda: "Példa: Ha $A = \\{1, 2\\}$ és $B = \\{2, 3\\}$, akkor $A \\cup B = \\{1, 2, 3\\}$.",
+                tipus: "elmelet"
+            },
+            {
+                nev: "Metszet",
+                szin: "radial-gradient(circle at 30% 30%, #ffeaa7, #fdcb6e)",
+                leiras: "Két halmaz metszete ($A \\cap B$) azoknak az elemeknek a halmaza, amelyek mindkét halmazban benne vannak.",
+                pelda: "Példa: Ha $A = \\{1, 2, 3\\}$ és $B = \\{2, 3, 4\\}$, akkor $A \\cap B = \\{2, 3\\}$.",
+                tipus: "elmelet"
+            }
+        ];
+
+        // FELADATOK ADATOK (Jobb oldalra)
+        const feladatAdatok = [
+            {
+                nev: "1. Feladat: Metszet",
+                szin: "radial-gradient(circle at 30% 30%, #fab1a0, #e17055)",
+                leiras: "Adott az $A = \\{2, 4, 6, 8\\}$ és a $B = \\{6, 8, 10, 12\\}$ halmaz.",
+                feladat: "Add meg a két halmaz metszetét ($A \\cap B$)!",
+                megoldas: "Megoldás: $\\{6, 8\\}$ (azok a számok, amelyek mindkét halmazban szerepelnek).",
+                tipus: "feladat"
+            },
+            {
+                nev: "2. Feladat: Unió",
+                szin: "radial-gradient(circle at 30% 30%, #a29bfe, #6c5ce7)",
+                leiras: "Adott az $A = \\{a, b\\}$ és a $B = \\{b, c, d\\}$ halmaz.",
+                feladat: "Add meg a két halmaz unióját ($A \\cup B$)!",
+                megoldas: "Megoldás: $\\{a, b, c, d\\}$ (összevonva, a duplikációt kiszűrve).",
+                tipus: "feladat"
+            },
+            {
+                nev: "3. Feladat: Részhalmaz",
+                szin: "radial-gradient(circle at 30% 30%, #fd79a8, #e84393)",
+                leiras: "Vizsgáld meg a következő állítást:",
+                feladat: "Részhalmaza-e a $\\{3, 5\\}$ halmaz a prímszámok halmazának?",
+                megoldas: "Megoldás: Igen, mert a 3 és az 5 is prímszám.",
+                tipus: "feladat"
+            },
+            {
+                nev: "4. Feladat: Különbség",
+                szin: "radial-gradient(circle at 30% 30%, #fdcb6e, #e17055)",
+                leiras: "Legyen $A = \\{1, 2, 3, 4, 5\\}$ és $B = \\{4, 5, 6\\}$.",
+                feladat: "Mennyi az $A \\setminus B$ (A különbség B) értéke?",
+                megoldas: "Megoldás: $\\{1, 2, 3\\}$ (azok az elemek, amelyek benne vannak az A-ban, de nincs benne a B-ben).",
+                tipus: "feladat"
+            }
+        ];
+
+        const leftZone = document.getElementById('left-zone');
+        const rightZone = document.getElementById('right-zone');
+        const infoPanel = document.getElementById('info-panel');
+        const bubbles = [];
+
+        function createBubbles() {
+            // Elmélet buborékok a bal oldalon
+            setupZoneBubbles(elmeletAdatok, leftZone, 'left');
+            // Feladat buborékok a jobb oldalon
+            setupZoneBubbles(feladatAdatok, rightZone, 'right');
+
+            requestAnimationFrame(animateBubbles);
+        }
+
+        function setupZoneBubbles(dataArray, zoneElement, side) {
+            const w = zoneElement.clientWidth;
+            const h = zoneElement.clientHeight;
+
+            dataArray.forEach((adat) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.innerText = adat.nev;
+                bubble.style.background = adat.szin;
+
+                let posX = Math.random() * (w - 120) + 10;
+                let posY = Math.random() * (h - 130) + 40; // Hagyjunk helyet a címkének felül
+
+                bubble.style.left = posX + 'px';
+                bubble.style.top = posY + 'px';
+
+                const speed = 0.6 + Math.random() * 0.9;
+                const angle = Math.random() * Math.PI * 2;
+                
+                const bubbleObj = {
+                    element: bubble,
+                    zone: zoneElement,
+                    x: posX,
+                    y: posY,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    width: 105,
+                    height: 105,
+                    adat: adat
+                };
+
+                bubble.addEventListener('click', () => updateInfoPanel(adat));
+                bubble.addEventListener('mouseenter', () => updateInfoPanel(adat));
+
+                zoneElement.appendChild(bubble);
+                bubbles.push(bubbleObj);
+            });
+        }
+
+        function updateInfoPanel(adat) {
+            if (adat.tipus === 'elmelet') {
+                infoPanel.innerHTML = `
+                    <h2 style="color: #38bdf8;">📖 Elmélet: ${adat.nev}</h2>
+                    <p><strong>Definíció:</strong> ${adat.leiras}</p>
+                    <p style="margin-top: 6px; color: #cbd5e1;">${adat.pelda}</p>
+                `;
+            } else {
+                infoPanel.innerHTML = `
+                    <h2 style="color: #facc15;">✍️ ${adat.nev}</h2>
+                    <p><strong>Helyzet:</strong> ${adat.leiras}</p>
+                    <p style="margin-top: 4px; color: #38bdf8;"><strong>Kérdés:</strong> ${adat.feladat}</p>
+                    <button class="answer-btn" onclick="showSolution(this, \`${adat.megoldas}\`)">Megoldás mutatása</button>
+                `;
+            }
+        }
+
+        window.showSolution = function(btn, solutionText) {
+            const p = document.createElement('p');
+            p.style.marginTop = "8px";
+            p.style.color = "#4ade80";
+            p.style.fontWeight = "bold";
+            p.innerHTML = solutionText;
+            btn.replaceWith(p);
+        };
+
+        function animateBubbles() {
+            bubbles.forEach(b => {
+                const w = b.zone.clientWidth;
+                const h = b.zone.clientHeight;
+
+                b.x += b.vx;
+                b.y += b.vy;
+
+                // Falak ütközése a saját zónáján belül
+                if (b.x <= 0 || b.x >= w - b.width) {
+                    b.vx *= -1;
+                    b.x = Math.max(0, Math.min(b.x, w - b.width));
+                }
+                // Fent hagyni helyet a "zone-label"-nek (~50px)
+                if (b.y <= 45 || b.y >= h - b.height) {
+                    b.vy *= -1;
+                    b.y = Math.max(45, Math.min(b.y, h - b.height));
+                }
+
+                b.element.style.left = b.x + 'px';
+                b.element.style.top = b.y + 'px';
+            });
+
+            requestAnimationFrame(animateBubbles);
+        }
+
+        // Indítás
+        window.addEventListener('load', createBubbles);
+    </script>
+
+</body></html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///D:/programe%20scolare/tankonyv/gemini-code-1789826118732.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritka Mátrixok Tömörítése - Elmélet</title>
+    
+    <!-- html2pdf.js könyvtár a PDF generáláshoz -->
+    <script src="./index_files/html2pdf.bundle.min.js.descărcare"></script>
+
+    <style>
+        :root {
+            --p-color: #2c3e50;
+            --h-color: #e74c3c;
+            --bg-color: #ecf0f1;
+            --shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nyomtatható A4-es oldal stílusa */
+        .page {
+            width: 210mm; /* A4 szélesség */
+            min-height: 297mm; /* A4 magasság */
+            padding: 20mm; /* Margó */
+            margin: 10mm 0; /* Oldalak közötti távolság a képernyőn */
+            background: white;
+            box-shadow: var(--shadow);
+            box-sizing: border-box;
+            page-break-after: always; /* Nyomtatáskor új oldal */
+            color: var(--p-color);
+            line-height: 1.6;
+        }
+
+        h1 { color: var(--h-color); text-align: center; border-bottom: 2px solid var(--h-color); padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 1.5em; border-left: 5px solid var(--h-color); padding-left: 10px; }
+        p { margin-bottom: 1em; text-align: justify; }
+        
+        strong { color: #c0392b; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+
+        .matrix-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 10px auto;
+            font-size: 0.9em;
+        }
+
+        table, th, td { border: 1px solid #bdc3c7; }
+        th, td { width: 30px; height: 30px; text-align: center; }
+        th { background-color: #f2f2f2; color: #7f8c8d; }
+
+        .sparse-val {
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+
+        /* Letöltés gomb stílusa */
+        #downloadBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: background 0.3s, transform 0.1s;
+            z-index: 1000; /* Mindig felül legyen */
+        }
+
+        #downloadBtn:hover { background-color: #219150; }
+        #downloadBtn:active { transform: scale(0.98); }
+
+        /* Nyomtatási beállítások */
+        @media print {
+            body { background: white; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+            }
+            #downloadBtn { display: none; } /* Gomb elrejtése a PDF-ben */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Letöltés Gomb -->
+    <button id="downloadBtn">Letöltés PDF-ként</button>
+
+    <!-- PDF TARTALOM KEZDETE -->
+    <div id="pdfContent">
+        
+        <!-- 1. OLDAL -->
+        <div class="page">
+            <h1>Ritka Mátrixok Tömörítése: Elméleti Összefoglaló</h1>
+            
+            <h2>1. Bevezetés: Mi az a Ritka Mátrix?</h2>
+            <p>
+                A matematikai és informatikai alkalmazásokban gyakran találkozunk olyan mátrixokkal, amelyekben a nem-nulla elemek száma elhanyagolható az összes elem számához képest. Az ilyen mátrixokat <strong>ritka mátrixoknak</strong> (sparse matrices) nevezzük. Ezzel szemben azokat a mátrixokat, amelyekben a legtöbb elem értékes adatot hordoz, sűrű mátrixoknak (dense matrices) hívjuk.
+            </p>
+            <p>
+                Tipikus példák ritka mátrixokra:
+                </p><ul>
+                    <li>Gráfelméleti szomszédsági mátrixok (ha a gráf kevés élet tartalmaz).</li>
+                    <li>Termék-felhasználó értékelési mátrixok (pl. Netflix, Amazon - egy felhasználó csak a termékek töredékét értékeli).</li>
+                    <li>Képi adatok (pl. Pixel art, ahol a háttér egyszínű).</li>
+                </ul>
+            <p></p>
+
+            <div class="highlight">
+                <strong>Definíció:</strong> Egy $A_{m \times n}$ mátrix ritka, ha a nem-nulla elemek száma lényegesen kisebb, mint az $m \times n$ szorzat.
+            </div>
+
+            <h2>2. A Tárolás Problémája</h2>
+            <p>
+                Képzeljünk el egy 10,000 $\times$ 10,000 méretű mátrixot. Ez összesen 100,000,000 (100 millió) elemet tartalmaz. Ha minden elemet 4 bájtos egész számként tárolunk, a mátrix memóriafogyasztása körülbelül <strong>400 MB</strong>.
+            </p>
+            <p>
+                Ha ebben a mátrixban csak 10,000 nem-nulla elem van, akkor a tárhely 99.99%-át nullák tárolására pazaroljuk. Ez nemcsak memóriapazarlás, de a mátrixon végzett műveletek (pl. összeadás, szorzás) lassulását is okozza, mivel a számítógépnek rengeteg nullával kell számolnia.
+            </p>
+            
+            <p style="text-align: center; font-style: italic; margin-top: 30px;">
+                (Az elmélet folytatása a következő oldalon...)
+            </p>
+        </div>
+
+        <!-- 2. OLDAL -->
+        <div class="page">
+            <h2>3. Tömörítési Stratégiák</h2>
+            <p>
+                A ritka mátrixok tömörítésének alapötlete egyszerű: <strong>csak a nem-nulla elemeket és azok pozícióját (indexeit) tároljuk.</strong> Több különböző formátum létezik erre a célra, de a legegyszerűbb és legelterjedtebb a <strong>Koordináta Formátum (Coordinate Format - COO)</strong>.
+            </p>
+
+            <h3>3.1. A Koordináta Formátum (COO)</h3>
+            <p>
+                A COO formátum három lineáris tömböt (vagy listát) használ az adatok tárolására:
+            </p>
+            <ul>
+                <li><strong>Sor indexek (row):</strong> Tárolja minden nem-nulla elem sor pozícióját.</li>
+                <li><strong>Oszlop indexek (col):</strong> Tárolja minden nem-nulla elem oszlop pozícióját.</li>
+                <li><strong>Értékek (val):</strong> Tárolja magát a nem-nulla értéket.</li>
+            </ul>
+            <p>
+                Ha a mátrixban $k$ darab nem-nulla elem van, akkor mindhárom tömb $k$ méretű lesz. A tárolt adatmennyiség így $3k$, ami független a mátrix eredeti méretétől.
+            </p>
+
+            <h2>4. Példa Szemléltetése</h2>
+            <p>
+                Vegyünk egy egyszerű 5 $\times$ 5 méretű ritka mátrixot, amelyben csak 4 nem-nulla elem található.
+            </p>
+
+            <div class="matrix-container">
+                <div>
+                    <strong>Eredeti 5x5 Raktár (Mátrix)</strong>
+                    <table>
+                        <tbody><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+                        <tr><th>0</th><td>0</td><td>0</td><td class="sparse-val">5</td><td>0</td><td>0</td></tr>
+                        <tr><th>1</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>2</th><td class="sparse-val">8</td><td>0</td><td>0</td><td class="sparse-val">3</td><td>0</td></tr>
+                        <tr><th>3</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>4</th><td>0</td><td class="sparse-val">9</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody></table>
+                </div>
+
+                <div>
+                    <strong>Tömörített Tárolás (COO)</strong>
+                    <table style="width: auto;">
+                        <tbody><tr><th>i (Sor)</th><th>j (Oszlop)</th><th>Érték</th></tr>
+                        <tr><td>0</td><td>2</td><td class="sparse-val">5</td></tr>
+                        <tr><td>2</td><td>0</td><td class="sparse-val">8</td></tr>
+                        <tr><td>2</td><td>3</td><td class="sparse-val">3</td></tr>
+                        <tr><td>4</td><td>1</td><td class="sparse-val">9</td></tr>
+                    </tbody></table>
+                </div>
+            </div>
+
+            <h3>Memória Megtakarítás Számítása</h3>
+            <p>
+                </p><ul>
+                    <li><strong>Eredeti tárolás:</strong> 5 $\times$ 5 = 25 egység (bájt).</li>
+                    <li><strong>Tömörített tárolás:</strong> 3 $\times$ 4 (ritka elem) = 12 egység.</li>
+                    <li><strong>Megtakarítás:</strong> $(1 - \frac{12}{25}) \times 100 = \mathbf{52\%}$.</li>
+                </ul>
+                Képzeljük el, mekkora lenne ez a megtakarítás egy $10,000 \times 10,000$-es mátrix esetén!
+            <p></p>
+        </div>
+        
+    </div>
+    <!-- PDF TARTALOM VÉGE -->
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // A PDF generáláshoz használt tartalom
+            const element = document.getElementById('pdfContent');
+            
+            // PDF beállítások
+            const opt = {
+                margin:       10, // Margó mm-ben (kis korrekció az oldalmargóhoz)
+                filename:     'ritka_matrix_elmelet.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true }, // Jobb minőség
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: 'css' } // CSS page-break betartása
+            };
+
+            // PDF generálás és letöltés
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+
+
+</body></html>

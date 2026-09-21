@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///C:/Users/Utilizator/Downloads/hlmaz.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Kódolási Csoportok Varázslatos Világa</title>
+    <style>
+        :root {
+            --bg-color: #1a0b2e;
+            --bubble-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            --accent-glow: #00f2fe;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #2e1a47 0%, #110522 100%);
+            color: #ffffff;
+            font-family: 'Comic Sans MS', 'Bubblegum Sans', cursive, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Szeszélyes háttér csillogó effektekkel */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white 1px, transparent 0);
+            background-size: 50px 50px;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Utasítás a tetején */
+        #instruction {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px dashed #ff9a9e;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 1.1rem;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 154, 158, 0.4);
+            animation: bounceInstruction 2s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes bounceInstruction {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* A középpont, ami körül a buborékok keringnek */
+        .orbit-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: 2;
+            pointer-events: none; /* Ne blokkolja a kattintásokat */
+        }
+
+        /* A buborékot keringető külső keret */
+        .bubble-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            animation: orbit 15s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Keringő animáció */
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(var(--distance)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(var(--distance)) rotate(-360deg); }
+        }
+
+        /* Buborék alapstílus */
+        .bubble {
+            position: absolute;
+            top: -55px;
+            left: -55px;
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle at 30% 30%, #ff9a9e, #fecfef);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2), 0 0 25px rgba(255,182,193,0.7);
+            transition: transform 0.2s, filter 0.2s;
+            z-index: 3;
+            user-select: none;
+            pointer-events: auto; /* Újra engedélyezi a kattintást a buborékon */
+        }
+
+        /* Rávitelkor megáll a mozgás és nagyobb lesz */
+        .bubble-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        .bubble:hover {
+            filter: brightness(1.2);
+            transform: scale(1.15);
+        }
+
+        .bubble span {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
+            padding: 0 5px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            pointer-events: none;
+        }
+
+        .bubble .icon {
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+            pointer-events: none;
+        }
+
+        /* Modális ablak (Magyarázat) */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2b1055, #7597de);
+            padding: 30px;
+            border-radius: 20px;
+            width: 450px;
+            max-width: 90%;
+            box-shadow: 0 0 30px rgba(0,242,254,0.5);
+            border: 2px solid #fff;
+            text-align: left;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #ffeb3b;
+            text-align: center;
+        }
+
+        .modal-content p {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #f0f0f0;
+        }
+
+        .modal-btn {
+            background: #ff416c;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Kérdés / Összefoglaló doboz */
+        #summary-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 101;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .summary-content {
+            background: linear-gradient(135deg, #134e5e, #71b280);
+            padding: 30px;
+            border-radius: 20px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 0 30px rgba(113,178,128,0.7);
+            border: 2px solid #fff;
+            text-align: center;
+        }
+
+        .summary-content textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            border: none;
+            padding: 10px;
+            font-family: inherit;
+            margin-top: 10px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        /* Cicás felugró elem a szélekről */
+        #cat-popup {
+            position: fixed;
+            bottom: -150px;
+            right: 40px;
+            background: #fff;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 20px 20px 0 20px;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 50;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid #ff758c;
+            pointer-events: none;
+        }
+
+        #cat-popup.show {
+            bottom: 20px;
+        }
+
+        .cat-avatar {
+            font-size: 1.8rem;
+        }
+
+        /* Győzelmi üzenet */
+        #win-message {
+            display: none;
+            position: absolute;
+            font-size: 2.5rem;
+            color: #ffeb3b;
+            text-align: center;
+            text-shadow: 0 0 20px #ff9800;
+            z-index: 200;
+            animation: pulseWin 1s infinite alternate;
+        }
+
+        @keyframes pulseWin {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div id="instruction">
+        ✨ <strong>Küldetés:</strong> Kattints rá és kapd el mind a 9 kódolási csoport buborékot, hogy megtanuld a tulajdonságaikat! ✨
+    </div>
+
+    <div class="orbit-center" id="orbitCenter">
+        <!-- Itt generálódnak a buborékok JavaScript-tel -->
+    <div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: 0s;"><div class="bubble">
+                    <div class="icon">📝</div>
+                    <span> Szintaktikai Csoportok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -2.22222s;"><div class="bubble">
+                    <div class="icon">🔀</div>
+                    <span> Feltételes Blokkok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -4.44444s;"><div class="bubble">
+                    <div class="icon">⚙️</div>
+                    <span> Függvénycsoportok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -8.88889s;"><div class="bubble">
+                    <div class="icon">🏷️</div>
+                    <span> Névterek</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -11.1111s;"><div class="bubble">
+                    <div class="icon">🧩</div>
+                    <span> Objektumcsoportok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -13.3333s;"><div class="bubble">
+                    <div class="icon">📚</div>
+                    <span> Modulcsoportok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -15.5556s;"><div class="bubble">
+                    <div class="icon">📊</div>
+                    <span> Tömbcsoportok</span>
+                </div></div><div class="bubble-wrapper" style="--distance: 239.36px; animation-delay: -17.7778s;"><div class="bubble">
+                    <div class="icon">💡</div>
+                    <span> Logikai Csoportok</span>
+                </div></div></div>
+
+    <!-- 1. Modális: Magyarázat -->
+    <div id="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modalTitle">4. Adatszerkezetek</h2>
+            <p id="modalText">Az adatszerkezetek olyan programozási csoportok, amelyek arra szolgálnak, hogy az adatokat hatékonyan rendszerezzük és tároljuk a memóriában. Ide tartoznak a listák, a halmazok, a szótárak és a fakonstrukciók is. A megfelelő adatszerkezet kiválasztása drasztikusan felgyorsíthatja a keresési és rendezési műveleteket. Ezen csoportok tulajdonságai határozzák meg, hogy az algoritmusok milyen gyorsan férhetnek hozzá az információkhoz.</p>
+            <button class="modal-btn" onclick="closeModalToSummary()">Elolvastam, kérem a kérdést!</button>
+        </div>
+    </div>
+
+    <!-- 2. Modális: Összefoglaló kérdés -->
+    <div id="summary-modal" style="display: none;">
+        <div class="summary-content">
+            <h3 style="color: #ffeb3b; margin-top:0;">Kis teszt! 🧠</h3>
+            <p style="font-size: 0.9rem;">Írd le 1-2 mondatban, hogy mi volt a lényege annak, amit most olvastál a kódolási csoportokról:</p>
+            <textarea id="summaryInput" placeholder="Ide írd a válaszod..."></textarea>
+            <button class="modal-btn" onclick="submitSummary()" style="background: #22c55e;">Küldés &amp; Tovább!</button>
+        </div>
+    </div>
+
+    <!-- Cicás felugró elem -->
+    <div id="cat-popup" class="">
+        <span class="cat-avatar">🐱</span>
+        <span id="cat-text">A kód az oldaladon áll! 💻</span>
+    </div>
+
+    <div id="win-message">🎉 Gratulálok! Minden buborékot elkapott a kódoló mester! 🎉</div>
+
+    <script>
+        const bubbleData = [
+            {
+                title: "1. Szintaktikai Csoportok",
+                icon: "📝",
+                text: "A szintaktikai csoportok azok a nyelvi szabályok egységei egy programnyelvben, amelyek meghatározzák, hogy a kódsorok hogyan épülnek fel helyesen. Ha egy csoportból hiányzik egy zárójel vagy pontosvessző, a fordító azonnal hibát jelez. Ezek a csoportok rendszerezik a kulcsszavakat, változóneveket és operátorokat. Ennek köszönhetően a gép pontosan megérti, hogy mit szeretne a programozó utasítani."
+            },
+            {
+                title: "2. Feltételes Blokkok",
+                icon: "🔀",
+                text: "A feltételes blokkok olyan utasításcsoportok, amelyek csak akkor futnak le, ha egy adott logikai feltétel igaznak bizonyul. Segítségükkel a kód képes döntéseket hozni a futásidőben, mint például az if-else szerkezetek esetében. Ez a csoportosítás teszi lehetővé, hogy a szoftver dinamikusan reagáljon a felhasználói bemenetekre. Ezen blokkok nélkül a programok mindig pontosan ugyanazt a merev utat járnák be."
+            },
+            {
+                title: "3. Függvénycsoportok",
+                icon: "⚙️",
+                text: "A függvénycsoportok az újrafelhasználható kódblokkok gyűjteményei, amelyek egyetlen specifikus feladat elvégzésére lettek megtervezve. Meghívásukkal megspórolhatjuk a kód ismétlését, így a program tiszta és áttekinthető marad. Ezek a csoportok paramétereket fogadhatnak be, és feldolgozás után visszatérési értéket adhatnak vissza. A moduláris programozás alapkövét jelentik, ami megkönnyíti a nagyméretű projektek karbantartását."
+            },
+            {
+                title: "4. Adatszerkezetek",
+                icon: "📦",
+                text: "Az adatszerkezetek olyan programozási csoportok, amelyek arra szolgálnak, hogy az adatokat hatékonyan rendszerezzük és tároljuk a memóriában. Ide tartoznak a listák, a halmazok, a szótárak és a fakonstrukciók is. A megfelelő adatszerkezet kiválasztása drasztikusan felgyorsíthatja a keresési és rendezési műveleteket. Ezen csoportok tulajdonságai határozzák meg, hogy az algoritmusok milyen gyorsan férhetnek hozzá az információkhoz."
+            },
+            {
+                title: "5. Névterek",
+                icon: "🏷️",
+                text: "A névterek olyan logikai csoportosítások, amelyek elkerülik a névközti ütközéseket a nagyobb kódbázisokban. Ha két különböző könyvtár ugyanazzal a névvel definiál egy függvényt, a névterek különítik el őket egymástól. Ez a tulajdonság biztosítja, hogy a változók és metódusok nevei ne keveredjenek össze a program futása során. Segítségükkel strukturáltabbá és biztonságosabbá válik a szoftverfejlesztési környezet."
+            },
+            {
+                title: "6. Objektumcsoportok",
+                icon: "🧩",
+                text: "Az objektum-orientált programozásban az objektumcsoportok az adatok és az azokat kezelő függvények egységbe zárását jelentik. Ezek a csoportok (osztályok példányai) valós világú entitásokat modelleznek a kódban. Az öröklődés és a polimorfizmus révén ezek a csoportok képesek egymás tulajdonságait átvenni és kiterjeszteni. Ez a paradigmacsoport hatalmas segítség a komplex rendszerek átlátható megteremtésében."
+            },
+            {
+                title: "7. Modulcsoportok",
+                icon: "📚",
+                text: "A modulcsoportok független fájlokba vagy csomagokba szervezett kódgyűjtemények, amelyek logikailag összetartozó funkciókat tartalmaznak. Lehetővé teszik, hogy egy hatalmas programot kisebb, könnyebben kezelhető részekre bontsunk szét. A fejlesztők így csak azokat a modulokat importálják a projektbe, amelyekre éppen szükségük van. Ez a csoportosítási módszer nagyban támogatja a csapatmunkát és a kód megosztását."
+            },
+            {
+                title: "8. Tömbcsoportok",
+                icon: "📊",
+                text: "A tömbcsoportok olyan adategységek, amelyek azonos típusú elemeket tárolnak szigorúan egymás után a memóriában. Indexek segítségével rendkívül gyorsan elérhető bennük bármelyik elem pozíció szerint. Ezek a csoportok fix vagy dinamikus méretűek lehetnek a használt programnyelvtől függően. Kiválóan alkalmasak mátrixok, listák és sorozatos numerikus adatok hatékony kezelésére."
+            },
+            {
+                title: "9. Logikai Csoportok",
+                icon: "💡",
+                text: "A logikai csoportok összetett feltételek vagy bitműveletek egységei, amelyeket logikai operátorok (ÉS, VAGY, NEM) kötnek össze. Ezek a csoportok vezérlelik a program legfontosabb elágazási pontjait és ciklusainak leállási feltételeit. A hibátlanul megírt logikai csoportok garantálják, hogy a kód helyes eredményt adjon minden lehetséges scenárióban. Megértésük elengedhetetlen a hibamentes programozáshoz és a szoftverek teszteléséhez."
+            }
+        ];
+
+        const orbitCenter = document.getElementById('orbitCenter');
+        const modal = document.getElementById('modal');
+        const summaryModal = document.getElementById('summary-modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+        const summaryInput = document.getElementById('summaryInput');
+        const winMessage = document.getElementById('win-message');
+        const catPopup = document.getElementById('cat-popup');
+        const catText = document.getElementById('cat-text');
+
+        let remainingBubbles = bubbleData.length;
+        let activeWrapperElement = null;
+
+        const catPhrases = [
+            "Menni fog! Csak így tovább! 🐱",
+            "Fantasztikus vagy ebben a kódolásban! ✨",
+            "Már csak néhány buborék maradt! 🚀",
+            "A kód az oldaladon áll! 💻",
+            "Zseniális programozó válik belőled! 🌟"
+        ];
+
+        function createBubbles() {
+            const total = bubbleData.length;
+            const distance = Math.min(window.innerWidth, window.innerHeight) * 0.32;
+            const animDuration = 20; // 20 másodperc egy teljes kör (lassabb, könnyebben elkapható)
+
+            bubbleData.forEach((data, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'bubble-wrapper';
+                wrapper.style.setProperty('--distance', `${distance}px`);
+                wrapper.style.animationDelay = `-${(animDuration / total) * index}s`;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+
+                bubble.innerHTML = `
+                    <div class="icon">${data.icon}</div>
+                    <span>${data.title.split('.')[1]}</span>
+                `;
+
+                bubble.onclick = (e) => {
+                    e.stopPropagation();
+                    openModal(data, wrapper);
+                };
+
+                wrapper.appendChild(bubble);
+                orbitCenter.appendChild(wrapper);
+            });
+        }
+
+        function openModal(data, wrapperElement) {
+            activeWrapperElement = wrapperElement;
+            modalTitle.innerText = data.title;
+            modalText.innerText = data.text;
+            modal.style.display = 'flex';
+        }
+
+        function closeModalToSummary() {
+            modal.style.display = 'none';
+            summaryInput.value = '';
+            summaryModal.style.display = 'flex';
+        }
+
+        function submitSummary() {
+            summaryModal.style.display = 'none';
+            
+            if (activeWrapperElement) {
+                activeWrapperElement.remove();
+                remainingBubbles--;
+                activeWrapperElement = null;
+            }
+
+            triggerCat();
+
+            if (remainingBubbles === 0) {
+                document.getElementById('instruction').style.display = 'none';
+                winMessage.style.display = 'block';
+            }
+        }
+
+        function triggerCat() {
+            const randomPhrase = catPhrases[Math.floor(Math.random() * catPhrases.length)];
+            catText.innerText = randomPhrase;
+            catPopup.classList.add('show');
+
+            setTimeout(() => {
+                catPopup.classList.remove('show');
+            }, 3500);
+        }
+
+        setInterval(() => {
+            if(remainingBubbles > 0 && remainingBubbles < bubbleData.length) {
+                triggerCat();
+            }
+        }, 15000);
+
+        window.onload = createBubbles;
+
+        window.onresize = () => {
+            const distance = Math.min(window.innerWidth, window.innerHeight) * 0.32;
+            document.querySelectorAll('.bubble-wrapper').forEach(b => {
+                b.style.setProperty('--distance', `${distance}px`);
+            });
+        };
+    </script>
+
+</body></html>

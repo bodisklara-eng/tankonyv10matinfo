@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///D:/programe%20scolare/tankonyv/gemini-code-1789825982191.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Sort - Vektor és Mátrix Szimuláció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 { margin-bottom: 5px; color: #38bdf8; }
+        p.subtitle { color: #94a3b8; margin-top: 0; margin-bottom: 20px; }
+        .game-container {
+            display: flex;
+            gap: 15px;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 700px;
+        }
+        .tube {
+            width: 50px;
+            height: 180px;
+            border: 3px solid #64748b;
+            border-top: none;
+            border-radius: 0 0 25px 25px;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 4px;
+            gap: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .tube:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
+        .tube.selected {
+            border-color: #f43f5e;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+        .segment {
+            width: 100%;
+            height: 38px;
+            border-radius: 6px;
+        }
+        .status-panel {
+            margin-top: 20px;
+            background: #1e293b;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        button {
+            margin-top: 15px;
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #0ea5e9; }
+    </style>
+</head>
+<body>
+
+    <h1>Magic Sort: Vektor Szimuláció</h1>
+    <p class="subtitle">Kattints egy csőre a kiválasztáshoz, majd egy másikra az átöntéshez!</p>
+
+    <div class="game-container" id="tubeContainer"><div class="tube "><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div></div><div class="tube "><div class="segment" style="background-color: rgb(59, 130, 246);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div></div><div class="tube "><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div></div><div class="tube "></div></div>
+
+    <div class="status-panel" id="statusMessage">Játék folyamatban... Válaszd ki az első csövet!</div>
+    <button onclick="resetGame()">Újrakezdés</button>
+
+<script>
+    // Színek definíciója (a vektorok elemei)
+    const COLORS = {
+        1: '#ef4444', // piros
+        2: '#3b82f6', // kék
+        3: '#10b981'  // zöld
+    };
+
+    // A mátrix / tömbök állapota (minden cső egy vektor, max 4 elem)
+    // 0 jelzi az üres helyet
+    let tubes = [
+        [1, 2, 3, 1],
+        [2, 1, 3, 2],
+        [3, 3, 1, 2],
+        [0, 0, 0, 0] // Segédváltozóként funkcionáló üres cső
+    ];
+
+    let selectedTubeIndex = null;
+
+    function render() {
+        const container = document.getElementById('tubeContainer');
+        container.innerHTML = '';
+
+        tubes.forEach((tube, index) => {
+            const tubeEl = document.createElement('div');
+            tubeEl.className = `tube ${selectedTubeIndex === index ? 'selected' : ''}`;
+            tubeEl.onclick = () => handleTubeClick(index);
+
+            // Vektor elemeinek kirajzolása alulról felfelé
+            tube.forEach(val => {
+                if (val !== 0) {
+                    const seg = document.createElement('div');
+                    seg.className = 'segment';
+                    seg.style.backgroundColor = COLORS[val];
+                    tubeEl.appendChild(seg);
+                }
+            });
+
+            container.appendChild(tubeEl);
+        });
+
+        checkWinCondition();
+    }
+
+    function handleTubeClick(index) {
+        if (selectedTubeIndex === null) {
+            // Ha még nincs kiválasztva cső, de nem üres a kiválasztott
+            if (tubes[index].every(val => val === 0)) {
+                document.getElementById('statusMessage').innerText = "Ez a cső üres! Válassz egy elemet tartalmazót.";
+                return;
+            }
+            selectedTubeIndex = index;
+            document.getElementById('statusMessage').innerText = `${index + 1}. vektor kiválasztva. Válassz hová öntsd!`;
+        } else {
+            // Átöntés logika (Vektor művelet)
+            if (selectedTubeIndex === index) {
+                selectedTubeIndex = null;
+                document.getElementById('statusMessage').innerText = "Kiválasztás visszavonva.";
+            } else {
+                moveElement(selectedTubeIndex, index);
+                selectedTubeIndex = null;
+            }
+        }
+        render();
+    }
+
+    function moveElement(fromIdx, toIdx) {
+        // Megkeressük a 'from' cső legfelső elemét
+        let fromTube = tubes[fromIdx];
+        let toTube = tubes[toIdx];
+
+        // Legfelső elem indexének keresése (ami nem 0)
+        let topElementIndex = -1;
+        for (let i = fromTube.length - 1; i >= 0; i--) {
+            if (fromTube[i] !== 0) {
+                topElementIndex = i;
+                break;
+            }
+        }
+
+        if (topElementIndex === -1) return;
+
+        // Megkeressük a 'to' cső első szabad helyét alulról
+        let targetSlotIndex = -1;
+        for (let i = 0; i < toTube.length; i++) {
+            if (toTube[i] === 0) {
+                targetSlotIndex = i;
+                break;
+            }
+        }
+
+        if (targetSlotIndex === -1) {
+            document.getElementById('statusMessage').innerText = "Hiba: A célvektor tele van!";
+            return;
+        }
+
+        // Átmozgatás (vektorok manipulációja)
+        let element = fromTube[topElementIndex];
+        fromTube[topElementIndex] = 0;
+        toTube[targetSlotIndex] = element;
+        
+        document.getElementById('statusMessage').innerText = "Sikeres átöntés végrehajtva!";
+    }
+
+    function checkWinCondition() {
+        // Ellenőrzés, hogy minden nem üres csőben azonos elemek vannak-e
+        let won = tubes.every(tube => {
+            const nonZero = tube.filter(v => v !== 0);
+            if (nonZero.length === 0) return true; // üres cső megengedett
+            if (nonZero.length < 4) return false; // nem elég teli
+            return nonZero.every(v => v === nonZero[0]); // mindegyik azonos színű-e
+        });
+
+        if (won && tubes.some(t => t.some(v => v !== 0))) {
+            document.getElementById('statusMessage').innerHTML = "🎉 <b>Gratulálok! Minden vektor sikeresen szétválogatva!</b>";
+        }
+    }
+
+    function resetGame() {
+        tubes = [
+            [1, 2, 3, 1],
+            [2, 1, 3, 2],
+            [3, 3, 1, 2],
+            [0, 0, 0, 0]
+        ];
+        selectedTubeIndex = null;
+        document.getElementById('statusMessage').innerText = "Játék alaphelyzetbe állítva. Sok sikert!";
+        render();
+    }
+
+    // Kezdeti renderelés
+    render();
+</script>
+
+
+</body></html>

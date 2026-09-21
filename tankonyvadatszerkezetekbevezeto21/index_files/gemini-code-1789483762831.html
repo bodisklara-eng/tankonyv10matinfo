@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotonikus Adatfolyam, Teljes Súgó és Hologram</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #02040a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(5, 10, 25, 0.85);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.25);
+            backdrop-filter: blur(10px);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        h1 { margin: 0 0 5px 0; font-size: 20px; color: #00f3ff; letter-spacing: 1.5px; }
+        p { margin: 0; font-size: 13px; color: #8ab4f8; }
+
+        .hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #526581;
+            letter-spacing: 1px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Jobb felső vezérlőgombok */
+        .control-panel {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0077ff, #00f3ff);
+            border: none;
+            color: #050814;
+            padding: 12px 18px;
+            font-weight: bold;
+            font-size: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 243, 255, 0.7);
+        }
+
+        .btn.active {
+            background: linear-gradient(135deg, #00ff88, #00f3ff);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
+        }
+
+        /* AR Szemüveg Keret / HUD */
+        #hud-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            border: 15px solid rgba(0, 243, 255, 0.15);
+            box-shadow: inset 0 0 50px rgba(0, 243, 255, 0.3);
+            display: none;
+            z-index: 5;
+            box-sizing: border-box;
+        }
+
+        #hud-overlay::before {
+            content: "AR SZEMÜVEG MÓD [ AKTÍV ]";
+            position: absolute;
+            top: 25px; left: 25px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #00ff88;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0,255,136,0.8);
+        }
+
+        /* Teljes súgó pop-up ablak */
+        #info-popup {
+            position: absolute;
+            top: 85px;
+            right: 25px;
+            width: 410px;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background: rgba(10, 25, 45, 0.88);
+            border: 1px solid rgba(0, 243, 255, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            z-index: 15;
+            display: none;
+        }
+
+        #info-popup h3 { color: #00f3ff; margin-top: 0; font-size: 17px; border-bottom: 1px solid rgba(0,243,255,0.3); padding-bottom: 6px; }
+        #info-popup h4 { color: #7dd3fc; font-size: 13px; margin: 14px 0 4px 0; }
+        #info-popup p, #info-popup li { font-size: 12px; color: #cbd5e1; line-height: 1.45; }
+        #info-popup ul { margin: 4px 0; padding-left: 18px; }
+
+        /* Villogó, interaktív kulcsszavak */
+        .interactive-word {
+            color: #38bdf8;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 1px dashed #38bdf8;
+            position: relative;
+            display: inline-block;
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        .interactive-word:hover {
+            color: #ffffff;
+            border-bottom-style: solid;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; text-shadow: 0 0 2px rgba(56,189,248,0); }
+            50% { opacity: 1; text-shadow: 0 0 10px rgba(56,189,248,0.8); }
+            100% { opacity: 0.6; text-shadow: 0 0 2px rgba(56,189,248,0); }
+        }
+
+        /* Lebegő kép doboz */
+        .image-tooltip {
+            display: none;
+            position: fixed;
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid #00f3ff;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(0,243,255,0.4);
+            z-index: 1000;
+            text-align: center;
+            max-width: 240px;
+            pointer-events: none;
+        }
+
+        .image-tooltip img { width: 220px; height: 130px; object-fit: cover; border-radius: 4px; margin-bottom: 4px; }
+        .image-tooltip span { font-size: 10px; color: #94a3b8; display: block; }
+
+        #info-popup::-webkit-scrollbar { width: 6px; }
+        #info-popup::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <h1>Fotonikus Adatfolyam és Hologram</h1>
+        <p>Optikai információtovábbítás 3D szimulációja.</p>
+    </div>
+    <div class="hint">Mozgasd az egeret a nézőpont váltásához, kattints a képernyőre új adatokért!</div>
+
+    <!-- Jobb felső vezérlőgombok -->
+    <div class="control-panel">
+        <button class="btn" id="glasses-btn" onclick="toggleGlasses()">AR Szemüveg: KI</button>
+        <button class="btn" id="popup-btn" onclick="togglePopup()">Súgó megnyitása</button>
+    </div>
+
+    <!-- AR Szemüveg keret -->
+    <div id="hud-overlay"></div>
+
+    <!-- TELJES Súgó ablak -->
+    <div id="info-popup">
+        <h3>Az információ a fényben</h3>
+        <p>Amikor azt mondjuk, hogy az információ fény formájában utazik, azt nem úgy kell elképzelni, mintha egy fizikai tárgy, egy betű vagy egy kép repülne a kábelben.</p>
+        
+        <p>A fényben hordozott információt leginkább egy rendkívül gyors, láthatatlan 
+           <span class="interactive-word" 
+                 onmouseenter="showImage(event, 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&q=80', 'Fény-morze kód: Fényvillanások sorozata')" 
+                 onmousemove="moveImage(event)" 
+                 onmouseleave="hideImage()">fény-morze kódhoz</span> 
+           vagy villogó üzenethez hasonlíthatjuk.</p>
+
+        <h4>1. A digitális alap: A villogás (0 és 1)</h4>
+        <p>A számítógépek mindent bitekre (0-kra és 1-ekre) bontanak. A fényalapú (fotonikus) adatátvitelben ezeket a biteket fényimpulzusok alakítják át:</p>
+        <ul>
+            <li><strong>Van fény / Erős villanás</strong> = 1-es bit</li>
+            <li><strong>Nincs fény / Sötét szünet</strong> = 0-s bit</li>
+        </ul>
+        <p>Mivel ez milliárdszor történik meg másodpercenként, a fénycsóva lényegében egy hipergyors Morse-kódot pötyög be a térbe.</p>
+
+        <h4>2. Mik azok a ragyogó gömbök?</h4>
+        <p>A 3D animációban látható cián színű, száguldó gömbök nem egyetlen bitet, hanem egy <strong>adatcsomagot (packet)</strong> jelképeznek, amely fotonok milliárdjait tartalmazza. Célba éréskor egy 
+           <span class="interactive-word" 
+                 onmouseenter="showImage(event, 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80', 'Fotodióda: Fényt alakít át jellé')" 
+                 onmousemove="moveImage(event)" 
+                 onmouseleave="hideImage()">fotodióda</span> 
+           fordítja le a fényvillanásokat a számítógép által érthető elektronikus jelekké.</p>
+
+        <h4>3. Hogyan fér el sok adat? (Színek és frekvenciák)</h4>
+        <p>Ha egyetlen fénysugár halad át egy szálon, az is gyors, de a modern technológia (WDM) ennél is okosabb: különböző színű lézersugarak futnak ugyanabban a kábelben egymás mellett anélkül, hogy zavarnák egymást. Az egyik szín viszi a filmeket, a másik a hangot.</p>
+
+        <h4>4. A valóságban hogy néz ki?</h4>
+        <p>Ha felnyitnál egy óceán alatti internethálózati száloptikai kábelt, nem látnál villogó gömböket. Ott csak egy hajszálvékony, tiszta üvegszálat látnál, amelyben szemmel láthatatlan infravörös lézerfény suhan keresztül teljes belső visszaverődéssel.</p>
+    </div>
+
+    <!-- Lebegő kép doboz konténer -->
+    <div id="imageTooltip" class="image-tooltip">
+        <img id="tooltipImg" src="" alt="Illusztráció">
+        <span id="tooltipText"></span>
+    </div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        let scene, camera, renderer;
+        let tubes = [], dataPackets = [];
+        let hologramCore, hologramWireframe;
+        let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+        let glassesActive = false;
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x02040a, 0.02);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 22);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0x112244, 3);
+            scene.add(ambientLight);
+
+            createOpticalNetwork();
+            createHologramCore();
+
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('click', (e) => {
+                if(e.target.closest('#info-popup') || e.target.closest('.control-panel')) return;
+                for(let i=0; i<3; i++) spawnRandomPacket();
+            });
+            window.addEventListener('mousemove', onMouseMove);
+
+            setInterval(() => { spawnRandomPacket(); }, 350);
+        }
+
+        // Központi Hologram létrehozása
+        function createHologramCore() {
+            const coreGeo = new THREE.IcosahedronGeometry(2, 2);
+            const coreMat = new THREE.MeshBasicMaterial({
+                color: 0x00f3ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            hologramCore = new THREE.Mesh(coreGeo, coreMat);
+            scene.add(hologramCore);
+
+            const innerGeo = new THREE.SphereGeometry(1.2, 16, 16);
+            const innerMat = new THREE.MeshBasicMaterial({
+                color: 0x00ff88,
+                transparent: true,
+                opacity: 0.4,
+                blending: THREE.AdditiveBlending
+            });
+            hologramWireframe = new THREE.Mesh(innerGeo, innerMat);
+            scene.add(hologramWireframe);
+        }
+
+        function createOpticalNetwork() {
+            const curveCount = 8;
+            for (let i = 0; i < curveCount; i++) {
+                const angle = (i / curveCount) * Math.PI * 2;
+                const radius = 9;
+
+                const points = [
+                    new THREE.Vector3(Math.cos(angle) * radius, Math.sin(angle) * radius, -12),
+                    new THREE.Vector3(Math.cos(angle + 1) * 3, Math.sin(angle + 1) * 3, 0),
+                    new THREE.Vector3(0, 0, 0)
+                ];
+
+                const curve = new THREE.CatmullRomCurve3(points);
+                
+                const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.1, 8, false);
+                const tubeMat = new THREE.MeshBasicMaterial({
+                    color: 0x0055ff,
+                    transparent: true,
+                    opacity: 0.2,
+                    wireframe: true
+                });
+                scene.add(new THREE.Mesh(tubeGeo, tubeMat));
+                tubes.push(curve);
+            }
+        }
+
+        function spawnRandomPacket() {
+            if (tubes.length === 0) return;
+            const curve = tubes[Math.floor(Math.random() * tubes.length)];
+
+            const packetGeo = new THREE.SphereGeometry(0.3, 16, 16);
+            const packetMat = new THREE.MeshBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.95 });
+            const packet = new THREE.Mesh(packetGeo, packetMat);
+
+            const glowGeo = new THREE.SphereGeometry(0.6, 16, 16);
+            const glowMat = new THREE.MeshBasicMaterial({ color: 0x0088ff, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+            packet.add(new THREE.Mesh(glowGeo, glowMat));
+
+            scene.add(packet);
+
+            dataPackets.push({
+                mesh: packet,
+                curve: curve,
+                progress: 0,
+                speed: 0.005 + Math.random() * 0.005
+            });
+        }
+
+        function toggleGlasses() {
+            glassesActive = !glassesActive;
+            const btn = document.getElementById('glasses-btn');
+            const hud = document.getElementById('hud-overlay');
+
+            if (glassesActive) {
+                btn.innerText = "AR Szemüveg: BE";
+                btn.classList.add('active');
+                hud.style.display = 'block';
+                renderer.setClearColor(0x010c08, 1);
+            } else {
+                btn.innerText = "AR Szemüveg: KI";
+                btn.classList.remove('active');
+                hud.style.display = 'none';
+                renderer.setClearColor(0x02040a, 1);
+            }
+        }
+
+        function togglePopup() {
+            const popup = document.getElementById('info-popup');
+            const btn = document.getElementById('popup-btn');
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+                btn.innerText = "Súgó megnyitása";
+                hideImage();
+            } else {
+                popup.style.display = 'block';
+                btn.innerText = "Súgó elrejtése";
+            }
+        }
+
+        const tooltip = document.getElementById('imageTooltip');
+        const tooltipImg = document.getElementById('tooltipImg');
+        const tooltipText = document.getElementById('tooltipText');
+
+        function showImage(event, src, text) {
+            tooltipImg.src = src;
+            tooltipText.innerText = text;
+            tooltip.style.display = 'block';
+            updateTooltipPos(event);
+        }
+        function moveImage(event) { updateTooltipPos(event); }
+        function hideImage() { tooltip.style.display = 'none'; }
+        function updateTooltipPos(e) {
+            tooltip.style.left = (e.clientX + 15) + 'px';
+            tooltip.style.top = (e.clientY - 110) + 'px';
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) * 0.002;
+            mouseY = (event.clientY - window.innerHeight / 2) * 0.002;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            for (let i = dataPackets.length - 1; i >= 0; i--) {
+                let p = dataPackets[i];
+                p.progress += p.speed;
+
+                if (p.progress >= 1) {
+                    scene.remove(p.mesh);
+                    dataPackets.splice(i, 1);
+                    if(hologramCore) {
+                        hologramCore.scale.set(1.2, 1.2, 1.2);
+                        setTimeout(() => hologramCore.scale.set(1, 1, 1), 150);
+                    }
+                } else {
+                    const pos = p.curve.getPointAt(p.progress);
+                    p.mesh.position.copy(pos);
+                }
+            }
+
+            if (hologramCore) {
+                hologramCore.rotation.y += 0.01;
+                hologramCore.rotation.x += 0.005;
+            }
+            if (hologramWireframe) {
+                hologramWireframe.rotation.y -= 0.015;
+            }
+
+            targetX += (mouseX - targetX) * 0.05;
+            targetY += (mouseY - targetY) * 0.05;
+
+            const mult = glassesActive ? 8 : 4;
+            camera.position.x = Math.sin(Date.now() * 0.0003) * 1.5 + targetX * mult;
+            camera.position.y = Math.cos(Date.now() * 0.0003) * 1.5 - targetY * mult;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>

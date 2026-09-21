@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/Utilizator/Downloads/info%204%20(1).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vektoros Bevásárlás - Animáció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+            color: #38bdf8;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+        }
+
+        .formula {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-family: monospace;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            color: #fbbf24;
+        }
+
+        .vector-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+            align-items: center;
+        }
+
+        .label {
+            font-weight: bold;
+            width: 130px;
+            text-align: right;
+            color: #38bdf8;
+            font-size: 0.95rem;
+        }
+
+        .cell {
+            width: 70px;
+            height: 55px;
+            background-color: #334155;
+            border: 2px solid #475569;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cell .index {
+            font-size: 0.6rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .cell.active {
+            background-color: #0284c7;
+            border-color: #38bdf8;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+        }
+
+        .cell.active .index {
+            color: #e0f2fe;
+        }
+
+        .operator {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f43f5e;
+            margin: 2px 0;
+        }
+
+        .line {
+            height: 2px;
+            background-color: #475569;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #0ea5e9;
+        }
+
+        button:disabled {
+            background-color: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-family: monospace;
+            color: #38bdf8;
+            min-height: 24px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Vektoros Bevásárlás</h1>
+        <p class="subtitle">Részösszegek számítása indexekkel: Összeg[i] = Ár[i] × Mennyiség[i]</p>
+
+        <div class="formula">
+            Termékek: [Kenyér, Tej, Hús, Sajt]
+        </div>
+
+        <!-- Ár vektor -->
+        <div class="vector-row">
+            <span class="label">Egységár (Ft):</span>
+            <div class="cell" id="a-0"><span>600</span><span class="index">i=0 (Kenyér)</span></div>
+            <div class="cell" id="a-1"><span>450</span><span class="index">i=1 (Tej)</span></div>
+            <div class="cell" id="a-2"><span>2400</span><span class="index">i=2 (Hús)</span></div>
+            <div class="cell" id="a-3"><span>1200</span><span class="index">i=3 (Sajt)</span></div>
+        </div>
+
+        <div class="operator">×</div>
+
+        <!-- Mennyiség vektor -->
+        <div class="vector-row">
+            <span class="label">Mennyiség:</span>
+            <div class="cell" id="b-0"><span>2</span><span class="index">i=0</span></div>
+            <div class="cell" id="b-1"><span>3</span><span class="index">i=1</span></div>
+            <div class="cell" id="b-2"><span>1</span><span class="index">i=2</span></div>
+            <div class="cell" id="b-3"><span>2</span><span class="index">i=3</span></div>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- Részösszeg vektor -->
+        <div class="vector-row">
+            <span class="label">Részösszeg (Ft):</span>
+            <div class="cell" id="c-0"><span>?</span><span class="index">i=0</span></div>
+            <div class="cell" id="c-1"><span>?</span><span class="index">i=1</span></div>
+            <div class="cell" id="c-2"><span>?</span><span class="index">i=2</span></div>
+            <div class="cell" id="c-3"><span>?</span><span class="index">i=3</span></div>
+        </div>
+
+        <div id="status">Kattintson a "Számítás indítása" gombra!</div>
+
+        <div class="controls">
+            <button id="startBtn" onclick="startAnimation()">Számítás indítása</button>
+            <button id="resetBtn" onclick="resetAnimation()" disabled="">Újra</button>
+        </div>
+    </div>
+
+    <script>
+        const Prices = [600, 450, 2400, 1200];
+        const Quantities = [2, 3, 1, 2];
+        const Names = ['Kenyér', 'Tej', 'Hús', 'Sajt'];
+        
+        let currentIndex = 0;
+        let animationInterval = null;
+        let totalCost = 0;
+
+        const statusDiv = document.getElementById('status');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function startAnimation() {
+            startBtn.disabled = true;
+            currentIndex = 0;
+            totalCost = 0;
+            clearActive();
+            
+            animationInterval = setInterval(() => {
+                if (currentIndex < Prices.length) {
+                    processStep(currentIndex);
+                    currentIndex++;
+                } else {
+                    clearInterval(animationInterval);
+                    statusDiv.innerHTML = `✅ Teljes vásárlás végösszege: <strong>${totalCost} Ft</strong>`;
+                    resetBtn.disabled = false;
+                }
+            }, 1400); 
+        }
+
+        function processStep(i) {
+            clearActive();
+
+            const cellA = document.getElementById(`a-${i}`);
+            const cellB = document.getElementById(`b-${i}`);
+            const cellC = document.getElementById(`c-${i}`);
+
+            cellA.classList.add('active');
+            cellB.classList.add('active');
+            cellC.classList.add('active');
+
+            const price = Prices[i];
+            const qty = Quantities[i];
+            const subtotal = price * qty;
+            totalCost += subtotal;
+
+            cellC.querySelector('span').innerText = subtotal;
+
+            statusDiv.innerHTML = `Index i=${i} [${Names[i]}]: ${price} Ft &times; ${qty} = <strong>${subtotal} Ft</strong>`;
+        }
+
+        function clearActive() {
+            for (let i = 0; i < Prices.length; i++) {
+                document.getElementById(`a-${i}`).classList.remove('active');
+                document.getElementById(`b-${i}`).classList.remove('active');
+                document.getElementById(`c-${i}`).classList.remove('active');
+            }
+        }
+
+        function resetAnimation() {
+            clearInterval(animationInterval);
+            clearActive();
+            currentIndex = 0;
+            totalCost = 0;
+
+            for (let i = 0; i < Prices.length; i++) {
+                document.querySelector(`#c-${i} span`).innerText = '?';
+            }
+
+            statusDiv.innerHTML = "Kattintson a \"Számítás indítása\" gombra!";
+            startBtn.disabled = false;
+            resetBtn.disabled = true;
+        }
+    </script>
+
+
+</body></html>

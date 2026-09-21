@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///C:/Users/Utilizator/Downloads/Halmazokmagyarazata.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Python Halmazok - Interaktív tanulás</title>
+
+<style>
+
+/* =========================================================
+   ALAPOK
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #04152d;
+    --bg2: #071f42;
+    --panel: rgba(8, 35, 72, 0.88);
+    --panel2: rgba(12, 45, 91, 0.9);
+    --blue: #1597ff;
+    --cyan: #20e0ff;
+    --purple: #a855f7;
+    --pink: #ec3cff;
+    --green: #27e6a5;
+    --yellow: #ffd43b;
+    --orange: #ff9d2e;
+    --red: #ff4d76;
+    --text: #f4f8ff;
+    --muted: #9fb4d4;
+    --border: rgba(45, 155, 255, .55);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(circle at 10% 10%, rgba(0, 153, 255, .18), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(168, 85, 247, .16), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(20, 224, 255, .1), transparent 30%),
+        linear-gradient(135deg, #020b1b, #06214a 55%, #03152e);
+
+    min-height: 100vh;
+}
+
+/* =========================================================
+   HÁTTÉR BUBORÉKOK
+========================================================= */
+
+.background-bubbles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.bg-bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: .12;
+    filter: blur(1px);
+    animation: floatBackground 12s ease-in-out infinite;
+}
+
+.bg1 {
+    width: 180px;
+    height: 180px;
+    background: #0ea5ff;
+    left: 5%;
+    top: 20%;
+}
+
+.bg2 {
+    width: 100px;
+    height: 100px;
+    background: #e83cff;
+    right: 12%;
+    top: 35%;
+    animation-delay: 2s;
+}
+
+.bg3 {
+    width: 240px;
+    height: 240px;
+    background: #20e0ff;
+    right: -80px;
+    bottom: 5%;
+    animation-delay: 4s;
+}
+
+.bg4 {
+    width: 130px;
+    height: 130px;
+    background: #ffd43b;
+    left: 35%;
+    bottom: 10%;
+    animation-delay: 6s;
+}
+
+@keyframes floatBackground {
+
+    0%,100% {
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-35px) translateX(20px);
+    }
+}
+
+/* =========================================================
+   FEJLÉC
+========================================================= */
+
+.topbar {
+    height: 95px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    background: rgba(2, 14, 34, .9);
+
+    border-bottom: 1px solid rgba(45, 155, 255, .4);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    backdrop-filter: blur(18px);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.python-logo {
+    font-size: 52px;
+    filter: drop-shadow(0 0 15px rgba(32, 224, 255, .5));
+}
+
+.logo-title {
+    font-size: 31px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+}
+
+.logo-title span {
+    color: var(--yellow);
+}
+
+.logo-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.top-stats {
+    display: flex;
+    gap: 14px;
+}
+
+.stat-box {
+    min-width: 170px;
+    padding: 12px 18px;
+
+    border: 1px solid rgba(91, 155, 255, .6);
+    border-radius: 17px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(20, 72, 140, .7),
+        rgba(8, 29, 63, .8)
+    );
+
+    box-shadow:
+        inset 0 0 20px rgba(30, 150, 255, .05),
+        0 0 20px rgba(0, 130, 255, .08);
+}
+
+.stat-label {
+    color: #a9c3e8;
+    font-size: 13px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.progress {
+    width: 150px;
+    height: 10px;
+
+    margin-top: 7px;
+
+    background: #102747;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        var(--green),
+        var(--cyan)
+    );
+
+    border-radius: 20px;
+
+    transition: width .5s ease;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.layout {
+    display: grid;
+
+    grid-template-columns: 210px 1fr 290px;
+
+    max-width: 1600px;
+
+    margin: auto;
+
+    min-height: calc(100vh - 95px);
+}
+
+/* =========================================================
+   OLDALSÁV
+========================================================= */
+
+.sidebar {
+    border-right: 1px solid rgba(45, 155, 255, .25);
+
+    padding: 25px 12px;
+
+    background: rgba(3, 18, 39, .55);
+}
+
+.menu-title {
+    font-size: 12px;
+    color: #6f91bd;
+    text-transform: uppercase;
+    margin: 5px 15px 15px;
+    letter-spacing: 1px;
+}
+
+.menu-button {
+    width: 100%;
+
+    border: 1px solid transparent;
+
+    background: transparent;
+
+    color: #c5d6ef;
+
+    padding: 13px 14px;
+
+    border-radius: 13px;
+
+    margin-bottom: 8px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: .2s;
+}
+
+.menu-button:hover,
+.menu-button.active {
+    background: linear-gradient(
+        90deg,
+        rgba(21, 151, 255, .25),
+        rgba(21, 151, 255, .08)
+    );
+
+    border-color: rgba(21, 151, 255, .55);
+
+    color: white;
+
+    transform: translateX(3px);
+}
+
+.menu-icon {
+    width: 30px;
+    display: inline-block;
+}
+
+/* =========================================================
+   FŐ TARTALOM
+========================================================= */
+
+main {
+    padding: 25px;
+    min-width: 0;
+}
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11, 49, 99, .92),
+            rgba(4, 25, 57, .94)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, .22),
+        inset 0 0 30px rgba(21, 151, 255, .035);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    background: rgba(21, 151, 255, .06);
+
+    right: -80px;
+    top: -80px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    font-size: 24px;
+
+    margin-top: 0;
+}
+
+.number {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #1597ff,
+        #20e0ff
+    );
+
+    color: white;
+
+    font-weight: 900;
+
+    box-shadow: 0 0 20px rgba(32, 224, 255, .35);
+}
+
+.description {
+    color: #c7d7ed;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   KÓD
+========================================================= */
+
+.code {
+    background: #020a18;
+
+    border: 1px solid rgba(68, 137, 219, .45);
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    font-family: Consolas, monospace;
+
+    color: #b7ffd9;
+
+    line-height: 1.7;
+
+    overflow-x: auto;
+
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, .3);
+}
+
+.keyword {
+    color: #c084fc;
+}
+
+.string {
+    color: #ffd43b;
+}
+
+.number-code {
+    color: #20e0ff;
+}
+
+.comment {
+    color: #557092;
+}
+
+/* =========================================================
+   BUBORÉKOS HALMAZOK
+========================================================= */
+
+.set-area {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 40px;
+
+    margin: 30px 0;
+
+    flex-wrap: wrap;
+}
+
+.set-bubble {
+    position: relative;
+
+    width: 310px;
+    height: 310px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid;
+
+    transition: .4s;
+
+    box-shadow:
+        inset 0 0 60px rgba(255,255,255,.05),
+        0 0 35px rgba(21,151,255,.15);
+}
+
+.set-a {
+    border-color: #1597ff;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(32, 185, 255, .3),
+            rgba(21, 80, 180, .16),
+            rgba(3, 28, 66, .4)
+        );
+}
+
+.set-b {
+    border-color: #d946ef;
+
+    background:
+        radial-gradient(
+            circle at 65% 30%,
+            rgba(236, 60, 255, .3),
+            rgba(140, 45, 180, .16),
+            rgba(50, 12, 70, .4)
+        );
+}
+
+.set-bubble:hover {
+    transform: scale(1.03);
+
+    box-shadow:
+        0 0 50px rgba(32, 185, 255, .25),
+        inset 0 0 70px rgba(255,255,255,.06);
+}
+
+.set-label {
+    position: absolute;
+
+    top: -20px;
+
+    padding: 8px 20px;
+
+    border-radius: 20px;
+
+    font-weight: 900;
+
+    font-size: 18px;
+
+    background: #0a2d5b;
+
+    border: 2px solid;
+}
+
+.set-a .set-label {
+    border-color: #1597ff;
+}
+
+.set-b .set-label {
+    border-color: #d946ef;
+}
+
+/* =========================================================
+   ELEM BUBORÉKOK
+========================================================= */
+
+.elements {
+    width: 230px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 13px;
+}
+
+.element {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    color: white;
+
+    border: 2px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        inset -5px -8px 10px rgba(0,0,0,.18),
+        inset 5px 5px 10px rgba(255,255,255,.2),
+        0 7px 16px rgba(0,0,0,.25);
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        opacity .2s;
+
+    animation: bubbleAppear .5s ease;
+}
+
+.element:hover {
+    transform: translateY(-7px) scale(1.12);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,.35),
+        inset 0 0 15px rgba(255,255,255,.2);
+}
+
+.element.selected {
+    transform: scale(1.18);
+
+    box-shadow:
+        0 0 35px rgba(255,255,255,.8);
+}
+
+.element.common {
+    animation: pulseCommon 1s infinite alternate;
+}
+
+@keyframes bubbleAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(.2);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseCommon {
+
+    from {
+        box-shadow:
+            0 0 8px white;
+    }
+
+    to {
+        box-shadow:
+            0 0 35px #ffd43b;
+    }
+}
+
+/* különböző buborékszínek */
+
+.element:nth-child(4n+1) {
+    background: linear-gradient(135deg, #19a9ff, #0872dc);
+}
+
+.element:nth-child(4n+2) {
+    background: linear-gradient(135deg, #a855f7, #6924bd);
+}
+
+.element:nth-child(4n+3) {
+    background: linear-gradient(135deg, #ffae35, #ef6c19);
+}
+
+.element:nth-child(4n+4) {
+    background: linear-gradient(135deg, #26e3a6, #0eae80);
+}
+
+/* =========================================================
+   MŰVELETEK
+========================================================= */
+
+.operations {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.operation {
+    border: 1px solid rgba(255,255,255,.2);
+
+    border-radius: 15px;
+
+    padding: 15px 10px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-weight: 800;
+
+    background: linear-gradient(
+        135deg,
+        #0d5eb5,
+        #08366d
+    );
+
+    transition: .2s;
+}
+
+.operation:hover {
+    transform: translateY(-4px);
+
+    border-color: white;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,.25);
+}
+
+.operation.union {
+    background: linear-gradient(135deg, #14dba2, #087c86);
+}
+
+.operation.intersection {
+    background: linear-gradient(135deg, #ffbd36, #ed721c);
+}
+
+.operation.difference {
+    background: linear-gradient(135deg, #a855f7, #6b28b8);
+}
+
+.operation.symmetric {
+    background: linear-gradient(135deg, #229cff, #1256cb);
+}
+
+.operation-symbol {
+    display: block;
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+   EREDMÉNY
+========================================================= */
+
+.result-box {
+    margin-top: 18px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+.result {
+    min-height: 70px;
+
+    border-radius: 14px;
+
+    padding: 16px;
+
+    background: rgba(0,0,0,.25);
+
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+.result-title {
+    color: #7fdcff;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+}
+
+.result-value {
+    font-size: 20px;
+
+    font-weight: 900;
+
+    color: white;
+}
+
+/* =========================================================
+   JOBB OLDALI PANEL
+========================================================= */
+
+.rightbar {
+    padding: 25px 15px;
+
+    border-left: 1px solid rgba(45, 155, 255, .25);
+
+    background: rgba(3, 18, 39, .4);
+}
+
+.side-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 46, 92, .85),
+            rgba(4, 24, 51, .9)
+        );
+
+    border: 1px solid rgba(45,155,255,.5);
+
+    border-radius: 17px;
+
+    padding: 18px;
+
+    margin-bottom: 16px;
+}
+
+.side-card h3 {
+    margin-top: 0;
+}
+
+.tip {
+    color: #d8e7ff;
+
+    line-height: 1.6;
+}
+
+.tip strong {
+    color: var(--yellow);
+}
+
+.side-code {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   KVÍZ
+========================================================= */
+
+.quiz-card {
+    border-color: rgba(236, 60, 255, .6);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(75, 20, 107, .65),
+            rgba(30, 12, 58, .8)
+        );
+}
+
+.quiz-question {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.quiz-options {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+}
+
+.quiz-option {
+    background: rgba(3,20,45,.8);
+
+    border: 1px solid rgba(45,155,255,.5);
+
+    color: white;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: .2s;
+}
+
+.quiz-option:hover {
+    border-color: #20e0ff;
+
+    transform: translateY(-2px);
+}
+
+.quiz-option.correct {
+    background: rgba(25, 205, 145, .3);
+
+    border-color: #27e6a5;
+}
+
+.quiz-option.wrong {
+    background: rgba(255, 60, 100, .3);
+
+    border-color: #ff4d76;
+}
+
+.quiz-feedback {
+    min-height: 35px;
+
+    margin-top: 15px;
+
+    font-weight: 800;
+}
+
+/* =========================================================
+   KIHÍVÁS
+========================================================= */
+
+.challenge {
+    border-color: rgba(255, 165, 40, .7);
+}
+
+.challenge-code {
+    font-size: 17px;
+}
+
+.challenge-options {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+/* =========================================================
+   GOMBOK
+========================================================= */
+
+.main-button {
+    border: none;
+
+    border-radius: 13px;
+
+    padding: 13px 20px;
+
+    cursor: pointer;
+
+    font-weight: 900;
+
+    color: #02172d;
+
+    background: linear-gradient(
+        135deg,
+        #20e0ff,
+        #27e6a5
+    );
+
+    box-shadow:
+        0 8px 20px rgba(32,224,255,.15);
+
+    transition: .2s;
+}
+
+.main-button:hover {
+    transform: translateY(-3px) scale(1.02);
+}
+
+.reset-button {
+    background: linear-gradient(
+        135deg,
+        #ff4d76,
+        #a855f7
+    );
+
+    color: white;
+}
+
+/* =========================================================
+   ÖSSZEFOGLALÓ
+========================================================= */
+
+.summary {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 10px;
+}
+
+.summary-item {
+    text-align: center;
+
+    padding: 15px 8px;
+
+    background: rgba(2,15,35,.55);
+
+    border-radius: 13px;
+
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.summary-symbol {
+    font-size: 27px;
+
+    font-weight: 900;
+
+    color: #20e0ff;
+}
+
+/* =========================================================
+   ANIMÁLT FELUGRÓ ÜZENET
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    padding: 15px 20px;
+
+    border-radius: 13px;
+
+    background: #0b2c58;
+
+    border: 1px solid #20e0ff;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.4);
+
+    transform: translateY(120px);
+
+    opacity: 0;
+
+    transition: .3s;
+
+    z-index: 500;
+}
+
+.toast.show {
+    transform: translateY(0);
+
+    opacity: 1;
+}
+
+/* =========================================================
+   MOBIL
+========================================================= */
+
+@media(max-width: 1150px) {
+
+    .layout {
+        grid-template-columns: 170px 1fr;
+    }
+
+    .rightbar {
+        display: none;
+    }
+
+    .operations {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 750px) {
+
+    .topbar {
+        height: auto;
+        padding: 15px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .top-stats {
+        width: 100%;
+    }
+
+    .stat-box {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    main {
+        padding: 12px;
+    }
+
+    .set-bubble {
+        width: 270px;
+        height: 270px;
+    }
+
+    .operations,
+    .quiz-options,
+    .challenge-options,
+    .result-box {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .logo-title {
+        font-size: 25px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HÁTTÉR -->
+<div class="background-bubbles">
+    <div class="bg-bubble bg1"></div>
+    <div class="bg-bubble bg2"></div>
+    <div class="bg-bubble bg3"></div>
+    <div class="bg-bubble bg4"></div>
+</div>
+
+
+<!-- =========================================================
+     FEJLÉC
+========================================================= -->
+
+<header class="topbar">
+
+    <div class="logo-area">
+
+        <div class="python-logo">🐍</div>
+
+        <div>
+            <div class="logo-title">
+                Python <span>Halmazok</span>
+            </div>
+
+            <div class="logo-subtitle">
+                Tanulj játékosan, lépésről lépésre! 🎮
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="top-stats">
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                ⭐ Pontszám
+            </div>
+
+            <div class="stat-value">
+                <span id="score">5</span>
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Haladás
+            </div>
+
+            <div class="stat-value">
+                <span id="progressText">5 pont</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-fill" id="progressFill" style="width: 5.26316%;">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+
+<!-- =========================================================
+     BAL OLDALI MENÜ
+========================================================= -->
+
+<aside class="sidebar">
+
+    <div class="menu-title">
+        Tananyag
+    </div>
+
+    <button class="menu-button active" onclick="scrollToSection('intro')">
+
+        <span class="menu-icon">🏠</span>
+        Kezdőlap
+
+    </button>
+
+
+    <button class="menu-button" onclick="scrollToSection('explanation')">
+
+        <span class="menu-icon">📖</span>
+        Magyarázat
+
+    </button>
+
+
+    <button class="menu-button" onclick="scrollToSection('operations')">
+
+        <span class="menu-icon">⭕</span>
+        Halmazműveletek
+
+    </button>
+
+
+    <button class="menu-button" onclick="scrollToSection('quiz')">
+
+        <span class="menu-icon">🧠</span>
+        Kvíz
+
+    </button>
+
+
+    <button class="menu-button" onclick="scrollToSection('challenge')">
+
+        <span class="menu-icon">🚀</span>
+        Kihívás
+
+    </button>
+
+
+    <button class="menu-button" onclick="scrollToSection('summary')">
+
+        <span class="menu-icon">🏆</span>
+        Összefoglaló
+
+    </button>
+
+</aside>
+
+
+<!-- =========================================================
+     FŐTARTALOM
+========================================================= -->
+
+<main>
+
+
+<!-- BEVEZETŐ -->
+
+<section class="card" id="intro">
+
+    <h2 class="section-title">
+
+        <span class="number">1</span>
+
+        💡 Mi az a halmaz?
+
+    </h2>
+
+
+    <p class="description">
+
+        A Pythonban a <b>set</b> egy olyan adatszerkezet,
+        amely egyedi elemeket tárol.
+        Egy elem csak egyszer szerepelhet benne.
+
+    </p>
+
+
+    <div class="code">
+
+<span class="keyword">gyumolcsok</span> =
+{
+<span class="string">"alma"</span>,
+<span class="string">"banán"</span>,
+<span class="string">"körte"</span>
+}
+
+<br><br>
+
+<span class="keyword">szamok</span> =
+{
+<span class="number-code">1</span>,
+<span class="number-code">2</span>,
+<span class="number-code">2</span>,
+<span class="number-code">3</span>,
+<span class="number-code">3</span>
+}
+
+<br>
+
+<span class="comment">
+# A Python eltávolítja a duplikációkat
+</span>
+
+<br>
+
+<span class="comment">
+# eredmény: {1, 2, 3}
+</span>
+
+    </div>
+
+</section>
+
+
+<!-- MAGYARÁZAT -->
+
+<section class="card" id="explanation">
+
+    <h2 class="section-title">
+
+        <span class="number">2</span>
+
+        🫧 A halmazok buborékokként
+
+    </h2>
+
+
+    <p class="description">
+
+        Gondolj a halmazra úgy, mint egy nagy buborékra.
+        A kisebb buborékok az elemeket jelentik.
+        Kattints egy elemre, hogy eltávolítsd!
+
+    </p>
+
+
+    <div class="set-area">
+
+        <!-- A HALMAZ -->
+
+        <div class="set-bubble set-a">
+
+            <div class="set-label">
+                A halmaz
+            </div>
+
+            <div class="elements" id="setA"><div class="element">1</div><div class="element">2</div><div class="element">3</div><div class="element">4</div></div>
+
+        </div>
+
+
+        <!-- B HALMAZ -->
+
+        <div class="set-bubble set-b">
+
+            <div class="set-label">
+                B halmaz
+            </div>
+
+            <div class="elements" id="setB"><div class="element">3</div><div class="element">4</div><div class="element">5</div><div class="element">6</div></div>
+
+        </div>
+
+    </div>
+
+
+    <p style="
+        text-align:center;
+        color:#9fb4d4;
+    ">
+
+        💡 Tipp: kattints egy buborékra az eltávolításhoz!
+
+    </p>
+
+</section>
+
+
+<!-- MŰVELETEK -->
+
+<section class="card" id="operations">
+
+    <h2 class="section-title">
+
+        <span class="number">3</span>
+
+        🎮 Próbáld ki a halmazműveleteket!
+
+    </h2>
+
+
+    <p class="description">
+
+        Válassz egy műveletet és figyeld meg,
+        hogyan változik az eredmény.
+
+    </p>
+
+
+    <div class="operations">
+
+        <button class="operation union" onclick="doOperation('union')">
+
+            <span class="operation-symbol">
+                A ∪ B
+            </span>
+
+            Egyesítés
+
+        </button>
+
+
+        <button class="operation intersection" onclick="doOperation('intersection')">
+
+            <span class="operation-symbol">
+                A ∩ B
+            </span>
+
+            Metszet
+
+        </button>
+
+
+        <button class="operation difference" onclick="doOperation('difference')">
+
+            <span class="operation-symbol">
+                A − B
+            </span>
+
+            Különbség
+
+        </button>
+
+
+        <button class="operation symmetric" onclick="doOperation('symmetric')">
+
+            <span class="operation-symbol">
+                A △ B
+            </span>
+
+            Szimmetrikus különbség
+
+        </button>
+
+    </div>
+
+
+    <div class="result-box">
+
+        <div class="result">
+
+            <div class="result-title">
+                ✨ EREDMÉNY
+            </div>
+
+            <div class="result-value" id="operationResult">{ 1, 2, 5, 6 }</div>
+
+        </div>
+
+
+        <div class="result">
+
+            <div class="result-title">
+                🐍 PYTHON KÓD
+            </div>
+
+            <div class="result-value" id="operationCode">A ^ B</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- KVÍZ -->
+
+<section class="card quiz-card" id="quiz">
+
+    <h2 class="section-title">
+
+        <span class="number">4</span>
+
+        🧠 Mini kvíz
+
+    </h2>
+
+
+    <div class="quiz-question" id="quizQuestion">Melyik operátor jelenti az egyesítést?</div>
+
+
+    <div class="quiz-options" id="quizOptions"><button class="quiz-option">A &amp; B</button><button class="quiz-option">A | B</button><button class="quiz-option">A - B</button><button class="quiz-option">A ^ B</button></div>
+
+
+    <div class="quiz-feedback" id="quizFeedback"></div>
+
+
+    <button class="main-button" id="nextQuiz" onclick="nextQuiz()" style="display:none">
+
+        Következő kérdés ➡️
+
+    </button>
+
+</section>
+
+
+<!-- KIHÍVÁS -->
+
+<section class="card challenge" id="challenge">
+
+    <h2 class="section-title">
+
+        <span class="number">5</span>
+
+        🚀 Python kihívás
+
+    </h2>
+
+
+    <p class="description">
+        Mit fog kiírni ez a Python program?
+    </p>
+
+
+    <div class="code challenge-code">
+
+A = {1, 2, 3, 4}
+
+<br>
+
+B = {3, 4, 5, 6}
+
+<br><br>
+
+print(A &amp; B)
+
+    </div>
+
+
+    <div class="challenge-options">
+
+        <button class="quiz-option" onclick="challenge(this, false)">
+
+            {1, 2, 3, 4, 5, 6}
+
+        </button>
+
+
+        <button class="quiz-option" onclick="challenge(this, true)">
+
+            {3, 4}
+
+        </button>
+
+
+        <button class="quiz-option" onclick="challenge(this, false)">
+
+            {1, 2}
+
+        </button>
+
+
+        <button class="quiz-option" onclick="challenge(this, false)">
+
+            {5, 6}
+
+        </button>
+
+    </div>
+
+
+    <div id="challengeFeedback" class="quiz-feedback">
+    </div>
+
+</section>
+
+
+<!-- ÖSSZEFOGLALÓ -->
+
+<section class="card" id="summary">
+
+    <h2 class="section-title">
+
+        <span class="number">6</span>
+
+        🏆 Összefoglaló
+
+    </h2>
+
+
+    <div class="summary">
+
+        <div class="summary-item">
+
+            <div class="summary-symbol">
+                set
+            </div>
+
+            Halmaz
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-symbol">
+                ∪
+            </div>
+
+            Egyesítés
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-symbol">
+                ∩
+            </div>
+
+            Metszet
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-symbol">
+                −
+            </div>
+
+            Különbség
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-symbol">
+                +
+            </div>
+
+            add()
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div style="text-align:center">
+
+        <button class="main-button reset-button" onclick="resetGame()">
+
+            🔄 Új játék indítása
+
+        </button>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     JOBB OLDALI INFORMÁCIÓS PANEL
+========================================================= -->
+
+<aside class="rightbar">
+
+
+    <div class="side-card">
+
+        <h3>
+            🐍 Fontos Python műveletek
+        </h3>
+
+
+        <div class="code side-code">
+
+A = {1, 2, 3}
+
+<br>
+
+B = {3, 4, 5}
+
+<br><br>
+
+<span class="comment">
+# Egyesítés
+</span>
+
+<br>
+
+A | B
+
+<br><br>
+
+<span class="comment">
+# Metszet
+</span>
+
+<br>
+
+A &amp; B
+
+<br><br>
+
+<span class="comment">
+# Különbség
+</span>
+
+<br>
+
+A - B
+
+<br><br>
+
+<span class="comment">
+# Hozzáadás
+</span>
+
+<br>
+
+A.add(10)
+
+<br><br>
+
+<span class="comment">
+# Törlés
+</span>
+
+<br>
+
+A.remove(10)
+
+        </div>
+
+    </div>
+
+
+    <div class="side-card">
+
+        <h3>
+            💡 Tipp
+        </h3>
+
+        <p class="tip">
+
+            A halmazok különösen hasznosak,
+            amikor <strong>egyedi elemekkel</strong>
+            szeretnél dolgozni.
+
+        </p>
+
+        <p class="tip">
+
+            Például ha egy listából szeretnéd
+            eltávolítani az ismétlődéseket:
+
+        </p>
+
+        <div class="code side-code">
+
+lista = [1,2,2,3,3]
+
+<br>
+
+halmaz = set(lista)
+
+        </div>
+
+    </div>
+
+
+    <div class="side-card">
+
+        <h3>
+            🎯 Küldetés
+        </h3>
+
+        <p class="tip">
+
+            Szerezd meg legalább
+
+            <strong>50 pontot!</strong>
+
+        </p>
+
+        <p class="tip">
+
+            🟢 Kvíz: +10 pont
+
+            <br>
+
+            🟡 Kihívás: +20 pont
+
+            <br>
+
+            🔵 Műveletek: +5 pont
+
+        </p>
+
+    </div>
+
+</aside>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">⭐ +5 pont! Kipróbáltál egy halmazműveletet!</div>
+
+
+<script>
+
+/* =========================================================
+   JÁTÉK ÁLLAPOT
+========================================================= */
+
+let score = 0;
+
+let A = new Set([1, 2, 3, 4]);
+
+let B = new Set([3, 4, 5, 6]);
+
+let operationUsed = false;
+
+
+/* =========================================================
+   HALMAZOK MEGJELENÍTÉSE
+========================================================= */
+
+function renderSets() {
+
+    const setA = document.getElementById("setA");
+    const setB = document.getElementById("setB");
+
+    setA.innerHTML = "";
+    setB.innerHTML = "";
+
+
+    [...A].forEach(number => {
+
+        const bubble =
+            createBubble(number);
+
+        bubble.onclick = () => {
+
+            A.delete(number);
+
+            renderSets();
+
+            showToast("🗑️ Elem eltávolítva az A halmazból!");
+
+        };
+
+        setA.appendChild(bubble);
+
+    });
+
+
+    [...B].forEach(number => {
+
+        const bubble =
+            createBubble(number);
+
+        bubble.onclick = () => {
+
+            B.delete(number);
+
+            renderSets();
+
+            showToast("🗑️ Elem eltávolítva a B halmazból!");
+
+        };
+
+        setB.appendChild(bubble);
+
+    });
+
+}
+
+
+/* =========================================================
+   BUBORÉK LÉTREHOZÁSA
+========================================================= */
+
+function createBubble(number) {
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className = "element";
+
+    bubble.textContent = number;
+
+    return bubble;
+}
+
+
+/* =========================================================
+   HALMAZMŰVELETEK
+========================================================= */
+
+function doOperation(type) {
+
+    let result;
+
+    let code;
+
+    if (type === "union") {
+
+        result =
+            new Set([
+                ...A,
+                ...B
+            ]);
+
+        code = "A | B";
+
+    }
+
+
+    if (type === "intersection") {
+
+        result =
+            new Set(
+                [...A].filter(
+                    x => B.has(x)
+                )
+            );
+
+        code = "A & B";
+
+    }
+
+
+    if (type === "difference") {
+
+        result =
+            new Set(
+                [...A].filter(
+                    x => !B.has(x)
+                )
+            );
+
+        code = "A - B";
+
+    }
+
+
+    if (type === "symmetric") {
+
+        result =
+            new Set([
+                ...[...A].filter(
+                    x => !B.has(x)
+                ),
+
+                ...[...B].filter(
+                    x => !A.has(x)
+                )
+            ]);
+
+        code = "A ^ B";
+
+    }
+
+
+    document.getElementById(
+        "operationResult"
+    ).textContent =
+        "{ " + [...result].join(", ") + " }";
+
+
+    document.getElementById(
+        "operationCode"
+    ).textContent = code;
+
+
+    if (!operationUsed) {
+
+        score += 5;
+
+        operationUsed = true;
+
+        updateScore();
+
+        showToast(
+            "⭐ +5 pont! Kipróbáltál egy halmazműveletet!"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   KVÍZ
+========================================================= */
+
+const questions = [
+
+    {
+        question:
+            "Melyik operátor jelenti az egyesítést?",
+
+        answers: [
+            "A & B",
+            "A | B",
+            "A - B",
+            "A ^ B"
+        ],
+
+        correct: 1
+    },
+
+
+    {
+        question:
+            "Melyik operátor jelenti a metszetet?",
+
+        answers: [
+            "A & B",
+            "A | B",
+            "A + B",
+            "A // B"
+        ],
+
+        correct: 0
+    },
+
+
+    {
+        question:
+            "Melyik metódussal adunk elemet egy sethez?",
+
+        answers: [
+            "append()",
+            "push()",
+            "add()",
+            "insert()"
+        ],
+
+        correct: 2
+    },
+
+
+    {
+        question:
+            "Lehet-e ugyanaz az elem kétszer egy setben?",
+
+        answers: [
+            "Igen",
+            "Nem"
+        ],
+
+        correct: 1
+    },
+
+
+    {
+        question:
+            "Mit eredményez: {1,2,3} - {2}?",
+
+        answers: [
+            "{2}",
+            "{1,3}",
+            "{1,2,3}",
+            "{}"
+        ],
+
+        correct: 1
+    }
+
+];
+
+
+let currentQuestion = 0;
+
+let answeredQuestion = false;
+
+
+function loadQuiz() {
+
+    const question =
+        questions[currentQuestion];
+
+
+    document.getElementById(
+        "quizQuestion"
+    ).textContent =
+        question.question;
+
+
+    const options =
+        document.getElementById(
+            "quizOptions"
+        );
+
+
+    options.innerHTML = "";
+
+
+    question.answers.forEach(
+        (answer, index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "quiz-option";
+
+            button.textContent =
+                answer;
+
+            button.onclick =
+                () =>
+                    answerQuiz(
+                        index,
+                        button
+                    );
+
+            options.appendChild(button);
+
+        }
+    );
+
+
+    document.getElementById(
+        "quizFeedback"
+    ).textContent = "";
+
+
+    document.getElementById(
+        "nextQuiz"
+    ).style.display = "none";
+
+
+    answeredQuestion = false;
+
+}
+
+
+function answerQuiz(index, button) {
+
+    if (answeredQuestion)
+        return;
+
+
+    answeredQuestion = true;
+
+
+    const question =
+        questions[currentQuestion];
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#quizOptions .quiz-option"
+        );
+
+
+    buttons.forEach(
+        button =>
+            button.disabled = true
+    );
+
+
+    if (index === question.correct) {
+
+        button.classList.add("correct");
+
+
+        document.getElementById(
+            "quizFeedback"
+        ).innerHTML =
+            "✅ Helyes! <b>+10 pont</b>";
+
+
+        score += 10;
+
+        showToast(
+            "🎉 Helyes válasz! +10 pont"
+        );
+
+    } else {
+
+        button.classList.add("wrong");
+
+        buttons[
+            question.correct
+        ].classList.add("correct");
+
+
+        document.getElementById(
+            "quizFeedback"
+        ).textContent =
+            "❌ Nem ez volt a helyes válasz.";
+
+    }
+
+
+    updateScore();
+
+
+    document.getElementById(
+        "nextQuiz"
+    ).style.display = "inline-block";
+
+}
+
+
+function nextQuiz() {
+
+    currentQuestion++;
+
+
+    if (
+        currentQuestion >=
+        questions.length
+    ) {
+
+        currentQuestion = 0;
+
+        document.getElementById(
+            "quizQuestion"
+        ).textContent =
+            "🎉 Végigértél a kvízen!";
+
+        document.getElementById(
+            "quizOptions"
+        ).innerHTML = "";
+
+        document.getElementById(
+            "quizFeedback"
+        ).innerHTML =
+            "Újraindítottuk a kvízt. Próbáld meg még egyszer!";
+
+        document.getElementById(
+            "nextQuiz"
+        ).style.display = "none";
+
+        updateProgress();
+
+        return;
+
+    }
+
+
+    loadQuiz();
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   KIHÍVÁS
+========================================================= */
+
+function challenge(button, correct) {
+
+    const buttons =
+        document.querySelectorAll(
+            ".challenge-options .quiz-option"
+        );
+
+
+    buttons.forEach(
+        b => b.disabled = true
+    );
+
+
+    if (correct) {
+
+        button.classList.add("correct");
+
+
+        document.getElementById(
+            "challengeFeedback"
+        ).innerHTML =
+            "🎉 Helyes! Az <b>&</b> a közös elemeket keresi: <b>{3, 4}</b>";
+
+
+        score += 20;
+
+        showToast(
+            "🚀 +20 pont! Megoldottad a kihívást!"
+        );
+
+    } else {
+
+        button.classList.add("wrong");
+
+
+        document.getElementById(
+            "challengeFeedback"
+        ).innerHTML =
+            "❌ Az & operátor a metszetet jelenti.";
+
+    }
+
+
+    updateScore();
+
+}
+
+
+/* =========================================================
+   PONTSZÁM
+========================================================= */
+
+function updateScore() {
+
+    document.getElementById(
+        "score"
+    ).textContent = score;
+
+
+    updateProgress();
+
+}
+
+
+function updateProgress() {
+
+    const maxScore = 95;
+
+    let percentage =
+        Math.min(
+            100,
+            (score / maxScore) * 100
+        );
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        percentage + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        score + " pont";
+
+}
+
+
+/* =========================================================
+   TOAST ÜZENET
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   NAVIGÁCIÓ
+========================================================= */
+
+function scrollToSection(id) {
+
+    document
+        .getElementById(id)
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================================================
+   ÚJ JÁTÉK
+========================================================= */
+
+function resetGame() {
+
+    score = 0;
+
+    operationUsed = false;
+
+    currentQuestion = 0;
+
+    A = new Set([
+        1, 2, 3, 4
+    ]);
+
+    B = new Set([
+        3, 4, 5, 6
+    ]);
+
+
+    document.getElementById(
+        "operationResult"
+    ).textContent =
+        "Válassz egy műveletet!";
+
+
+    document.getElementById(
+        "operationCode"
+    ).textContent =
+        "A | B";
+
+
+    document.getElementById(
+        "challengeFeedback"
+    ).textContent = "";
+
+
+    renderSets();
+
+    loadQuiz();
+
+    updateScore();
+
+
+    showToast(
+        "🔄 Új játék indult!"
+    );
+
+}
+
+
+/* =========================================================
+   INDÍTÁS
+========================================================= */
+
+renderSets();
+
+loadQuiz();
+
+updateScore();
+
+</script>
+
+
+
+
+</body></html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///C:/Users/Utilizator/Downloads/gemini-code-1788974699690.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lépésenkénti Python Szimulációk: Rugó &amp; Ferde Hajítás</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            text-align: center;
+            color: #1a252f;
+        }
+        /* Navigációs fülek */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            background-color: #e2e8f0;
+            color: #475569;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .sim-panel {
+            display: none;
+        }
+        .sim-panel.active {
+            display: block;
+        }
+        /* Layout Grid */
+        .top-grid {
+            display: grid;
+            grid-template-columns: 320px 220px 1fr;
+            gap: 20px;
+            align-items: start;
+            margin-bottom: 25px;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            font-size: 13.5px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        button.action-btn {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-step { background-color: #007bff; }
+        .btn-step:hover { background-color: #0056b3; }
+        .btn-play { background-color: #28a745; }
+        .btn-play:hover { background-color: #218838; }
+        .btn-reset { background-color: #dc3545; }
+        .btn-reset:hover { background-color: #c82333; }
+
+        /* Python Kód Doboz és Sorkiemelő */
+        .code-container {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            height: 380px;
+            overflow-y: auto;
+        }
+        .code-line {
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .code-line.active {
+            background-color: #d97706;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .section-box {
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-top: 20px;
+        }
+        .formula-box {
+            background: #eef2f7;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th { background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Interaktív Szimulációk &amp; Lépésenkénti Python Kód</h2>
+
+    <!-- Fülek -->
+    <div class="tab-buttons">
+        <button class="tab-btn" onclick="switchTab('spring')">1. Csillapított Rugós Oszcillátor</button>
+        <button class="tab-btn active" onclick="switchTab('proj')">2. Ferde Hajítás 2D (Légellenállással)</button>
+    </div>
+
+    <!-- 1. MODELL: RUGÓS OSZCILLÁTOR -->
+    <div id="panel-spring" class="sim-panel">
+        <div class="top-grid">
+            <canvas id="canvasSpring" width="320" height="400"></canvas>
+
+            <div class="controls">
+                <div class="info-card"><strong>Idő (t):</strong> <span id="spTime">0.00</span> s</div>
+                <div class="info-card"><strong>Kitérés (x):</strong> <span id="spPos">1.50</span> m</div>
+                <div class="info-card"><strong>Sebesség (v):</strong> <span id="spVel">0.00</span> m/s</div>
+                <div class="info-card"><strong>Gyorsulás (a):</strong> <span id="spAcc">-15.00</span> m/s²</div>
+
+                <div class="btn-group">
+                    <button class="action-btn btn-step" onclick="stepSpring()">1 Lépés Futtatása (Step)</button>
+                    <button class="action-btn btn-play" id="playBtnSpring" onclick="togglePlaySpring()">Folyamatos Lejátszás</button>
+                    <button class="action-btn btn-reset" onclick="resetSpring()">Újraindítás</button>
+                </div>
+            </div>
+
+            <!-- Python Kód Oszcillátorhoz -->
+            <div class="code-container">
+                <div id="spL1" class="code-line"># 1. Paraméterek és kezdőértékek</div>
+                <div id="spL2" class="code-line">m, k, c = 1.0, 10.0, 0.35</div>
+                <div id="spL3" class="code-line active">x, v, t, dt = 1.5, 0.0, 0.0, 0.02</div>
+                <div id="spL4" class="code-line"></div>
+                <div id="spL5" class="code-line"># 2. Ciklus lépésenként</div>
+                <div id="spL6" class="code-line">while t &lt; 10.0:</div>
+                <div id="spL7" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;a = (-k * x - c * v) / m</div>
+                <div id="spL8" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;v = v + a * dt</div>
+                <div id="spL9" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;x = x + v * dt</div>
+                <div id="spL10" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;t = t + dt</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>Fizikai Képletek (Oszcillátor)</h3>
+            <p><strong>Eredő gyorsulás:</strong> <span class="formula-box">a = (-k * x - c * v) / m</span></p>
+            <p><strong>Léptetés (Euler):</strong> <span class="formula-box">v_új = v + a * dt &nbsp;|&nbsp; x_új = x + v * dt</span></p>
+        </div>
+
+        <div class="section-box">
+            <h3>Jellemzők Összehasonlítása</h3>
+            <table>
+                <thead>
+                    <tr><th>Jellemző</th><th>Kitérés (x)</th><th>Sebesség (v)</th><th>Gyorsulás (a)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Jelentése</strong></td><td>A nyugalmi ponttól mért távolság.</td><td>A kitérés változási sebessége.</td><td>A rugóerő és csillapítás által kiváltott gyorsulás.</td></tr>
+                    <tr><td><strong>Mértékegység</strong></td><td>m</td><td>m/s</td><td>m/s²</td></tr>
+                    <tr><td><strong>Viselkedés</strong></td><td>A szélsőértékeknél maximális.</td><td>Az egyensúlyi ponton áthaladva maximális.</td><td>A rugó kiakasztásakor a legnagyobb.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 2. MODELL: FERDE HAJÍTÁS 2D -->
+    <div id="panel-proj" class="sim-panel active">
+        <div class="top-grid">
+            <canvas id="canvasProj" width="320" height="400"></canvas>
+
+            <div class="controls">
+                <div class="info-card"><strong>Idő (t):</strong> <span id="prTime">2.06</span> s</div>
+                <div class="info-card"><strong>Távolság (x):</strong> <span id="prX">12.60</span> m</div>
+                <div class="info-card"><strong>Magasság (y):</strong> <span id="prY">0.00</span> m</div>
+                <div class="info-card"><strong>Sebesség (v):</strong> <span id="prV">7.82</span> m/s</div>
+
+                <div class="btn-group">
+                    <button class="action-btn btn-step" onclick="stepProj()">1 Lépés Futtatása (Step)</button>
+                    <button class="action-btn btn-play" id="playBtnProj" onclick="togglePlayProj()" style="background-color: rgb(40, 167, 69);">Folyamatos Lejátszás</button>
+                    <button class="action-btn btn-reset" onclick="resetProj()">Újraindítás</button>
+                </div>
+            </div>
+
+            <!-- Python Kód Ferde Hajításhoz -->
+            <div class="code-container">
+                <div id="prL1" class="code-line"># 1. Kezdőfeltételek (v0=28.28 m/s, ש=45°)</div>
+                <div id="prL2" class="code-line">g, m, k, dt = 9.81, 1.0, 0.12, 0.02</div>
+                <div id="prL3" class="code-line">x, y, vx, vy, t = 0.0, 0.0, 20.0, 20.0, 0.0</div>
+                <div id="prL4" class="code-line"></div>
+                <div id="prL5" class="code-line"># 2. Szimulációs ciklus léptetése</div>
+                <div id="prL6" class="code-line">while y &gt;= 0:</div>
+                <div id="prL7" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;v = (vx**2 + vy**2)**0.5</div>
+                <div id="prL8" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;ax = -(k / m) * v * vx</div>
+                <div id="prL9" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;ay = -g - (k / m) * v * vy</div>
+                <div id="prL10" class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;vx += ax * dt; vy += ay * dt</div>
+                <div id="prL11" class="code-line active">&nbsp;&nbsp;&nbsp;&nbsp;x += vx * dt; y += vy * dt; t += dt</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>Fizikai Képletek (2D Ferde Hajítás)</h3>
+            <p><strong>X és Y irányú gyorsulás:</strong> <span class="formula-box">ax = -(k/m)*v*vx &nbsp;|&nbsp; ay = -g - (k/m)*v*vy</span></p>
+            <p><strong>Eredő sebesség nagysága:</strong> <span class="formula-box">v = √(vx² + vy²)</span></p>
+        </div>
+
+        <div class="section-box">
+            <h3>Légellenállás Hatása a Pályára</h3>
+            <table>
+                <thead>
+                    <tr><th>Tulajdonság</th><th>Vákuumban (Légellenállás nélkül)</th><th>Levegőben (Légellenállással)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Pálya alakja</strong></td><td>Szimmetrikus parabola.</td><td>Aszimmetrikus (eséskor meredekebb).</td></tr>
+                    <tr><td><strong>Vízszintes sebesség ($v_x$)</strong></td><td>Állandó.</td><td>Folyamatosan csökken.</td></tr>
+                    <tr><td><strong>Max. Távolság</strong></td><td>Hosszabb röppálya.</td><td>Lényegesen rövidebb röppálya.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    let activeTab = 'spring';
+
+    function switchTab(tab) {
+        activeTab = tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.sim-panel').forEach(p => p.classList.remove('active'));
+
+        if (tab === 'spring') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('panel-spring').classList.add('active');
+            resetSpring();
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('panel-proj').classList.add('active');
+            resetProj();
+        }
+    }
+
+    // --- 1. RUGÓS OSZCILLÁTOR LOGIKA ---
+    const canvasSp = document.getElementById('canvasSpring');
+    const ctxSp = canvasSp.getContext('2d');
+    const m_sp = 1.0, k_sp = 10.0, c_sp = 0.35, dt_sp = 0.02;
+    let x_sp = 1.5, v_sp = 0.0, t_sp = 0.0, a_sp = -15.0;
+    let playSp = false, intervalSp = null, stepCodeSp = 0;
+
+    function highlightSpring(lineNum) {
+        document.querySelectorAll('#panel-spring .code-line').forEach(el => el.classList.remove('active'));
+        if (lineNum) {
+            const el = document.getElementById('spL' + lineNum);
+            if (el) el.classList.add('active');
+        }
+    }
+
+    function stepSpring() {
+        a_sp = (-k_sp * x_sp - c_sp * v_sp) / m_sp;
+        v_sp += a_sp * dt_sp;
+        x_sp += v_sp * dt_sp;
+        t_sp += dt_sp;
+
+        stepCodeSp = (stepCodeSp % 4) + 7; // 7, 8, 9, 10 sorok léptetése
+        highlightSpring(stepCodeSp);
+
+        document.getElementById('spTime').innerText = t_sp.toFixed(2);
+        document.getElementById('spPos').innerText = x_sp.toFixed(2);
+        document.getElementById('spVel').innerText = v_sp.toFixed(2);
+        document.getElementById('spAcc').innerText = a_sp.toFixed(2);
+
+        drawSpring();
+    }
+
+    function togglePlaySpring() {
+        const btn = document.getElementById('playBtnSpring');
+        if (playSp) {
+            clearInterval(intervalSp);
+            playSp = false;
+            btn.innerText = "Folyamatos Lejátszás";
+            btn.style.backgroundColor = "#28a745";
+        } else {
+            playSp = true;
+            btn.innerText = "Szüneteltetés";
+            btn.style.backgroundColor = "#ffc107";
+            intervalSp = setInterval(stepSpring, 30);
+        }
+    }
+
+    function resetSpring() {
+        if (playSp) togglePlaySpring();
+        x_sp = 1.5; v_sp = 0.0; t_sp = 0.0; a_sp = -15.0;
+        document.getElementById('spTime').innerText = "0.00";
+        document.getElementById('spPos').innerText = "1.50";
+        document.getElementById('spVel').innerText = "0.00";
+        document.getElementById('spAcc').innerText = "-15.00";
+        highlightSpring(3);
+        drawSpring();
+    }
+
+    function drawSpring() {
+        ctxSp.clearRect(0, 0, canvasSp.width, canvasSp.height);
+        let centerX = canvasSp.width / 2;
+        let centerY = 70 + (x_sp + 2) * 55;
+
+        // Felső felfüggesztés
+        ctxSp.fillStyle = '#64748b';
+        ctxSp.fillRect(centerX - 40, 20, 80, 8);
+
+        // Rugó szál
+        ctxSp.strokeStyle = '#334155';
+        ctxSp.lineWidth = 3;
+        ctxSp.beginPath();
+        ctxSp.moveTo(centerX, 28);
+        ctxSp.lineTo(centerX, centerY);
+        ctxSp.stroke();
+
+        // Tömeg
+        ctxSp.fillStyle = '#0284c7';
+        ctxSp.fillRect(centerX - 20, centerY, 40, 40);
+        ctxSp.strokeStyle = '#0369a1';
+        ctxSp.strokeRect(centerX - 20, centerY, 40, 40);
+    }
+
+
+    // --- 2. FERDE HAJÍTÁS LOGIKA ---
+    const canvasPr = document.getElementById('canvasProj');
+    const ctxPr = canvasPr.getContext('2d');
+    const g_pr = 9.81, m_pr = 1.0, k_pr = 0.12, dt_pr = 0.02;
+    let x_pr = 0.0, y_pr = 0.0, vx_pr = 20.0, vy_pr = 20.0, t_pr = 0.0;
+    let pathHistoryPr = [];
+    let playPr = false, intervalPr = null, stepCodePr = 0;
+
+    function highlightProj(lineNum) {
+        document.querySelectorAll('#panel-proj .code-line').forEach(el => el.classList.remove('active'));
+        if (lineNum) {
+            const el = document.getElementById('prL' + lineNum);
+            if (el) el.classList.add('active');
+        }
+    }
+
+    function stepProj() {
+        if (y_pr < 0) return;
+
+        let v = Math.sqrt(vx_pr * vx_pr + vy_pr * vy_pr);
+        let ax = -(k_pr / m_pr) * v * vx_pr;
+        let ay = -g_pr - (k_pr / m_pr) * v * vy_pr;
+
+        vx_pr += ax * dt_pr;
+        vy_pr += ay * dt_pr;
+        x_pr += vx_pr * dt_pr;
+        y_pr += vy_pr * dt_pr;
+        t_pr += dt_pr;
+
+        if (y_pr < 0) y_pr = 0;
+        pathHistoryPr.push({x: x_pr, y: y_pr});
+
+        stepCodePr = (stepCodePr % 5) + 7; // 7, 8, 9, 10, 11 sorok léptetése
+        highlightProj(stepCodePr);
+
+        document.getElementById('prTime').innerText = t_pr.toFixed(2);
+        document.getElementById('prX').innerText = x_pr.toFixed(2);
+        document.getElementById('prY').innerText = y_pr.toFixed(2);
+        document.getElementById('prV').innerText = v.toFixed(2);
+
+        drawProj();
+    }
+
+    function togglePlayProj() {
+        const btn = document.getElementById('playBtnProj');
+        if (playPr) {
+            clearInterval(intervalPr);
+            playPr = false;
+            btn.innerText = "Folyamatos Lejátszás";
+            btn.style.backgroundColor = "#28a745";
+        } else {
+            playPr = true;
+            btn.innerText = "Szüneteltetés";
+            btn.style.backgroundColor = "#ffc107";
+            intervalPr = setInterval(() => {
+                if (y_pr > 0) stepProj();
+                else togglePlayProj();
+            }, 30);
+        }
+    }
+
+    function resetProj() {
+        if (playPr) togglePlayProj();
+        x_pr = 0.0; y_pr = 0.0; vx_pr = 20.0; vy_pr = 20.0; t_pr = 0.0;
+        pathHistoryPr = [];
+        document.getElementById('prTime').innerText = "0.00";
+        document.getElementById('prX').innerText = "0.00";
+        document.getElementById('prY').innerText = "0.00";
+        document.getElementById('prV').innerText = "28.28";
+        highlightProj(3);
+        drawProj();
+    }
+
+    function drawProj() {
+        ctxPr.clearRect(0, 0, canvasPr.width, canvasPr.height);
+
+        // Talaj
+        ctxPr.fillStyle = '#64748b';
+        ctxPr.fillRect(0, canvasPr.height - 20, canvasPr.width, 20);
+
+        // Nyomvonal
+        ctxPr.strokeStyle = '#94a3b8';
+        ctxPr.lineWidth = 2;
+        ctxPr.beginPath();
+        pathHistoryPr.forEach((pt, idx) => {
+            let px = 20 + pt.x * 11;
+            let py = (canvasPr.height - 20) - pt.y * 11;
+            if (idx === 0) ctxPr.moveTo(px, py);
+            else ctxPr.lineTo(px, py);
+        });
+        ctxPr.stroke();
+
+        // Lövedék
+        let px = 20 + x_pr * 11;
+        let py = (canvasPr.height - 20) - y_pr * 11;
+        ctxPr.beginPath();
+        ctxPr.arc(px, py, 8, 0, Math.PI * 2);
+        ctxPr.fillStyle = '#ea580c';
+        ctxPr.fill();
+        ctxPr.strokeStyle = '#9a3412';
+        ctxPr.stroke();
+    }
+
+    // Kezdő nézet inicializálása
+    resetSpring();
+</script>
+
+</body></html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///D:/programe%20scolare/tankonyv/gemini-code-1789826082759.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Geometriai Puzzle Rács</title>
+    <style>
+        :root {
+            --bg-color: #e0f2f1; /* Mentazöld */
+            --wood-color: #f3e5ab; /* Fa szín */
+            --wood-border: #d2b48c;
+            --grid-border: #b2dfdb;
+            --panel-bg: #ffffff;
+            --text-color: #333333;
+            --shape-blue: #2196f3;
+            --shape-green: #4caf50;
+            --shape-red: #f44336;
+            --shape-yellow: #ffeb3b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #00695c;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+            justify-content: center;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #00796b;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #b2dfdb;
+            padding-bottom: 5px;
+            width: 100%;
+        }
+
+        /* Puzzle Tábla Rács (Mátrix) */
+        .board-container {
+            padding: 10px;
+            background-color: var(--wood-color);
+            border: 4px solid var(--wood-border);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(10, 30px);
+            gap: 2px;
+            width: 318px; /* (30*10) + (2*9) */
+            height: 318px;
+        }
+
+        .grid-cell {
+            background-color: #f5f5f5;
+            border: 1px solid var(--grid-border);
+            border-radius: 2px;
+            transition: background-color 0.1s;
+        }
+
+        .grid-cell.over {
+            background-color: rgba(76, 175, 80, 0.2); /* Zöldes kiemelés húzáskor */
+        }
+
+        .grid-cell.occupied {
+            background-color: #ccc; /* Alapszín foglalt cellának */
+        }
+
+        /* A rács celláihoz tartozó koordináta stílusok */
+        .grid-cell.filled-blue { background-color: var(--shape-blue); }
+        .grid-cell.filled-green { background-color: var(--shape-green); }
+        .grid-cell.filled-red { background-color: var(--shape-red); }
+        .grid-cell.filled-yellow { background-color: var(--shape-yellow); }
+
+        /* Formák Tára */
+        .pieces-bin {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            width: 250px;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        /* Közös Drag Source stílus */
+        .draggable-shape {
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #333;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s, opacity 0.1s;
+        }
+
+        .draggable-shape:active { cursor: grabbing; transform: scale(0.98); }
+        .draggable-shape.dragging { opacity: 0.5; cursor: grabbing; }
+
+        /* Konkrét Formák */
+        #shape-sq-blue {
+            width: 62px; height: 62px;
+            background-color: var(--shape-blue);
+        }
+        #shape-rect-green {
+            width: 94px; height: 30px;
+            background-color: var(--shape-green);
+        }
+        #shape-l-red {
+            width: 62px; height: 62px;
+            position: relative;
+        }
+        #shape-l-red::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 30px; height: 62px;
+            background-color: var(--shape-red);
+        }
+        #shape-l-red::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 62px; height: 30px;
+            background-color: var(--shape-red);
+        }
+
+        #shape-t-yellow {
+            width: 94px; height: 62px;
+            position: relative;
+        }
+        #shape-t-yellow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 30px;
+            width: 32px; height: 62px;
+            background-color: var(--shape-yellow);
+        }
+        #shape-t-yellow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 94px; height: 32px;
+            background-color: var(--shape-yellow);
+        }
+
+        /* Kontrollok és Státusz */
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #00796b;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        button:hover { background-color: #004d40; }
+
+        .status-block {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fcfcfc;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Interaktív Mátrix Puzzle</h1>
+
+    <div class="description">
+        Kattints egy formára és húzd a mátrix rácsba! A rendszer ellenőrzi, hogy elfér-e és beilleszti.
+        A háttérben egy 10x10-es mátrix tárolja a rács állapotát.
+    </div>
+
+    <div class="main-container">
+
+        <!-- 1. Panel: Puzzle Tábla (Drop Target) -->
+        <div class="panel board-container">
+            <div class="panel-title">Mátrix Rács (10x10)</div>
+            <div class="puzzle-grid" id="puzzleGrid"><div class="grid-cell" data-row="0" data-col="0"></div><div class="grid-cell" data-row="0" data-col="1"></div><div class="grid-cell" data-row="0" data-col="2"></div><div class="grid-cell" data-row="0" data-col="3"></div><div class="grid-cell" data-row="0" data-col="4"></div><div class="grid-cell" data-row="0" data-col="5"></div><div class="grid-cell" data-row="0" data-col="6"></div><div class="grid-cell" data-row="0" data-col="7"></div><div class="grid-cell" data-row="0" data-col="8"></div><div class="grid-cell" data-row="0" data-col="9"></div><div class="grid-cell" data-row="1" data-col="0"></div><div class="grid-cell" data-row="1" data-col="1"></div><div class="grid-cell" data-row="1" data-col="2"></div><div class="grid-cell" data-row="1" data-col="3"></div><div class="grid-cell" data-row="1" data-col="4"></div><div class="grid-cell" data-row="1" data-col="5"></div><div class="grid-cell" data-row="1" data-col="6"></div><div class="grid-cell" data-row="1" data-col="7"></div><div class="grid-cell" data-row="1" data-col="8"></div><div class="grid-cell" data-row="1" data-col="9"></div><div class="grid-cell" data-row="2" data-col="0"></div><div class="grid-cell" data-row="2" data-col="1"></div><div class="grid-cell" data-row="2" data-col="2"></div><div class="grid-cell" data-row="2" data-col="3"></div><div class="grid-cell" data-row="2" data-col="4"></div><div class="grid-cell" data-row="2" data-col="5"></div><div class="grid-cell" data-row="2" data-col="6"></div><div class="grid-cell" data-row="2" data-col="7"></div><div class="grid-cell" data-row="2" data-col="8"></div><div class="grid-cell" data-row="2" data-col="9"></div><div class="grid-cell" data-row="3" data-col="0"></div><div class="grid-cell" data-row="3" data-col="1"></div><div class="grid-cell" data-row="3" data-col="2"></div><div class="grid-cell" data-row="3" data-col="3"></div><div class="grid-cell" data-row="3" data-col="4"></div><div class="grid-cell" data-row="3" data-col="5"></div><div class="grid-cell" data-row="3" data-col="6"></div><div class="grid-cell" data-row="3" data-col="7"></div><div class="grid-cell" data-row="3" data-col="8"></div><div class="grid-cell" data-row="3" data-col="9"></div><div class="grid-cell" data-row="4" data-col="0"></div><div class="grid-cell" data-row="4" data-col="1"></div><div class="grid-cell" data-row="4" data-col="2"></div><div class="grid-cell" data-row="4" data-col="3"></div><div class="grid-cell" data-row="4" data-col="4"></div><div class="grid-cell" data-row="4" data-col="5"></div><div class="grid-cell" data-row="4" data-col="6"></div><div class="grid-cell" data-row="4" data-col="7"></div><div class="grid-cell" data-row="4" data-col="8"></div><div class="grid-cell" data-row="4" data-col="9"></div><div class="grid-cell" data-row="5" data-col="0"></div><div class="grid-cell" data-row="5" data-col="1"></div><div class="grid-cell" data-row="5" data-col="2"></div><div class="grid-cell" data-row="5" data-col="3"></div><div class="grid-cell" data-row="5" data-col="4"></div><div class="grid-cell" data-row="5" data-col="5"></div><div class="grid-cell" data-row="5" data-col="6"></div><div class="grid-cell" data-row="5" data-col="7"></div><div class="grid-cell" data-row="5" data-col="8"></div><div class="grid-cell" data-row="5" data-col="9"></div><div class="grid-cell" data-row="6" data-col="0"></div><div class="grid-cell" data-row="6" data-col="1"></div><div class="grid-cell" data-row="6" data-col="2"></div><div class="grid-cell" data-row="6" data-col="3"></div><div class="grid-cell" data-row="6" data-col="4"></div><div class="grid-cell" data-row="6" data-col="5"></div><div class="grid-cell" data-row="6" data-col="6"></div><div class="grid-cell" data-row="6" data-col="7"></div><div class="grid-cell" data-row="6" data-col="8"></div><div class="grid-cell" data-row="6" data-col="9"></div><div class="grid-cell" data-row="7" data-col="0"></div><div class="grid-cell" data-row="7" data-col="1"></div><div class="grid-cell" data-row="7" data-col="2"></div><div class="grid-cell" data-row="7" data-col="3"></div><div class="grid-cell" data-row="7" data-col="4"></div><div class="grid-cell" data-row="7" data-col="5"></div><div class="grid-cell" data-row="7" data-col="6"></div><div class="grid-cell" data-row="7" data-col="7"></div><div class="grid-cell" data-row="7" data-col="8"></div><div class="grid-cell" data-row="7" data-col="9"></div><div class="grid-cell" data-row="8" data-col="0"></div><div class="grid-cell" data-row="8" data-col="1"></div><div class="grid-cell" data-row="8" data-col="2"></div><div class="grid-cell" data-row="8" data-col="3"></div><div class="grid-cell" data-row="8" data-col="4"></div><div class="grid-cell" data-row="8" data-col="5"></div><div class="grid-cell" data-row="8" data-col="6"></div><div class="grid-cell" data-row="8" data-col="7"></div><div class="grid-cell" data-row="8" data-col="8"></div><div class="grid-cell" data-row="8" data-col="9"></div><div class="grid-cell" data-row="9" data-col="0"></div><div class="grid-cell" data-row="9" data-col="1"></div><div class="grid-cell" data-row="9" data-col="2"></div><div class="grid-cell" data-row="9" data-col="3"></div><div class="grid-cell" data-row="9" data-col="4"></div><div class="grid-cell" data-row="9" data-col="5"></div><div class="grid-cell" data-row="9" data-col="6"></div><div class="grid-cell" data-row="9" data-col="7"></div><div class="grid-cell" data-row="9" data-col="8"></div><div class="grid-cell" data-row="9" data-col="9"></div></div>
+            <div class="controls">
+                <button id="resetBtn">Új Játék / Törlés</button>
+            </div>
+        </div>
+
+        <!-- 2. Panel: Formák (Drag Source) -->
+        <div class="panel">
+            <div class="panel-title">Formák</div>
+            <div class="pieces-bin" id="piecesBin">
+                <!-- Draggable Shapes -->
+                <div class="draggable-shape" id="shape-sq-blue" draggable="true" data-color="blue"></div>
+                <div class="draggable-shape" id="shape-rect-green" draggable="true" data-color="green"></div>
+                <div class="draggable-shape" id="shape-l-red" draggable="true" data-color="red"></div>
+                <div class="draggable-shape" id="shape-t-yellow" draggable="true" data-color="yellow"></div>
+            </div>
+            <div class="status-block">
+                <strong>Státusz:</strong>
+                <span id="statusText">Játék kész. Húzz egy formát!</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const puzzleGrid = document.getElementById('puzzleGrid');
+        const piecesBin = document.getElementById('piecesBin');
+        const statusText = document.getElementById('statusText');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const matrixRows = 10;
+        const matrixCols = 10;
+        const matrix = Array(matrixRows).fill().map(() => Array(matrixCols).fill(null));
+
+        // Formák mátrix kiterjedéseinek definíciója (COO koordináta formátumban)
+        const shapeLayouts = {
+            'shape-sq-blue': [[0,0], [0,1], [1,0], [1,1]], // 2x2 négyzet
+            'shape-rect-green': [[0,0], [0,1], [0,2]],    // 1x3 téglalap
+            'shape-l-red': [[0,0], [1,0], [1,1]],          // Kis L alak
+            'shape-t-yellow': [[0,1], [1,0], [1,1], [1,2]]  // T alak
+        };
+
+        let draggingShapeId = null;
+
+        // Initialize Grid
+        function generateGrid() {
+            puzzleGrid.innerHTML = '';
+            for (let i = 0; i < matrixRows; i++) {
+                for (let j = 0; j < matrixCols; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    // Add Drag-and-Drop Drop Target listeners
+                    cell.addEventListener('dragenter', dragEnter);
+                    cell.addEventListener('dragover', dragOver);
+                    cell.addEventListener('dragleave', dragLeave);
+                    cell.addEventListener('drop', drop);
+
+                    puzzleGrid.appendChild(cell);
+                }
+            }
+        }
+
+        // Initialize Draggable pieces
+        function generatePieces() {
+            const pieces = piecesBin.querySelectorAll('.draggable-shape');
+            pieces.forEach(piece => {
+                piece.addEventListener('dragstart', dragStart);
+                piece.addEventListener('dragend', dragEnd);
+            });
+        }
+
+        // Drag Source event handlers
+        function dragStart(e) {
+            draggingShapeId = e.target.id;
+            e.target.classList.add('dragging');
+            statusText.textContent = `Húzod: ${draggingShapeId.split('-').slice(1).join(' ')}`;
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggingShapeId = null;
+        }
+
+        // Drop Target event handlers
+        function dragEnter(e) { e.preventDefault(); e.target.classList.add('over'); }
+        function dragOver(e) { e.preventDefault(); }
+        function dragLeave(e) { e.target.classList.remove('over'); }
+
+        function drop(e) {
+            e.preventDefault();
+            e.target.classList.remove('over');
+
+            if (!draggingShapeId) return;
+
+            const targetRow = parseInt(e.target.dataset.row);
+            const targetCol = parseInt(e.target.dataset.col);
+
+            const layout = shapeLayouts[draggingShapeId];
+            const color = document.getElementById(draggingShapeId).dataset.color;
+
+            if (canPlaceShape(targetRow, targetCol, layout)) {
+                placeShape(targetRow, targetCol, layout, color);
+                statusText.textContent = `Beillesztetted: ${color} ${draggingShapeId.split('-')[1]}!`;
+                // Remove the original piece from the bin
+                document.getElementById(draggingShapeId).remove();
+            } else {
+                statusText.textContent = "Nem elfér vagy ütközik! Próbáld máshova.";
+            }
+        }
+
+        // Logic functions
+        function canPlaceShape(row, col, layout) {
+            for (let coord of layout) {
+                const r = row + coord[0];
+                const c = col + coord[1];
+
+                // Check Matrix bounds
+                if (r < 0 || r >= matrixRows || c < 0 || c >= matrixCols) {
+                    return false;
+                }
+                // Check Collision (is cell already occupied)
+                if (matrix[r][c] !== null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function placeShape(row, col, layout, color) {
+            for (let coord of layout) {
+                const r = row + coord[0];
+                const c = col + coord[1];
+
+                // Update Matrix Model
+                matrix[r][c] = color;
+
+                // Update Grid View
+                const cell = puzzleGrid.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+                cell.classList.add('occupied', `filled-${color}`);
+            }
+        }
+
+        function resetGame() {
+            // Re-create the pieces in the bin
+            piecesBin.innerHTML = `
+                <div class="draggable-shape" id="shape-sq-blue" draggable="true" data-color="blue"></div>
+                <div class="draggable-shape" id="shape-rect-green" draggable="true" data-color="green"></div>
+                <div class="draggable-shape" id="shape-l-red" draggable="true" data-color="red"></div>
+                <div class="draggable-shape" id="shape-t-yellow" draggable="true" data-color="yellow"></div>
+            `;
+            generatePieces();
+
+            // Clear Matrix Model
+            for (let i = 0; i < matrixRows; i++) {
+                for (let j = 0; j < matrixCols; j++) {
+                    matrix[i][j] = null;
+                }
+            }
+            
+            // Clear Grid View
+            generateGrid();
+            statusText.textContent = "Új játék kész. Húzz egy formát!";
+        }
+
+        // Initialize
+        resetBtn.addEventListener('click', resetGame);
+        generateGrid();
+        generatePieces();
+
+    </script>
+
+</body></html>

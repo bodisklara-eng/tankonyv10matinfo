@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///D:/programe%20scolare/tankonyv/3d_jatekszimulator.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Oktatójátékok 3D Szimulátora</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            background-color: #1a1a24;
+            color: #fff;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        /* UI Panel - Mobile First & Responsive */
+        #ui-panel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            max-width: 380px;
+            background: rgba(26, 26, 36, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 16px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        h1 {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: #ffda79;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: center;
+        }
+        .toy-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .btn.active {
+            background: #ffb142;
+            color: #1a1a24;
+            border-color: #ffda79;
+            box-shadow: 0 0 15px rgba(255, 177, 66, 0.4);
+        }
+        #info-card {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            border-left: 3px solid #ffb142;
+            color: #ddd;
+        }
+        
+        /* Toast Feedback */
+        #feedback-toast {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(46, 213, 115, 0.95);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 20;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        /* Help Instructions */
+        .instructions {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.72rem;
+            color: #bbb;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @media (max-width: 480px) {
+            #ui-panel {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                padding: 12px;
+            }
+            .btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            h1 { font-size: 0.95rem; }
+            .instructions { display: none; }
+        }
+    </style>
+
+    <!-- Three.js Library és OrbitControls -->
+    <script src="./index_files/three.min.js.descărcare"></script>
+    <script src="./index_files/OrbitControls.js.descărcare"></script>
+    <script src="./index_files/tween.umd.js.descărcare"></script>
+</head>
+<body>
+
+    <div id="canvas-container"><canvas width="1603" height="935" style="display: block; width: 1283px; height: 748px;"></canvas></div>
+
+    <div id="ui-panel">
+        <h1>🎮 3D Játékszimulátor</h1>
+        <div class="toy-selector">
+            <button class="btn active" onclick="switchToy('busyboard', this)">🔌 1. Busy Board (Fa tábla)</button>
+            <button class="btn" onclick="switchToy('hotdots', this)">🔢 2. Hot Dots Numberblocks</button>
+            <button class="btn" onclick="switchToy('farm', this)">🥕 3. Répás Interaktív Farm</button>
+        </div>
+        <div id="info-card"><b>Montessori Busy Board:</b> Kattints/Koppints a kulcsra a rendszer elindításához, majd a kapcsolókra!</div>
+    </div>
+
+    <div id="feedback-toast" style="opacity: 0;">MOO! EZ A TEHÉN! 🐄</div>
+    <div class="instructions">👆 1 ujj: Forgatás | ✌️ 2 ujj: Nagyítás / Mozgatás</div>
+
+    <script>
+        // --- Globális Változók ---
+        let scene, camera, renderer, controls;
+        let currentToyGroup = null;
+        let raycaster = new THREE.Raycaster();
+        let mouse = new THREE.Vector2();
+        let interactiveObjects = [];
+        let currentToyType = 'busyboard';
+
+        // Állapotok
+        let busyBoardState = { powerKey: false, switch1: false, switch2: false, buttonLed: false };
+        let penMesh = null, carrotPenMesh = null;
+
+        // Sound Synthesis (Web Audio API)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playBeep(freq = 520, type = 'sine', duration = 0.15) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playSuccessSound() {
+            playBeep(523.25, 'triangle', 0.1);
+            setTimeout(() => playBeep(659.25, 'triangle', 0.1), 100);
+            setTimeout(() => playBeep(783.99, 'triangle', 0.2), 200);
+        }
+
+        function playErrorSound() {
+            playBeep(200, 'sawtooth', 0.2);
+            setTimeout(() => playBeep(150, 'sawtooth', 0.3), 150);
+        }
+
+        // --- Inicializálás ---
+        function init() {
+            const container = document.getElementById('canvas-container');
+
+            // Jelenet
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a24);
+
+            // Kamera
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 16, 14);
+
+            // Renderelő
+            renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Vezérlés (OrbitControls - Érintőképernyő támogatással)
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 - 0.05;
+            controls.touches = {
+                ONE: THREE.TOUCH.ROTATE,
+                TWO: THREE.TOUCH.DOLLY_PAN
+            };
+
+            // Fények
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(10, 20, 10);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            scene.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0xffeedd, 0.4);
+            pointLight.position.set(-10, 10, -10);
+            scene.add(pointLight);
+
+            // Padló
+            const floorGeo = new THREE.PlaneGeometry(50, 50);
+            const floorMat = new THREE.MeshStandardMaterial({ color: 0x111118, roughness: 0.8 });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.y = -0.1;
+            floor.receiveShadow = true;
+            scene.add(floor);
+
+            // Első játék betöltése
+            loadToy('busyboard');
+
+            // Eseményfigyelők (Egér & Érintőképernyő)
+            window.addEventListener('resize', onWindowResize);
+            
+            const domElem = renderer.domElement;
+            domElem.addEventListener('pointerdown', onPointerDown, false);
+
+            // Animációs ciklus
+            animate();
+        }
+
+        // --- 1. JÁTÉK: MONTESSORI BUSY BOARD ---
+        function createBusyBoard() {
+            const group = new THREE.Group();
+            interactiveObjects = [];
+
+            // Fa alap
+            const boardGeo = new THREE.BoxGeometry(7, 0.8, 11);
+            const boardMat = new THREE.MeshStandardMaterial({ color: 0xd4a373, roughness: 0.6 });
+            const board = new THREE.Mesh(boardGeo, boardMat);
+            board.castShadow = true;
+            board.receiveShadow = true;
+            group.add(board);
+
+            // Fejléc
+            const headerGeo = new THREE.BoxGeometry(6, 0.1, 1.8);
+            const headerMat = new THREE.MeshStandardMaterial({ color: 0xf4a261, roughness: 0.4 });
+            const header = new THREE.Mesh(headerGeo, headerMat);
+            header.position.set(0, 0.45, -4.0);
+            group.add(header);
+
+            // 1. Kulcsos kapcsoló
+            const keyBase = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.3), new THREE.MeshStandardMaterial({ metalness: 0.8, roughness: 0.2 }));
+            keyBase.position.set(-2, 0.55, -1.8);
+            group.add(keyBase);
+
+            const keyMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.6, 0.4), new THREE.MeshStandardMaterial({ color: 0xcccccc, metalness: 0.9 }));
+            keyMesh.position.set(-2, 0.8, -1.8);
+            keyMesh.name = "keySwitch";
+            group.add(keyMesh);
+            interactiveObjects.push(keyMesh);
+
+            // 2. Billenőkapcsoló
+            const switchBox = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.8), new THREE.MeshStandardMaterial({ color: 0x222222 }));
+            switchBox.position.set(0, 0.5, -1.8);
+            group.add(switchBox);
+
+            const toggleBtn = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.3, 0.4), new THREE.MeshStandardMaterial({ color: 0xe74c3c }));
+            toggleBtn.position.set(0, 0.65, -1.8);
+            toggleBtn.rotation.x = 0.2;
+            toggleBtn.name = "toggleSwitch1";
+            group.add(toggleBtn);
+            interactiveObjects.push(toggleBtn);
+
+            // 3. LED izzók
+            const ledColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff];
+            const leds = [];
+            for (let i = 0; i < 5; i++) {
+                const ledGeo = new THREE.SphereGeometry(0.25, 16, 16);
+                const ledMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3, emissive: 0x000000 });
+                const led = new THREE.Mesh(ledGeo, ledMat);
+                led.position.set(-2 + i * 1, 0.55, 0.2);
+                group.add(led);
+
+                const pLight = new THREE.PointLight(ledColors[i], 0, 3);
+                pLight.position.set(-2 + i * 1, 0.8, 0.2);
+                group.add(pLight);
+
+                leds.push({ mesh: led, light: pLight, color: ledColors[i] });
+            }
+            group.userData.leds = leds;
+
+            // 4. Nyomógomb
+            const btnBase = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.2), new THREE.MeshStandardMaterial({ color: 0x555555 }));
+            btnBase.position.set(-1.5, 0.5, 2.5);
+            group.add(btnBase);
+
+            const pushBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.3), new THREE.MeshStandardMaterial({ color: 0x3498db }));
+            pushBtn.position.set(-1.5, 0.65, 2.5);
+            pushBtn.name = "pushButton";
+            group.add(pushBtn);
+            interactiveObjects.push(pushBtn);
+
+            // 5. Nagy Dóm lámpa
+            const domeGeo = new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const domeMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee, roughness: 0.2, transparent: true, opacity: 0.9 });
+            const dome = new THREE.Mesh(domeGeo, domeMat);
+            dome.position.set(1.2, 0.4, 2.5);
+            group.add(dome);
+
+            const domeLight = new THREE.PointLight(0xffffff, 0, 5);
+            domeLight.position.set(1.2, 1.0, 2.5);
+            group.add(domeLight);
+            group.userData.domeLight = domeLight;
+
+            return group;
+        }
+
+        // --- 2. JÁTÉK: HOT DOTS NUMBERBLOCKS ---
+        function createHotDots() {
+            const group = new THREE.Group();
+            interactiveObjects = [];
+
+            // Könyv
+            const bookBase = new THREE.Mesh(new THREE.BoxGeometry(9.5, 0.3, 6.5), new THREE.MeshStandardMaterial({ color: 0x3c6382 }));
+            bookBase.position.y = 0.15;
+            group.add(bookBase);
+
+            const pageGeo = new THREE.PlaneGeometry(4.2, 5.8);
+            
+            const pageLeft = new THREE.Mesh(pageGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5 }));
+            pageLeft.rotation.x = -Math.PI / 2;
+            pageLeft.position.set(-2.2, 0.32, 0);
+            group.add(pageLeft);
+
+            const pageRight = new THREE.Mesh(pageGeo, new THREE.MeshStandardMaterial({ color: 0xfffae6, roughness: 0.5 }));
+            pageRight.rotation.x = -Math.PI / 2;
+            pageRight.position.set(2.2, 0.32, 0);
+            group.add(pageRight);
+
+            // Kockák
+            for(let i=0; i<3; i++) {
+                const block = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.7), new THREE.MeshStandardMaterial({color: i===0? 0xff5252 : i===1? 0xffda79 : 0x34ace0}));
+                block.position.set(-3.2 + i*1.0, 0.65, -1.2);
+                group.add(block);
+            }
+
+            // Válaszpontok
+            const answers = [
+                { pos: [1.5, 1.6], correct: false },
+                { pos: [1.5, 0.0], correct: true },
+                { pos: [1.5, -1.6], correct: false }
+            ];
+
+            answers.forEach((ans) => {
+                const dot = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.06, 32), new THREE.MeshStandardMaterial({ color: 0x222222 }));
+                dot.position.set(ans.pos[0], 0.36, ans.pos[1]);
+                dot.name = ans.correct ? "hotdot_correct" : "hotdot_wrong";
+                group.add(dot);
+                interactiveObjects.push(dot);
+
+                const ring = new THREE.Mesh(new THREE.RingGeometry(0.2, 0.3, 32), new THREE.MeshBasicMaterial({ color: 0xf1c40f, side: THREE.DoubleSide }));
+                ring.rotation.x = -Math.PI / 2;
+                ring.position.set(ans.pos[0], 0.39, ans.pos[1]);
+                group.add(ring);
+            });
+
+            // Toll
+            penMesh = new THREE.Group();
+            const penBody = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.14, 3.2, 16), new THREE.MeshStandardMaterial({ color: 0xf1c40f }));
+            penBody.position.y = 1.6;
+            penMesh.add(penBody);
+
+            const penTip = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.4, 16), new THREE.MeshStandardMaterial({ color: 0x333333 }));
+            penTip.position.y = -0.1;
+            penTip.rotation.x = Math.PI;
+            penMesh.add(penTip);
+
+            const penLedMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x000000 });
+            const penLed = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), penLedMat);
+            penLed.position.y = 3.3;
+            penMesh.add(penLed);
+
+            const penLight = new THREE.PointLight(0xffffff, 0, 3);
+            penLight.position.y = 3.3;
+            penMesh.add(penLight);
+
+            penMesh.position.set(3.8, 1.8, 2);
+            penMesh.rotation.z = -0.3;
+            group.add(penMesh);
+
+            group.userData.penLedMat = penLedMat;
+            group.userData.penLight = penLight;
+
+            return group;
+        }
+
+        // --- 3. JÁTÉK: RÉPÁS INTERAKTÍV FARM ---
+        function createFarmToy() {
+            const group = new THREE.Group();
+            interactiveObjects = [];
+
+            // Farm Tábla
+            const board = new THREE.Mesh(new THREE.BoxGeometry(10, 0.2, 7.5), new THREE.MeshStandardMaterial({ color: 0x7bed9f, roughness: 0.8 }));
+            board.position.y = 0.1;
+            group.add(board);
+
+            // Pajta
+            const barn = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.8, 1.8), new THREE.MeshStandardMaterial({ color: 0xff4757 }));
+            barn.position.set(-2.8, 1.0, -2.2);
+            group.add(barn);
+
+            const roof = new THREE.Mesh(new THREE.ConeGeometry(2.2, 1.0, 4), new THREE.MeshStandardMaterial({ color: 0x2f3542 }));
+            roof.position.set(-2.8, 2.4, -2.2);
+            roof.rotation.y = Math.PI / 4;
+            group.add(roof);
+
+            // Kártyák
+            const cardsData = [
+                { pos: [-2.6, 0.22, 1.5], color: 0xffffff, isCorrect: true },
+                { pos: [0, 0.22, 1.5], color: 0xffa4b6, isCorrect: false },
+                { pos: [2.6, 0.22, 1.5], color: 0xeccc68, isCorrect: false }
+            ];
+
+            cardsData.forEach(c => {
+                const card = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 2.2), new THREE.MeshStandardMaterial({ color: c.color }));
+                card.position.set(c.pos[0], c.pos[1], c.pos[2]);
+                group.add(card);
+
+                const dot = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.06), new THREE.MeshStandardMaterial({ color: 0x1e90ff }));
+                dot.position.set(c.pos[0], c.pos[1] + 0.02, c.pos[2] + 0.7);
+                dot.name = c.isCorrect ? "farmdot_correct" : "farmdot_wrong";
+                group.add(dot);
+                interactiveObjects.push(dot);
+            });
+
+            // SÁRGARÉPA TOLL
+            carrotPenMesh = new THREE.Group();
+
+            const body = new THREE.Mesh(new THREE.ConeGeometry(0.35, 2.2, 16), new THREE.MeshStandardMaterial({ color: 0xff7f50, roughness: 0.4 }));
+            body.rotation.x = Math.PI;
+            body.position.y = 1.1;
+            carrotPenMesh.add(body);
+
+            for(let i=0; i<4; i++) {
+                const leaf = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.08, 0.7), new THREE.MeshStandardMaterial({ color: 0x2ed573 }));
+                leaf.position.set(Math.sin(i*1.5)*0.15, 2.3, Math.cos(i*1.5)*0.15);
+                carrotPenMesh.add(leaf);
+            }
+
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const eye1 = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 8), eyeMat);
+            eye1.position.set(-0.1, 1.6, 0.25);
+            const eye2 = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 8), eyeMat);
+            eye2.position.set(0.1, 1.6, 0.25);
+            carrotPenMesh.add(eye1);
+            carrotPenMesh.add(eye2);
+
+            const carrotLight = new THREE.PointLight(0xffffff, 0, 4);
+            carrotLight.position.set(0, 2.0, 0);
+            carrotPenMesh.add(carrotLight);
+
+            carrotPenMesh.position.set(2.8, 1.8, 2.2);
+            carrotPenMesh.rotation.z = -0.2;
+            group.add(carrotPenMesh);
+
+            group.userData.carrotLight = carrotLight;
+
+            return group;
+        }
+
+        // --- JÁTÉKVÁLTÓ LOGIKA ---
+        function loadToy(type) {
+            if (currentToyGroup) scene.remove(currentToyGroup);
+
+            currentToyType = type;
+            const infoCard = document.getElementById('info-card');
+
+            if (type === 'busyboard') {
+                currentToyGroup = createBusyBoard();
+                infoCard.innerHTML = "<b>Montessori Busy Board:</b> Kattints/Koppints a kulcsra a rendszer elindításához, majd a kapcsolókra!";
+            } else if (type === 'hotdots') {
+                currentToyGroup = createHotDots();
+                infoCard.innerHTML = "<b>Hot Dots Numberblocks:</b> Számold meg a blokkokat, és koppints a helyes válasz melletti pontra!";
+            } else if (type === 'farm') {
+                currentToyGroup = createFarmToy();
+                infoCard.innerHTML = "<b>Répás Interaktív Farm:</b> Koppints a kártyákon lévő pontokra a sárgarépa-toll használatához!";
+            }
+
+            scene.add(currentToyGroup);
+        }
+
+        function switchToy(type, btnElem) {
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+            if(btnElem) btnElem.classList.add('active');
+            loadToy(type);
+        }
+
+        // --- INTERAKCIÓK ÉS KATTINTÁS/KOPPINTÁS KEZELÉS ---
+        function onPointerDown(event) {
+            // Ne váltsunk ki interakciót, ha a UI panelre koppintott a felhasználó
+            const uiPanel = document.getElementById('ui-panel');
+            const rect = uiPanel.getBoundingClientRect();
+            if (event.clientX >= rect.left && event.clientX <= rect.right &&
+                event.clientY >= rect.top && event.clientY <= rect.bottom) {
+                return;
+            }
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(interactiveObjects, true);
+
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
+                handleInteraction(obj);
+            }
+        }
+
+        function handleInteraction(obj) {
+            if (currentToyType === 'busyboard') {
+                if (obj.name === "keySwitch") {
+                    busyBoardState.powerKey = !busyBoardState.powerKey;
+                    new TWEEN.Tween(obj.rotation)
+                        .to({ y: busyBoardState.powerKey ? Math.PI / 2 : 0 }, 300)
+                        .start();
+                    playBeep(400, 'square', 0.05);
+                } 
+                else if (obj.name === "toggleSwitch1") {
+                    busyBoardState.switch1 = !busyBoardState.switch1;
+                    new TWEEN.Tween(obj.rotation)
+                        .to({ x: busyBoardState.switch1 ? -0.2 : 0.2 }, 150)
+                        .start();
+                    playBeep(300, 'square', 0.05);
+                }
+                else if (obj.name === "pushButton") {
+                    new TWEEN.Tween(obj.position)
+                        .to({ y: 0.55 }, 100)
+                        .yoyo(true).repeat(1)
+                        .start();
+                    busyBoardState.buttonLed = !busyBoardState.buttonLed;
+                    playBeep(600, 'sine', 0.1);
+                }
+
+                updateBusyBoardLeds();
+            }
+
+            else if (currentToyType === 'hotdots') {
+                if (obj.name.startsWith("hotdot")) {
+                    const isCorrect = obj.name === "hotdot_correct";
+                    
+                    new TWEEN.Tween(penMesh.position)
+                        .to({ x: obj.position.x, y: 1.1, z: obj.position.z }, 350)
+                        .easing(TWEEN.Easing.Back.Out)
+                        .onComplete(() => {
+                            const ledMat = currentToyGroup.userData.penLedMat;
+                            const light = currentToyGroup.userData.penLight;
+
+                            if (isCorrect) {
+                                ledMat.emissive.setHex(0x2ed573);
+                                light.color.setHex(0x2ed573);
+                                light.intensity = 2;
+                                playSuccessSound();
+                                showToast("HELYES VÁLASZ! 🌟");
+                            } else {
+                                ledMat.emissive.setHex(0xff4757);
+                                light.color.setHex(0xff4757);
+                                light.intensity = 2;
+                                playErrorSound();
+                                showToast("PRÓBÁLD ÚJRA! ❌");
+                            }
+
+                            setTimeout(() => {
+                                ledMat.emissive.setHex(0x000000);
+                                light.intensity = 0;
+                            }, 1000);
+                        })
+                        .start();
+                }
+            }
+
+            else if (currentToyType === 'farm') {
+                if (obj.name.startsWith("farmdot")) {
+                    const isCorrect = obj.name === "farmdot_correct";
+
+                    new TWEEN.Tween(carrotPenMesh.position)
+                        .to({ x: obj.position.x, y: 1.1, z: obj.position.z }, 350)
+                        .easing(TWEEN.Easing.Quadratic.Out)
+                        .onComplete(() => {
+                            const light = currentToyGroup.userData.carrotLight;
+                            
+                            if (isCorrect) {
+                                light.color.setHex(0x2ed573);
+                                light.intensity = 3;
+                                playSuccessSound();
+                                showToast("MOO! EZ A TEHÉN! 🐄");
+                            } else {
+                                light.color.setHex(0xffa500);
+                                light.intensity = 2;
+                                playBeep(350, 'sine', 0.2);
+                                showToast("AZ EGY MÁSIK ÁLLAT! 🚜");
+                            }
+
+                            setTimeout(() => { light.intensity = 0; }, 1200);
+                        })
+                        .start();
+                }
+            }
+        }
+
+        function updateBusyBoardLeds() {
+            const leds = currentToyGroup.userData.leds;
+            const domeLight = currentToyGroup.userData.domeLight;
+
+            if (busyBoardState.powerKey) {
+                leds.forEach((led) => {
+                    if (busyBoardState.switch1) {
+                        led.mesh.material.emissive.setHex(led.color);
+                        led.light.intensity = 1.5;
+                    } else {
+                        led.mesh.material.emissive.setHex(0x000000);
+                        led.light.intensity = 0;
+                    }
+                });
+
+                if (busyBoardState.buttonLed) {
+                    domeLight.intensity = 3;
+                } else {
+                    domeLight.intensity = 0;
+                }
+            } else {
+                leds.forEach(led => {
+                    led.mesh.material.emissive.setHex(0x000000);
+                    led.light.intensity = 0;
+                });
+                domeLight.intensity = 0;
+            }
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('feedback-toast');
+            toast.innerText = text;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 1800);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            TWEEN.update();
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        window.onload = init;
+    </script>
+
+</body></html>

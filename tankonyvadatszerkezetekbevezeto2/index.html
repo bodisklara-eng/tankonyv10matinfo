@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///C:/Users/Utilizator/Downloads/c_std_vector_vizu_lis_tananyag%20(1)%20(2).html -->
+<html lang="hu" class="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ std::vector Elegáns Vizuális Tananyag</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="./index_files/saved_resource"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <!-- Google Fonts Inter & Playfair Display -->
+    <link href="./index_files/css2" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        blush: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#e8d5d0',
+                            300: '#d5b4ab',
+                            400: '#be8c80',
+                            500: '#a36d60',
+                        },
+                        gold: {
+                            100: '#fef3c7',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #fbf4f8 50%, #f3f0ff 100%);
+            color: #334155;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Soft Glassmorphism utility */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(253, 228, 230, 0.8);
+            box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+        }
+
+        .glass-card-subtle {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        /* Animations */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+
+        .page-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Item movement transition */
+        .item-move {
+            transition: all 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+        }
+
+        .item-dim {
+            opacity: 0.25;
+            filter: grayscale(80%);
+            transition: all 0.5s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fecdd3;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fda4af;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:Fira Code, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.bottom-2{bottom:0.5rem}.left-36{left:9rem}.left-4{left:1rem}.left-8{left:2rem}.right-4{right:1rem}.top-0{top:0px}.top-1{top:0.25rem}.top-2{top:0.5rem}.z-10{z-index:10}.z-30{z-index:30}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mr-1\.5{margin-right:0.375rem}.mt-1{margin-top:0.25rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-2{height:0.5rem}.h-40{height:10rem}.h-44{height:11rem}.h-48{height:12rem}.h-64{height:16rem}.h-72{height:18rem}.min-h-screen{min-height:100vh}.w-1\/2{width:50%}.w-10{width:2.5rem}.w-12{width:3rem}.w-full{width:100%}.min-w-full{min-width:100%}.min-w-\[95px\]{min-width:95px}.max-w-3xl{max-width:48rem}.max-w-7xl{max-width:80rem}.flex-grow{flex-grow:1}.border-collapse{border-collapse:collapse}.-translate-y-16{--tw-translate-y:-4rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-24{--tw-translate-x:6rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-4{--tw-translate-y:1rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-6{--tw-translate-y:1.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-12 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(3rem * var(--tw-space-x-reverse));margin-left:calc(3rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-16 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(4rem * var(--tw-space-x-reverse));margin-left:calc(4rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-rose-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(255 228 230 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-b-4{border-bottom-width:4px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-amber-100{--tw-border-opacity:1;border-color:rgb(254 243 199 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-200\/80{border-color:rgb(253 230 138 / 0.8)}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-emerald-100{--tw-border-opacity:1;border-color:rgb(209 250 229 / var(--tw-border-opacity, 1))}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-200\/60{border-color:rgb(167 243 208 / 0.6)}.border-emerald-400{--tw-border-opacity:1;border-color:rgb(52 211 153 / var(--tw-border-opacity, 1))}.border-pink-100{--tw-border-opacity:1;border-color:rgb(252 231 243 / var(--tw-border-opacity, 1))}.border-pink-200{--tw-border-opacity:1;border-color:rgb(251 207 232 / var(--tw-border-opacity, 1))}.border-pink-400{--tw-border-opacity:1;border-color:rgb(244 114 182 / var(--tw-border-opacity, 1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255 / var(--tw-border-opacity, 1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255 / var(--tw-border-opacity, 1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252 / var(--tw-border-opacity, 1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230 / var(--tw-border-opacity, 1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-rose-200\/60{border-color:rgb(254 205 211 / 0.6)}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133 / var(--tw-border-opacity, 1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-50\/60{background-color:rgb(255 251 235 / 0.6)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/60{background-color:rgb(236 253 245 / 0.6)}.bg-emerald-50\/80{background-color:rgb(236 253 245 / 0.8)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-pink-100{--tw-bg-opacity:1;background-color:rgb(252 231 243 / var(--tw-bg-opacity, 1))}.bg-pink-50\/60{background-color:rgb(253 242 248 / 0.6)}.bg-pink-500{--tw-bg-opacity:1;background-color:rgb(236 72 153 / var(--tw-bg-opacity, 1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-purple-50\/60{background-color:rgb(250 245 255 / 0.6)}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-rose-50\/50{background-color:rgb(255 241 242 / 0.5)}.bg-rose-50\/60{background-color:rgb(255 241 242 / 0.6)}.bg-rose-50\/80{background-color:rgb(255 241 242 / 0.8)}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/60{background-color:rgb(255 255 255 / 0.6)}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-amber-200{--tw-gradient-from:#fde68a var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 230 138 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-50\/30{--tw-gradient-from:rgb(253 242 248 / 0.3) var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 242 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-50\/40{--tw-gradient-from:rgb(253 242 248 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(253 242 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-rose-400{--tw-gradient-from:#fb7185 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 113 133 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 63 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-white{--tw-gradient-from:#fff var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-300{--tw-gradient-to:rgb(252 211 77 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fcd34d var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-pink-400{--tw-gradient-to:rgb(244 114 182 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f472b6 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-pink-500{--tw-gradient-to:rgb(236 72 153 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ec4899 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-200{--tw-gradient-to:#fde68a var(--tw-gradient-to-position)}.to-pink-50\/50{--tw-gradient-to:rgb(253 242 248 / 0.5) var(--tw-gradient-to-position)}.to-pink-500{--tw-gradient-to:#ec4899 var(--tw-gradient-to-position)}.to-purple-400{--tw-gradient-to:#c084fc var(--tw-gradient-to-position)}.to-purple-50\/20{--tw-gradient-to:rgb(250 245 255 / 0.2) var(--tw-gradient-to-position)}.to-purple-50\/30{--tw-gradient-to:rgb(250 245 255 / 0.3) var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:Fira Code, monospace}.font-serif{font-family:Playfair Display, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[9px\]{font-size:9px}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:0.05em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-pink-300{--tw-text-opacity:1;color:rgb(249 168 212 / var(--tw-text-opacity, 1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-pink-600{--tw-text-opacity:1;color:rgb(219 39 119 / var(--tw-text-opacity, 1))}.text-pink-700{--tw-text-opacity:1;color:rgb(190 24 93 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206 / var(--tw-text-opacity, 1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.opacity-100{opacity:1}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-200{--tw-shadow-color:#fde68a;--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-200{--tw-shadow-color:#a7f3d0;--tw-shadow:var(--tw-shadow-colored)}.shadow-pink-200{--tw-shadow-color:#fbcfe8;--tw-shadow:var(--tw-shadow-colored)}.shadow-purple-200{--tw-shadow-color:#e9d5ff;--tw-shadow:var(--tw-shadow-colored)}.shadow-rose-200{--tw-shadow-color:#fecdd3;--tw-shadow:var(--tw-shadow-colored)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-rose-200 *::selection{--tw-bg-opacity:1;background-color:rgb(254 205 211 / var(--tw-bg-opacity, 1))}.selection\:text-rose-900 *::selection{--tw-text-opacity:1;color:rgb(136 19 55 / var(--tw-text-opacity, 1))}.selection\:bg-rose-200::selection{--tw-bg-opacity:1;background-color:rgb(254 205 211 / var(--tw-bg-opacity, 1))}.selection\:text-rose-900::selection{--tw-text-opacity:1;color:rgb(136 19 55 / var(--tw-text-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:-translate-y-1:hover{--tw-translate-y:-0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-amber-600:hover{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-600:hover{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.hover\:bg-pink-600:hover{--tw-bg-opacity:1;background-color:rgb(219 39 119 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-600:hover{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50\/30:hover{background-color:rgb(255 241 242 / 0.3)}.hover\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:from-rose-600:hover{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgb(225 29 72 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-pink-600:hover{--tw-gradient-to:#db2777 var(--tw-gradient-to-position)}.hover\:text-rose-600:hover{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.focus\:border-rose-400:focus{--tw-border-opacity:1;border-color:rgb(251 113 133 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:w-1\/2{width:50%}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}}@media (min-width: 1024px){.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-rose-200 selection:text-rose-900">
+
+    <header class="sticky top-0 z-50 glass-card border-b border-rose-100 bg-white/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo(1)">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-400 via-pink-400 to-purple-400 flex items-center justify-center text-white shadow-md shadow-rose-200">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-serif font-bold text-lg text-slate-800 leading-tight">C++ <span class="text-rose-500 italic">std::vector</span></h1>
+                    <p class="text-xs text-rose-400 font-medium">Boutique &amp; Vanity Kollekció Guide</p>
+                </div>
+            </div>
+
+            <!-- Global Slide Navigation Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button id="btn-prev" onclick="changeSlide(-1)" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-slate-700 border border-rose-200 shadow-sm transition flex items-center space-x-2 text-xs font-semibold" style="opacity: 1;">
+                    <i class="fa-solid fa-chevron-left text-rose-400"></i>
+                    <span class="hidden sm:inline">Előző</span>
+                </button>
+                <div class="text-xs font-mono font-bold text-rose-600 px-3.5 py-1.5 rounded-xl bg-rose-50 border border-rose-200 shadow-inner">
+                    <span id="slide-indicator">8</span> / 8
+                </div>
+                <button id="btn-next" onclick="changeSlide(1)" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold shadow-md shadow-rose-200 transition flex items-center space-x-2 text-xs" disabled="" style="opacity: 0.5;">
+                    <span class="hidden sm:inline">Következő</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Horizontal Slide Navigation Bar (8 pages) -->
+        <div class="bg-white/60 border-t border-rose-100 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 flex space-x-1 py-1.5 text-xs">
+                <button onclick="navigateTo(1)" id="tab-1" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">1. Bevezetés</button>
+                <button onclick="navigateTo(2)" id="tab-2" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">2. Indexelés</button>
+                <button onclick="navigateTo(3)" id="tab-3" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">3. push_back()</button>
+                <button onclick="navigateTo(4)" id="tab-4" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">4. insert() Elejére</button>
+                <button onclick="navigateTo(5)" id="tab-5" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">5. erase() Törlés</button>
+                <button onclick="navigateTo(6)" id="tab-6" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">6. Bináris Keresés</button>
+                <button onclick="navigateTo(7)" id="tab-7" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium">7. Csoportos Beszúrás</button>
+                <button onclick="navigateTo(8)" id="tab-8" class="tab-btn px-3 py-1.5 rounded-lg text-rose-600 bg-rose-100 font-bold whitespace-nowrap transition shadow-sm border border-rose-200">8. Szimulátor &amp; Mátrix</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 relative">
+
+        <section id="page-1" class="page-transition space-y-6 hidden">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-600 border border-rose-200 inline-block shadow-sm">
+                    ✨ C++ Adatszerkezetek Elegánsan
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-800">
+                    Az <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500">std::vector</span> működése Boutique kijelzővel
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    A C++ standard könyvtár legfontosabb dinamikus tömbje a <code>std::vector</code>. Ebben a tananyagban egy luxus boutique szépítkezőasztalának (Vanity Tray) kiegészítői segítségével érted meg a folytonos memóriakezelést, beszúrást, törlést és keresést!
+                </p>
+            </div>
+
+            <!-- Visual Hero Card -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-4 md:w-1/2">
+                        <div class="flex items-center space-x-2 text-rose-500">
+                            <i class="fa-solid fa-gem text-xl"></i>
+                            <h3 class="font-serif font-bold text-lg text-slate-800">Folytonos Memóriaterület (Contiguous Memory)</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            A vektor elemei a RAM memóriában <strong>szigorúan egymás mellett</strong>, megszakítás nélkül helyezkednek el, mint a parfümös üvegek és rúzsok a boutique polcán. Ez garantálja a villámgyors közvetlen elérést, de a sorközépi rendezésnél átrendezést igényel.
+                        </p>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 shadow-sm">
+                                <span class="text-slate-500 block mb-1 font-medium">Előny:</span>
+                                <span class="text-emerald-700 font-bold flex items-center"><i class="fa-solid fa-bolt mr-1.5 text-emerald-500"></i> O(1) Instant index elérés</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-rose-50/80 border border-rose-200/60 shadow-sm">
+                                <span class="text-slate-500 block mb-1 font-medium">Hátrány:</span>
+                                <span class="text-rose-700 font-bold flex items-center"><i class="fa-solid fa-hourglass-half mr-1.5 text-rose-500"></i> O(n) Beszúrás az elején</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Preview Graphic -->
+                    <div class="w-full md:w-1/2 bg-gradient-to-b from-white to-pink-50/50 rounded-2xl p-5 border border-rose-100 shadow-inner">
+                        <div class="text-xs text-rose-400 mb-3 font-mono flex justify-between">
+                            <span>RAM Memóriamodell (0x7ffe...)</span>
+                            <span class="font-bold">std::vector&lt;LuxuryItem&gt;</span>
+                        </div>
+                        
+                        <!-- Boutique Shelf Representation -->
+                        <div class="w-full bg-white rounded-2xl p-4 relative border border-pink-200 shadow-md">
+                            <div class="flex justify-around items-end relative z-10 py-2 border-b-4 border-amber-200/80 pb-3">
+                                <div class="text-center">
+                                    <span class="bg-rose-100 text-rose-600 text-[10px] px-2 py-0.5 rounded-full font-mono font-bold mb-2 inline-block">[0]</span>
+                                    <div class="text-3xl text-rose-400 mb-1"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                                    <span class="text-[11px] text-slate-600 font-medium block">Parfüm</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="bg-rose-100 text-rose-600 text-[10px] px-2 py-0.5 rounded-full font-mono font-bold mb-2 inline-block">[1]</span>
+                                    <div class="text-3xl text-pink-500 mb-1"><i class="fa-solid fa-wine-glass"></i></div>
+                                    <span class="text-[11px] text-slate-600 font-medium block">Rúzs</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="bg-rose-100 text-rose-600 text-[10px] px-2 py-0.5 rounded-full font-mono font-bold mb-2 inline-block">[2]</span>
+                                    <div class="text-3xl text-purple-400 mb-1"><i class="fa-solid fa-bag-shopping"></i></div>
+                                    <span class="text-[11px] text-slate-600 font-medium block">Táska</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                    <button onclick="navigateTo(2)" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold shadow-lg shadow-rose-200 transition transform hover:-translate-y-0.5 flex items-center space-x-2 text-sm">
+                        <span>Fedezzük fel az Indexelést</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-2" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">1. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">A Vektor fogalma &amp; 0-alapú Indexelés</h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-mono font-bold shadow-sm">
+                    Elérés: O(1) - Instant elérés
+                </div>
+            </div>
+
+            <!-- Code Banner -->
+            <div class="glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-rose-400 bg-white/90">
+                <span class="text-slate-400">// Vektor inicializálása 3 elegáns kiegészítővel</span><br>
+                <span class="text-purple-600 font-bold">std::vector</span>&lt;<span class="text-rose-500">std::string</span>&gt; polc = {<span class="text-emerald-600">"Parfüm"</span>, <span class="text-emerald-600">"Rúzs"</span>, <span class="text-emerald-600">"Táska"</span>};
+            </div>
+
+            <!-- Animated Canvas Container -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="flex justify-between items-center text-xs text-slate-500 font-mono">
+                    <span>Állapot: Kiegészítők a boutique polcon</span>
+                    <span class="text-rose-500 font-bold">size(): 3 | capacity(): 3</span>
+                </div>
+
+                <!-- Boutique Shelf Display Stage -->
+                <div class="w-full h-64 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative">
+                        <!-- Wooden/Gold Shelf baseline -->
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <!-- Items Row -->
+                        <div id="scene1-items" class="w-full flex justify-around items-end relative z-10 pb-2">
+                            <!-- Item 0 -->
+                            <div class="flex flex-col items-center group cursor-pointer transition transform hover:-translate-y-1" onclick="highlightItem(0)">
+                                <span class="bg-rose-500 text-white text-xs px-2.5 py-0.5 rounded-full font-mono font-bold mb-3 shadow">
+                                    [0]
+                                </span>
+                                <div class="text-5xl text-rose-400 mb-1 filter drop-shadow">
+                                    <i class="fa-solid fa-spray-can-sparkles"></i>
+                                </div>
+                                <span class="text-xs text-slate-700 font-bold">Parfüm</span>
+                                <span class="text-[10px] text-slate-400 font-mono">polc[0]</span>
+                            </div>
+
+                            <!-- Item 1 -->
+                            <div class="flex flex-col items-center group cursor-pointer transition transform hover:-translate-y-1" onclick="highlightItem(1)">
+                                <span class="bg-rose-500 text-white text-xs px-2.5 py-0.5 rounded-full font-mono font-bold mb-3 shadow">
+                                    [1]
+                                </span>
+                                <div class="text-5xl text-pink-500 mb-1 filter drop-shadow">
+                                    <i class="fa-solid fa-wine-glass"></i>
+                                </div>
+                                <span class="text-xs text-slate-700 font-bold">Rúzs</span>
+                                <span class="text-[10px] text-slate-400 font-mono">polc[1]</span>
+                            </div>
+
+                            <!-- Item 2 -->
+                            <div class="flex flex-col items-center group cursor-pointer transition transform hover:-translate-y-1 scale-110" onclick="highlightItem(2)">
+                                <span class="bg-rose-500 text-white text-xs px-2.5 py-0.5 rounded-full font-mono font-bold mb-3 shadow">
+                                    [2]
+                                </span>
+                                <div class="text-5xl text-purple-400 mb-1 filter drop-shadow">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                </div>
+                                <span class="text-xs text-slate-700 font-bold">Táska</span>
+                                <span class="text-[10px] text-slate-400 font-mono">polc[2]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="p-4 rounded-2xl bg-rose-50/60 border border-rose-100 space-y-2">
+                    <h4 class="font-serif font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Miért 0-val kezdődik az indexelés?
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        A C++ nyelvben az index valójában egy <strong>memória-eltolást (offset)</strong> jelent a tömb legelső címétől. Az első tárgy a polc legelején áll (0 eltolás: <code>kezdőcím + 0 * elem_mérete</code>). A második tárgy pontosan 1 egységnyivel van feljebb a memóriában.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-3" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">2. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Hozzáadás a Végére: <code class="text-rose-500">push_back()</code></h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-mono font-bold shadow-sm">
+                    Komplexitás: O(1) - Gyors!
+                </div>
+            </div>
+
+            <!-- Code & Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2 glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-emerald-400 bg-white/90">
+                    <span class="text-slate-400">// Új kiegészítő elhelyezése a sor legvégére</span><br>
+                    polc.<span class="text-emerald-600 font-bold">push_back</span>(<span class="text-emerald-600">"Magassarkú"</span>);
+                </div>
+                <div class="glass-card rounded-2xl p-3 flex flex-col justify-center items-center space-y-2">
+                    <button id="btn-anim-push" onclick="runPushBackAnim()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-emerald-200">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Animáció Indítása</span>
+                    </button>
+                    <button onclick="resetPushBackAnim()" class="w-full py-1.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition">
+                        Visszaállítás
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Stage -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="w-full h-64 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative">
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <!-- Items Row -->
+                        <div class="w-full flex justify-start items-end space-x-12 px-6 relative z-10 pb-2">
+                            <!-- Static existing items -->
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-2">[0]</span>
+                                <div class="text-4xl text-rose-400"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                                <span class="text-xs text-slate-600 mt-1">Parfüm</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-2">[1]</span>
+                                <div class="text-4xl text-pink-500"><i class="fa-solid fa-wine-glass"></i></div>
+                                <span class="text-xs text-slate-600 mt-1">Rúzs</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-2">[2]</span>
+                                <div class="text-4xl text-purple-400"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <span class="text-xs text-slate-600 mt-1">Táska</span>
+                            </div>
+
+                            <!-- Animated Shoe Item -->
+                            <div id="shoe-target" class="item-move flex flex-col items-center opacity-0 transform translate-x-24">
+                                <span class="bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-mono font-bold mb-2 shadow animate-bounce">
+                                    [3]
+                                </span>
+                                <div class="text-4xl text-rose-500 filter drop-shadow">
+                                    <i class="fa-solid fa-shoe-prints"></i>
+                                </div>
+                                <span class="text-xs text-emerald-600 font-bold mt-1">Magassarkú</span>
+                                <span class="text-[10px] text-emerald-500 font-mono">ÚJ ELEM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-100 text-slate-700 text-xs leading-relaxed space-y-1">
+                    <span class="font-bold text-emerald-700 block text-sm">💡 Miért O(1) komplexitású ez a művelet?</span>
+                    <p>
+                        A meglévő 3 tárgy közül <strong>egyetlenegynek sem kell elmozdulnia</strong>! Az új Magassarkú cipő egyszerűen a meglévő tárgyak utáni legelső szabad pozícióba <code>[3]</code> kerül. Az üzemeltetés azonnali és közvetlen.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-4" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">3. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Beszúrás az Elejére: <code class="text-rose-500">insert()</code> (VIP Korona)</h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-rose-100 border border-rose-200 text-rose-700 text-xs font-mono font-bold shadow-sm">
+                    Komplexitás: O(n) - LASSÚ!
+                </div>
+            </div>
+
+            <!-- Code & Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2 glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-rose-500 bg-white/90">
+                    <span class="text-slate-400">// VIP Korona beszúrása a legelső (0.) pozícióba</span><br>
+                    polc.<span class="text-rose-600 font-bold">insert</span>(polc.<span class="text-purple-600">begin</span>(), <span class="text-emerald-600">"VIP Korona"</span>);
+                </div>
+                <div class="glass-card rounded-2xl p-3 flex flex-col justify-center items-center space-y-2">
+                    <button id="btn-anim-insert" onclick="runInsertAnim()" class="w-full py-2.5 px-4 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-semibold text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-rose-200">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Beszúrás Animálása</span>
+                    </button>
+                    <button onclick="resetInsertAnim()" class="w-full py-1.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition">
+                        Visszaállítás
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="w-full h-72 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative h-44 flex items-center">
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <!-- Floating VIP Crown -->
+                        <div id="crown-item" class="item-move absolute left-8 top-2 z-30 transform flex flex-col items-center opacity-100 translate-y-4">
+                            <span class="bg-amber-400 text-slate-900 font-bold text-[10px] px-2 py-0.5 rounded-full shadow animate-pulse">VIP Elem!</span>
+                            <div class="text-5xl text-amber-400 filter drop-shadow">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <span class="text-xs text-amber-600 font-bold">VIP Korona</span>
+                        </div>
+
+                        <!-- Shiftable Items Row -->
+                        <div id="insert-items-row" class="w-full flex justify-start items-center space-x-12 px-8 relative z-10 item-move" style="transform: translateX(90px);">
+                            <div id="item-shift-0" class="item-move flex flex-col items-center">
+                                <span id="idx-tag-0" class="bg-rose-100 text-rose-600 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">[0]</span>
+                                <div class="text-4xl text-rose-400"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Parfüm</span>
+                            </div>
+
+                            <div id="item-shift-1" class="item-move flex flex-col items-center">
+                                <span id="idx-tag-1" class="bg-rose-100 text-rose-600 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">[1]</span>
+                                <div class="text-4xl text-pink-500"><i class="fa-solid fa-wine-glass"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Rúzs</span>
+                            </div>
+
+                            <div id="item-shift-2" class="item-move flex flex-col items-center">
+                                <span id="idx-tag-2" class="bg-rose-100 text-rose-600 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">[2]</span>
+                                <div class="text-4xl text-purple-400"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Táska</span>
+                            </div>
+
+                            <div id="item-shift-3" class="item-move flex flex-col items-center">
+                                <span id="idx-tag-3" class="bg-rose-100 text-rose-600 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">[3]</span>
+                                <div class="text-4xl text-rose-500"><i class="fa-solid fa-shoe-prints"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Magassarkú</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="p-4 rounded-2xl bg-rose-50/60 border border-rose-100 text-slate-700 text-xs leading-relaxed space-y-1">
+                    <span class="font-bold text-rose-600 block text-sm">⚠️ Miért lassú az insert() a sor elején?</span>
+                    <p>
+                        A memóriában nem hagyhatunk üres rést. Ahhoz, hogy a VIP Korona elfoglalhassa a 0. pozíciót, <strong>AZ ÖSSZES MEGLÉVŐ TÁRGYNAK 1 HELYEL JOBBRA KELL TOLÓDNIA</strong> (0➡️1, 1➡️2, 2➡️3, 3➡️4). 1000 elem esetén ez 1000 áthelyezési lépést jelent!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-5" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">4. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Törlés a Vektorból: <code class="text-rose-500">erase()</code></h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-700 text-xs font-mono font-bold shadow-sm">
+                    Komplexitás: O(n) - Hézagkitöltés szükséges!
+                </div>
+            </div>
+
+            <!-- Code & Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2 glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-amber-400 bg-white/90">
+                    <span class="text-slate-400">// A 2. indexen lévő törött Rúzs eltávolítása</span><br>
+                    polc.<span class="text-amber-600 font-bold">erase</span>(polc.<span class="text-purple-600">begin</span>() + <span class="text-rose-500">2</span>);
+                </div>
+                <div class="glass-card rounded-2xl p-3 flex flex-col justify-center items-center space-y-2">
+                    <button id="btn-anim-erase" onclick="runEraseAnim()" class="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-amber-200">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Törlés Animálása</span>
+                    </button>
+                    <button onclick="resetEraseAnim()" class="w-full py-1.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition">
+                        Visszaállítás
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="w-full h-64 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative h-40 flex items-center">
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <div class="w-full flex justify-around px-6 relative z-10">
+                            <!-- Item 0 -->
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1">[0]</span>
+                                <div class="text-3xl text-amber-400"><i class="fa-solid fa-crown"></i></div>
+                                <span class="text-[11px] text-slate-500">Korona</span>
+                            </div>
+
+                            <!-- Item 1 -->
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1">[1]</span>
+                                <div class="text-3xl text-rose-400"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                                <span class="text-[11px] text-slate-500">Parfüm</span>
+                            </div>
+
+                            <!-- Target Item to Erase (Lipstick [2]) -->
+                            <div id="erase-target-item" class="item-move flex flex-col items-center" style="transform: translateY(-60px) scale(0.5); opacity: 0;">
+                                <span id="erase-badge" class="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-mono mb-1 font-bold">[2]</span>
+                                <div class="text-3xl text-pink-500"><i class="fa-solid fa-wine-glass"></i></div>
+                                <span class="text-[11px] text-amber-600 font-bold">Rúzs (Törlés)</span>
+                            </div>
+
+                            <!-- Item 3 shifting to 2 -->
+                            <div id="erase-shift-1" class="item-move flex flex-col items-center" style="transform: translateX(-100px);">
+                                <span id="erase-idx-3" class="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-mono mb-1 font-bold">[2]</span>
+                                <div class="text-3xl text-purple-400"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <span class="text-[11px] text-slate-500">Táska</span>
+                            </div>
+
+                            <!-- Item 4 shifting to 3 -->
+                            <div id="erase-shift-2" class="item-move flex flex-col items-center" style="transform: translateX(-100px);">
+                                <span id="erase-idx-4" class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1">[3]</span>
+                                <div class="text-3xl text-rose-500"><i class="fa-solid fa-shoe-prints"></i></div>
+                                <span class="text-[11px] text-slate-500">Cipő</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 text-slate-700 text-xs leading-relaxed space-y-1">
+                    <span class="font-bold text-amber-700 block text-sm">💡 A lyukak kitöltésének kötelezettsége</span>
+                    <p>
+                        A <code>std::vector</code> folytonos memóriájában <strong>TILOS üres rést hagyhatni</strong>! Amikor a Rúzs törlésre kerül a 2. indexről, a mögötte lévő Táskának és Cipőnek azonnal 1-1 hellyel balra kell tolódnia a hézag megszüntetésére.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-6" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">5. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Bináris Keresés: <code class="text-purple-600">binary_search()</code></h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-purple-100 border border-purple-200 text-purple-700 text-xs font-mono font-bold shadow-sm">
+                    Komplexitás: O(log n) - Villámgyors!
+                </div>
+            </div>
+
+            <!-- Code & Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2 glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-purple-400 bg-white/90">
+                    <span class="text-slate-400">// Rendezett kollekcióban a #57-es rúzskód keresése</span><br>
+                    <span class="text-purple-600 font-bold">bool</span> talalat = <span class="text-purple-600">std::binary_search</span>(polc.begin(), polc.end(), <span class="text-rose-500">57</span>);
+                </div>
+                <div class="glass-card rounded-2xl p-3 flex flex-col justify-center items-center space-y-2">
+                    <button id="btn-anim-search" onclick="runBinarySearchAnim()" class="w-full py-2.5 px-4 rounded-xl bg-purple-500 hover:bg-purple-600 text-white font-semibold text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-purple-200">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Felező Keresés Indítása</span>
+                    </button>
+                    <button onclick="resetBinarySearchAnim()" class="w-full py-1.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition">
+                        Visszaállítás
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="flex justify-between items-center text-xs font-mono">
+                    <span class="text-slate-500">Keresett Rúzskód: <strong class="text-rose-600 text-sm">#57</strong></span>
+                    <span id="search-step-text" class="text-purple-600 font-bold">3. TALÁLAT! #57 Megtalálva mindössze 2 lépésből!</span>
+                </div>
+
+                <div class="w-full h-64 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative h-40 flex items-center">
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <!-- 7 Sorted Lipsticks -->
+                        <div class="w-full flex justify-around px-2 relative z-10">
+                            <div id="bitem-0" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#12</span>
+                                <div class="text-3xl text-pink-300"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <div id="bitem-1" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#25</span>
+                                <div class="text-3xl text-pink-400"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <div id="bitem-2" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#34</span>
+                                <div class="text-3xl text-rose-400"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <!-- Mid 1 -->
+                            <div id="bitem-3" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#48</span>
+                                <div class="text-3xl text-rose-500"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <!-- Target #57 -->
+                            <div id="bitem-4" class="item-move flex flex-col items-center">
+                                <span id="target-tag" class="bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1 animate-bounce shadow">#57</span>
+                                <div class="text-3xl text-purple-500"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <div id="bitem-5" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#61</span>
+                                <div class="text-3xl text-purple-600"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                            <div id="bitem-6" class="item-move flex flex-col items-center item-dim">
+                                <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1">#89</span>
+                                <div class="text-3xl text-purple-800"><i class="fa-solid fa-wine-glass"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="p-4 rounded-2xl bg-purple-50/60 border border-purple-100 text-slate-700 text-xs leading-relaxed space-y-1">
+                    <span class="font-bold text-purple-700 block text-sm">💡 Hogyan működik a felező keresés?</span>
+                    <p>
+                        Mindig a sor középső elemét vizsgáljuk. Mivel a kollekció <strong>szigorúan rendezett</strong>, ha $57 &gt; 48$, a teljes bal oldalt egy lépésben kizárhatjuk! Így 7 elemből mindössze 2 lépés alatt megtaláljuk a kívánt árnyalatot.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-7" class="page-transition space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">6. Fejezet</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Csoportos Beszúrás: <code class="text-rose-500">insert(pos, range)</code></h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-pink-100 border border-pink-200 text-pink-700 text-xs font-mono font-bold shadow-sm">
+                    Ajándékszett: 1 Közös Eltolással!
+                </div>
+            </div>
+
+            <!-- Code & Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2 glass-card rounded-2xl p-4 font-mono text-xs sm:text-sm border-l-4 border-pink-400 bg-white/90">
+                    <span class="text-slate-400">// 3 darabos sminkszett beszúrása az [1] indexre</span><br>
+                    polc.<span class="text-pink-600 font-bold">insert</span>(polc.begin() + 1, szett.begin(), szett.end());
+                </div>
+                <div class="glass-card rounded-2xl p-3 flex flex-col justify-center items-center space-y-2">
+                    <button id="btn-anim-range" onclick="runRangeInsertAnim()" class="w-full py-2.5 px-4 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-pink-200">
+                        <i class="fa-solid fa-box-open"></i>
+                        <span>Szett Beszúrása</span>
+                    </button>
+                    <button onclick="resetRangeInsertAnim()" class="w-full py-1.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition">
+                        Visszaállítás
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage -->
+            <div class="glass-card rounded-3xl p-6 space-y-4">
+                <div class="w-full h-72 bg-gradient-to-b from-pink-50/40 to-purple-50/30 rounded-2xl relative overflow-hidden border border-rose-100 flex flex-col justify-center p-4">
+                    <div class="w-full bg-white rounded-2xl p-6 border border-pink-100 shadow-sm relative h-48 flex items-center">
+                        <div class="absolute bottom-2 left-4 right-4 h-2 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 rounded-full"></div>
+                        
+                        <!-- Gift Set floating from top -->
+                        <div id="gift-set" class="item-move absolute left-36 top-1 z-30 transform flex space-x-4 opacity-100 translate-y-6">
+                            <div class="flex flex-col items-center">
+                                <span class="text-[10px] bg-pink-500 text-white font-bold px-1.5 rounded-full">Szerum</span>
+                                <div class="text-3xl text-pink-400"><i class="fa-solid fa-bottle-droplet"></i></div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-[10px] bg-pink-500 text-white font-bold px-1.5 rounded-full">Ecset</span>
+                                <div class="text-3xl text-rose-400"><i class="fa-solid fa-paint-brush"></i></div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-[10px] bg-pink-500 text-white font-bold px-1.5 rounded-full">Púder</span>
+                                <div class="text-3xl text-purple-400"><i class="fa-solid fa-compact-disc"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Original Items -->
+                        <div class="w-full flex justify-start items-center space-x-16 px-10 relative z-10">
+                            <!-- Item 0 -->
+                            <div class="flex flex-col items-center">
+                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1">[0]</span>
+                                <div class="text-4xl text-rose-400"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Parfüm</span>
+                            </div>
+
+                            <!-- Item 1 (Shifting right by 3 slots) -->
+                            <div id="range-shift-item" class="item-move flex flex-col items-center" style="transform: translateX(210px);">
+                                <span id="range-item-badge" class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1">[4]</span>
+                                <div class="text-4xl text-purple-400"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <span class="text-xs text-slate-600 font-medium">Táska</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="p-4 rounded-2xl bg-pink-50/60 border border-pink-100 text-slate-700 text-xs leading-relaxed space-y-1">
+                    <span class="font-bold text-pink-600 block text-sm">💡 Miért hatékonyabb a csoportos insert()?</span>
+                    <p>
+                        Ha külön-külön szúrnánk be a 3 elemet, a Táskának háromszor kellene jobbra tolódnia. A csoportos <code>insert(pos, first, last)</code> segítségével a vektor kiszámolja az új méretet, <strong>egyetlen eltolással szab 3 szabad helyet</strong>, majd egyszerre helyezi be az ajándékszettet!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-8" class="page-transition space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-rose-500 uppercase tracking-wider">7-8. Fejezet &amp; Összefoglaló</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-800">Interaktív Vanity Szimulátor &amp; Komplexitás</h2>
+                </div>
+            </div>
+
+            <!-- SANDBOX INTERACTIVE PLAYGROUND -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6 border-2 border-rose-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-rose-100 pb-4 gap-2">
+                    <div>
+                        <h3 class="font-serif font-bold text-lg text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-gem text-rose-500"></i> Élő Memória Vanity Tray
+                        </h3>
+                        <p class="text-xs text-slate-500">Próbáld ki a műveleteket a saját élő vektorkollekciódon!</p>
+                    </div>
+                    <div class="flex items-center space-x-3 text-xs font-mono">
+                        <span class="px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 font-bold">size(): <strong id="sandbox-size">4</strong></span>
+                        <span class="px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-600 font-bold">capacity(): <strong id="sandbox-cap">4</strong></span>
+                    </div>
+                </div>
+
+                <!-- Live Vector Display -->
+                <div class="w-full h-44 bg-gradient-to-b from-pink-50/30 to-purple-50/20 rounded-2xl p-4 border border-rose-100 flex items-center overflow-x-auto">
+                    <div id="sandbox-vector-row" class="flex items-center space-x-4 min-w-full"><div class="flex flex-col items-center bg-white border border-rose-100 p-3 rounded-2xl min-w-[95px] item-move shadow-sm">
+                    <span class="bg-rose-100 text-rose-600 font-mono text-[10px] px-2 py-0.5 rounded-full mb-1 font-bold">[0]</span>
+                    <span class="text-xs font-bold text-slate-700 my-1">🌸 Parfüm</span>
+                    <span class="text-[9px] text-slate-400 font-mono">0x7d0</span>
+                </div><div class="flex flex-col items-center bg-white border border-rose-100 p-3 rounded-2xl min-w-[95px] item-move shadow-sm">
+                    <span class="bg-rose-100 text-rose-600 font-mono text-[10px] px-2 py-0.5 rounded-full mb-1 font-bold">[1]</span>
+                    <span class="text-xs font-bold text-slate-700 my-1">💄 Rúzs</span>
+                    <span class="text-[9px] text-slate-400 font-mono">0x7d8</span>
+                </div><div class="flex flex-col items-center bg-white border border-rose-100 p-3 rounded-2xl min-w-[95px] item-move shadow-sm">
+                    <span class="bg-rose-100 text-rose-600 font-mono text-[10px] px-2 py-0.5 rounded-full mb-1 font-bold">[2]</span>
+                    <span class="text-xs font-bold text-slate-700 my-1">👜 Táska</span>
+                    <span class="text-[9px] text-slate-400 font-mono">0x7e0</span>
+                </div><div class="flex flex-col items-center bg-white border border-rose-100 p-3 rounded-2xl min-w-[95px] item-move shadow-sm">
+                    <span class="bg-rose-100 text-rose-600 font-mono text-[10px] px-2 py-0.5 rounded-full mb-1 font-bold">[3]</span>
+                    <span class="text-xs font-bold text-slate-700 my-1">👠 Cipő</span>
+                    <span class="text-[9px] text-slate-400 font-mono">0x7e8</span>
+                </div></div>
+                </div>
+
+                <!-- Sandbox Controls -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                    <!-- Push back -->
+                    <div class="p-3.5 bg-white/80 rounded-2xl border border-rose-100 space-y-2 shadow-sm">
+                        <span class="font-bold text-slate-700 block">push_back(érték)</span>
+                        <div class="flex space-x-2">
+                            <input id="sb-push-val" type="text" value="👑 Korona" class="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-2.5 py-1.5 text-slate-700 focus:outline-none focus:border-rose-400">
+                            <button onclick="sbPushBack()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition shadow-sm">Hozzáad</button>
+                        </div>
+                    </div>
+
+                    <!-- Insert -->
+                    <div class="p-3.5 bg-white/80 rounded-2xl border border-rose-100 space-y-2 shadow-sm">
+                        <span class="font-bold text-slate-700 block">insert(index, érték)</span>
+                        <div class="flex space-x-1">
+                            <input id="sb-insert-idx" type="number" value="0" min="0" class="w-12 bg-rose-50/50 border border-rose-200 rounded-xl px-1 py-1.5 text-center text-slate-700">
+                            <input id="sb-insert-val" type="text" value="💍 Gyűrű" class="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-2 py-1.5 text-slate-700">
+                            <button onclick="sbInsert()" class="px-2.5 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold transition shadow-sm">Beszúr</button>
+                        </div>
+                    </div>
+
+                    <!-- Erase -->
+                    <div class="p-3.5 bg-white/80 rounded-2xl border border-rose-100 space-y-2 shadow-sm">
+                        <span class="font-bold text-slate-700 block">erase(index)</span>
+                        <div class="flex space-x-2">
+                            <input id="sb-erase-idx" type="number" value="1" min="0" class="w-full bg-rose-50/50 border border-rose-200 rounded-xl px-2 py-1.5 text-center text-slate-700">
+                            <button onclick="sbErase()" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold transition shadow-sm">Töröl</button>
+                        </div>
+                    </div>
+
+                    <!-- Pop Back / Reset -->
+                    <div class="p-3.5 bg-white/80 rounded-2xl border border-rose-100 flex flex-col justify-between shadow-sm">
+                        <span class="font-bold text-slate-700 block">Egyéb műveletek</span>
+                        <div class="flex space-x-2">
+                            <button onclick="sbPopBack()" class="w-1/2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold">pop_back()</button>
+                            <button onclick="sbReset()" class="w-1/2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUMMARY COMPLEXITY TABLE -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-4">
+                <h3 class="font-serif font-bold text-xl text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-rose-500"></i> Összefoglaló Komplexitási Mátrix
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-600 border-collapse">
+                        <thead>
+                            <tr class="border-b border-rose-100 bg-rose-50/50 font-mono text-slate-500">
+                                <th class="p-3">Művelet</th>
+                                <th class="p-3">C++ Függvény</th>
+                                <th class="p-3">Időkomplexitás</th>
+                                <th class="p-3">Boutique Hasonlat</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-rose-100 font-medium">
+                            <tr class="hover:bg-rose-50/30">
+                                <td class="p-3 font-bold text-slate-800">Végére beszúrás</td>
+                                <td class="p-3 font-mono text-emerald-600">push_back(x)</td>
+                                <td class="p-3"><span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-mono font-bold">O(1)</span></td>
+                                <td class="p-3">Új kiegészítő letétele a polc legvégére</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/30">
+                                <td class="p-3 font-bold text-slate-800">Elejére beszúrás</td>
+                                <td class="p-3 font-mono text-rose-600">insert(begin, x)</td>
+                                <td class="p-3"><span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 font-mono font-bold">O(n)</span></td>
+                                <td class="p-3">VIP Korona behelyezése a 0. pozícióra (minden eltolódik)</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/30">
+                                <td class="p-3 font-bold text-slate-800">Törlés a sorból</td>
+                                <td class="p-3 font-mono text-amber-600">erase(pos)</td>
+                                <td class="p-3"><span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 font-mono font-bold">O(n)</span></td>
+                                <td class="p-3">Tárgy elvétele a polc közepéről (rés kitöltése eltolással)</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/30">
+                                <td class="p-3 font-bold text-slate-800">Bináris Keresés</td>
+                                <td class="p-3 font-mono text-purple-600">binary_search()</td>
+                                <td class="p-3"><span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 font-mono font-bold">O(log n)</span></td>
+                                <td class="p-3">Felező keresés rendezett rúzskollekcióban</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="glass-card border-t border-rose-100 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-rose-400 font-medium">
+            C++ std::vector Elegáns Vizuális Útmutató &amp; Szimulátor © 2026
+        </div>
+    </footer>
+
+    <script>
+        // State variables
+        let currentSlide = 1;
+        const totalSlides = 8;
+
+        // On Load initialization
+        window.onload = function() {
+            updateSlideUI();
+            initSandbox();
+        };
+
+        // Navigation Controller
+        function navigateTo(slideNum) {
+            if (slideNum < 1 || slideNum > totalSlides) return;
+            
+            // Hide current slide
+            document.getElementById(`page-${currentSlide}`).classList.add('hidden');
+            
+            // Show target slide
+            currentSlide = slideNum;
+            document.getElementById(`page-${currentSlide}`).classList.remove('hidden');
+            
+            updateSlideUI();
+        }
+
+        function changeSlide(direction) {
+            navigateTo(currentSlide + direction);
+        }
+
+        function updateSlideUI() {
+            // Update counter indicator
+            document.getElementById('slide-indicator').innerText = currentSlide;
+            
+            // Update Nav buttons state
+            document.getElementById('btn-prev').disabled = (currentSlide === 1);
+            document.getElementById('btn-prev').style.opacity = (currentSlide === 1) ? '0.5' : '1';
+            
+            document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+            document.getElementById('btn-next').style.opacity = (currentSlide === totalSlides) ? '0.5' : '1';
+
+            // Update Tab highlights
+            for (let i = 1; i <= totalSlides; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (tab) {
+                    if (i === currentSlide) {
+                        tab.className = "tab-btn px-3 py-1.5 rounded-lg text-rose-600 bg-rose-100 font-bold whitespace-nowrap transition shadow-sm border border-rose-200";
+                    } else {
+                        tab.className = "tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 whitespace-nowrap transition font-medium";
+                    }
+                }
+            }
+
+            // Scroll tab bar to view active tab
+            const activeTab = document.getElementById(`tab-${currentSlide}`);
+            if (activeTab) {
+                activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        // SCENE 1 ITEM HIGHLIGHT
+        function highlightItem(idx) {
+            const items = document.querySelectorAll('#scene1-items > div');
+            items.forEach((item, i) => {
+                if (i === idx) {
+                    item.classList.add('scale-110');
+                } else {
+                    item.classList.remove('scale-110');
+                }
+            });
+        }
+
+        // SCENE 2: PUSH BACK ANIMATION
+        function runPushBackAnim() {
+            const shoe = document.getElementById('shoe-target');
+            shoe.classList.remove('opacity-0', 'translate-x-24');
+            shoe.classList.add('opacity-100', 'translate-x-0');
+        }
+
+        function resetPushBackAnim() {
+            const shoe = document.getElementById('shoe-target');
+            shoe.classList.add('opacity-0', 'translate-x-24');
+            shoe.classList.remove('opacity-100', 'translate-x-0');
+        }
+
+        // SCENE 3: INSERT ANIMATION
+        function runInsertAnim() {
+            const crown = document.getElementById('crown-item');
+            const row = document.getElementById('insert-items-row');
+            
+            // Step 1: Shift existing items right
+            row.style.transform = 'translateX(90px)';
+
+            // Step 2: Drop crown down into index 0
+            setTimeout(() => {
+                crown.classList.remove('opacity-0', '-translate-y-16');
+                crown.classList.add('opacity-100', 'translate-y-4');
+            }, 500);
+        }
+
+        function resetInsertAnim() {
+            const crown = document.getElementById('crown-item');
+            const row = document.getElementById('insert-items-row');
+            
+            row.style.transform = 'translateX(0px)';
+            crown.classList.add('opacity-0', '-translate-y-16');
+            crown.classList.remove('opacity-100', 'translate-y-4');
+        }
+
+        // SCENE 4: ERASE ANIMATION
+        function runEraseAnim() {
+            const target = document.getElementById('erase-target-item');
+            const shift1 = document.getElementById('erase-shift-1');
+            const shift2 = document.getElementById('erase-shift-2');
+            const badge3 = document.getElementById('erase-idx-3');
+            const badge4 = document.getElementById('erase-idx-4');
+
+            // Step 1: Target item fades out / moves up
+            target.style.transform = 'translateY(-60px) scale(0.5)';
+            target.style.opacity = '0';
+
+            // Step 2: Gaps closed by shifting left
+            setTimeout(() => {
+                shift1.style.transform = 'translateX(-100px)';
+                shift2.style.transform = 'translateX(-100px)';
+                badge3.innerText = '[2]';
+                badge4.innerText = '[3]';
+                badge3.className = 'bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-mono mb-1 font-bold';
+            }, 600);
+        }
+
+        function resetEraseAnim() {
+            const target = document.getElementById('erase-target-item');
+            const shift1 = document.getElementById('erase-shift-1');
+            const shift2 = document.getElementById('erase-shift-2');
+            const badge3 = document.getElementById('erase-idx-3');
+            const badge4 = document.getElementById('erase-idx-4');
+
+            target.style.transform = 'none';
+            target.style.opacity = '1';
+            shift1.style.transform = 'none';
+            shift2.style.transform = 'none';
+            badge3.innerText = '[3]';
+            badge4.innerText = '[4]';
+            badge3.className = 'bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-mono mb-1';
+        }
+
+        // SCENE 5: BINARY SEARCH ANIMATION
+        function runBinarySearchAnim() {
+            const stepText = document.getElementById('search-step-text');
+            const targetTag = document.getElementById('target-tag');
+            
+            // Step 1: Check Mid 1 (#48 at index 3)
+            stepText.innerText = '1. Lépés: Középső elem (#48). Mivel 57 > 48, a bal oldal kizárva!';
+            document.getElementById('bitem-0').classList.add('item-dim');
+            document.getElementById('bitem-1').classList.add('item-dim');
+            document.getElementById('bitem-2').classList.add('item-dim');
+            document.getElementById('bitem-3').classList.add('item-dim');
+
+            // Step 2: Check Mid 2 (#61 at index 5)
+            setTimeout(() => {
+                stepText.innerText = '2. Lépés: Megmaradtak közepe (#61). Mivel 57 < 61, a jobb oldal kizárva!';
+                document.getElementById('bitem-5').classList.add('item-dim');
+                document.getElementById('bitem-6').classList.add('item-dim');
+            }, 1800);
+
+            // Step 3: Match Found!
+            setTimeout(() => {
+                stepText.innerText = '3. TALÁLAT! #57 Megtalálva mindössze 2 lépésből!';
+                targetTag.className = 'bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1 animate-bounce shadow';
+            }, 3200);
+        }
+
+        function resetBinarySearchAnim() {
+            document.getElementById('search-step-text').innerText = 'Indítsd el a keresést!';
+            document.getElementById('target-tag').className = 'bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-mono font-bold mb-1';
+            for (let i = 0; i <= 6; i++) {
+                document.getElementById(`bitem-${i}`).classList.remove('item-dim');
+            }
+        }
+
+        // SCENE 6: RANGE INSERT ANIMATION
+        function runRangeInsertAnim() {
+            const giftSet = document.getElementById('gift-set');
+            const shiftItem = document.getElementById('range-shift-item');
+            const badge = document.getElementById('range-item-badge');
+
+            // Step 1: Single shift for bag
+            shiftItem.style.transform = 'translateX(210px)';
+            badge.innerText = '[4]';
+
+            // Step 2: Gift set lands in space
+            setTimeout(() => {
+                giftSet.classList.remove('opacity-0', '-translate-y-16');
+                giftSet.classList.add('opacity-100', 'translate-y-6');
+            }, 600);
+        }
+
+        function resetRangeInsertAnim() {
+            const giftSet = document.getElementById('gift-set');
+            const shiftItem = document.getElementById('range-shift-item');
+            const badge = document.getElementById('range-item-badge');
+
+            shiftItem.style.transform = 'none';
+            badge.innerText = '[1]';
+            giftSet.classList.add('opacity-0', '-translate-y-16');
+            giftSet.classList.remove('opacity-100', 'translate-y-6');
+        }
+
+        // ================= INTERACTIVE SANDBOX SYSTEM =================
+        let sandboxVector = ['🌸 Parfüm', '💄 Rúzs', '👜 Táska', '👠 Cipő'];
+
+        function initSandbox() {
+            renderSandbox();
+        }
+
+        function renderSandbox() {
+            const row = document.getElementById('sandbox-vector-row');
+            row.innerHTML = '';
+
+            sandboxVector.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex flex-col items-center bg-white border border-rose-100 p-3 rounded-2xl min-w-[95px] item-move shadow-sm';
+                itemEl.innerHTML = `
+                    <span class="bg-rose-100 text-rose-600 font-mono text-[10px] px-2 py-0.5 rounded-full mb-1 font-bold">[${index}]</span>
+                    <span class="text-xs font-bold text-slate-700 my-1">${item}</span>
+                    <span class="text-[9px] text-slate-400 font-mono">0x${(2000 + index * 8).toString(16)}</span>
+                `;
+                row.appendChild(itemEl);
+            });
+
+            // Update stats
+            document.getElementById('sandbox-size').innerText = sandboxVector.length;
+            document.getElementById('sandbox-cap').innerText = Math.pow(2, Math.ceil(Math.log2(sandboxVector.length || 1)));
+        }
+
+        function sbPushBack() {
+            const val = document.getElementById('sb-push-val').value || '👑 Korona';
+            sandboxVector.push(val);
+            renderSandbox();
+        }
+
+        function sbInsert() {
+            const idx = parseInt(document.getElementById('sb-insert-idx').value) || 0;
+            const val = document.getElementById('sb-insert-val').value || '💍 Gyűrű';
+            
+            const validIdx = Math.max(0, Math.min(idx, sandboxVector.length));
+            sandboxVector.splice(validIdx, 0, val);
+            renderSandbox();
+        }
+
+        function sbErase() {
+            const idx = parseInt(document.getElementById('sb-erase-idx').value) || 0;
+            if (sandboxVector.length === 0) return;
+            
+            const validIdx = Math.max(0, Math.min(idx, sandboxVector.length - 1));
+            sandboxVector.splice(validIdx, 1);
+            renderSandbox();
+        }
+
+        function sbPopBack() {
+            if (sandboxVector.length > 0) {
+                sandboxVector.pop();
+                renderSandbox();
+            }
+        }
+
+        function sbReset() {
+            sandboxVector = ['🌸 Parfüm', '💄 Rúzs', '👜 Táska', '👠 Cipő'];
+            renderSandbox();
+        }
+    </script>
+
+</body></html>

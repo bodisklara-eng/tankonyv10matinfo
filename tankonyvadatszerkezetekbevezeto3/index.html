@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)file:///C:/Users/Utilizator/Downloads/interakt_v_sz_linapt_r%20(9).html -->
+<html lang="hu" class="h-full"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Szülinaptár és Algoritmus Szimulátor</title>
+    <script src="./index_files/saved_resource"></script>
+    <link href="./index_files/css2" rel="stylesheet">
+    <link rel="stylesheet" href="./index_files/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        birthday: {
+                            pink: '#ff758c',
+                            yellow: '#ff7eb3',
+                            blue: '#4facfe',
+                            green: '#00f2fe',
+                            purple: '#b19cd9',
+                            cream: '#fffdf9',
+                            gold: '#ffd700'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .title-font {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Shimmer animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-effect {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+        /* Chain hanging sway effect */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-1.5deg); }
+            50% { transform: rotate(1.5deg); }
+        }
+        .pendant-sway {
+            animation: sway 4s ease-in-out infinite;
+            transform-origin: top center;
+        }
+        .pendant-sway:nth-child(even) {
+            animation-duration: 5s;
+            animation-delay: -1s;
+        }
+        /* Glow effects */
+        .glow-gold {
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        }
+        .glow-pink {
+            box-shadow: 0 0 15px rgba(255, 117, 140, 0.6);
+        }
+        /* Code line highlight */
+        .code-highlight {
+            background-color: rgba(59, 130, 246, 0.25);
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-y-0{top:0px;bottom:0px}.-bottom-12{bottom:-3rem}.-left-12{left:-3rem}.-right-12{right:-3rem}.-top-12{top:-3rem}.left-3{left:0.75rem}.right-0{right:0px}.top-0{top:0px}.top-3{top:0.75rem}.-bottom-1{bottom:-0.25rem}.-right-1{right:-0.25rem}.-top-4{top:-1rem}.left-1\/2{left:50%}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-6{margin-top:1.5rem}.mb-4{margin-bottom:1rem}.mr-1\.5{margin-right:0.375rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-20{height:5rem}.h-3{height:0.75rem}.h-32{height:8rem}.h-48{height:12rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-12{height:3rem}.h-2{height:0.5rem}.h-4{height:1rem}.h-7{height:1.75rem}.max-h-\[90vh\]{max-height:90vh}.min-h-\[30px\]{min-height:30px}.w-10{width:2.5rem}.w-20{width:5rem}.w-24{width:6rem}.w-3{width:0.75rem}.w-32{width:8rem}.w-48{width:12rem}.w-64{width:16rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.w-px{width:1px}.w-screen{width:100vw}.w-0\.5{width:0.125rem}.w-12{width:3rem}.w-7{width:1.75rem}.min-w-0{min-width:0px}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-full{max-width:100%}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.border-collapse{border-collapse:collapse}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(241 245 249 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-amber-100{--tw-border-opacity:1;border-color:rgb(254 243 199 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175 / var(--tw-border-opacity, 1))}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-white\/60{border-color:rgb(255 255 255 / 0.6)}.border-yellow-800{--tw-border-opacity:1;border-color:rgb(133 77 14 / var(--tw-border-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-200\/40{background-color:rgb(253 230 138 / 0.4)}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/60{background-color:rgb(2 44 34 / 0.6)}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-pink-400\/30{background-color:rgb(244 114 182 / 0.3)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-yellow-400\/40{background-color:rgb(250 204 21 / 0.4)}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8 / var(--tw-bg-opacity, 1))}.bg-yellow-950{--tw-bg-opacity:1;background-color:rgb(66 32 6 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-\[\#fffdf9\]{--tw-gradient-from:#fffdf9 var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 253 249 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-300{--tw-gradient-from:#fcd34d var(--tw-gradient-from-position);--tw-gradient-to:rgb(252 211 77 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-400{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 191 36 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-500{--tw-gradient-from:#ec4899 var(--tw-gradient-from-position);--tw-gradient-to:rgb(236 72 153 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-600{--tw-gradient-from:#db2777 var(--tw-gradient-from-position);--tw-gradient-to:rgb(219 39 119 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-yellow-400{--tw-gradient-from:#facc15 var(--tw-gradient-from-position);--tw-gradient-to:rgb(250 204 21 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgb(96 165 250 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-cyan-400{--tw-gradient-from:#22d3ee var(--tw-gradient-from-position);--tw-gradient-to:rgb(34 211 238 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-400{--tw-gradient-from:#34d399 var(--tw-gradient-from-position);--tw-gradient-to:rgb(52 211 153 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-400{--tw-gradient-from:#818cf8 var(--tw-gradient-from-position);--tw-gradient-to:rgb(129 140 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-400{--tw-gradient-from:#fb923c var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 146 60 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-pink-400{--tw-gradient-from:#f472b6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 114 182 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgb(192 132 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-rose-400{--tw-gradient-from:#fb7185 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 113 133 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-300{--tw-gradient-from:#cbd5e1 var(--tw-gradient-from-position);--tw-gradient-to:rgb(203 213 225 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-50\/50{--tw-gradient-from:rgb(248 250 252 / 0.5) var(--tw-gradient-from-position);--tw-gradient-to:rgb(248 250 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-400{--tw-gradient-from:#2dd4bf var(--tw-gradient-from-position);--tw-gradient-to:rgb(45 212 191 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-orange-400{--tw-gradient-to:rgb(251 146 60 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fb923c var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-yellow-200{--tw-gradient-to:rgb(254 240 138 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fef08a var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-amber-300{--tw-gradient-to:rgb(252 211 77 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fcd34d var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-\[\#fff6e6\]{--tw-gradient-to:#fff6e6 var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-orange-500{--tw-gradient-to:#f97316 var(--tw-gradient-to-position)}.to-pink-300{--tw-gradient-to:#f9a8d4 var(--tw-gradient-to-position)}.to-pink-500{--tw-gradient-to:#ec4899 var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.to-teal-600{--tw-gradient-to:#0d9488 var(--tw-gradient-to-position)}.to-yellow-400{--tw-gradient-to:#facc15 var(--tw-gradient-to-position)}.to-yellow-500{--tw-gradient-to:#eab308 var(--tw-gradient-to-position)}.to-amber-500{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.to-blue-500{--tw-gradient-to:#3b82f6 var(--tw-gradient-to-position)}.to-cyan-500{--tw-gradient-to:#06b6d4 var(--tw-gradient-to-position)}.to-emerald-500{--tw-gradient-to:#10b981 var(--tw-gradient-to-position)}.to-indigo-500{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-red-500{--tw-gradient-to:#ef4444 var(--tw-gradient-to-position)}.to-rose-500{--tw-gradient-to:#f43f5e var(--tw-gradient-to-position)}.to-slate-300{--tw-gradient-to:#cbd5e1 var(--tw-gradient-to-position)}.to-teal-500{--tw-gradient-to:#14b8a6 var(--tw-gradient-to-position)}.to-violet-500{--tw-gradient-to:#8b5cf6 var(--tw-gradient-to-position)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-3{padding:0.75rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.pb-1{padding-bottom:0.25rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pl-10{padding-left:2.5rem}.pr-1{padding-right:0.25rem}.pr-4{padding-right:1rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-amber-700\/70{color:rgb(180 83 9 / 0.7)}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-pink-600{--tw-text-opacity:1;color:rgb(219 39 119 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-300{--tw-text-opacity:1;color:rgb(253 224 71 / var(--tw-text-opacity, 1))}.accent-emerald-500{accent-color:#10b981}.opacity-0{opacity:0}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-emerald-500\/20{--tw-shadow-color:rgb(16 185 129 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-orange-500\/20{--tw-shadow-color:rgb(249 115 22 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-pink-500\/25{--tw-shadow-color:rgb(236 72 153 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.shadow-pink-500\/30{--tw-shadow-color:rgb(236 72 153 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.blur-2xl{--tw-blur:blur(40px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-md{--tw-drop-shadow:drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-sm{--tw-drop-shadow:drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.hover\:rotate-12:hover{--tw-rotate:12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-pink-300:hover{--tw-border-opacity:1;border-color:rgb(249 168 212 / var(--tw-border-opacity, 1))}.hover\:bg-amber-200:hover{--tw-bg-opacity:1;background-color:rgb(253 230 138 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-100:hover{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-50:hover{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50\/80:hover{background-color:rgb(248 250 252 / 0.8)}.hover\:from-amber-500:hover{--tw-gradient-from:#f59e0b var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:from-emerald-600:hover{--tw-gradient-from:#059669 var(--tw-gradient-from-position);--tw-gradient-to:rgb(5 150 105 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:from-pink-600:hover{--tw-gradient-from:#db2777 var(--tw-gradient-from-position);--tw-gradient-to:rgb(219 39 119 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-orange-600:hover{--tw-gradient-to:#ea580c var(--tw-gradient-to-position)}.hover\:to-teal-700:hover{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.hover\:to-yellow-600:hover{--tw-gradient-to:#ca8a04 var(--tw-gradient-to-position)}.hover\:text-slate-200:hover{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.hover\:text-indigo-600:hover{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.hover\:text-pink-700:hover{--tw-text-opacity:1;color:rgb(190 24 93 / var(--tw-text-opacity, 1))}.hover\:text-rose-600:hover{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.hover\:shadow-xl:hover{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-pink-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(244 114 182 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:h-24{height:6rem}.sm\:w-24{width:6rem}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.sm\:space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pb-0{padding-bottom:0px}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (min-width: 1280px){.xl\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="flex flex-col h-full text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-40 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 to-yellow-400 flex items-center justify-center text-white shadow-lg shadow-pink-500/30">
+                    <i class="fa-solid fa-cake-candles text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="title-font text-xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">Osztály Szülinaptár</h1>
+                    <p class="text-xs text-slate-500">Interaktív függő díszek és Algoritmus Szimulátor</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Toggle View Mode -->
+                <button onclick="toggleViewMode()" id="viewModeBtn" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-list-ul text-pink-500"></i>
+                    <span class="hidden sm:inline" id="viewModeText">Lista Nézet</span>
+                </button>
+
+                <!-- Student Manager Modal Trigger -->
+                <button onclick="openStudentModal()" class="px-3 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-medium transition flex items-center space-x-2 border border-indigo-200 shadow-sm">
+                    <i class="fa-solid fa-users-gear text-indigo-500"></i>
+                    <span class="hidden sm:inline">Diákok Szerkesztése</span>
+                </button>
+
+                <!-- Algorithm Simulator Popup Trigger -->
+                <button onclick="openSimModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white text-sm font-bold transition flex items-center space-x-2 shadow-md shadow-orange-500/20">
+                    <i class="fa-solid fa-code text-white"></i>
+                    <span class="hidden sm:inline">C++/Python Szimulátor</span>
+                </button>
+
+                <!-- Help Button -->
+                <button onclick="toggleHelpDrawer()" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-sm" title="Súgó">
+                    <i class="fa-solid fa-circle-question text-lg text-purple-500"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col space-y-6">
+        
+        <!-- Sun Header with Radiating Rays & Welcome Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-300 via-yellow-200 to-pink-300 p-6 sm:p-8 shadow-xl border border-white/60">
+            <!-- Decorative background sun rays simulation -->
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-yellow-400/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-pink-400/30 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-yellow-400 via-orange-400 to-pink-500 flex items-center justify-center text-white shadow-xl transform hover:rotate-12 transition duration-500 cursor-pointer animate-pulse">
+                        <i class="fa-solid fa-sun text-4xl sm:text-5xl drop-shadow-md"></i>
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-pink-600 mb-2 shadow-sm">
+                            <i class="fa-solid fa-sparkles"></i>
+                            <span>Tanév Szülinapjai</span>
+                        </div>
+                        <h2 class="title-font text-2xl sm:text-4xl font-bold text-slate-900 drop-shadow-sm">Boldog Szülinapot Mindenkinek!</h2>
+                        <p class="text-sm text-slate-700 mt-1 max-w-xl">Húzd a szülinapos kártyákat a hónapok alá, vagy kattints a diákok fotójára az adatok megtekintéséhez!</p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Badge -->
+                <div class="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-lg border border-white flex items-center space-x-6">
+                    <div class="text-center">
+                        <div id="statTotal" class="title-font text-2xl font-bold text-indigo-600">14</div>
+                        <div class="text-xs text-slate-500 font-medium">Összes diák</div>
+                    </div>
+                    <div class="w-px h-8 bg-slate-200"></div>
+                    <div class="text-center">
+                        <div id="statCurrentMonth" class="title-font text-2xl font-bold text-pink-600">1</div>
+                        <div class="text-xs text-slate-500 font-medium">Ehavi ünnepelt</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="calendarMainContainer" class="flex flex-col space-y-6">
+            <!-- Navigation toolbar for months / filter -->
+            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0" id="monthTabs"><button onclick="filterByMonth(0)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-indigo-600 text-white shadow-md">Mind a 12 hónap</button><button onclick="filterByMonth(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Január</button><button onclick="filterByMonth(2)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Február</button><button onclick="filterByMonth(3)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Március</button><button onclick="filterByMonth(4)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Április</button><button onclick="filterByMonth(5)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Május</button><button onclick="filterByMonth(6)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Június</button><button onclick="filterByMonth(7)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Július</button><button onclick="filterByMonth(8)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Augusztus</button><button onclick="filterByMonth(9)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Szeptember</button><button onclick="filterByMonth(10)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">Október</button><button onclick="filterByMonth(11)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">November</button><button onclick="filterByMonth(12)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600">December</button></div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="resetDataToDefault()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium rounded-lg transition" title="Alapadatok visszaállítása">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Alaphelyzet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Horizontal 12 Months Display Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="monthsGrid">
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-pink-400 to-rose-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    1
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Január</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                2 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1534528741775-53994a69daeb" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    14.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Kovács Anna</h4>
+                                                <p class="text-xs text-slate-500">Január 14.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1539571696357-5a69c17a67c6" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    22.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Nagy Bence</h4>
+                                                <p class="text-xs text-slate-500">Január 22.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(2)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(2)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(1)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Január)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-purple-400 to-indigo-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    2
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Február</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1517841905240-472988babdf9" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    5.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Szabó Lili</h4>
+                                                <p class="text-xs text-slate-500">Február 5.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(3)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(3)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(2)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Február)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-blue-400 to-cyan-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    3
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Március</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1507003211169-0a1dd7228f2d" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    19.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Tóth Máté</h4>
+                                                <p class="text-xs text-slate-500">Március 19.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(4)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(4)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(3)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Március)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-emerald-400 to-teal-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    4
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Április</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1494790108377-be9c29b29330" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    3.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Horváth Dóra</h4>
+                                                <p class="text-xs text-slate-500">Április 3.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(5)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(5)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(4)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Április)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-amber-400 to-orange-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    5
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Május</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1500648767791-00dcc994a43e" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    11.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Varga Bálint</h4>
+                                                <p class="text-xs text-slate-500">Május 11.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(6)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(6)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(5)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Május)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-pink-500 to-purple-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    6
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Június</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                2 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1524504388940-b1c1722653e1" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    25.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Kiss Eszter</h4>
+                                                <p class="text-xs text-slate-500">Június 25.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(7)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(7)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/ffffff" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    5.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">irma</h4>
+                                                <p class="text-xs text-slate-500">Június 5.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(14)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(14)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(6)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Június)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-yellow-400 to-amber-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    7
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Július</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1492562080023-ab3db95bfbce" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    8.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Molnár Milán</h4>
+                                                <p class="text-xs text-slate-500">Július 8.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(8)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(8)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(7)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Július)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-cyan-400 to-blue-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    8
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Augusztus</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1534528741775-53994a69daeb" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    17.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Németh Zsófia</h4>
+                                                <p class="text-xs text-slate-500">Augusztus 17.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(9)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(9)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(8)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Augusztus)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-rose-400 to-pink-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    9
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Szeptember</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1507003211169-0a1dd7228f2d" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    2.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Farkas Dániel</h4>
+                                                <p class="text-xs text-slate-500">Szeptember 2.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(10)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(10)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(9)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Szeptember)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-indigo-400 to-violet-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    10
+                                </div>
+                                <h3 class="title-font text-lg font-bold">Október</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1517841905240-472988babdf9" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    30.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Papp Luca</h4>
+                                                <p class="text-xs text-slate-500">Október 30.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(11)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(11)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(10)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (Október)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-teal-400 to-emerald-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    11
+                                </div>
+                                <h3 class="title-font text-lg font-bold">November</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1539571696357-5a69c17a67c6" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    12.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Takács Levente</h4>
+                                                <p class="text-xs text-slate-500">November 12.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(12)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(12)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(11)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (November)
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r from-orange-400 to-red-500 p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    12
+                                </div>
+                                <h3 class="title-font text-lg font-bold">December</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                1 ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            
+                                <div class="w-full space-y-4">
+                                    
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="./index_files/photo-1494790108377-be9c29b29330" onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    20.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">Juhász Fanni</h4>
+                                                <p class="text-xs text-slate-500">December 20.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(13)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(13)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(12)" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (December)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div id="calendarListContainer" class="hidden bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="title-font text-xl font-bold text-slate-800">Diákok Listája Hónapok Szerint</h3>
+                <div class="relative">
+                    <input type="text" id="searchInput" oninput="filterStudentsList(this.value)" placeholder="Keresés név vagy hónap alapján..." class="pl-10 pr-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400 w-64">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400"></i>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-200 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                            <th class="py-3 px-4">Név</th>
+                            <th class="py-3 px-4">Hónap</th>
+                            <th class="py-3 px-4">Nap</th>
+                            <th class="py-3 px-4">Osztály / Jel</th>
+                            <th class="py-3 px-4 text-right">Műveletek</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody" class="divide-y divide-slate-100 text-sm">
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1534528741775-53994a69daeb" class="w-8 h-8 rounded-full object-cover">
+                                <span>Kovács Anna</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Január</td>
+                            <td class="py-3 px-4 text-slate-600">14.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(1)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(1)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1539571696357-5a69c17a67c6" class="w-8 h-8 rounded-full object-cover">
+                                <span>Nagy Bence</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Január</td>
+                            <td class="py-3 px-4 text-slate-600">22.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(2)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(2)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1517841905240-472988babdf9" class="w-8 h-8 rounded-full object-cover">
+                                <span>Szabó Lili</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Február</td>
+                            <td class="py-3 px-4 text-slate-600">5.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(3)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(3)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1507003211169-0a1dd7228f2d" class="w-8 h-8 rounded-full object-cover">
+                                <span>Tóth Máté</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Március</td>
+                            <td class="py-3 px-4 text-slate-600">19.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(4)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(4)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1494790108377-be9c29b29330" class="w-8 h-8 rounded-full object-cover">
+                                <span>Horváth Dóra</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Április</td>
+                            <td class="py-3 px-4 text-slate-600">3.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(5)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(5)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1500648767791-00dcc994a43e" class="w-8 h-8 rounded-full object-cover">
+                                <span>Varga Bálint</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Május</td>
+                            <td class="py-3 px-4 text-slate-600">11.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(6)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(6)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1524504388940-b1c1722653e1" class="w-8 h-8 rounded-full object-cover">
+                                <span>Kiss Eszter</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Június</td>
+                            <td class="py-3 px-4 text-slate-600">25.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(7)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(7)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1492562080023-ab3db95bfbce" class="w-8 h-8 rounded-full object-cover">
+                                <span>Molnár Milán</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Július</td>
+                            <td class="py-3 px-4 text-slate-600">8.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(8)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(8)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1534528741775-53994a69daeb" class="w-8 h-8 rounded-full object-cover">
+                                <span>Németh Zsófia</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Augusztus</td>
+                            <td class="py-3 px-4 text-slate-600">17.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(9)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(9)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1507003211169-0a1dd7228f2d" class="w-8 h-8 rounded-full object-cover">
+                                <span>Farkas Dániel</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Szeptember</td>
+                            <td class="py-3 px-4 text-slate-600">2.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(10)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(10)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1517841905240-472988babdf9" class="w-8 h-8 rounded-full object-cover">
+                                <span>Papp Luca</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Október</td>
+                            <td class="py-3 px-4 text-slate-600">30.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(11)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(11)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1539571696357-5a69c17a67c6" class="w-8 h-8 rounded-full object-cover">
+                                <span>Takács Levente</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">November</td>
+                            <td class="py-3 px-4 text-slate-600">12.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(12)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(12)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/photo-1494790108377-be9c29b29330" class="w-8 h-8 rounded-full object-cover">
+                                <span>Juhász Fanni</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">December</td>
+                            <td class="py-3 px-4 text-slate-600">20.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(13)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(13)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="./index_files/ffffff(1)" class="w-8 h-8 rounded-full object-cover">
+                                <span>irma</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">Június</td>
+                            <td class="py-3 px-4 text-slate-600">5.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(14)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(14)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="helpDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="toggleHelpDrawer()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-gradient-to-b from-[#fffdf9] to-[#fff6e6] shadow-2xl border-l border-amber-200 p-6 flex flex-col justify-between relative overflow-y-auto">
+                <!-- Decorative glitter effect -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-200/40 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-amber-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-pink-500 flex items-center justify-center text-white shadow-md">
+                                <i class="fa-solid fa-sparkles"></i>
+                            </div>
+                            <h3 class="title-font text-xl font-bold text-slate-900">Súgó és Használati Útmutató</h3>
+                        </div>
+                        <button onclick="toggleHelpDrawer()" class="w-8 h-8 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 flex items-center justify-center transition">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-6 space-y-6 text-sm text-slate-700">
+                        <div class="bg-white/80 p-4 rounded-2xl shadow-sm border border-amber-100">
+                            <h4 class="font-bold text-amber-800 mb-2 flex items-center"><i class="fa-solid fa-sun mr-2 text-amber-500"></i> Hónapok és Függő Díszek</h4>
+                            <p>A főoldalon a 12 hónap lógó szalagos elrendezésben jelenik meg. A diákok fényképes medáljai láncon lógnak, és finoman lengenek!</p>
+                        </div>
+
+                        <div class="bg-white/80 p-4 rounded-2xl shadow-sm border border-amber-100">
+                            <h4 class="font-bold text-amber-800 mb-2 flex items-center"><i class="fa-solid fa-code mr-2 text-indigo-500"></i> C++ / Python Szimulátor</h4>
+                            <p>Kattints a felső narancssárga gombra a vector-of-vectors adatszerkezet vizuális teszteléséhez. Lépkedhetsz az elemek között, és láthatod a kódrészletek villogását!</p>
+                        </div>
+
+                        <div class="bg-white/80 p-4 rounded-2xl shadow-sm border border-amber-100">
+                            <h4 class="font-bold text-amber-800 mb-2 flex items-center"><i class="fa-solid fa-users-gear mr-2 text-pink-500"></i> Diákok Kezelése</h4>
+                            <p>Bármikor hozzáadhatsz új diákot, módosíthatod a meglévőket, vagy törölheted őket a „Diákok Szerkesztése” gombon keresztül.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-amber-200 text-center text-xs text-amber-700/70">
+                    Készült szeretettel az osztály számára • 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="studentModal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeStudentModal()"></div>
+        <div class="relative bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl z-10 border border-slate-100">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h3 class="title-font text-xl font-bold text-slate-800" id="modalTitle">Új diák hozzáadása</h3>
+                <button onclick="closeStudentModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="studentForm" onsubmit="handleStudentFormSubmit(event)" class="mt-6 space-y-4">
+                <input type="hidden" id="editStudentId">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Diák Neve</label>
+                        <input type="text" id="inputName" required="" placeholder="pl. Kovács Anna" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Hónap</label>
+                        <select id="inputMonth" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+                            <option value="1">Január</option>
+                            <option value="2">Február</option>
+                            <option value="3">Március</option>
+                            <option value="4">Április</option>
+                            <option value="5">Május</option>
+                            <option value="6">Június</option>
+                            <option value="7">Július</option>
+                            <option value="8">Augusztus</option>
+                            <option value="9">Szeptember</option>
+                            <option value="10">Október</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nap</label>
+                        <input type="number" id="inputDay" min="1" max="31" required="" placeholder="15" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Fotó URL (opcionális)</label>
+                        <input type="url" id="inputPhoto" placeholder="https://..." class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition">Mégse</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white text-sm font-bold transition shadow-md shadow-pink-500/25">Mentés</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="simModal" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 hidden">
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity" onclick="closeSimModal()"></div>
+        <div class="relative bg-slate-900 rounded-3xl max-w-5xl w-full p-6 sm:p-8 shadow-2xl z-10 border border-slate-700 text-slate-100 max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="title-font text-xl font-bold">Vector-of-Vectors Algoritmus Szimulátor</h3>
+                        <p class="text-xs text-slate-400">Párhuzamos C++ és Python végrehajtás lépésről lépésre</p>
+                    </div>
+                </div>
+                <button onclick="closeSimModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Simulation Controls & Status Bar -->
+            <div class="py-4 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <button onclick="simStepBackward()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium transition flex items-center space-x-2">
+                        <i class="fa-solid fa-backward-step"></i>
+                        <span class="hidden sm:inline">Előző Lépés</span>
+                    </button>
+                    <button onclick="simTogglePlay()" id="simPlayBtn" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-sm font-bold transition flex items-center space-x-2 shadow-lg shadow-emerald-500/20">
+                        <i id="simPlayIcon" class="fa-solid fa-play"></i>
+                        <span id="simPlayText">Indítás</span>
+                    </button>
+                    <button onclick="simStepForward()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium transition flex items-center space-x-2">
+                        <span class="hidden sm:inline">Következő Lépés</span>
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button onclick="simReset()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-sm transition" title="Újraindítás">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="text-xs text-slate-400">Sebesség:</div>
+                    <input type="range" id="simSpeed" min="500" max="2500" step="200" value="1200" class="w-24 accent-emerald-500">
+                    <div class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-800" id="simStatusBadge">Lépés: 1 / 6</div>
+                </div>
+            </div>
+
+            <!-- Parallel Code Views & Visual Matrix Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 my-6 overflow-y-auto flex-1 pr-1">
+                
+                <!-- C++ Code View Panel -->
+                <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800 flex flex-col font-mono text-xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-slate-400">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <span class="font-bold text-slate-200">C++ (std::vector&lt;std::vector&lt;Student&gt;&gt;)</span>
+                        </div>
+                        <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800">C++17</span>
+                    </div>
+                    <pre class="pt-3 text-slate-300 overflow-x-auto leading-relaxed" id="cppCodeContainer"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+struct Student { std::string name; int day; };
+
+int main() {
+    // 1. 12 hónap inicializálása üres vektorokkal
+    std::vector&lt;std::vector&lt;Student&gt;&gt; birthdayCalendar(12);
+
+    // 2. Diákok besorolása a hónap index szerint (0-11)
+    birthdayCalendar[0].push_back({"Anna", 12});
+    birthdayCalendar[0].push_back({"Péter", 24});
+    
+    // 3. Iteráció a vector-of-vectors struktúrán
+    for (size_t m = 0; m &lt; birthdayCalendar.size(); ++m) {
+        for (const auto&amp; student : birthdayCalendar[m]) {
+            std::cout &lt;&lt; "Hónap " &lt;&lt; m+1 &lt;&lt; ": " &lt;&lt; student.name &lt;&lt; "\n";
+        }
+    }
+    return 0;
+}</code></pre>
+                </div>
+
+                <!-- Python Code View Panel -->
+                <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800 flex flex-col font-mono text-xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-slate-400">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="font-bold text-slate-200">Python (List of Lists)</span>
+                        </div>
+                        <span class="text-[10px] bg-yellow-950 text-yellow-300 px-2 py-0.5 rounded border border-yellow-800">Python 3.x</span>
+                    </div>
+                    <pre class="pt-3 text-slate-300 overflow-x-auto leading-relaxed" id="pythonCodeContainer"><code># 1. 12 üres lista listája a hónapoknak
+birthday_calendar = [[] for _ in range(12)]
+
+# 2. Diákok hozzáadása a megfelelő hónap listához
+birthday_calendar[0].append({"name": "Anna", "day": 12})
+birthday_calendar[0].append({"name": "Péter", "day": 24})
+
+# 3. Bejárás egymásba ágyazott ciklussal
+for month_idx, month_list in enumerate(birthday_calendar):
+    for student in month_list:
+        print(f"Hónap {month_idx + 1}: {student['name']}")</code></pre>
+                </div>
+
+            </div>
+
+            <!-- Visual Matrix Traversal State Display -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                <div class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider flex items-center justify-between">
+                    <span>Vizuális Adatszerkezet (Matrix / Vector of Vectors)</span>
+                    <span id="simActivePointer" class="text-emerald-400 font-mono">1. Vektorok inicializálása (12 db)</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2" id="simMatrixGrid">
+                    <div id="simCell_0" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Január</div>
+                        <div id="simCellContent_0" class="text-xs text-slate-300 min-h-[30px] flex items-center">Kovács, Nagy</div>
+                    </div>
+                
+                    <div id="simCell_1" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Február</div>
+                        <div id="simCellContent_1" class="text-xs text-slate-300 min-h-[30px] flex items-center">Szabó</div>
+                    </div>
+                
+                    <div id="simCell_2" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Március</div>
+                        <div id="simCellContent_2" class="text-xs text-slate-300 min-h-[30px] flex items-center">Tóth</div>
+                    </div>
+                
+                    <div id="simCell_3" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Április</div>
+                        <div id="simCellContent_3" class="text-xs text-slate-300 min-h-[30px] flex items-center">Horváth</div>
+                    </div>
+                
+                    <div id="simCell_4" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Május</div>
+                        <div id="simCellContent_4" class="text-xs text-slate-300 min-h-[30px] flex items-center">Varga</div>
+                    </div>
+                
+                    <div id="simCell_5" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Június</div>
+                        <div id="simCellContent_5" class="text-xs text-slate-300 min-h-[30px] flex items-center">Kiss, irma</div>
+                    </div>
+                
+                    <div id="simCell_6" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Július</div>
+                        <div id="simCellContent_6" class="text-xs text-slate-300 min-h-[30px] flex items-center">Molnár</div>
+                    </div>
+                
+                    <div id="simCell_7" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Augusztus</div>
+                        <div id="simCellContent_7" class="text-xs text-slate-300 min-h-[30px] flex items-center">Németh</div>
+                    </div>
+                
+                    <div id="simCell_8" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Szeptember</div>
+                        <div id="simCellContent_8" class="text-xs text-slate-300 min-h-[30px] flex items-center">Farkas</div>
+                    </div>
+                
+                    <div id="simCell_9" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: Október</div>
+                        <div id="simCellContent_9" class="text-xs text-slate-300 min-h-[30px] flex items-center">Papp</div>
+                    </div>
+                
+                    <div id="simCell_10" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: November</div>
+                        <div id="simCellContent_10" class="text-xs text-slate-300 min-h-[30px] flex items-center">Takács</div>
+                    </div>
+                
+                    <div id="simCell_11" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: December</div>
+                        <div id="simCellContent_11" class="text-xs text-slate-300 min-h-[30px] flex items-center">Juhász</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Default Month Names in Hungarian
+        const MONTH_NAMES = [
+            "Január", "Február", "Március", "Április", 
+            "Május", "Június", "Július", "Augusztus", 
+            "Szeptember", "Október", "November", "December"
+        ];
+
+        // Default Student Data (Vector of Vectors equivalent)
+        let defaultStudents = [
+            { id: 1, name: "Kovács Anna", month: 1, day: 14, photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
+            { id: 2, name: "Nagy Bence", month: 1, day: 22, photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80" },
+            { id: 3, name: "Szabó Lili", month: 2, day: 5, photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
+            { id: 4, name: "Tóth Máté", month: 3, day: 19, photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
+            { id: 5, name: "Horváth Dóra", month: 4, day: 3, photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" },
+            { id: 6, name: "Varga Bálint", month: 5, day: 11, photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
+            { id: 7, name: "Kiss Eszter", month: 6, day: 25, photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80" },
+            { id: 8, name: "Molnár Milán", month: 7, day: 8, photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" },
+            { id: 9, name: "Németh Zsófia", month: 8, day: 17, photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
+            { id: 10, name: "Farkas Dániel", month: 9, day: 2, photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
+            { id: 11, name: "Papp Luca", month: 10, day: 30, photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
+            { id: 12, name: "Takács Levente", month: 11, day: 12, photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80" },
+            { id: 13, name: "Juhász Fanni", month: 12, day: 20, photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" }
+        ];
+
+        let students = JSON.parse(localStorage.getItem('classroom_students')) || defaultStudents;
+        let isListView = false;
+        let activeMonthFilter = 0; // 0 = all months
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderApp();
+            initSimulatorMatrix();
+        };
+
+        function saveToLocalStorage() {
+            localStorage.setItem('classroom_students', JSON.stringify(students));
+        }
+
+        function resetDataToDefault() {
+            if(confirm('Biztosan visszaállítod az alapértelmezett diákokat?')) {
+                students = JSON.parse(JSON.stringify(defaultStudents));
+                saveToLocalStorage();
+                renderApp();
+            }
+        }
+
+        function renderApp() {
+            updateStats();
+            renderMonthTabs();
+            renderMonthsGrid();
+            renderStudentTable();
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = students.length;
+            const currentMonthIndex = new Date().getMonth() + 1;
+            const currentMonthCount = students.filter(s => s.month === currentMonthIndex).length;
+            document.getElementById('statCurrentMonth').innerText = currentMonthCount;
+        }
+
+        function renderMonthTabs() {
+            const container = document.getElementById('monthTabs');
+            let html = `<button onclick="filterByMonth(0)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${activeMonthFilter === 0 ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}">Mind a 12 hónap</button>`;
+            
+            MONTH_NAMES.forEach((name, idx) => {
+                const mNum = idx + 1;
+                const isActive = activeMonthFilter === mNum;
+                html += `<button onclick="filterByMonth(${mNum})" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${isActive ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}">${name}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterByMonth(m) {
+            activeMonthFilter = m;
+            renderApp();
+        }
+
+        function renderMonthsGrid() {
+            const grid = document.getElementById('monthsGrid');
+            let html = '';
+
+            const filteredMonths = activeMonthFilter === 0 ? [1,2,3,4,5,6,7,8,9,10,11,12] : [activeMonthFilter];
+
+            filteredMonths.forEach(mNum => {
+                const monthName = MONTH_NAMES[mNum - 1];
+                const monthStudents = students.filter(s => s.month === mNum);
+                
+                // Color palette per month
+                const colors = [
+                    'from-pink-400 to-rose-500', 'from-purple-400 to-indigo-500', 'from-blue-400 to-cyan-500',
+                    'from-emerald-400 to-teal-500', 'from-amber-400 to-orange-500', 'from-pink-500 to-purple-500',
+                    'from-yellow-400 to-amber-500', 'from-cyan-400 to-blue-500', 'from-rose-400 to-pink-500',
+                    'from-indigo-400 to-violet-500', 'from-teal-400 to-emerald-500', 'from-orange-400 to-red-500'
+                ];
+                const headerColor = colors[(mNum - 1) % colors.length];
+
+                html += `
+                    <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden flex flex-col transition hover:shadow-xl">
+                        <!-- Month Header -->
+                        <div class="bg-gradient-to-r ${headerColor} p-4 text-white flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-sm">
+                                    ${mNum}
+                                </div>
+                                <h3 class="title-font text-lg font-bold">${monthName}</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium">
+                                ${monthStudents.length} ünnepelt
+                            </span>
+                        </div>
+
+                        <!-- Hanging Chain & Pendants Area -->
+                        <div class="p-4 flex-1 bg-gradient-to-b from-slate-50/50 to-white flex flex-col items-center">
+                            <!-- Horizontal Chain Bar -->
+                            <div class="w-full h-2 bg-gradient-to-r from-slate-300 via-amber-300 to-slate-300 rounded-full mb-4 shadow-inner"></div>
+
+                            ${monthStudents.length === 0 ? `
+                                <div class="py-8 text-center text-slate-400 text-xs italic">
+                                    Nincs ezen a hónapon szülinapos diák.
+                                </div>
+                            ` : `
+                                <div class="w-full space-y-4">
+                                    ${monthStudents.map(student => `
+                                        <div class="pendant-sway relative bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center space-x-3 hover:border-pink-300 transition group">
+                                            <!-- Chain hanger line -->
+                                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-amber-400"></div>
+
+                                            <!-- Avatar with Fallback -->
+                                            <div class="relative">
+                                                <img src="${student.photo || 'https://placehold.co/150x150/ff758c/ffffff?text=' + encodeURIComponent(student.name.charAt(0))}" 
+                                                     onerror="this.src='https://placehold.co/150x150/ff758c/ffffff?text=User'"
+                                                     class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white group-hover:scale-105 transition">
+                                                <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                                                    ${student.day}.
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-slate-800 text-sm truncate">${student.name}</h4>
+                                                <p class="text-xs text-slate-500">${monthName} ${student.day}.</p>
+                                            </div>
+
+                                            <!-- Actions on hover -->
+                                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition">
+                                                <button onclick="editStudent(${student.id})" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 flex items-center justify-center transition" title="Szerkesztés">
+                                                    <i class="fa-solid fa-pen text-xs"></i>
+                                                </button>
+                                                <button onclick="deleteStudent(${student.id})" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center transition" title="Törlés">
+                                                    <i class="fa-solid fa-trash text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+
+                        <!-- Card Footer Add Button -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+                            <button onclick="openStudentModalForMonth(${mNum})" class="text-xs font-semibold text-pink-600 hover:text-pink-700 transition flex items-center justify-center w-full py-1">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Új diák ide (${monthName})
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function renderStudentTable(searchTerm = '') {
+            const tbody = document.getElementById('studentTableBody');
+            let filtered = students;
+            
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                filtered = students.filter(s => s.name.toLowerCase().includes(term) || MONTH_NAMES[s.month - 1].toLowerCase().includes(term));
+            }
+
+            let html = '';
+            if (filtered.length === 0) {
+                html = `<tr><td colspan="5" class="py-6 text-center text-slate-400 italic">Nincs találat a keresésre.</td></tr>`;
+            } else {
+                filtered.forEach(student => {
+                    const monthName = MONTH_NAMES[student.month - 1];
+                    html += `
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="py-3 px-4 font-medium text-slate-800 flex items-center space-x-3">
+                                <img src="${student.photo || 'https://placehold.co/100x100/ff758c/ffffff?text=User'}" class="w-8 h-8 rounded-full object-cover">
+                                <span>${student.name}</span>
+                            </td>
+                            <td class="py-3 px-4 text-slate-600">${monthName}</td>
+                            <td class="py-3 px-4 text-slate-600">${student.day}.</td>
+                            <td class="py-3 px-4"><span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Osztály</span></td>
+                            <td class="py-3 px-4 text-right space-x-2">
+                                <button onclick="editStudent(${student.id})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 text-xs transition">Szerkesztés</button>
+                                <button onclick="deleteStudent(${student.id})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs transition">Törlés</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            tbody.innerHTML = html;
+        }
+
+        function toggleViewMode() {
+            isListView = !isListView;
+            const mainContainer = document.getElementById('calendarMainContainer');
+            const listContainer = document.getElementById('calendarListContainer');
+            const btnText = document.getElementById('viewModeText');
+            
+            if (isListView) {
+                mainContainer.classList.add('hidden');
+                listContainer.classList.remove('hidden');
+                btnText.innerText = 'Függő Dísz Nézet';
+            } else {
+                mainContainer.classList.remove('hidden');
+                listContainer.classList.add('hidden');
+                btnText.innerText = 'Lista Nézet';
+            }
+        }
+
+        function filterStudentsList(val) {
+            renderStudentTable(val);
+        }
+
+        function openStudentModal() {
+            document.getElementById('modalTitle').innerText = 'Új diák hozzáadása';
+            document.getElementById('editStudentId').value = '';
+            document.getElementById('inputName').value = '';
+            document.getElementById('inputMonth').value = '1';
+            document.getElementById('inputDay').value = '';
+            document.getElementById('inputPhoto').value = '';
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function openStudentModalForMonth(mNum) {
+            openStudentModal();
+            document.getElementById('inputMonth').value = mNum;
+        }
+
+        function editStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            document.getElementById('modalTitle').innerText = 'Diák adatainak módosítása';
+            document.getElementById('editStudentId').value = student.id;
+            document.getElementById('inputName').value = student.name;
+            document.getElementById('inputMonth').value = student.month;
+            document.getElementById('inputDay').value = student.day;
+            document.getElementById('inputPhoto').value = student.photo || '';
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function closeStudentModal() {
+            document.getElementById('studentModal').classList.add('hidden');
+        }
+
+        function handleStudentFormSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editStudentId').value;
+            const name = document.getElementById('inputName').value;
+            const month = parseInt(document.getElementById('inputMonth').value);
+            const day = parseInt(document.getElementById('inputDay').value);
+            const photo = document.getElementById('inputPhoto').value;
+
+            if (editId) {
+                // Edit existing
+                const index = students.findIndex(s => s.id == editId);
+                if (index !== -1) {
+                    students[index] = { id: parseInt(editId), name, month, day, photo };
+                }
+            } else {
+                // Add new
+                const newId = students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1;
+                students.push({ id: newId, name, month, day, photo });
+            }
+
+            saveToLocalStorage();
+            renderApp();
+            closeStudentModal();
+        }
+
+        function deleteStudent(id) {
+            if (confirm('Biztosan törölni szeretnéd ezt a diákot?')) {
+                students = students.filter(s => s.id !== id);
+                saveToLocalStorage();
+                renderApp();
+            }
+        }
+
+        function toggleHelpDrawer() {
+            const drawer = document.getElementById('helpDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function openSimModal() {
+            document.getElementById('simModal').classList.remove('hidden');
+            simReset();
+        }
+
+        function closeSimModal() {
+            document.getElementById('simModal').classList.add('hidden');
+            if (simInterval) clearInterval(simInterval);
+            isSimPlaying = false;
+            updateSimPlayButton();
+        }
+
+        let simStep = 0;
+        const totalSimSteps = 6;
+        let simInterval = null;
+        let isSimPlaying = false;
+
+        function initSimulatorMatrix() {
+            const grid = document.getElementById('simMatrixGrid');
+            let html = '';
+            for (let i = 0; i < 12; i++) {
+                html += `
+                    <div id="simCell_${i}" class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
+                        <div class="text-[10px] text-slate-400 font-bold mb-1">M: ${MONTH_NAMES[i]}</div>
+                        <div id="simCellContent_${i}" class="text-xs text-slate-300 min-h-[30px] flex items-center">üres</div>
+                    </div>
+                `;
+            }
+            grid.innerHTML = html;
+        }
+
+        function updateSimulatorDisplay() {
+            document.getElementById('simStatusBadge').innerText = `Lépés: ${simStep} / ${totalSimSteps}`;
+            
+            // Highlight code lines or blocks based on simStep
+            const cppLines = document.querySelectorAll('#cppCodeContainer code');
+            // Simplified simulation pointer updates
+            let activeText = "Készenlétben";
+            if (simStep === 1) activeText = "1. Vektorok inicializálása (12 db)";
+            if (simStep === 2) activeText = "2. Elem hozzáadása a 0. hónaphoz (Január)";
+            if (simStep === 3) activeText = "3. Külső ciklus indítása: m = 0";
+            if (simStep === 4) activeText = "4. Belső ciklus: diákok bejárása a hónapban";
+            if (simStep === 5) activeText = "5. Kiírás konzolra";
+            if (simStep === 6) activeText = "6. Szimuláció vége";
+
+            document.getElementById('simActivePointer').innerText = activeText;
+
+            // Update matrix cell visuals
+            for (let i = 0; i < 12; i++) {
+                const cell = document.getElementById(`simCell_${i}`);
+                const content = document.getElementById(`simCellContent_${i}`);
+                cell.className = "bg-slate-900 p-3 rounded-xl border border-slate-800 flex flex-col justify-between transition";
+                
+                const monthStudents = students.filter(s => s.month === (i + 1));
+                if (monthStudents.length > 0) {
+                    content.innerText = monthStudents.map(s => s.name.split(' ')[0]).join(', ');
+                } else {
+                    content.innerText = 'üres';
+                }
+
+                if (simStep >= 2 && i === 0) {
+                    cell.className = "bg-emerald-950/60 p-3 rounded-xl border border-emerald-500 flex flex-col justify-between transition shadow-lg shadow-emerald-500/20";
+                }
+            }
+        }
+
+        function simStepForward() {
+            if (simStep < totalSimSteps) {
+                simStep++;
+                updateSimulatorDisplay();
+            } else {
+                if (simInterval) clearInterval(simInterval);
+                isSimPlaying = false;
+                updateSimPlayButton();
+            }
+        }
+
+        function simStepBackward() {
+            if (simStep > 0) {
+                simStep--;
+                updateSimulatorDisplay();
+            }
+        }
+
+        function simReset() {
+            simStep = 0;
+            if (simInterval) clearInterval(simInterval);
+            isSimPlaying = false;
+            updateSimPlayButton();
+            updateSimulatorDisplay();
+        }
+
+        function simTogglePlay() {
+            isSimPlaying = !isSimPlaying;
+            updateSimPlayButton();
+            
+            const speed = parseInt(document.getElementById('simSpeed').value);
+
+            if (isSimPlaying) {
+                if (simStep >= totalSimSteps) simStep = 0;
+                simInterval = setInterval(() => {
+                    if (simStep < totalSimSteps) {
+                        simStep++;
+                        updateSimulatorDisplay();
+                    } else {
+                        clearInterval(simInterval);
+                        isSimPlaying = false;
+                        updateSimPlayButton();
+                    }
+                }, speed);
+            } else {
+                if (simInterval) clearInterval(simInterval);
+            }
+        }
+
+        function updateSimPlayButton() {
+            const icon = document.getElementById('simPlayIcon');
+            const text = document.getElementById('simPlayText');
+            if (isSimPlaying) {
+                icon.className = "fa-solid fa-pause";
+                text.innerText = "Szünet";
+            } else {
+                icon.className = "fa-solid fa-play";
+                text.innerText = "Indítás";
+            }
+        }
+    </script>
+
+</body></html>

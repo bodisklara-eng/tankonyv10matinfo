@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///D:/programe%20scolare/tankonyv/gemini-code-1789826093959.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometriai Állatkert - Puzzle Mátrix</title>
+    <style>
+        :root {
+            --bg-color: #e0f2f1; /* Mentazöld háttér */
+            --wood-color: #f3e5ab; /* Világos fa szín */
+            --wood-border: #d2b48c;
+            --panel-bg: #ffffff;
+            --text-color: #333333;
+            /* Alakzat színek */
+            --shape-blue: #2196f3;
+            --shape-green: #4caf50;
+            --shape-red: #f44336;
+            --shape-yellow: #ffeb3b;
+            --shape-orange: #ff9800;
+            --shape-purple: #9c27b0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #00695c;
+            margin-bottom: 30px;
+        }
+
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .top-row, .middle-row, .bottom-row {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Közös panel stílusok */
+        .panel {
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #00796b;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 2px solid #b2dfdb;
+            padding-bottom: 5px;
+        }
+
+        /* Fa doboz stílus */
+        .wood-box {
+            background-color: var(--wood-color);
+            border: 4px solid var(--wood-border);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* 1. Panel: Nyitott doboz (Hattyú és Keverék) */
+        #swanBox {
+            flex: 1;
+            align-items: center;
+        }
+        .swan-pattern {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .mixed-pieces-bin {
+            width: 100%;
+            height: 80px;
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
+            gap: 3px;
+            justify-content: center;
+        }
+
+        /* 2. Panel: Második doboz (Keverék mátrix) */
+        #matrixBox {
+            flex: 1;
+            align-items: center;
+        }
+        .mixed-matrix-display {
+            width: 180px;
+            height: 180px;
+        }
+
+        /* 3. Panel: Fő Pillangó Mátrix Tábla */
+        #butterflyBoard {
+            flex: 1.5;
+            align-items: center;
+        }
+        .butterfly-grid {
+            width: 280px;
+            height: 280px;
+        }
+
+        /* 4. Panel: Legenda / Mennyiségi mátrix */
+        #quantityLegend {
+            flex: 1.2;
+        }
+        .legend-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        .legend-table th, .legend-table td {
+            border: 1px solid #e0e0e0;
+            padding: 6px;
+            text-align: center;
+        }
+        .legend-table th {
+            background-color: #f5f5f5;
+        }
+        .shape-icon {
+            width: 25px;
+            height: 25px;
+        }
+
+        /* 5. Panel: Nyitott útmutató füzet */
+        #guideBook {
+            flex: 1.5;
+        }
+        .book-spread {
+            display: flex;
+            gap: 15px;
+        }
+        .book-page {
+            flex: 1;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            font-size: 0.8em;
+        }
+
+        /* 6. Panel: Mintakártyák */
+        #patternCards {
+            flex: 1;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+        }
+        .card {
+            width: 60px;
+            height: 80px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* SVG Alakzat Definíciók */
+        .svg-shape {
+            stroke: #333;
+            stroke-width: 0.5px;
+        }
+        
+        /* Szín osztályok */
+        .s-blue { fill: var(--shape-blue); }
+        .s-green { fill: var(--shape-green); }
+        .s-red { fill: var(--shape-red); }
+        .s-yellow { fill: var(--shape-yellow); }
+        .s-orange { fill: var(--shape-orange); }
+        .s-purple { fill: var(--shape-purple); }
+
+    </style>
+</head>
+<body>
+
+    <h1>GEOMETRIAI ÁLLATKERT</h1>
+
+    <div class="main-layout">
+        
+        <!-- FELSŐ SOR -->
+        <div class="top-row">
+            <!-- 1. Nyitott doboz (Hattyú) -->
+            <div class="panel wood-box" id="swanBox">
+                <div class="panel-title">Minta Tároló</div>
+                <svg class="swan-pattern" viewBox="0 0 100 100">
+                    <!-- Hattyú Tangram -->
+                    <polygon class="svg-shape s-green" points="20,80 50,50 80,80"></polygon> <!-- Nagy háromszög test -->
+                    <polygon class="svg-shape s-red" points="50,20 65,35 50,50"></polygon> <!-- Közepes háromszög nyak -->
+                    <rect class="svg-shape s-yellow" x="50" y="35" width="15" height="15" transform="rotate(45 57.5 42.5)"></rect> <!-- Négyzet fej -->
+                    <polygon class="svg-shape s-blue" points="35,35 50,50 35,65"></polygon> <!-- Kis háromszög szárny 1 -->
+                    <polygon class="svg-shape s-orange" points="65,65 80,80 65,95"></polygon> <!-- Kis háromszög farok -->
+                </svg>
+                <div class="mixed-pieces-bin">
+                    <!-- Vegyes darabok ikonok -->
+                    <svg class="shape-icon s-blue" viewBox="0 0 10 10"><rect width="8" height="8" x="1" y="1"></rect></svg>
+                    <svg class="shape-icon s-green" viewBox="0 0 10 10"><polygon points="5,1 9,9 1,9"></polygon></svg>
+                    <svg class="shape-icon s-red" viewBox="0 0 10 10"><polygon points="1,1 9,1 5,9"></polygon></svg>
+                    <svg class="shape-icon s-yellow" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"></circle></svg>
+                </div>
+            </div>
+
+            <!-- 2. Második doboz (Mátrix keverék) -->
+            <div class="panel wood-box" id="matrixBox">
+                <div class="panel-title">Mátrix Alap</div>
+                <svg class="mixed-matrix-display" viewBox="0 0 100 100">
+                    <!-- Absztrakt keverék minta rács -->
+                    <defs>
+                        <pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <rect width="10" height="10" fill="none" stroke="#ddd" stroke-width="0.5"></rect>
+                        </pattern>
+                    </defs>
+                    <rect width="100" height="100" fill="url(#gridPattern)"></rect>
+                    <!-- Keverék darabok a rácson -->
+                    <rect class="svg-shape s-blue" x="10" y="10" width="10" height="10"></rect>
+                    <polygon class="svg-shape s-green" points="20,10 30,20 20,30"></polygon>
+                    <circle class="svg-shape s-red" cx="45" cy="25" r="5"></circle>
+                    <rect class="svg-shape s-yellow" x="60" y="10" width="20" height="10"></rect>
+                    <polygon class="svg-shape s-orange" points="10,40 30,40 20,60"></polygon>
+                </svg>
+            </div>
+        </div>
+
+        <!-- KÖZÉPSŐ SOR -->
+        <div class="middle-row">
+            <!-- 3. Fő Pillangó Tábla -->
+            <div class="panel wood-box" id="butterflyBoard">
+                <div class="panel-title">Pillangó Puzzle Mátrix</div>
+                <svg class="butterfly-grid" viewBox="0 0 100 100">
+                    <!-- Rács -->
+                    <rect width="100" height="100" fill="url(#gridPattern)"></rect>
+                    <!-- Komplex Pillangó Minta -->
+                    <!-- Bal szárny -->
+                    <polygon class="svg-shape s-red" points="30,20 50,30 30,40"></polygon>
+                    <polygon class="svg-shape s-blue" points="20,30 40,40 20,50"></polygon>
+                    <polygon class="svg-shape s-green" points="10,40 30,50 10,60"></polygon>
+                    <!-- Jobb szárny -->
+                    <polygon class="svg-shape s-red" points="70,20 50,30 70,40"></polygon>
+                    <polygon class="svg-shape s-blue" points="80,30 60,40 80,50"></polygon>
+                    <polygon class="svg-shape s-green" points="90,40 70,50 90,60"></polygon>
+                    <!-- Test -->
+                    <rect class="svg-shape s-yellow" x="48" y="25" width="4" height="50" rx="2"></rect>
+                    <circle class="svg-shape s-orange" cx="50" cy="25" r="3"></circle>
+                </svg>
+            </div>
+
+            <!-- 4. Mennyiségi Legenda Mátrix -->
+            <div class="panel" id="quantityLegend">
+                <div class="panel-title">Hányféleség (Mennyiség)</div>
+                <table class="legend-table">
+                    <thead>
+                        <tr>
+                            <th>Darab</th>
+                            <th>Szín</th>
+                            <th>Mennyiség</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><svg class="shape-icon s-blue" viewBox="0 0 10 10"><rect width="8" height="8" x="1" y="1"></rect></svg> Parallelogramma</td>
+                            <td>Kék</td>
+                            <td>×18</td>
+                        </tr>
+                        <tr>
+                            <td><svg class="shape-icon s-yellow" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"></circle></svg> Negyedkör</td>
+                            <td>Sárga</td>
+                            <td>×24</td>
+                        </tr>
+                        <tr>
+                            <td><svg class="shape-icon s-red" viewBox="0 0 10 10"><polygon points="5,1 9,5 5,9 1,5"></polygon></svg> Rombusz</td>
+                            <td>Piros</td>
+                            <td>×35</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ALSÓ SOR -->
+        <div class="bottom-row">
+            <!-- 5. Útmutató füzet -->
+            <div class="panel" id="guideBook">
+                <div class="panel-title">Útmutató Füzet</div>
+                <div class="book-spread">
+                    <div class="book-page">
+                        <h3>Szint 1: Pillangó Mátrix</h3>
+                        <p>Használd a rácsot a pillangó kirakásához. Ellenőrizd a darabszámokat.</p>
+                        <p>Szükséges: 6 db háromszög, 2 db négyzet...</p>
+                    </div>
+                    <div class="book-page">
+                        <h3>Szint 2: Madár Mátrix</h3>
+                        <p>Egy bonyolultabb rács feladat. Figyelj a színekre és az orientációra.</p>
+                        <p>Szükséges: 10 db trapéz...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Mintakártyák -->
+            <div class="panel" id="patternCards">
+                <div class="panel-title">Minta Kártyák</div>
+                <div class="card">
+                    <svg viewBox="0 0 10 10" class="svg-shape s-green"><polygon points="5,1 9,9 1,9"></polygon></svg>
+                </div>
+                <div class="card">
+                    <svg viewBox="0 0 10 10" class="svg-shape s-red"><circle cx="5" cy="5" r="4"></circle></svg>
+                </div>
+                <div class="card">
+                    <svg viewBox="0 0 10 10" class="svg-shape s-blue"><rect width="8" height="8" x="1" y="1"></rect></svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body></html>

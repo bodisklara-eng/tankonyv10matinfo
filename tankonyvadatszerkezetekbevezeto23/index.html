@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///D:/programe%20scolare/tankonyv/gemini-code-1789825973616.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Sort - Oktatói Vektor &amp; Mátrix Szimuláció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { margin-bottom: 5px; color: #38bdf8; text-align: center; }
+        p.subtitle { color: #94a3b8; margin-top: 0; margin-bottom: 20px; text-align: center; }
+
+        /* Fülek (Tabs) stílusa */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 2px solid #334155;
+            padding: 10px 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover {
+            background: #334155;
+            color: #f8fafc;
+        }
+        .tab-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        /* Tartalom panelek */
+        .tab-content {
+            display: none;
+            width: 100%;
+            max-width: 750px;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Játék / Kémcsövek elrendezése */
+        .game-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .tube {
+            width: 50px;
+            height: 180px;
+            border: 3px solid #64748b;
+            border-top: none;
+            border-radius: 0 0 25px 25px;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 4px;
+            gap: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .tube:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
+        .tube.selected {
+            border-color: #f43f5e;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+        .segment {
+            width: 100%;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: rgba(0,0,0,0.6);
+        }
+        .status-panel {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 15px;
+            border: 1px solid #334155;
+        }
+        button.action-btn {
+            margin-top: 15px;
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.action-btn:hover { background: #0ea5e9; }
+
+        /* Oktató panelok szövegei */
+        h3 { color: #38bdf8; margin-top: 0; }
+        code { background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #f43f5e; font-family: monospace; }
+        pre { background: #0f172a; padding: 12px; border-radius: 8px; overflow-x: auto; color: #38bdf8; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <h1>Magic Sort: Adatszerkezet Szimuláció</h1>
+    <p class="subtitle">Interaktív tananyag a vektorok, mátrixok és rendezési algoritmusok szemléltetésére</p>
+
+    <!-- Fül gombok -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(0)">🎮 1. Interaktív Játék</button>
+        <button class="tab-btn" onclick="switchTab(1)">📊 2. Adatszerkezet</button>
+        <button class="tab-btn" onclick="switchTab(2)">🔢 3. Indexek &amp; Koordináták</button>
+        <button class="tab-btn" onclick="switchTab(3)">⚖️ 4. Szabályok &amp; Validáció</button>
+        <button class="tab-btn" onclick="switchTab(4)">💻 5. Live Debugger &amp; Kód</button>
+    </div>
+
+    <!-- 1. Fül: Játék -->
+    <div id="tab-0" class="tab-content active">
+        <h3>Interaktív Szétválogató Tér</h3>
+        <p>Kattints egy csőre a kiválasztáshoz, majd egy másikra az átöntéshez. Cél: Minden szín a saját vektorába kerüljön!</p>
+        <div class="game-container" id="tubeContainerGame"><div class="tube "><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div></div><div class="tube "><div class="segment" style="background-color: rgb(59, 130, 246);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div></div><div class="tube "><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(16, 185, 129);"></div><div class="segment" style="background-color: rgb(239, 68, 68);"></div><div class="segment" style="background-color: rgb(59, 130, 246);"></div></div><div class="tube "></div></div>
+        <div class="status-panel" id="statusMessage">Válassz ki egy forrásvektort!</div>
+        <button class="action-btn" onclick="resetGame()">Alaphelyzet</button>
+    </div>
+
+    <!-- 2. Fül: Adatszerkezet -->
+    <div id="tab-1" class="tab-content">
+        <h3>Mátrixok és Vektorok a Memóriában</h3>
+        <p>Informatikai szempontból a kémcsövek egy <b>vektorok vektora (kétdimenziós tömb)</b> adatszerkezetet alkotnak.</p>
+        <pre id="matrixRepresentation">let tubes = [<br>  [1, 2, 3, 1], // 0. vektor<br>  [2, 1, 3, 2], // 1. vektor<br>  [3, 3, 1, 2], // 2. vektor<br>  [0, 0, 0, 0], // 3. vektor<br>];</pre>
+        <p>Minden egyes oszlop egy önálló egydimenziós tömb, amely fix maximális elemszámmal (kapacitással) rendelkezik.</p>
+    </div>
+
+    <!-- 3. Fül: Indexek -->
+    <div id="tab-2" class="tab-content">
+        <h3>Indexek és Elemek Elérése</h3>
+        <p>A tömbök elemeit indexekkel érjük el (0-tól 3-ig). Nézd meg, hogyan épül fel a kiválasztott cső belső szerkezete:</p>
+        <div class="game-container" id="tubeContainerIndex"><div class="tube" style="cursor: default;"><div class="segment" style="background-color: rgb(239, 68, 68);">[0]</div><div class="segment" style="background-color: rgb(59, 130, 246);">[1]</div><div class="segment" style="background-color: rgb(16, 185, 129);">[2]</div><div class="segment" style="background-color: rgb(239, 68, 68);">[3]</div></div><div class="tube" style="cursor: default;"><div class="segment" style="background-color: rgb(59, 130, 246);">[0]</div><div class="segment" style="background-color: rgb(239, 68, 68);">[1]</div><div class="segment" style="background-color: rgb(16, 185, 129);">[2]</div><div class="segment" style="background-color: rgb(59, 130, 246);">[3]</div></div><div class="tube" style="cursor: default;"><div class="segment" style="background-color: rgb(16, 185, 129);">[0]</div><div class="segment" style="background-color: rgb(16, 185, 129);">[1]</div><div class="segment" style="background-color: rgb(239, 68, 68);">[2]</div><div class="segment" style="background-color: rgb(59, 130, 246);">[3]</div></div><div class="tube" style="cursor: default;"></div></div>
+        <p style="font-size: 0.9rem; color: #94a3b8;">* A <code>[0]</code> index jelenti a cső alját, míg a <code>[3]</code> index a tetejét (a legkönnyebben elérhető elemet).</p>
+    </div>
+
+    <!-- 4. Fül: Szabályok -->
+    <div id="tab-3" class="tab-content">
+        <h3>Feltételes Elágazások (If-Else Logika)</h3>
+        <p>Az átöntés nem történhet meg bárhova. A program az alábbi logikai feltételeket vizsgálja minden lépésnél:</p>
+        <ul>
+            <li><b>Nem üres-e a forrás?</b> <code>ha forrás.length &gt; 0</code></li>
+            <li><b>Van-e hely a célcsőben?</b> <code>ha cél.length &lt; 4</code></li>
+            <li><b>Egyezik-e a szín?</b> <code>ha cél_teteje == forrás_teteje vagy cél üres</code></li>
+        </ul>
+        <p>Ha ezen feltételek valamelyike hamis, a program elutasítja a műveletet és hibaüzenetet ad.</p>
+    </div>
+
+    <!-- 5. Fül: Live Debugger -->
+    <div id="tab-4" class="tab-content">
+        <h3>Live Debugger &amp; Kódvégrehajtás</h3>
+        <p>Itt követheted nyomon a háttérben futó utasításokat és a részeredményeket:</p>
+        <pre id="debugLog"></pre>
+        <p><b>Részösszeg / Állapot:</b> <span id="winProgress">0 / 3 homogén vektor kész</span></p>
+    </div>
+
+<script>
+    const COLORS = {
+        1: { hex: '#ef4444', name: 'Piros' },
+        2: { hex: '#3b82f6', name: 'Kék' },
+        3: { hex: '#10b981', name: 'Zöld' }
+    };
+
+    let tubes = [
+        [1, 2, 3, 1],
+        [2, 1, 3, 2],
+        [3, 3, 1, 2],
+        [0, 0, 0, 0]
+    ];
+
+    let selectedTubeIndex = null;
+    let logHistory = [];
+
+    function switchTab(index) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('.tab-btn');
+        
+        contents.forEach((c, i) => {
+            c.classList.toggle('active', i === index);
+        });
+        buttons.forEach((b, i) => {
+            b.classList.toggle('active', i === index);
+        });
+
+        if (index === 1) updateMatrixView();
+        if (index === 2) renderIndexView();
+        if (index === 4) updateDebuggerView();
+    }
+
+    function renderGame() {
+        const container = document.getElementById('tubeContainerGame');
+        container.innerHTML = '';
+
+        tubes.forEach((tube, index) => {
+            const tubeEl = document.createElement('div');
+            tubeEl.className = `tube ${selectedTubeIndex === index ? 'selected' : ''}`;
+            tubeEl.onclick = () => handleTubeClick(index);
+
+            tube.forEach(val => {
+                if (val !== 0) {
+                    const seg = document.createElement('div');
+                    seg.className = 'segment';
+                    seg.style.backgroundColor = COLORS[val].hex;
+                    tubeEl.appendChild(seg);
+                }
+            });
+            container.appendChild(tubeEl);
+        });
+        checkWinCondition();
+    }
+
+    function handleTubeClick(index) {
+        if (selectedTubeIndex === null) {
+            if (tubes[index].every(val => val === 0)) {
+                document.getElementById('statusMessage').innerText = "Hiba: Ez a cső üres!";
+                addLog("Kísérlet üres cső kiválasztására.");
+                return;
+            }
+            selectedTubeIndex = index;
+            document.getElementById('statusMessage').innerText = `${index + 1}. vektor kiválasztva. Válassz célt!`;
+            addLog(`Kiválasztva a(z) ${index}.indexű vektor.`);
+        } else {
+            if (selectedTubeIndex === index) {
+                selectedTubeIndex = null;
+                document.getElementById('statusMessage').innerText = "Kiválasztás visszavonva.";
+            } else {
+                moveElement(selectedTubeIndex, index);
+                selectedTubeIndex = null;
+            }
+        }
+        renderGame();
+    }
+
+    function moveElement(fromIdx, toIdx) {
+        let fromTube = tubes[fromIdx];
+        let toTube = tubes[toIdx];
+
+        let topElementIndex = -1;
+        for (let i = fromTube.length - 1; i >= 0; i--) {
+            if (fromTube[i] !== 0) { topElementIndex = i; break; }
+        }
+
+        let targetSlotIndex = -1;
+        for (let i = 0; i < toTube.length; i++) {
+            if (toTube[i] === 0) { targetSlotIndex = i; break; }
+        }
+
+        if (targetSlotIndex === -1) {
+            document.getElementById('statusMessage').innerText = "Hiba: A célvektor tele van!";
+            addLog(`Hiba: A(z) ${toIdx}. indexű célvektor megtelt.`);
+            return;
+        }
+
+        let element = fromTube[topElementIndex];
+        fromTube[topElementIndex] = 0;
+        toTube[targetSlotIndex] = element;
+        
+        document.getElementById('statusMessage').innerText = "Sikeres átöntés végrehajtva!";
+        addLog(`Átmozgatás: vektor[${fromIdx}].pop() -> vektor[${toIdx}].push(${COLORS[element].name})`);
+    }
+
+    function updateMatrixView() {
+        let text = "let tubes = [\n";
+        tubes.forEach((t, i) => {
+            text += `  [${t.join(', ')}], // ${i}. vektor\n`;
+        });
+        text += "];";
+        document.getElementById('matrixRepresentation').innerText = text;
+    }
+
+    function renderIndexView() {
+        const container = document.getElementById('tubeContainerIndex');
+        container.innerHTML = '';
+
+        tubes.forEach((tube, index) => {
+            const tubeEl = document.createElement('div');
+            tubeEl.className = 'tube';
+            tubeEl.style.cursor = 'default';
+
+            tube.forEach((val, idx) => {
+                if (val !== 0) {
+                    const seg = document.createElement('div');
+                    seg.className = 'segment';
+                    seg.style.backgroundColor = COLORS[val].hex;
+                    seg.innerText = `[${idx}]`;
+                    tubeEl.appendChild(seg);
+                }
+            });
+            container.appendChild(tubeEl);
+        });
+    }
+
+    function addLog(message) {
+        const time = new Date().toLocaleTimeString();
+        logHistory.push(`[${time}] ${message}`);
+        if (logHistory.length > 10) logHistory.shift();
+    }
+
+    function updateDebuggerView() {
+        document.getElementById('debugLog').innerText = logHistory.join('\n');
+    }
+
+    function checkWinCondition() {
+        let homogeneousCount = 0;
+        tubes.forEach(tube => {
+            const nonZero = tube.filter(v => v !== 0);
+            if (nonZero.length === 4 && nonZero.every(v => v === nonZero[0])) {
+                homogeneousCount++;
+            }
+        });
+        document.getElementById('winProgress').innerText = `${homogeneousCount} / 3 homogén vektor kész`;
+    }
+
+    function resetGame() {
+        tubes = [
+            [1, 2, 3, 1],
+            [2, 1, 3, 2],
+            [3, 3, 1, 2],
+            [0, 0, 0, 0]
+        ];
+        selectedTubeIndex = null;
+        document.getElementById('statusMessage').innerText = "Játék alaphelyzetbe állítva.";
+        addLog("Játék újraindítva alapállapotba.");
+        renderGame();
+    }
+
+    renderGame();
+</script>
+
+
+</body></html>

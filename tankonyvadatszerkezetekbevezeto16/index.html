@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- saved from url=(0108)file:///D:/programe%20scolare/tankonyv/Mi%20az%20a%20halmaz_%20-%20Interakt%C3%ADv%20anim%C3%A1ci%C3%B3.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi az a halmaz? - Interaktív animáció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #d1d8e0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            flex: 1;
+            min-width: 320px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Venn-diagram dobozok */
+        .venn-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        .set {
+            position: absolute;
+            border: 3px solid #ff4757;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* A halmaz (Nagyobb) */
+        #set-a {
+            width: 240px;
+            height: 240px;
+            top: 20px;
+            left: 20px;
+            border-color: #2ed573;
+            background: rgba(46, 213, 115, 0.05);
+        }
+
+        /* B halmaz (Kisebb / Részhalmaz) */
+        #set-b {
+            width: 110px;
+            height: 110px;
+            top: 80px;
+            left: 50px;
+            border-color: #ffa502;
+            background: rgba(255, 165, 2, 0.1);
+        }
+
+        .set-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        #label-a { top: 25px; left: 35px; color: #2ed573; }
+        #label-b { top: 85px; left: 65px; color: #ffa502; }
+
+        /* Elemek (pontok) animációval */
+        .item {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            color: #333;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Vezérlőgombok */
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #ff6b81;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .explanation {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 80px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mi az a halmaz?</h1>
+    <div class="subtitle">Matematikai szemléltetés Venn-diagrammal és animációval</div>
+
+    <div class="container">
+        <!-- Vizuális rész -->
+        <div class="card">
+            <div class="venn-container">
+                <div id="set-a" class="set" style="transform: scale(0.8); opacity: 0.3;"></div>
+                <div id="label-a" style="opacity: 1;">A</div>
+                
+                <div id="set-b" class="set" style="transform: scale(0); opacity: 0;"></div>
+                <div id="label-b" style="opacity: 0;">B</div>
+
+                <!-- Elemek elhelyezése -->
+                <div id="elem-1" class="item" style="top: 115px; left: 90px; transform: translate(0px, 0px);">1</div>
+                <div id="elem-2" class="item" style="top: 115px; left: 130px; transform: translate(0px, 0px);">2</div>
+                <div id="elem-3" class="item" style="top: 45px; left: 170px; transform: translate(0px, 0px);">3</div>
+                <div id="elem-4" class="item" style="top: 195px; left: 140px; transform: translate(0px, 0px);">4</div>
+                <div id="elem-5" class="item" style="top: 230px; left: 230px; transform: translate(-50px, -70px); background: rgb(255, 71, 87);">X</div>
+            </div>
+        </div>
+
+        <!-- Magyarázat és Gombok -->
+        <div class="card" style="justify-content: space-between;">
+            <div>
+                <h3>Magyarázat</h3>
+                <div id="text-box" class="explanation"><strong>2. Elemek és tagság:</strong> Azok a dolgok, amelyek a halmazba tartoznak, a halmaz <em>elemei</em> (1, 2, 3, 4 az A halmaz elemei). Az 'X' nincs benne az A halmazban.</div>
+            </div>
+            
+            <div class="controls" style="margin-top: 15px;">
+                <button onclick="step1()">1. Mi a halmaz?</button>
+                <button onclick="step2()">2. Elemek a halmazban</button>
+                <button onclick="step3()">3. Részhalmaz</button>
+                <button onclick="resetAll()">Alaphelyzet</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const textBox = document.getElementById('text-box');
+        const setA = document.getElementById('set-a');
+        const setB = document.getElementById('set-b');
+        const labelA = document.getElementById('label-a');
+        const labelB = document.getElementById('label-b');
+        
+        const e1 = document.getElementById('elem-1');
+        const e2 = document.getElementById('elem-2');
+        const e3 = document.getElementById('elem-3');
+        const e4 = document.getElementById('elem-4');
+        const e5 = document.getElementById('elem-5');
+
+        function step1() {
+            resetAllVisuals();
+            // A halmaz megjelenítése
+            setA.style.transform = "scale(1)";
+            setA.style.opacity = "1";
+            labelA.style.opacity = "1";
+            
+            textBox.innerHTML = "<strong>1. A halmaz:</strong> A halmaz jól megkülönböztethető dolgok (objektumok, számok) összessége. A zöld kör az <strong>'A'</strong> halmaz határait jelöli.";
+        }
+
+        function step2() {
+            step1();
+            setTimeout(() => {
+                // Elemek bemozgatása az A-ba
+                e1.style.transform = "translate(0px, 0px)";
+                e2.style.transform = "translate(0px, 0px)";
+                e3.style.transform = "translate(0px, 0px)";
+                e4.style.transform = "translate(0px, 0px)";
+                e5.style.transform = "translate(-50px, -70px)"; // Kifele/vagy máshova
+                
+                e5.style.background = "#ff4757"; // Kint maradó elem piros
+                e5.innerHTML = "X";
+
+                textBox.innerHTML = "<strong>2. Elemek és tagság:</strong> Azok a dolgok, amelyek a halmazba tartoznak, a halmaz <em>elemei</em> (1, 2, 3, 4 az A halmaz elemei). Az 'X' nincs benne az A halmazban.";
+            }, 300);
+        }
+
+        function step3() {
+            step2();
+            setTimeout(() => {
+                // B halmaz megjelenítése az A-n belül
+                setB.style.transform = "scale(1)";
+                setB.style.opacity = "1";
+                labelB.style.opacity = "1";
+                
+                // Elemek átrendezése a B-be
+                e1.style.transform = "translate(-15px, -15px)";
+                e2.style.transform = "translate(15px, -15px)";
+
+                textBox.innerHTML = "<strong>3. Részhalmaz:</strong> Ha a 'B' halmaz minden egyes eleme benne van az 'A' halmazban is, akkor a B az A <strong>részhalmaza</strong> ($B \\subset A$). Itt a B={1, 2}.";
+            }, 800);
+        }
+
+        function resetAll() {
+            setA.style.transform = "scale(0.8)";
+            setA.style.opacity = "0.3";
+            labelA.style.opacity = "0.5";
+
+            setB.style.transform = "scale(0)";
+            setB.style.opacity = "0";
+            labelB.style.opacity = "0";
+
+            e1.style.transform = "translate(-40px, 20px)";
+            e2.style.transform = "translate(50px, -30px)";
+            e3.style.transform = "translate(-20px, 40px)";
+            e4.style.transform = "translate(30px, -50px)";
+            e5.style.transform = "translate(0px, 0px)";
+            e5.style.background = "#fff";
+            e5.innerHTML = "?";
+
+            textBox.innerHTML = "Kattints valamelyik gombra lent, hogy megnézd a halmazok tulajdonságait animáció közben!";
+        }
+
+        // Kezdeti állapot beállítása betöltéskor
+        window.onload = function() {
+            setA.style.transform = "scale(0.8)";
+            setA.style.opacity = "0.3";
+            setB.style.transform = "scale(0)";
+            setB.style.opacity = "0";
+            labelB.style.opacity = "0";
+        }
+
+        function resetAllVisuals() {
+            setA.style.transform = "scale(1)";
+            setA.style.opacity = "1";
+            labelA.style.opacity = "1";
+        }
+    </script>
+
+</body></html>

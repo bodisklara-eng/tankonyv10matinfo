@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<!-- saved from url=(0135)file:///D:/programe%20scolare/tankonyv/Zen%C3%A9l%C5%91%20K%C3%A9peslap%20Szimul%C3%A1tor%20%E2%80%94%20ROM%20-_%20PWM%20-_%20Hang.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenélő Képeslap Szimulátor — ROM -&gt; PWM -&gt; Hang</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --card-bg: #ffffff;
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --secondary: #0284c7;
+            --secondary-light: #e0f2fe;
+            --accent: #059669;
+            --accent-light: #d1fae5;
+            --text-main: #1c1917;
+            --text-muted: #78716c;
+            --border: #e7e5e4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 15px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px dashed var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* CARD CONTROLS / SWITCH */
+        .controls-panel {
+            background: var(--primary-light);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card-state {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(194, 65, 12, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .switch-btn:hover {
+            background: #9a3412;
+            transform: translateY(-1px);
+        }
+
+        .switch-btn:active {
+            transform: translateY(1px);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.closed {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+
+        .status-badge.open {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .tune-select-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tune-select-group label {
+            font-weight: 600;
+            color: #9a3412;
+            font-size: 0.9rem;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            background: white;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* PIPELINE SECTIONS */
+        .pipeline {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .stage-box {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .stage-box h2 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stage-1 h2 { color: var(--secondary); }
+        .stage-2 h2 { color: var(--primary); }
+        .stage-3 h2 { color: var(--accent); }
+
+        .stage-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* STAGE 1: ROM MEMORY TABS */
+        .rom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .rom-cell {
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            transition: all 0.2s ease;
+        }
+
+        .rom-cell.active {
+            border-color: var(--secondary);
+            background: var(--secondary-light);
+            box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.3);
+            transform: scale(1.03);
+        }
+
+        .rom-addr {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .rom-data {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #0f172a;
+        }
+
+        .rom-note {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* STAGE 2: CPU & PWM OSCILLOSCOPE */
+        .pwm-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pwm-info {
+            display: flex;
+            justify-content: space-between;
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: #1e293b;
+            color: #38bdf8;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 120px;
+            background: #0f172a;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* STAGE 3: BUZZER / SPEAKER */
+        .buzzer-visualization {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px;
+            background: #f0fdf4;
+            border-radius: 8px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .piezo-disc {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fef08a 0%, #eab308 60%, #ca8a04 100%);
+            border: 4px solid #a16207;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .piezo-disc::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+        }
+
+        .piezo-disc.vibrating {
+            animation: vibrate 0.08s infinite alternate;
+        }
+
+        @keyframes vibrate {
+            from { transform: scale(0.97); }
+            to { transform: scale(1.03); }
+        }
+
+        .sound-waves {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            height: 40px;
+        }
+
+        .wave-bar {
+            width: 6px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: height 0.05s ease;
+        }
+
+        .piezo-stats {
+            font-size: 0.9rem;
+            color: #166534;
+        }
+
+        .piezo-stats strong {
+            font-size: 1.1rem;
+        }
+
+        /* FOOTER / EXPLANATION */
+        .info-card {
+            margin-top: 25px;
+            background: #f8fafc;
+            border-left: 4px solid var(--secondary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .info-card h3 {
+            color: #0f172a;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .controls-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tune-select-group {
+                justify-content: space-between;
+            }
+            .buzzer-visualization {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>✉️🎵 Zenélő Képeslap Szimulátor</h1>
+        <p>Hogyan lesz a ROM memóriában lévő bájtokból PWM négyszöghullám és analóg hang?</p>
+    </header>
+
+    <!-- VEZÉRLŐPANEL (KÉPESLAP NYITÁS/ZÁRÁS) -->
+    <div class="controls-panel">
+        <div class="card-state">
+            <button class="switch-btn" id="toggleCardBtn" onclick="toggleCard()">
+                <span id="btnIcon">📂</span> <span id="btnText">Képeslap Kinyitása</span>
+            </button>
+            <span class="status-badge closed" id="statusBadge">Képeslap Zárva (Áramkör Nyitva)</span>
+        </div>
+
+        <div class="tune-select-group">
+            <label for="tuneSelect">Dallam kiválasztása:</label>
+            <select id="tuneSelect" onchange="changeTune()">
+                <option value="birthday">Bocsi, bocsi tarka tehén / Mégis van (C-D-E)</option>
+                <option value="jingle">Jingle Bells (Örömzene)</option>
+                <option value="scale">C-Dúr Skála</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="pipeline">
+        <!-- 1. FÁZIS: ROM MEMÓRIA -->
+        <div class="stage-box stage-1">
+            <h2>💾 1. Lépés: Kottaadatok a ROM Memóriában (Read-Only Memory)</h2>
+            <p class="stage-desc">
+                Az mikrokontroller belső ROM-jában a dallam kottája strukturált tömbként van tárolva. 
+                Minden elem megadja a **hangmagasságot (frekvenciát)** és a **tartamot (ms)**.
+            </p>
+            <div class="rom-grid" id="romGrid"><div class="rom-cell " id="rom-0">
+                <div class="rom-addr">0x00</div>
+                <div class="rom-data">C4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-1">
+                <div class="rom-addr">0x01</div>
+                <div class="rom-data">D4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-2">
+                <div class="rom-addr">0x02</div>
+                <div class="rom-data">E4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-3">
+                <div class="rom-addr">0x03</div>
+                <div class="rom-data">C4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-4">
+                <div class="rom-addr">0x04</div>
+                <div class="rom-data">C4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-5">
+                <div class="rom-addr">0x05</div>
+                <div class="rom-data">D4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-6">
+                <div class="rom-addr">0x06</div>
+                <div class="rom-data">E4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-7">
+                <div class="rom-addr">0x07</div>
+                <div class="rom-data">C4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-8">
+                <div class="rom-addr">0x08</div>
+                <div class="rom-data">E4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-9">
+                <div class="rom-addr">0x09</div>
+                <div class="rom-data">F4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-10">
+                <div class="rom-addr">0x0A</div>
+                <div class="rom-data">G4</div>
+                <div class="rom-note">700 ms</div>
+            </div><div class="rom-cell " id="rom-11">
+                <div class="rom-addr">0x0B</div>
+                <div class="rom-data">E4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-12">
+                <div class="rom-addr">0x0C</div>
+                <div class="rom-data">F4</div>
+                <div class="rom-note">350 ms</div>
+            </div><div class="rom-cell " id="rom-13">
+                <div class="rom-addr">0x0D</div>
+                <div class="rom-data">G4</div>
+                <div class="rom-note">700 ms</div>
+            </div></div>
+        </div>
+
+        <!-- 2. FÁZIS: CPU ÉS PWM GENERÁLÁS -->
+        <div class="stage-box stage-2">
+            <h2>⚡ 2. Lépés: Mikrokontroller &amp; PWM (Pulse Width Modulation) Jel</h2>
+            <p class="stage-desc">
+                A processzor kiolvassa a memóriacím tartalmát, és a megadott frekvenciának megfelelő **négyszöghullámot (PWM)** 
+                kapcsolgat a kimeneti lábon (0V ↔ 3V).
+            </p>
+            <div class="pwm-container">
+                <div class="pwm-info">
+                    <span>Aktivált Frekvencia: <strong id="freqDisp">0 Hz (Szünet)</strong></span>
+                    <span>Belső Órajel / Ciklus: <strong id="clockDisp">STOP</strong></span>
+                    <span>Kimenet: <strong id="valDisp">LOW (0V)</strong></span>
+                </div>
+                <canvas id="scopeCanvas" width="900" height="120"></canvas>
+            </div>
+        </div>
+
+        <!-- 3. FÁZIS: PIEZO HANGSZÓRÓ -->
+        <div class="stage-box stage-3">
+            <h2>🔊 3. Lépés: Piezoelektromos Hangszóró (Analóg Rezgés)</h2>
+            <p class="stage-desc">
+                A feszültségimpulzusok hatására a piezo kristály másodpercenként többszázszor meghajlik, 
+                és a levegőt megrezgetve **füllel hallható hanggá** alakítja a PWM jelet.
+            </p>
+            <div class="buzzer-visualization">
+                <div class="piezo-disc vibrating" id="piezoDisc"></div>
+                <div class="sound-waves">
+                    <div class="wave-bar" id="wb1" style="height: 21px;"></div>
+                    <div class="wave-bar" id="wb2" style="height: 33px;"></div>
+                    <div class="wave-bar" id="wb3" style="height: 35px;"></div>
+                    <div class="wave-bar" id="wb4" style="height: 26px;"></div>
+                    <div class="wave-bar" id="wb5" style="height: 19px;"></div>
+                </div>
+                <div class="piezo-stats">
+                    Jelenlegi Hang: <strong id="noteDisp">—</strong><br>
+                    Memóriacím (Program Counter): <strong id="pcDisp">0x00</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <h3>💡 Működési elv összefoglalása:</h3>
+        <p>
+            Amikor kinyitod a képeslapot, a mechanikus rugós kapcsoló **zárolja az áramkört (Interrupt)**. A mikrokontroller bekapcsol, és a <code>Program Counter</code> mutatót elindítja a ROM memória <code>0x00</code> címétől. Minden lépésben beállítja a belső időzítő regisztert (Timer), ami a kimeneti lábat magas (3V) és alacsony (0V) feszültségre kapcsolja a hang frekvenciájának megfelelően. Ez a négyszöghullám közvetlenül meghajtja a piezo lemezt!
+        </p>
+    </div>
+</div>
+
+<script>
+    // --- HANGJEGY FREKVENCIÁK (Hz) ---
+    const NOTES = {
+        'C4': 261.63,
+        'D4': 293.66,
+        'E4': 329.63,
+        'F4': 349.23,
+        'G4': 392.00,
+        'A4': 440.00,
+        'B4': 493.88,
+        'C5': 523.25,
+        'REST': 0
+    };
+
+    // --- DALLAMOK A ROM MEMÓRIÁBAN ---
+    const TUNES = {
+        birthday: [
+            { note: 'C4', dur: 350 }, { note: 'D4', dur: 350 }, { note: 'E4', dur: 350 }, { note: 'C4', dur: 350 },
+            { note: 'C4', dur: 350 }, { note: 'D4', dur: 350 }, { note: 'E4', dur: 350 }, { note: 'C4', dur: 350 },
+            { note: 'E4', dur: 350 }, { note: 'F4', dur: 350 }, { note: 'G4', dur: 700 },
+            { note: 'E4', dur: 350 }, { note: 'F4', dur: 350 }, { note: 'G4', dur: 700 }
+        ],
+        jingle: [
+            { note: 'E4', dur: 300 }, { note: 'E4', dur: 300 }, { note: 'E4', dur: 600 },
+            { note: 'E4', dur: 300 }, { note: 'E4', dur: 300 }, { note: 'E4', dur: 600 },
+            { note: 'E4', dur: 300 }, { note: 'G4', dur: 300 }, { note: 'C4', dur: 450 }, { note: 'D4', dur: 150 },
+            { note: 'E4', dur: 1000 }
+        ],
+        scale: [
+            { note: 'C4', dur: 300 }, { note: 'D4', dur: 300 }, { note: 'E4', dur: 300 }, { note: 'F4', dur: 300 },
+            { note: 'G4', dur: 300 }, { note: 'A4', dur: 300 }, { note: 'B4', dur: 300 }, { note: 'C5', dur: 600 }
+        ]
+    };
+
+    let isCardOpen = false;
+    let currentTune = TUNES.birthday;
+    let currentStep = 0;
+    let audioCtx = null;
+    let currentOscillator = null;
+    let stepTimer = null;
+    let animFrame = null;
+
+    // Scope canvas setup
+    const canvas = document.getElementById('scopeCanvas');
+    const ctx = canvas.getContext('2d');
+    let scopeData = new Array(200).fill(0);
+    let currentFreq = 0;
+    let phase = 0;
+
+    // --- ROM RENDERING ---
+    function renderROM() {
+        const grid = document.getElementById('romGrid');
+        grid.innerHTML = '';
+        currentTune.forEach((item, index) => {
+            const hexAddr = '0x' + index.toString(16).padStart(2, '0').toUpperCase();
+            const cell = document.createElement('div');
+            cell.className = `rom-cell ${index === currentStep && isCardOpen ? 'active' : ''}`;
+            cell.id = `rom-${index}`;
+            cell.innerHTML = `
+                <div class="rom-addr">${hexAddr}</div>
+                <div class="rom-data">${item.note}</div>
+                <div class="rom-note">${item.dur} ms</div>
+            `;
+            grid.appendChild(cell);
+        });
+    }
+
+    // --- KÉPESLAP NYITÁS / ZÁRÁS ---
+    function toggleCard() {
+        isCardOpen = !isCardOpen;
+
+        const btnIcon = document.getElementById('btnIcon');
+        const btnText = document.getElementById('btnText');
+        const badge = document.getElementById('statusBadge');
+
+        if (isCardOpen) {
+            btnIcon.innerText = '📁';
+            btnText.innerText = 'Képeslap Becsukása';
+            badge.innerText = 'Képeslap Nyitva (Áramkör Zárva)';
+            badge.className = 'status-badge open';
+
+            // AudioContext inicializálása böngésző szabályok miatt
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } else if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            currentStep = 0;
+            playNextNote();
+            startOscilloscope();
+        } else {
+            btnIcon.innerText = '📂';
+            btnText.innerText = 'Képeslap Kinyitása';
+            badge.innerText = 'Képeslap Zárva (Áramkör Nyitva)';
+            badge.className = 'status-badge closed';
+
+            stopAudio();
+            clearTimeout(stepTimer);
+            cancelAnimationFrame(animFrame);
+            currentStep = 0;
+            currentFreq = 0;
+            renderScopeFrame();
+            updateUI(0, '—', 0);
+            renderROM();
+        }
+    }
+
+    function changeTune() {
+        const sel = document.getElementById('tuneSelect').value;
+        currentTune = TUNES[sel];
+        currentStep = 0;
+        if (isCardOpen) {
+            stopAudio();
+            clearTimeout(stepTimer);
+            playNextNote();
+        } else {
+            renderROM();
+        }
+    }
+
+    // --- AUDIO & PROCESSZOR CIKLUS ---
+    function playNextNote() {
+        if (!isCardOpen) return;
+
+        renderROM();
+
+        const item = currentTune[currentStep];
+        const freq = NOTES[item.note];
+        currentFreq = freq;
+
+        updateUI(freq, item.note, currentStep);
+
+        if (freq > 0) {
+            startSquareWave(freq);
+            setPiezoVibrating(true);
+        } else {
+            stopAudio();
+            setPiezoVibrating(false);
+        }
+
+        stepTimer = setTimeout(() => {
+            currentStep = (currentStep + 1) % currentTune.length;
+            playNextNote();
+        }, item.dur);
+    }
+
+    function startSquareWave(freq) {
+        stopAudio();
+        if (!audioCtx) return;
+
+        // PWM / NÉGYSZÖGHULLÁM GENERÁTOR (Piezo csipogó emuláció)
+        currentOscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        currentOscillator.type = 'square'; // Négyszöghullám = Digitális PWM
+        currentOscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime); // Halk, kímélő hangerő
+
+        currentOscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        currentOscillator.start();
+    }
+
+    function stopAudio() {
+        if (currentOscillator) {
+            try { currentOscillator.stop(); } catch(e){}
+            currentOscillator.disconnect();
+            currentOscillator = null;
+        }
+    }
+
+    // --- UI ÉS GRAFIKA FRISSÍTÉSE ---
+    function updateUI(freq, noteName, stepIdx) {
+        document.getElementById('freqDisp').innerText = freq > 0 ? `${freq.toFixed(1)} Hz` : '0 Hz (Szünet)';
+        document.getElementById('clockDisp').innerText = isCardOpen ? '4.0 MHz (RUN)' : 'STOP';
+        document.getElementById('valDisp').innerText = freq > 0 ? 'PWM PWM PWM' : 'LOW (0V)';
+        document.getElementById('noteDisp').innerText = noteName;
+        document.getElementById('pcDisp').innerText = '0x' + stepIdx.toString(16).padStart(2, '0').toUpperCase();
+    }
+
+    function setPiezoVibrating(vibrating) {
+        const disc = document.getElementById('piezoDisc');
+        if (vibrating) {
+            disc.classList.add('vibrating');
+        } else {
+            disc.classList.remove('vibrating');
+        }
+    }
+
+    // --- NÉGYSZÖGHULLÁM OSCILLOSZKÓP SHADER / CANVAS ---
+    function startOscilloscope() {
+        function draw() {
+            if (!isCardOpen) return;
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Rács rajzolása
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 40) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 30) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+
+            // Négyszöghullám generálása a jelenlegi frekvenciából
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            const cy = canvas.height / 2;
+            const amp = 35;
+
+            if (currentFreq > 0) {
+                const speed = currentFreq / 1000;
+                phase += speed;
+
+                for (let x = 0; x < canvas.width; x++) {
+                    const wave = Math.sin((x * 0.05) + phase) > 0 ? 1 : -1;
+                    const y = cy - (wave * amp);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+            } else {
+                ctx.moveTo(0, cy + amp);
+                ctx.lineTo(canvas.width, cy + amp);
+            }
+
+            ctx.stroke();
+
+            // Hanghullám oszlopok animációja
+            const bars = [document.getElementById('wb1'), document.getElementById('wb2'), document.getElementById('wb3'), document.getElementById('wb4'), document.getElementById('wb5')];
+            bars.forEach(bar => {
+                const h = currentFreq > 0 ? Math.floor(Math.random() * 28) + 8 : 4;
+                bar.style.height = `${h}px`;
+            });
+
+            animFrame = requestAnimationFrame(draw);
+        }
+
+        draw();
+    }
+
+    function renderScopeFrame() {
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
+    }
+
+    // Kezdő ROM megjelenítés
+    renderROM();
+    renderScopeFrame();
+</script>
+
+
+</body></html>
