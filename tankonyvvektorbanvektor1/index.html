@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)file:///C:/Users/Utilizator/Downloads/sz_linapt_r_komplex_projekt%20(2).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktív Szülinaptár - Komplex Projekt</title>
+    <script src="./index_files/browser@4"></script><style>/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+    --color-red-600: oklch(57.7% 0.245 27.325);
+    --color-orange-600: oklch(64.6% 0.222 41.116);
+    --color-orange-700: oklch(55.3% 0.195 38.402);
+    --color-amber-50: oklch(98.7% 0.022 95.277);
+    --color-amber-100: oklch(96.2% 0.059 95.617);
+    --color-amber-200: oklch(92.4% 0.12 95.746);
+    --color-amber-300: oklch(87.9% 0.169 91.605);
+    --color-amber-400: oklch(82.8% 0.189 84.429);
+    --color-amber-500: oklch(76.9% 0.188 70.08);
+    --color-amber-600: oklch(66.6% 0.179 58.318);
+    --color-amber-700: oklch(55.5% 0.163 48.998);
+    --color-amber-900: oklch(41.4% 0.112 45.904);
+    --color-emerald-50: oklch(97.9% 0.021 166.113);
+    --color-emerald-200: oklch(90.5% 0.093 164.15);
+    --color-emerald-300: oklch(84.5% 0.143 164.978);
+    --color-blue-50: oklch(97% 0.014 254.604);
+    --color-blue-200: oklch(88.2% 0.059 254.128);
+    --color-indigo-200: oklch(87% 0.065 274.039);
+    --color-indigo-300: oklch(78.5% 0.115 274.713);
+    --color-indigo-800: oklch(39.8% 0.195 277.366);
+    --color-indigo-900: oklch(35.9% 0.144 278.697);
+    --color-indigo-950: oklch(25.7% 0.09 281.288);
+    --color-purple-50: oklch(97.7% 0.014 308.299);
+    --color-purple-200: oklch(90.2% 0.063 306.703);
+    --color-pink-600: oklch(59.2% 0.249 0.584);
+    --color-rose-50: oklch(96.9% 0.015 12.422);
+    --color-rose-100: oklch(94.1% 0.03 12.58);
+    --color-rose-200: oklch(89.2% 0.058 10.001);
+    --color-rose-300: oklch(81% 0.117 11.638);
+    --color-rose-400: oklch(71.2% 0.194 13.428);
+    --color-rose-700: oklch(51.4% 0.222 16.935);
+    --color-rose-800: oklch(45.5% 0.188 13.697);
+    --color-rose-900: oklch(41% 0.159 10.272);
+    --color-rose-950: oklch(27.1% 0.105 12.094);
+    --color-slate-200: oklch(92.9% 0.013 255.508);
+    --color-slate-300: oklch(86.9% 0.022 252.894);
+    --color-slate-400: oklch(70.4% 0.04 256.788);
+    --color-slate-500: oklch(55.4% 0.046 257.417);
+    --color-slate-600: oklch(44.6% 0.043 257.281);
+    --color-slate-700: oklch(37.2% 0.044 257.287);
+    --color-slate-800: oklch(27.9% 0.041 260.031);
+    --color-slate-900: oklch(20.8% 0.042 265.755);
+    --color-slate-950: oklch(12.9% 0.042 264.695);
+    --color-black: #000;
+    --color-white: #fff;
+    --spacing: 0.25rem;
+    --container-md: 28rem;
+    --container-7xl: 80rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-base: 1rem;
+    --text-base--line-height: calc(1.5 / 1);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+    --leading-relaxed: 1.625;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --animate-spin: spin 1s linear infinite;
+    --animate-bounce: bounce 1s infinite;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --default-font-family: var(--font-sans);
+    --default-mono-font-family: var(--font-mono);
+  }
+}
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+  html, :host {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji');
+    font-feature-settings: var(--default-font-feature-settings, normal);
+    font-variation-settings: var(--default-font-variation-settings, normal);
+    -webkit-tap-highlight-color: transparent;
+  }
+  hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+  abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+  b, strong {
+    font-weight: bolder;
+  }
+  code, kbd, samp, pre {
+    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace);
+    font-feature-settings: var(--default-mono-font-feature-settings, normal);
+    font-variation-settings: var(--default-mono-font-variation-settings, normal);
+    font-size: 1em;
+  }
+  small {
+    font-size: 80%;
+  }
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  sup {
+    top: -0.5em;
+  }
+  table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+  :-moz-focusring:where(:not(iframe)) {
+    outline: auto;
+  }
+  progress {
+    vertical-align: baseline;
+  }
+  summary {
+    display: list-item;
+  }
+  ol, ul, menu {
+    list-style: none;
+  }
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  button, input, select, optgroup, textarea, ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+  :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+  :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+  ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+  ::placeholder {
+    opacity: 1;
+  }
+  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {
+    ::placeholder {
+      color: currentcolor;
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, currentcolor 50%, transparent);
+      }
+    }
+  }
+  textarea {
+    resize: vertical;
+  }
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+  ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+  ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
+  button, input:where([type='button'], [type='reset'], [type='submit']), ::file-selector-button {
+    appearance: button;
+  }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    height: auto;
+  }
+  [hidden]:where(:not([hidden='until-found'])) {
+    display: none !important;
+  }
+}
+@layer utilities {
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
+  .relative {
+    position: relative;
+  }
+  .sticky {
+    position: sticky;
+  }
+  .inset-0 {
+    inset: 0px;
+  }
+  .top-0 {
+    top: 0px;
+  }
+  .right-0 {
+    right: 0px;
+  }
+  .z-50 {
+    z-index: 50;
+  }
+  .mx-auto {
+    margin-inline: auto;
+  }
+  .my-1 {
+    margin-block: var(--spacing);
+  }
+  .mt-6 {
+    margin-top: calc(var(--spacing) * 6);
+  }
+  .mb-1 {
+    margin-bottom: var(--spacing);
+  }
+  .mb-2 {
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+  .mb-6 {
+    margin-bottom: calc(var(--spacing) * 6);
+  }
+  .block {
+    display: block;
+  }
+  .flex {
+    display: flex;
+  }
+  .grid {
+    display: grid;
+  }
+  .hidden {
+    display: none;
+  }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
+  .h-7 {
+    height: calc(var(--spacing) * 7);
+  }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
+  .h-\[280px\] {
+    height: 280px;
+  }
+  .h-full {
+    height: 100%;
+  }
+  .min-h-\[40px\] {
+    min-height: 40px;
+  }
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .w-0\.5 {
+    width: calc(var(--spacing) * 0.5);
+  }
+  .w-7 {
+    width: calc(var(--spacing) * 7);
+  }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+  .w-full {
+    width: 100%;
+  }
+  .max-w-7xl {
+    max-width: var(--container-7xl);
+  }
+  .max-w-md {
+    max-width: var(--container-md);
+  }
+  .animate-bounce {
+    animation: var(--animate-bounce);
+  }
+  .animate-spin {
+    animation: var(--animate-spin);
+  }
+  .cursor-grab {
+    cursor: grab;
+  }
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-end {
+    justify-content: flex-end;
+  }
+  .gap-1 {
+    gap: var(--spacing);
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
+  }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
+  :where(.space-y-1\.5 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 1.5) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-3 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-4 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-6 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
+  }
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  .rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
+  }
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+  .rounded-xl {
+    border-radius: var(--radius-xl);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-0 {
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+  }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
+  .border-4 {
+    border-style: var(--tw-border-style);
+    border-width: 4px;
+  }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
+  .border-amber-200 {
+    border-color: var(--color-amber-200);
+  }
+  .border-amber-300 {
+    border-color: var(--color-amber-300);
+  }
+  .border-amber-400 {
+    border-color: var(--color-amber-400);
+  }
+  .border-amber-500 {
+    border-color: var(--color-amber-500);
+  }
+  .border-blue-200 {
+    border-color: var(--color-blue-200);
+  }
+  .border-emerald-200 {
+    border-color: var(--color-emerald-200);
+  }
+  .border-indigo-800 {
+    border-color: var(--color-indigo-800);
+  }
+  .border-indigo-900 {
+    border-color: var(--color-indigo-900);
+  }
+  .border-purple-200 {
+    border-color: var(--color-purple-200);
+  }
+  .border-rose-200 {
+    border-color: var(--color-rose-200);
+  }
+  .border-rose-300 {
+    border-color: var(--color-rose-300);
+  }
+  .bg-amber-50 {
+    background-color: var(--color-amber-50);
+  }
+  .bg-amber-100 {
+    background-color: var(--color-amber-100);
+  }
+  .bg-amber-400 {
+    background-color: var(--color-amber-400);
+  }
+  .bg-amber-500 {
+    background-color: var(--color-amber-500);
+  }
+  .bg-amber-600 {
+    background-color: var(--color-amber-600);
+  }
+  .bg-amber-700 {
+    background-color: var(--color-amber-700);
+  }
+  .bg-black\/50 {
+    background-color: color-mix(in srgb, #000 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+    }
+  }
+  .bg-blue-50 {
+    background-color: var(--color-blue-50);
+  }
+  .bg-emerald-50 {
+    background-color: var(--color-emerald-50);
+  }
+  .bg-indigo-900 {
+    background-color: var(--color-indigo-900);
+  }
+  .bg-indigo-950 {
+    background-color: var(--color-indigo-950);
+  }
+  .bg-orange-600 {
+    background-color: var(--color-orange-600);
+  }
+  .bg-purple-50 {
+    background-color: var(--color-purple-50);
+  }
+  .bg-rose-50 {
+    background-color: var(--color-rose-50);
+  }
+  .bg-rose-100 {
+    background-color: var(--color-rose-100);
+  }
+  .bg-rose-700 {
+    background-color: var(--color-rose-700);
+  }
+  .bg-rose-800 {
+    background-color: var(--color-rose-800);
+  }
+  .bg-rose-900 {
+    background-color: var(--color-rose-900);
+  }
+  .bg-slate-200 {
+    background-color: var(--color-slate-200);
+  }
+  .bg-slate-800 {
+    background-color: var(--color-slate-800);
+  }
+  .bg-slate-900 {
+    background-color: var(--color-slate-900);
+  }
+  .bg-slate-950 {
+    background-color: var(--color-slate-950);
+  }
+  .bg-white {
+    background-color: var(--color-white);
+  }
+  .bg-white\/80 {
+    background-color: color-mix(in srgb, #fff 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
+    }
+  }
+  .bg-gradient-to-r {
+    --tw-gradient-position: to right in oklab;
+    background-image: linear-gradient(var(--tw-gradient-stops));
+  }
+  .from-red-600 {
+    --tw-gradient-from: var(--color-red-600);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .via-pink-600 {
+    --tw-gradient-via: var(--color-pink-600);
+    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-via-stops);
+  }
+  .to-amber-500 {
+    --tw-gradient-to: var(--color-amber-500);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .bg-clip-text {
+    background-clip: text;
+  }
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
+  }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
+  }
+  .p-6 {
+    padding: calc(var(--spacing) * 6);
+  }
+  .px-1 {
+    padding-inline: var(--spacing);
+  }
+  .px-1\.5 {
+    padding-inline: calc(var(--spacing) * 1.5);
+  }
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .px-3\.5 {
+    padding-inline: calc(var(--spacing) * 3.5);
+  }
+  .px-4 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  .px-6 {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  .py-0\.5 {
+    padding-block: calc(var(--spacing) * 0.5);
+  }
+  .py-1 {
+    padding-block: var(--spacing);
+  }
+  .py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .pt-1 {
+    padding-top: var(--spacing);
+  }
+  .pt-2 {
+    padding-top: calc(var(--spacing) * 2);
+  }
+  .pt-4 {
+    padding-top: calc(var(--spacing) * 4);
+  }
+  .pb-1\.5 {
+    padding-bottom: calc(var(--spacing) * 1.5);
+  }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-base {
+    font-size: var(--text-base);
+    line-height: var(--tw-leading, var(--text-base--line-height));
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+  }
+  .text-\[9px\] {
+    font-size: 9px;
+  }
+  .text-\[10px\] {
+    font-size: 10px;
+  }
+  .text-\[11px\] {
+    font-size: 11px;
+  }
+  .leading-relaxed {
+    --tw-leading: var(--leading-relaxed);
+    line-height: var(--leading-relaxed);
+  }
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+  }
+  .font-extrabold {
+    --tw-font-weight: var(--font-weight-extrabold);
+    font-weight: var(--font-weight-extrabold);
+  }
+  .font-semibold {
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+  }
+  .tracking-wide {
+    --tw-tracking: var(--tracking-wide);
+    letter-spacing: var(--tracking-wide);
+  }
+  .tracking-wider {
+    --tw-tracking: var(--tracking-wider);
+    letter-spacing: var(--tracking-wider);
+  }
+  .text-amber-300 {
+    color: var(--color-amber-300);
+  }
+  .text-amber-400 {
+    color: var(--color-amber-400);
+  }
+  .text-amber-900 {
+    color: var(--color-amber-900);
+  }
+  .text-emerald-300 {
+    color: var(--color-emerald-300);
+  }
+  .text-indigo-200 {
+    color: var(--color-indigo-200);
+  }
+  .text-indigo-300 {
+    color: var(--color-indigo-300);
+  }
+  .text-rose-400 {
+    color: var(--color-rose-400);
+  }
+  .text-rose-700 {
+    color: var(--color-rose-700);
+  }
+  .text-rose-800 {
+    color: var(--color-rose-800);
+  }
+  .text-rose-900 {
+    color: var(--color-rose-900);
+  }
+  .text-rose-950 {
+    color: var(--color-rose-950);
+  }
+  .text-slate-400 {
+    color: var(--color-slate-400);
+  }
+  .text-slate-500 {
+    color: var(--color-slate-500);
+  }
+  .text-slate-600 {
+    color: var(--color-slate-600);
+  }
+  .text-slate-700 {
+    color: var(--color-slate-700);
+  }
+  .text-slate-800 {
+    color: var(--color-slate-800);
+  }
+  .text-transparent {
+    color: transparent;
+  }
+  .text-white {
+    color: var(--color-white);
+  }
+  .italic {
+    font-style: italic;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-2xl {
+    --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-inner {
+    --tw-shadow: inset 0 2px 4px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-lg {
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-md {
+    --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-sm {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-xl {
+    --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .drop-shadow {
+    --tw-drop-shadow-size: drop-shadow(0 1px 2px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.1))) drop-shadow(0 1px 1px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.06)));
+    --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow( 0 1px 1px rgb(0 0 0 / 0.06));
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .selection\:bg-amber-200 ::selection {
+    background-color: var(--color-amber-200);
+  }
+  .selection\:bg-amber-200::selection {
+    background-color: var(--color-amber-200);
+  }
+  @media (hover: hover) {
+    .hover\:bg-amber-200:hover {
+      background-color: var(--color-amber-200);
+    }
+    .hover\:bg-amber-400:hover {
+      background-color: var(--color-amber-400);
+    }
+    .hover\:bg-amber-500:hover {
+      background-color: var(--color-amber-500);
+    }
+    .hover\:bg-amber-600:hover {
+      background-color: var(--color-amber-600);
+    }
+    .hover\:bg-amber-700:hover {
+      background-color: var(--color-amber-700);
+    }
+    .hover\:bg-orange-700:hover {
+      background-color: var(--color-orange-700);
+    }
+    .hover\:bg-rose-200:hover {
+      background-color: var(--color-rose-200);
+    }
+    .hover\:bg-rose-700:hover {
+      background-color: var(--color-rose-700);
+    }
+    .hover\:bg-rose-800:hover {
+      background-color: var(--color-rose-800);
+    }
+    .hover\:bg-slate-300:hover {
+      background-color: var(--color-slate-300);
+    }
+    .hover\:bg-slate-700:hover {
+      background-color: var(--color-slate-700);
+    }
+    .hover\:bg-white:hover {
+      background-color: var(--color-white);
+    }
+    .hover\:text-rose-300:hover {
+      color: var(--color-rose-300);
+    }
+    .hover\:text-rose-900:hover {
+      color: var(--color-rose-900);
+    }
+    .hover\:text-slate-800:hover {
+      color: var(--color-slate-800);
+    }
+    .hover\:shadow:hover {
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
+  .focus\:ring-2:focus {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .focus\:ring-amber-500:focus {
+    --tw-ring-color: var(--color-amber-500);
+  }
+  .focus\:outline-none:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+  .active\:cursor-grabbing:active {
+    cursor: grabbing;
+  }
+  @media (width >= 40rem) {
+    .sm\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sm\:grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .sm\:p-6 {
+      padding: calc(var(--spacing) * 6);
+    }
+    .sm\:p-8 {
+      padding: calc(var(--spacing) * 8);
+    }
+    .sm\:text-4xl {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+    .sm\:text-xl {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
+  @media (width >= 48rem) {
+    .md\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .md\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .md\:grid-cols-6 {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+  @media (width >= 64rem) {
+    .lg\:col-span-2 {
+      grid-column: span 2 / span 2;
+    }
+    .lg\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+}
+@property --tw-space-y-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-gradient-position {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-via {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-to {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-via-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --tw-gradient-via-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --tw-gradient-to-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-space-y-reverse: 0;
+      --tw-border-style: solid;
+      --tw-gradient-position: initial;
+      --tw-gradient-from: #0000;
+      --tw-gradient-via: #0000;
+      --tw-gradient-to: #0000;
+      --tw-gradient-stops: initial;
+      --tw-gradient-via-stops: initial;
+      --tw-gradient-from-position: 0%;
+      --tw-gradient-via-position: 50%;
+      --tw-gradient-to-position: 100%;
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+      --tw-tracking: initial;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
+    }
+  }
+}
+</style>
+    <style>
+        @keyframes shimmer {
+            0% { box-shadow: 0 0 5px #ffb703, 0 0 10px #ffb703, inset 0 0 5px #ffb703; transform: scale(1); }
+            50% { box-shadow: 0 0 20px #fb8500, 0 0 30px #ffb703, inset 0 0 10px #fb8500; transform: scale(1.08); }
+            100% { box-shadow: 0 0 5px #ffb703, 0 0 10px #ffb703, inset 0 0 5px #ffb703; transform: scale(1); }
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        @keyframes activeBlink {
+            0%, 100% { background-color: #fef3c7; border-color: #f59e0b; transform: scale(1.1); }
+            50% { background-color: #f43f5e; border-color: #fda4af; color: white; transform: scale(1.18); }
+        }
+        .shimmer-frame { animation: shimmer 2s infinite alternate; }
+        .chain-pendant { animation: sway 3s ease-in-out infinite; transform-origin: top center; }
+        .active-traversal { animation: activeBlink 0.5s infinite ease-in-out !important; z-index: 10; }
+        .cream-bg { background-color: rgba(255, 253, 240, 0.98); }
+        .glitter-border { border: 2px solid #ffb703; box-shadow: 0 0 10px rgba(255, 183, 3, 0.6); }
+        .drag-over { background-color: rgba(251, 191, 36, 0.25) !important; border: 2px dashed #d97706 !important; }
+    </style>
+</head>
+<body class="bg-amber-50 min-h-screen text-slate-800 font-sans selection:bg-amber-200">
+
+    <!-- FŐ NAVIGÁCIÓS FÜLEK -->
+    <header class="bg-rose-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🎂</span>
+                <h1 class="text-lg sm:text-xl font-bold tracking-wide">Szülinaptár Komplex Projekt</h1>
+            </div>
+            <nav class="flex flex-wrap gap-2">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="px-4 py-2 rounded-xl font-semibold transition bg-amber-500 text-rose-950 shadow">
+                    1. Fő Nézet (Balról-Jobbra Indexelt Bejárás)
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="px-4 py-2 rounded-xl font-semibold transition bg-rose-800 hover:bg-rose-700 text-white">
+                    2. Részletes Dokumentáció &amp; Architektúra
+                </button>
+            </nav>
+            <button onclick="toggleHelp(true)" class="bg-amber-400 hover:bg-amber-500 text-rose-950 font-bold px-3 py-1.5 rounded-xl text-sm shadow flex items-center gap-1">
+                💡 Súgó
+            </button>
+        </div>
+    </header>
+
+    <!-- FŐ TARTALOM KONTÉNER -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
+
+        <!-- 1. FÜL: FŐ NÉZET -->
+        <section id="tab-1" class="space-y-6">
+            
+            <!-- VIZUÁLIS MODELL SZINT (Faliújság korongok lógó láncokkal) -->
+            <div class="bg-rose-50 border-4 border-rose-300 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div class="flex flex-wrap justify-between items-center mb-6 gap-3">
+                    <span class="text-3xl animate-bounce">🌞</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-pink-600 to-amber-500 drop-shadow text-center">
+                        Szülinaptár Faliújság (Balról-Jobbra Bejárás)
+                    </h2>
+                    <span class="text-3xl animate-spin" style="animation-duration: 12s;">🌻</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-3 text-center" id="visual-months-container"><div id="vis-month-0" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Január</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-0-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Kovács Anna (14.)">
+                                KA
+                            </div>
+                            <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            <div id="pendant-0-1" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Irma (15.)">
+                                I
+                            </div></div><div id="vis-month-1" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Február</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-1-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Molnár Péter (22.)">
+                                MP
+                            </div></div><div id="vis-month-2" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Március</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-2-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Horváth Lili (14.)">
+                                HL
+                            </div></div><div id="vis-month-3" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Április</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div><span class="text-[10px] text-slate-400 italic py-2">Üres</span></div><div id="vis-month-4" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Május</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-4-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Tóth Luca (8.)">
+                                TL
+                            </div></div><div id="vis-month-5" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Június</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-5-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Molnár Máté (19.)">
+                                MM
+                            </div></div><div id="vis-month-6" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Július</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-6-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Balogh Elemér (12.)">
+                                BE
+                            </div></div><div id="vis-month-7" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Augusztus</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div><span class="text-[10px] text-slate-400 italic py-2">Üres</span></div><div id="vis-month-8" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Szeptember</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-8-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Horváth Dávid (3.)">
+                                HD
+                            </div></div><div id="vis-month-9" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">Október</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div><span class="text-[10px] text-slate-400 italic py-2">Üres</span></div><div id="vis-month-10" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">November</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>
+                            
+                            <div id="pendant-10-0" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="Kiss Máté (27.)">
+                                KM
+                            </div></div><div id="vis-month-11" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">December</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div><span class="text-[10px] text-slate-400 italic py-2">Üres</span></div></div>
+            </div>
+
+            <!-- KÉTOSZLOPOS RENDSZER: BALRA RÁCS & DRAG&DROP, JOBBRA KÓDFUTTATÓ ÉS INDEX NAPLÓ -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- BAL OLDAL (2 oszlop): Tantermi Rács, Kezelés, Törlések -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 flex flex-wrap justify-between items-center gap-3">
+                        <div>
+                            <h3 class="text-xl font-bold text-amber-900">Tantermi Rács &amp; Lista Kezelés</h3>
+                            <p class="text-xs text-slate-600">Adj hozzá, szerkessz, törölj diákot, ürítsd a listákat vagy húzd át másik hónapba!</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="openAddModal()" class="bg-amber-500 hover:bg-amber-600 text-rose-950 px-3 py-1.5 rounded-xl text-xs font-bold shadow">＋ Új diák</button>
+                            <button onclick="clearAllLists()" class="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow">🧹 Teljes Ürítés</button>
+                            <button onclick="resetData()" class="bg-rose-700 hover:bg-rose-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow">🗑️ Alaphelyzet</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="grid-months-container">
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 0)" class="border-2 rounded-2xl p-3 shadow bg-blue-50 border-blue-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">JANUÁR</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=0</span>
+                                    <button onclick="clearMonth(0)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-0-0" draggable="true" ondragstart="drag(event, 0, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        KA
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Kovács Anna</p>
+                                        <p class="text-[9px] text-slate-500">[0][0] · 14. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(0, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(0, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            <div id="grid-item-0-1" draggable="true" ondragstart="drag(event, 0, 1)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        I
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Irma</p>
+                                        <p class="text-[9px] text-slate-500">[0][1] · 15. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(0, 1)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(0, 1)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(0)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 1)" class="border-2 rounded-2xl p-3 shadow bg-emerald-50 border-emerald-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">FEBRUÁR</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=1</span>
+                                    <button onclick="clearMonth(1)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-1-0" draggable="true" ondragstart="drag(event, 1, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        MP
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Molnár Péter</p>
+                                        <p class="text-[9px] text-slate-500">[1][0] · 22. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(1, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(1, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(1)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 2)" class="border-2 rounded-2xl p-3 shadow bg-purple-50 border-purple-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">MÁRCIUS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=2</span>
+                                    <button onclick="clearMonth(2)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-2-0" draggable="true" ondragstart="drag(event, 2, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        HL
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Horváth Lili</p>
+                                        <p class="text-[9px] text-slate-500">[2][0] · 14. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(2, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(2, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(2)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 3)" class="border-2 rounded-2xl p-3 shadow bg-rose-50 border-rose-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">ÁPRILIS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=3</span>
+                                    <button onclick="clearMonth(3)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                <div class="text-xs text-slate-400 italic py-3 text-center">Nincs diák [főlista: 3]</div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(3)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 4)" class="border-2 rounded-2xl p-3 shadow bg-blue-50 border-blue-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">MÁJUS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=4</span>
+                                    <button onclick="clearMonth(4)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-4-0" draggable="true" ondragstart="drag(event, 4, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        TL
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Tóth Luca</p>
+                                        <p class="text-[9px] text-slate-500">[4][0] · 8. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(4, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(4, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(4)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 5)" class="border-2 rounded-2xl p-3 shadow bg-emerald-50 border-emerald-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">JÚNIUS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=5</span>
+                                    <button onclick="clearMonth(5)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-5-0" draggable="true" ondragstart="drag(event, 5, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        MM
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Molnár Máté</p>
+                                        <p class="text-[9px] text-slate-500">[5][0] · 19. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(5, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(5, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(5)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 6)" class="border-2 rounded-2xl p-3 shadow bg-purple-50 border-purple-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">JÚLIUS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=6</span>
+                                    <button onclick="clearMonth(6)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-6-0" draggable="true" ondragstart="drag(event, 6, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        BE
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Balogh Elemér</p>
+                                        <p class="text-[9px] text-slate-500">[6][0] · 12. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(6, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(6, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(6)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 7)" class="border-2 rounded-2xl p-3 shadow bg-rose-50 border-rose-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">AUGUSZTUS</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=7</span>
+                                    <button onclick="clearMonth(7)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                <div class="text-xs text-slate-400 italic py-3 text-center">Nincs diák [főlista: 7]</div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(7)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 8)" class="border-2 rounded-2xl p-3 shadow bg-blue-50 border-blue-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">SZEPTEMBER</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=8</span>
+                                    <button onclick="clearMonth(8)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-8-0" draggable="true" ondragstart="drag(event, 8, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        HD
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Horváth Dávid</p>
+                                        <p class="text-[9px] text-slate-500">[8][0] · 3. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(8, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(8, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(8)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 9)" class="border-2 rounded-2xl p-3 shadow bg-emerald-50 border-emerald-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">OKTÓBER</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=9</span>
+                                    <button onclick="clearMonth(9)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                <div class="text-xs text-slate-400 italic py-3 text-center">Nincs diák [főlista: 9]</div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(9)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 10)" class="border-2 rounded-2xl p-3 shadow bg-purple-50 border-purple-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">NOVEMBER</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=10</span>
+                                    <button onclick="clearMonth(10)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                
+                            <div id="grid-item-10-0" draggable="true" ondragstart="drag(event, 10, 0)" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        KM
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">Kiss Máté</p>
+                                        <p class="text-[9px] text-slate-500">[10][0] · 27. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(10, 0)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(10, 0)" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(10)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, 11)" class="border-2 rounded-2xl p-3 shadow bg-rose-50 border-rose-200 flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">DECEMBER</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=11</span>
+                                    <button onclick="clearMonth(11)" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                <div class="text-xs text-slate-400 italic py-3 text-center">Nincs diák [főlista: 11]</div>
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(11)" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div></div>
+                </div>
+
+                <!-- JOBB OLDAL (1 oszlop): Indexelt Bejárás Szimulátor & Iframe -->
+                <div class="space-y-4">
+                    <div class="bg-indigo-950 text-white p-5 rounded-2xl shadow-xl space-y-4 flex flex-col justify-between h-full">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-bold text-amber-400">Balról-Jobbra Index Bejárás</h3>
+                                <span class="text-[10px] bg-indigo-900 px-2 py-0.5 rounded text-amber-300 font-mono">i=0..11, j=0..end</span>
+                            </div>
+                            <p class="text-xs text-indigo-200 leading-relaxed">
+                                A ciklus szigorúan balról jobbra (januártól decemberig, azaz <code class="text-amber-300">i</code> index szerint növekvően, és azon belül a diákokat <code class="text-amber-300">j</code> index szerint) haladva járja be az elemeket, miközben a medálok villognak és lengnek.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="startTraversalSimulation()" class="bg-amber-500 hover:bg-amber-400 text-rose-950 px-3 py-1.5 rounded-xl font-bold text-xs shadow">▶️ Bejárás Indítása</button>
+                                <button onclick="stopTraversalSimulation()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-1.5 rounded-xl font-bold text-xs shadow">⏹️ Stop</button>
+                            </div>
+                        </div>
+
+                        <!-- Iframe kód & Index futtató -->
+                        <div class="bg-slate-900 rounded-xl border border-indigo-800 overflow-hidden shadow-inner h-[280px]">
+                            <iframe id="code-runner-frame" class="w-full h-full border-0 bg-slate-950 text-emerald-300 font-mono text-xs" src="./index_files/saved_resource.html"></iframe>
+                        </div>
+
+                        <div class="flex justify-between items-center text-[11px] text-indigo-300 pt-1 border-t border-indigo-900">
+                            <span>Státusz: <b id="sim-state-text" class="text-amber-400">Készenlétben</b></span>
+                            <button onclick="clearSpecificMonthPrompt()" class="text-rose-400 hover:text-rose-300 underline text-[10px]">Hónap ürítése...</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. FÜL: DOKUMENTÁCIÓ -->
+        <section id="tab-2" class="hidden space-y-6">
+            <div class="cream-bg border-2 border-amber-300 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+                <h2 class="text-3xl font-extrabold text-rose-900 border-b border-amber-300 pb-3">Részletes Adatszerkezet &amp; Balról-Jobbra Indexelés</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-700 leading-relaxed">
+                    <div class="space-y-3 bg-white/80 p-5 rounded-2xl border border-amber-200 shadow-sm">
+                        <h3 class="font-bold text-base text-amber-900">Főlista és Állista Balról-Jobbra Bejárása</h3>
+                        <p>A kétdimenziós struktúra főlistája a hónapokat indexeli (<code class="bg-amber-100 px-1 rounded">i = 0..11</code> balról jobbra), míg az állista az adott hónaphoz tartozó diákokat tárolja (<code class="bg-amber-100 px-1 rounded">j = 0..szám-1</code> ugyancsak balról jobbra sorrendben).</p>
+                    </div>
+                    <div class="space-y-3 bg-white/80 p-5 rounded-2xl border border-amber-200 shadow-sm">
+                        <h3 class="font-bold text-base text-amber-900">Vizuális Visszajelzés &amp; Animáció</h3>
+                        <p>A bejárás során a rendszer szigorú egymásutániságban villogtatja a korongokat, követve a balról jobbra haladó programlogikát.</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4">
+                    <button onclick="switchTab(1)" class="bg-rose-900 hover:bg-rose-800 text-white px-6 py-2.5 rounded-xl font-bold shadow">← Vissza a Fő Nézethez</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SÚGÓ MODAL -->
+    <div id="help-drawer" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity" onclick="toggleHelp(false)">
+        <div class="absolute right-0 top-0 h-full w-full max-w-md cream-bg p-6 shadow-2xl overflow-y-auto glitter-border flex flex-col justify-between" onclick="event.stopPropagation()">
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-amber-300 pb-3">
+                    <h3 class="text-xl font-bold text-rose-900 flex items-center gap-2">💡 Súgó</h3>
+                    <button onclick="toggleHelp(false)" class="text-slate-500 hover:text-slate-800 font-bold text-lg">✕</button>
+                </div>
+                <div class="space-y-3 text-sm text-slate-700">
+                    <p><b>Balról-Jobbra Bejárás:</b> Indítsd el a szimulációt, és figyeld, hogyan halad a főlista és az állista vizsgálata balról jobbra (januártól kezdve)!</p>
+                </div>
+            </div>
+            <button onclick="toggleHelp(false)" class="w-full bg-rose-900 hover:bg-rose-800 text-white py-2.5 rounded-xl font-bold shadow mt-6">Bezárás</button>
+        </div>
+    </div>
+
+    <!-- DIÁK HOZZÁADÁSA / SZERKESZTÉSE MODAL -->
+    <div id="student-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl border border-amber-200 space-y-4">
+            <h3 class="text-xl font-bold text-amber-900" id="modal-title">Új diák hozzáadása</h3>
+            <form id="student-form" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                <input type="hidden" id="edit-month" value="-1">
+                <input type="hidden" id="edit-index" value="-1">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Diák neve:</label>
+                    <input type="text" id="student-name" required="" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="pl. Kovács Anna">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Hónap:</label>
+                    <select id="student-month" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="0">Január</option><option value="1">Február</option><option value="2">Március</option>
+                        <option value="3">Április</option><option value="4">Május</option><option value="5">Június</option>
+                        <option value="6">Július</option><option value="7">Augusztus</option><option value="8">Szeptember</option>
+                        <option value="9">Október</option><option value="10">November</option><option value="11">December</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Születési nap (szám):</label>
+                    <input type="number" id="student-day" min="1" max="31" value="1" required="" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Fénykép URL (nem kötelező):</label>
+                    <input type="url" id="student-photo" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="https://...">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold">Mégse</button>
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow">Mentés</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ALKALMAZÁS LOGIKA -->
+    <script>
+        const monthNames = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
+        
+        let calendarData = [
+            [{ name: "Kovács Anna", day: 14, photo: "" }, { name: "Irma", day: 15, photo: "" }],
+            [{ name: "Molnár Péter", day: 22, photo: "" }],
+            [{ name: "Horváth Lili", day: 14, photo: "" }],
+            [],
+            [{ name: "Tóth Luca", day: 8, photo: "" }],
+            [{ name: "Molnár Máté", day: 19, photo: "" }],
+            [{ name: "Balogh Elemér", day: 12, photo: "" }],
+            [],
+            [{ name: "Horváth Dávid", day: 3, photo: "" }],
+            [],
+            [{ name: "Kiss Máté", day: 27, photo: "" }],
+            []
+        ];
+
+        function switchTab(tabIndex) {
+            for (let i = 1; i <= 2; i++) {
+                document.getElementById(`tab-${i}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${i}`);
+                btn.classList.remove('bg-amber-500', 'text-rose-950', 'shadow');
+                btn.classList.add('bg-rose-800', 'text-white');
+            }
+            document.getElementById(`tab-${tabIndex}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabIndex}`);
+            activeBtn.classList.remove('bg-rose-800', 'text-white');
+            activeBtn.classList.add('bg-amber-500', 'text-rose-950', 'shadow');
+            renderAll();
+        }
+
+        function renderAll() {
+            renderVisualView();
+            renderGridView();
+        }
+
+        function renderVisualView() {
+            const container = document.getElementById('visual-months-container');
+            container.innerHTML = '';
+            calendarData.forEach((students, i) => {
+                let html = `<div id="vis-month-${i}" class="bg-white/80 rounded-2xl p-2 border border-rose-200 shadow-sm flex flex-col items-center transition-all">
+                    <span class="text-xs font-bold text-rose-900">${monthNames[i]}</span>
+                    <div class="h-4 w-0.5 bg-amber-700 my-1"></div>`;
+                if (students.length === 0) {
+                    html += `<span class="text-[10px] text-slate-400 italic py-2">Üres</span>`;
+                } else {
+                    students.forEach((st, j) => {
+                        const initials = st.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+                        html += `
+                            ${j > 0 ? '<div class="h-4 w-0.5 bg-amber-700 my-1"></div>' : ''}
+                            <div id="pendant-${i}-${j}" class="chain-pendant w-10 h-10 rounded-full shimmer-frame border-2 border-amber-500 overflow-hidden bg-rose-100 flex items-center justify-center text-xs font-bold text-rose-800 relative group cursor-pointer" title="${st.name} (${st.day}.)">
+                                ${st.photo ? `<img src="${st.photo}" class="w-full h-full object-cover">` : initials}
+                            </div>`;
+                    });
+                }
+                html += `</div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderGridView() {
+            const container = document.getElementById('grid-months-container');
+            container.innerHTML = '';
+            calendarData.forEach((students, i) => {
+                const bgColors = ['bg-blue-50 border-blue-200', 'bg-emerald-50 border-emerald-200', 'bg-purple-50 border-purple-200', 'bg-rose-50 border-rose-200'];
+                const colorClass = bgColors[i % bgColors.length];
+                
+                let studentsHtml = '';
+                if (students.length === 0) {
+                    studentsHtml = `<div class="text-xs text-slate-400 italic py-3 text-center">Nincs diák [főlista: ${i}]</div>`;
+                } else {
+                    students.forEach((st, j) => {
+                        const initials = st.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+                        studentsHtml += `
+                            <div id="grid-item-${i}-${j}" draggable="true" ondragstart="drag(event, ${i}, ${j})" class="bg-white p-2 rounded-xl border flex justify-between items-center shadow-sm cursor-grab active:cursor-grabbing hover:shadow transition">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full border border-amber-400 overflow-hidden bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-900">
+                                        ${st.photo ? `<img src="${st.photo}" class="w-full h-full object-cover">` : initials}
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">${st.name}</p>
+                                        <p class="text-[9px] text-slate-500">[${i}][${j}] · ${st.day}. nap</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button onclick="editStudent(${i}, ${j})" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 px-1 py-0.5 rounded">✏️</button>
+                                    <button onclick="deleteStudent(${i}, ${j})" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-900 px-1 py-0.5 rounded">🗑️</button>
+                                </div>
+                            </div>`;
+                    });
+                }
+
+                container.innerHTML += `
+                    <div ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="dropToMonth(event, ${i})" class="border-2 rounded-2xl p-3 shadow ${colorClass} flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-800">${monthNames[i].toUpperCase()}</span>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded-full font-mono text-slate-600">i=${i}</span>
+                                    <button onclick="clearMonth(${i})" class="text-[10px] text-rose-700 hover:text-rose-900 font-bold px-1" title="Hónap ürítése">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 mb-2 min-h-[40px]">
+                                ${studentsHtml}
+                            </div>
+                        </div>
+                        <button onclick="openAddModalForMonth(${i})" class="w-full bg-white/80 hover:bg-white text-amber-900 border border-amber-300 py-1 rounded-lg text-[11px] font-bold shadow-sm">＋ Hozzáadás</button>
+                    </div>`;
+            });
+        }
+
+        // DRAG & DROP
+        function drag(ev, monthIdx, studentIdx) {
+            ev.dataTransfer.setData("text/plain", JSON.stringify({ monthIdx, studentIdx }));
+        }
+        function allowDrop(ev) { ev.preventDefault(); ev.currentTarget.classList.add('drag-over'); }
+        function removeDropStyle(ev) { ev.currentTarget.classList.remove('drag-over'); }
+        function dropToMonth(ev, targetMonthIdx) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('drag-over');
+            const dataStr = ev.dataTransfer.getData("text/plain");
+            if (!dataStr) return;
+            const { monthIdx, studentIdx } = JSON.parse(dataStr);
+            const student = calendarData[monthIdx].splice(studentIdx, 1)[0];
+            calendarData[targetMonthIdx].push(student);
+            renderAll();
+        }
+
+        // LISTA ÜRÍTÉSEK ÉS TÖRLÉSEK
+        function clearMonth(monthIdx) {
+            if (confirm(`Biztosan kiüríted ${monthNames[monthIdx]} hónap listáját?`)) {
+                calendarData[monthIdx] = [];
+                renderAll();
+            }
+        }
+
+        function clearAllLists() {
+            if (confirm("Biztosan kiüríted az ÖSSZES hónap összes diákját (teljes főlista ürítés)?")) {
+                calendarData = calendarData.map(() => []);
+                renderAll();
+            }
+        }
+
+        function clearSpecificMonthPrompt() {
+            let m = prompt("Add meg a hónap sorszámát (0 = Január ... 11 = December):");
+            if (m !== null && !isNaN(m)) {
+                let idx = parseInt(m);
+                if (idx >= 0 && idx < 12) {
+                    calendarData[idx] = [];
+                    renderAll();
+                } else {
+                    alert("Érvénytelen index!");
+                }
+            }
+        }
+
+        // MODAL & CRUD
+        function toggleHelp(show) { document.getElementById('help-drawer').classList.toggle('hidden', !show); }
+        function openAddModal() {
+            document.getElementById('modal-title').innerText = "Új diák hozzáadása";
+            document.getElementById('edit-month').value = "-1";
+            document.getElementById('edit-index').value = "-1";
+            document.getElementById('student-name').value = "";
+            document.getElementById('student-day').value = "1";
+            document.getElementById('student-photo').value = "";
+            document.getElementById('student-modal').classList.remove('hidden');
+        }
+        function openAddModalForMonth(monthIdx) { openAddModal(); document.getElementById('student-month').value = monthIdx; }
+        function closeAddModal() { document.getElementById('student-modal').classList.add('hidden'); }
+        
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const month = parseInt(document.getElementById('student-month').value);
+            const name = document.getElementById('student-name').value;
+            const day = parseInt(document.getElementById('student-day').value);
+            const photo = document.getElementById('student-photo').value;
+            const editMonth = parseInt(document.getElementById('edit-month').value);
+            const editIdx = parseInt(document.getElementById('edit-index').value);
+
+            if (editMonth >= 0 && editIdx >= 0) {
+                if (editMonth === month) {
+                    calendarData[month][editIdx] = { name, day, photo };
+                } else {
+                    calendarData[editMonth].splice(editIdx, 1);
+                    calendarData[month].push({ name, day, photo });
+                }
+            } else {
+                calendarData[month].push({ name, day, photo });
+            }
+            closeAddModal();
+            renderAll();
+        }
+
+        function deleteStudent(monthIdx, studentIdx) { calendarData[monthIdx].splice(studentIdx, 1); renderAll(); }
+        function editStudent(monthIdx, studentIdx) {
+            const st = calendarData[monthIdx][studentIdx];
+            document.getElementById('modal-title').innerText = "Diák szerkesztése";
+            document.getElementById('edit-month').value = monthIdx;
+            document.getElementById('edit-index').value = studentIdx;
+            document.getElementById('student-month').value = monthIdx;
+            document.getElementById('student-name').value = st.name;
+            document.getElementById('student-day').value = st.day;
+            document.getElementById('student-photo').value = st.photo;
+            document.getElementById('student-modal').classList.remove('hidden');
+        }
+
+        function resetData() {
+            if (confirm("Visszaállítod az eredeti mintadiákokat?")) {
+                calendarData = [
+                    [{ name: "Kovács Anna", day: 14, photo: "" }, { name: "Irma", day: 15, photo: "" }],
+                    [{ name: "Molnár Péter", day: 22, photo: "" }],
+                    [{ name: "Horváth Lili", day: 14, photo: "" }],
+                    [],
+                    [{ name: "Tóth Luca", day: 8, photo: "" }],
+                    [{ name: "Molnár Máté", day: 19, photo: "" }],
+                    [{ name: "Balogh Elemér", day: 12, photo: "" }],
+                    [],
+                    [{ name: "Horváth Dávid", day: 3, photo: "" }],
+                    [],
+                    [{ name: "Kiss Máté", day: 27, photo: "" }],
+                    []
+                ];
+                renderAll();
+            }
+        }
+
+        // IFRAME ÉS BALRÓL-JOBBRA INDEXELT BEJÁRÁS SZIMULÁTOR
+        function initIframeRunner() {
+            const iframe = document.getElementById('code-runner-frame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                <head>
+                    <style>
+                        body { background: #090d16; color: #34d399; font-family: monospace; padding: 10px; font-size: 11px; margin: 0; }
+                        .log { margin-bottom: 5px; }
+                        .highlight { color: #fbbf24; font-weight: bold; }
+                        .sub { color: #f43f5e; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="log">&gt;&gt; Balról-jobbra bejáró készen áll.</div>
+                    <div class="log">&gt;&gt; Főlista (i: 0..11) és Állista (j) iterációra vár.</div>
+                </body>
+                </html>
+            `);
+            doc.close();
+        }
+
+        let traversalInterval = null;
+        function startTraversalSimulation() {
+            stopTraversalSimulation();
+            const iframe = document.getElementById('code-runner-frame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.body.innerHTML = `<div class="log">&gt;&gt; Balról-jobbra bejárás indítása (i = 0-tól 11-ig)...</div>`;
+            document.getElementById('sim-state-text').innerText = "Balról-jobbra fut...";
+
+            let i = 0, j = 0;
+            
+            traversalInterval = setInterval(() => {
+                // Előző aktív elemek tisztítása
+                document.querySelectorAll('.active-traversal').forEach(el => el.classList.remove('active-traversal'));
+
+                // Ha túlléptünk a főlistán (12. hónap után)
+                if (i >= calendarData.length) {
+                    doc.body.innerHTML += `<div class="log highlight">&gt;&gt; Balról-jobbra bejárás sikeresen befejezve! 🎉</div>`;
+                    document.getElementById('sim-state-text').innerText = "Kész";
+                    stopTraversalSimulation();
+                    return;
+                }
+
+                // Ha az aktuális főlistás hónap üres, vagy véget ért az állistája balról jobbra
+                if (j >= calendarData[i].length) {
+                    i++;
+                    j = 0;
+                    return;
+                }
+
+                // Aktív medál és rács elem megjelölése és animálása
+                const pendantEl = document.getElementById(`pendant-${i}-${j}`);
+                const gridEl = document.getElementById(`grid-item-${i}-${j}`);
+                if (pendantEl) pendantEl.classList.add('active-traversal');
+                if (gridEl) gridEl.classList.add('active-traversal');
+
+                const st = calendarData[i][j];
+                doc.body.innerHTML += `<div class="log">calendar[<span class="highlight">i=${i}</span>][<span class="sub">j=${j}</span>] ➔ <span class="highlight">${st.name}</span> (${monthNames[i]} ${st.day}.)</div>`;
+                doc.window.scrollTo(0, doc.body.scrollHeight);
+
+                j++;
+            }, 1000);
+        }
+
+        function stopTraversalSimulation() {
+            if (traversalInterval) clearInterval(traversalInterval);
+            traversalInterval = null;
+            document.querySelectorAll('.active-traversal').forEach(el => el.classList.remove('active-traversal'));
+            document.getElementById('sim-state-text').innerText = "Megállítva";
+        }
+
+        // Kezdeti renderelés
+        renderAll();
+        window.onload = () => { initIframeRunner(); };
+    </script>
+
+</body></html>
