@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)file:///D:/tankonyv/alap1.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Képeslap Áramkör Műhely &amp; Elmélet</title>
+  <style>
+    :root {
+      --primary: #2575fc;
+      --secondary: #6a11cb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 { text-align: center; color: #1a1a2e; margin-bottom: 6px; }
+    p.subtitle { text-align: center; color: #64748b; margin-bottom: 20px; }
+
+    /* FŐ NAVIGÁCIÓS FÜLEK */
+    .tab-menu {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Tervező Workspace */
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
+
+    .canvas-wrapper {
+      position: relative;
+      border: 2px dashed #cbd5e0;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 400px;
+      border-radius: 12px;
+      cursor: crosshair;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-danger { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+
+    .control-panel {
+      background: #f8fafc;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .status-badge {
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .status-ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .status-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .btn-generate {
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Útmutató */
+    .guide-section {
+      margin-top: 30px;
+      border-top: 2px solid #e2e8f0;
+      padding-top: 20px;
+      display: none;
+    }
+
+    .global-audio-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 8px;
+      align-items: center;
+    }
+
+    .step-card {
+      background: #ffffff;
+      border-left: 5px solid var(--primary);
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .speak-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e0;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    /* Falstad iframe */
+    .falstad-section {
+      margin-top: 30px;
+      border-top: 2px solid #e2e8f0;
+      padding-top: 20px;
+    }
+
+    .falstad-iframe-container {
+      width: 100%;
+      height: 550px;
+      border: 2px solid #cbd5e0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    iframe { width: 100%; height: 100%; border: none; }
+
+    /* Elmélet Card */
+    .theory-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .theory-card h3 { margin-top: 0; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>✨ Interaktív Képeslap Áramkör &amp; Műhely</h1>
+  <p class="subtitle">Tervezz, kalibrálj, radírozz, tanulj elméletet és teszteld az áramkört szimulációban!</p>
+
+  <!-- NAVIGÁCIÓS FÜLEK -->
+  <div class="tab-menu">
+    <button class="tab-btn active" onclick="switchTab('designer')">🎨 Tervező &amp; Szimulátor</button>
+    <button class="tab-btn" onclick="switchTab('theory')">📚 Elméleti Áramköri Tudásbázis</button>
+  </div>
+
+  <!-- 1. FÜL: TERVEZŐ ÉS SZIMULÁTOR -->
+  <div id="tab-designer" class="tab-content active">
+    <div class="workspace">
+      <!-- CANVAS FELÜLET -->
+      <div>
+        <div class="canvas-wrapper">
+          <canvas id="cardCanvas" width="650" height="400" style="cursor: move;"></canvas>
+        </div>
+
+        <div class="toolbar">
+          <span>Eszközök:</span>
+          <button class="btn" id="btnDraw" onclick="setTool('draw')">✏️ Ceruza</button>
+          <button class="btn" id="btnEraser" onclick="setTool('erase')">🧹 Radír</button>
+          <button class="btn active" id="btnMove" onclick="setTool('move')">🖐️ Áthelyezés (Drag &amp; Drop)</button>
+          <button class="btn" onclick="addComponent('led')">💡 +LED</button>
+          <button class="btn" onclick="addComponent('button')">🔘 +Gomb</button>
+          <button class="btn" onclick="calibrateCanvas()">📏 Kalibrálás</button>
+          <input type="color" id="penColor" value="#2575fc" style="width:32px; height:30px; border:none; cursor:pointer;">
+          <button class="btn btn-danger" onclick="clearCanvas()">🗑️ Összes Törlése</button>
+        </div>
+        <small style="color:#64748b; margin-top:4px; display:block;">💡 <i>Tipp: Használd a radírt tetszőleges rajzrészlet törléséhez! Az Áthelyezés gombbal mozgasd az alkatrészeket.</i></small>
+      </div>
+
+      <!-- FIZIKAI ELLENŐRZŐ PANEL -->
+      <div class="control-panel">
+        <h3>🔍 Áramkör Ellenőrzése</h3>
+
+        <div class="stat-box">
+          💡 <b>LED-ek száma:</b> <span id="statLEDCount">0</span> db<br>
+          🔘 <b>Kapcsolók:</b> <span id="statBtnCount">0</span> db<br>
+          🔋 <b>Tápellátás:</b> 3V CR2032 Gombelem
+        </div>
+
+        <div class="form-group">
+          <label for="lightEffect">⚡ Fény működése:</label>
+          <select id="lightEffect" style="width:100%; padding:8px; border-radius:6px;">
+            <option value="folyamatos">Párhuzamos - Folyamatos fény</option>
+            <option value="villogo">Villogó fény (555-ös modul)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="soundEffect">🎵 Megszólaló hang:</label>
+          <select id="soundEffect" style="width:100%; padding:8px; border-radius:6px;">
+            <option value="csipogas">Buzzer Csipogás</option>
+            <option value="dallam">Ünnepi Dallam</option>
+            <option value="szirena">Szirénázó Váltóhang</option>
+          </select>
+        </div>
+
+        <div id="statusBox" class="status-badge status-error">⚠️ Hiba: Helyezz el legalább 1 db LED égőt!</div>
+
+        <button class="btn-generate" onclick="generateGuide()">⚙️ Útmutató Generálása</button>
+      </div>
+    </div>
+
+    <!-- GENERÁLT ÚTMUTATÓ -->
+    <div class="guide-section" id="guideSection">
+      <h2>📋 Kivitelezési Útmutató</h2>
+      <div class="global-audio-bar">
+        <span>🔊 <b>Hangos Asszisztens:</b></span>
+        <button class="btn" onclick="readAllSteps()">▶️ Teljes Útmutató Felolvasása</button>
+        <button class="btn" onclick="stopSpeech()">⏹️ Leállítás</button>
+      </div>
+      <div id="stepsList"></div>
+    </div>
+
+    <!-- FALSTAD SZIMULÁTOR VILÁGOS HÁTTÉRREL -->
+    <div class="falstad-section">
+      <h2>⚡ Áramköri Szimulátor (Világos Háttér + Teljes Vezérlés)</h2>
+      <p style="color:#64748b; font-size:0.9rem;">Állítsd a csúszkákat (áramsebesség, frekvencia, feszültség) az áramkör működésének teszteléséhez!</p>
+
+      <div class="falstad-iframe-container">
+        <iframe src="./index_files/circuitjs.html" title="Falstad Circuit Simulator"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. FÜL: ELMÉLETI OLDAL -->
+  <div id="tab-theory" class="tab-content">
+    <h2>📚 Elméleti Tudásbázis &amp; Áramköri Alapok</h2>
+    <div class="global-audio-bar">
+      <span>🔊 <b>Felolvasás:</b></span>
+      <button class="btn" onclick="speakText(document.getElementById('theoryText').innerText)">▶️ Elmélet Felolvasása</button>
+      <button class="btn" onclick="stopSpeech()">⏹️ Leállítás</button>
+    </div>
+
+    <div id="theoryText">
+      <div class="theory-card">
+        <h3>1. Mi az az áramkör és hogyan folyik az áram?</h3>
+        <p>Az áramkör egy zárt hurok, amin keresztül az elektromos töltések áramlanak. A gombelem pozitív (+) és negatív (-) pólussal rendelkezik. Az áram csak akkor folyik, ha a vezeték (a rézszalag) megszakítás nélkül köti össze a pólusokat az alkatrészeken keresztül.</p>
+      </div>
+
+      <div class="theory-card">
+        <h3>2. Párhuzamos vs. Soros Kapcsolás</h3>
+        <p><b>Párhuzamos kapcsolásnál</b> minden LED külön ágat alkot. Ha az egyik kiég vagy elromlik, a többi még világít! Ráadásul mindegyik LED megkapja a teljes 3 voltos feszültséget a gombelemről. Képeslapoknál mindig ezt az elrendezést használjuk.</p>
+      </div>
+
+      <div class="theory-card">
+        <h3>3. A LED-ek polaritása</h3>
+        <p>A LED (fénykibocsátó dióda) egyirányú alkatrész: a hosszabbik lába a <b>Pozitív (Anód)</b>, a rövidebbik a <b>Negatív (Katód)</b>. Ha fordítva kötöd be az áramkörbe, a LED nem fog világítani!</p>
+      </div>
+
+      <div class="theory-card">
+        <h3>4. Hogyan működik a Hangszóró (Buzzer)?</h3>
+        <p>A papíráramkörben lévő piezo csipogó kristályt tartalmaz. Amikor feszültséget kap, a kristály aprót tágul és összehúzódik. A másodpercenkénti sok ezer rezgés hanghullámokat hoz létre a levegőben, így halljuk a dallamot vagy csipogást.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // FÜL VÁLTÁS
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+    if (tabName === 'designer') {
+      document.querySelectorAll('.tab-btn')[0].classList.add('active');
+      document.getElementById('tab-designer').classList.add('active');
+    } else {
+      document.querySelectorAll('.tab-btn')[1].classList.add('active');
+      document.getElementById('tab-theory').classList.add('active');
+    }
+  }
+
+  // CANVAS INITIALIZATION
+  const canvas = document.getElementById('cardCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Külön réteg a szabad kézi rajznak/radírozásnak
+  const drawingCanvas = document.createElement('canvas');
+  drawingCanvas.width = canvas.width;
+  drawingCanvas.height = canvas.height;
+  const drawCtx = drawingCanvas.getContext('2d');
+
+  let currentTool = 'draw';
+  let isInteracting = false;
+  let draggedElement = null;
+  let dragOffsetX = 0, dragOffsetY = 0;
+  let lastX = 0, lastY = 0;
+
+  // Kezdő alkatrészek
+  let components = [{ id: 'bat1', type: 'battery', x: 80, y: 330, radius: 25, label: '🔋 3V Elem' }];
+
+  function setTool(tool) {
+    currentTool = tool;
+    document.getElementById('btnDraw').classList.toggle('active', tool === 'draw');
+    document.getElementById('btnEraser').classList.toggle('active', tool === 'erase');
+    document.getElementById('btnMove').classList.toggle('active', tool === 'move');
+    
+    if(tool === 'move') {
+      canvas.style.cursor = 'move';
+    } else {
+      canvas.style.cursor = 'crosshair';
+    }
+  }
+
+  function calibrateCanvas() {
+    render();
+    alert("📏 A vászon és a koordináták sikeresen kalibrálva!");
+  }
+
+  function addComponent(type) {
+    const x = 150 + Math.random() * 250;
+    const y = 100 + Math.random() * 150;
+    if (type === 'led') {
+      components.push({ id: 'led_' + Date.now(), type: 'led', x, y, radius: 18, label: '💡 LED' });
+    } else if (type === 'button') {
+      components.push({ id: 'btn_' + Date.now(), type: 'button', x, y, radius: 18, label: '🔘 Gomb' });
+    }
+    setTool('move'); // Automatikusan áthelyező módba vált, hogy könnyen lehessen pozicionálni
+    render();
+    checkPhysics();
+  }
+
+  // Pozíció lekérése a vásznon
+  function getMousePos(evt) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+      x: (evt.clientX - rect.left) * scaleX,
+      y: (evt.clientY - rect.top) * scaleY
+    };
+  }
+
+  // EGÉR ESEMÉNYEK (MOUSEDOWN / MOVE / UP)
+  canvas.addEventListener('mousedown', (e) => {
+    isInteracting = true;
+    const pos = getMousePos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+
+    if (currentTool === 'draw') {
+      drawCtx.globalCompositeOperation = 'source-over';
+      drawCtx.beginPath();
+      drawCtx.arc(pos.x, pos.y, (document.getElementById('penColor').value ? 2 : 2), 0, Math.PI * 2);
+      drawCtx.fillStyle = document.getElementById('penColor').value;
+      drawCtx.fill();
+    } else if (currentTool === 'erase') {
+      drawCtx.globalCompositeOperation = 'destination-out';
+      drawCtx.beginPath();
+      drawCtx.arc(pos.x, pos.y, 12, 0, Math.PI * 2);
+      drawCtx.fill();
+    } else if (currentTool === 'move') {
+      for (let i = components.length - 1; i >= 0; i--) {
+        let comp = components[i];
+        let dist = Math.hypot(comp.x - pos.x, comp.y - pos.y);
+        if (dist <= comp.radius + 8) {
+          draggedElement = comp;
+          dragOffsetX = pos.x - comp.x;
+          dragOffsetY = pos.y - comp.y;
+          break;
+        }
+      }
+    }
+    render();
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (!isInteracting) return;
+    const pos = getMousePos(e);
+
+    if (currentTool === 'draw') {
+      drawCtx.globalCompositeOperation = 'source-over';
+      drawCtx.beginPath();
+      drawCtx.moveTo(lastX, lastY);
+      drawCtx.lineTo(pos.x, pos.y);
+      drawCtx.strokeStyle = document.getElementById('penColor').value;
+      drawCtx.lineWidth = 4;
+      drawCtx.lineCap = 'round';
+      drawCtx.stroke();
+    } else if (currentTool === 'erase') {
+      drawCtx.globalCompositeOperation = 'destination-out';
+      drawCtx.beginPath();
+      drawCtx.moveTo(lastX, lastY);
+      drawCtx.lineTo(pos.x, pos.y);
+      drawCtx.lineWidth = 24;
+      drawCtx.lineCap = 'round';
+      drawCtx.stroke();
+    } else if (currentTool === 'move' && draggedElement) {
+      draggedElement.x = pos.x - dragOffsetX;
+      draggedElement.y = pos.y - dragOffsetY;
+      checkPhysics();
+    }
+
+    lastX = pos.x;
+    lastY = pos.y;
+    render();
+  });
+
+  window.addEventListener('mouseup', () => {
+    isInteracting = false;
+    draggedElement = null;
+  });
+
+  // DUPLA KATTINTÁS TÖRLESHEZ
+  canvas.addEventListener('dblclick', (e) => {
+    const pos = getMousePos(e);
+    components = components.filter(comp => {
+      if (comp.type === 'battery') return true; // Elemet nem töröljük duplaklikkel
+      return Math.hypot(comp.x - pos.x, comp.y - pos.y) > comp.radius + 6;
+    });
+    render();
+    checkPhysics();
+  });
+
+  // RAJZOLÁS / RENDERELÉS
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Megrajzolt vonalak rétege
+    ctx.drawImage(drawingCanvas, 0, 0);
+
+    // 2. Alkatrészek rétege
+    components.forEach(comp => {
+      ctx.beginPath();
+      ctx.arc(comp.x, comp.y, comp.radius, 0, Math.PI * 2);
+      
+      if (comp.type === 'battery') ctx.fillStyle = '#94a3b8';
+      else if (comp.type === 'led') ctx.fillStyle = '#facc15';
+      else if (comp.type === 'button') ctx.fillStyle = '#f87171';
+      
+      ctx.fill();
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Feliratok
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(comp.label, comp.x, comp.y + comp.radius + 15);
+    });
+  }
+
+  function clearCanvas() {
+    drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    components = components.filter(c => c.type === 'battery');
+    render();
+    checkPhysics();
+  }
+
+  // FIZIKAI ELLENŐRZŐ PANEL
+  let isCircuitValid = false;
+  let validationMessage = "";
+
+  function checkPhysics() {
+    const leds = components.filter(c => c.type === 'led');
+    const buttons = components.filter(c => c.type === 'button');
+
+    document.getElementById('statLEDCount').innerText = leds.length;
+    document.getElementById('statBtnCount').innerText = buttons.length;
+
+    const statusBox = document.getElementById('statusBox');
+
+    if (leds.length === 0) {
+      isCircuitValid = false;
+      validationMessage = "⚠️ Hiba: Helyezz el legalább 1 db LED égőt!";
+      statusBox.className = "status-badge status-error";
+    } else if (buttons.length === 0) {
+      isCircuitValid = false;
+      validationMessage = "⚠️ Hiba: Hiányzik a kapcsoló gomb!";
+      statusBox.className = "status-badge status-error";
+    } else {
+      isCircuitValid = true;
+      validationMessage = `✅ Működőképes áramkör! (${leds.length} LED, 1 gombelem)`;
+      statusBox.className = "status-badge status-ok";
+    }
+    statusBox.innerText = validationMessage;
+  }
+
+  // ÚTMUTATÓ GENERÁLÁSA ÉS FELOLVASÁS
+  let generatedSteps = [];
+
+  function generateGuide() {
+    if (!isCircuitValid) { alert(validationMessage); return; }
+
+    const leds = components.filter(c => c.type === 'led').length;
+    const light = document.getElementById('lightEffect').value;
+    const sound = document.getElementById('soundEffect').value;
+
+    generatedSteps = [
+      { title: "1. Lépés: Rajzolás és Kivágás", text: `Rajzold meg a mintát a kartonpapírra, és jelöld meg azt a ${leds} pontot, ahová a LED-eket tetted.` },
+      { title: "2. Lépés: Lyukasztás", text: `Készíts ${leds} darab lyukat az előlapon, és bújtasd át rajtuk a LED-ek fejeit.` },
+      { title: "3. Lépés: Rézszalag Fektetés", text: `Ragassz rézszalagot a belső oldalra, és kösd párhuzamosan a LED-ek lábait.` },
+      { title: "4. Lépés: Hangszóró és Beépítés", text: `Helyezd be a piezo csipogót. Nyomásra a fény ${light} módon világít, és megszólal a ${sound}.` },
+      { title: "5. Lépés: Tesztelés", text: `Hajtsd be a kapcsoló sarok-elemet a gombelem felett, és próbáld ki!` }
+    ];
+
+    const stepsContainer = document.getElementById('stepsList');
+    stepsContainer.innerHTML = '';
+
+    generatedSteps.forEach((step) => {
+      const card = document.createElement('div');
+      card.className = 'step-card';
+      const safeText = step.text.replace(/'/g, "\\'");
+      card.innerHTML = `
+        <div>
+          <div style="font-weight:bold; color:#1e293b;">${step.title}</div>
+          <div style="color:#475569; font-size:0.9rem; margin-top:4px;">${step.text}</div>
+        </div>
+        <button class="speak-btn" onclick="speakText('${step.title}. ${safeText}')">🔊</button>
+      `;
+      stepsContainer.appendChild(card);
+    });
+
+    document.getElementById('guideSection').style.display = 'block';
+    document.getElementById('guideSection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // HANGASSZISZTENS
+  const synth = window.speechSynthesis;
+
+  function speakText(text) {
+    stopSpeech();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'hu-HU';
+    utterance.rate = 0.95;
+    synth.speak(utterance);
+  }
+
+  function readAllSteps() {
+    stopSpeech();
+    if (generatedSteps.length === 0) return;
+    let fullText = "A lépések: " + generatedSteps.map(s => s.title + ". " + s.text).join(" ");
+    speakText(fullText);
+  }
+
+  function stopSpeech() {
+    if (synth.speaking) synth.cancel();
+  }
+
+  // Első kirajzolás
+  render();
+  checkPhysics();
+</script>
+
+
+</body></html>

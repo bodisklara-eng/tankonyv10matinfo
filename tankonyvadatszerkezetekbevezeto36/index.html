@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)file:///D:/tankonyv/lecke.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Informatika &amp; Elektronika – Tankönyv + Effekt Menü</title>
+  <style>
+    /* Alap tipográfia */
+    :root {
+      --blue: #1e88e5;
+      --yellow: #ffb300;
+      --green: #43a047;
+      --purple: #8e24aa;
+      --grey: #455a64;
+      --page-bg: #ffffff;
+      --body-bg: #e0e0e0;
+      --text-main: #212121;
+      --text-muted: #616161;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--body-bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+    }
+
+    /* A4 oldal beállítás */
+    @page {
+      size: A4 portrait;
+      margin: 18mm 15mm 20mm 15mm;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 10mm auto;
+      background: var(--page-bg);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+      padding: 18mm 15mm 20mm 15mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header {
+      border-bottom: 2px solid #bdbdbd;
+      padding-bottom: 6mm;
+      margin-bottom: 6mm;
+    }
+
+    .page-header h1 {
+      font-size: 20pt;
+      margin: 0 0 4mm 0;
+    }
+
+    .page-header h2 {
+      font-size: 12pt;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 15mm;
+      right: 15mm;
+      font-size: 9pt;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 2mm;
+    }
+
+    .page-footer .page-number {
+      font-weight: 600;
+    }
+
+    main {
+      font-size: 11pt;
+      line-height: 1.5;
+    }
+
+    h3 {
+      margin-top: 8mm;
+      margin-bottom: 3mm;
+      font-size: 13pt;
+    }
+
+    p {
+      margin: 2mm 0;
+    }
+
+    /* Didaktikai kártyák */
+    .card {
+      border-radius: 6px;
+      padding: 6mm;
+      margin: 4mm 0;
+      border: 1px solid #e0e0e0;
+    }
+
+    .card-title {
+      font-weight: 700;
+      margin-bottom: 3mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+    }
+
+    .card-title span.icon {
+      font-size: 14pt;
+    }
+
+    .card-title span.label {
+      font-size: 11pt;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .card-blue {
+      border-color: #bbdefb;
+      background: #e3f2fd;
+    }
+
+    .card-yellow {
+      border-color: #ffe082;
+      background: #fff8e1;
+    }
+
+    .card-green {
+      border-color: #c8e6c9;
+      background: #e8f5e9;
+    }
+
+    .card-purple {
+      border-color: #e1bee7;
+      background: #f3e5f5;
+    }
+
+    .card-grey {
+      border-color: #cfd8dc;
+      background: #eceff1;
+    }
+
+    /* Kódblokkok – C++ és Python egymás mellett */
+    .code-row {
+      display: flex;
+      gap: 6mm;
+      margin: 4mm 0;
+      flex-wrap: wrap;
+    }
+
+    .code-block {
+      flex: 1 1 45%;
+      background: #263238;
+      color: #eceff1;
+      border-radius: 4px;
+      padding: 4mm;
+      font-family: "Fira Code", Consolas, monospace;
+      font-size: 9pt;
+      overflow-x: auto;
+    }
+
+    .code-block h4 {
+      margin: 0 0 3mm 0;
+      font-size: 10pt;
+      color: #ffcc80;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre;
+    }
+
+    /* Interaktív gomb + modál */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto;
+      padding: 6mm 15mm 4mm 15mm;
+      display: flex;
+      justify-content: flex-end;
+      gap: 4mm;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 10pt;
+      cursor: pointer;
+      background: linear-gradient(135deg, #3949ab, #1e88e5);
+      color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn span {
+      font-size: 12pt;
+    }
+
+    .btn:hover {
+      filter: brightness(1.08);
+    }
+
+    /* Modális */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal {
+      background: #121212;
+      color: #f5f5f5;
+      border-radius: 8px;
+      max-width: 720px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+      padding: 16px 18px 18px 18px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 14pt;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: #f5f5f5;
+      font-size: 14pt;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      font-size: 10pt;
+    }
+
+    .modal-body p.intro {
+      margin-bottom: 8px;
+      color: #bdbdbd;
+    }
+
+    .option-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .option-item {
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      background: #1e1e1e;
+      border: 1px solid #424242;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .option-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .option-item-title {
+      font-weight: 600;
+      font-size: 10pt;
+    }
+
+    .option-item-source {
+      font-size: 8pt;
+      color: #9e9e9e;
+    }
+
+    .option-item-desc {
+      font-size: 9pt;
+      color: #e0e0e0;
+    }
+
+    .option-item a {
+      color: #64b5f6;
+      text-decoration: none;
+      font-size: 9pt;
+    }
+
+    .option-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Nyomtatási nézet – vezérlők és modál elrejtése */
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .toolbar,
+      .modal-backdrop {
+        display: none !important;
+      }
+      .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* Responsív finomhangolás */
+    @media (max-width: 900px) {
+      .page {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+        padding: 16px;
+      }
+      .toolbar {
+        width: 100%;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Felső eszköztár: Effekt Menü gomb -->
+  <div class="toolbar">
+    <button class="btn" id="openModalBtn">
+      <span>✨</span> Csillogó / Effekt Menü Megnyitása (22 Opció)
+    </button>
+  </div>
+
+  <!-- A4-es tankönyv oldal -->
+  <div class="page">
+    <header class="page-header">
+      <h1>Informatika &amp; Elektronika – Interaktív Tankönyv</h1>
+      <h2>Fények, hangok, mikrokontrollerek és áramkörök – C++ (Arduino) &amp; MicroPython</h2>
+    </header>
+
+    <main>
+      <h3>Bevezetés: Digitális fények és hangok mikrokontrollerrel</h3>
+      <p>
+        A modern elektronikai projektekben a mikrokontrollerek (pl. Arduino, ESP32, Raspberry Pi Pico)
+        segítségével könnyedén vezérelhetünk LED-eket, hangszórókat, szenzorokat és motorokat.
+        Az alábbi didaktikai kártyák segítenek abban, hogy a tanuló ne csak „megcsinálja” a projektet,
+        hanem meg is értse a működési elveket.
+      </p>
+
+      <!-- 🔍 MIT KELL MEGFIGYELNIE? -->
+      <section class="card card-blue">
+        <div class="card-title">
+          <span class="icon">🔍</span>
+          <span class="label">MIT KELL MEGFIGYELNIE?</span>
+        </div>
+        <p>
+          Figyelje meg, hogyan változik a LED fényereje, ha PWM (pulzusszélesség-moduláció) segítségével
+          vezéreljük a kimenetet. Észre fogja venni, hogy a LED nem „folyamatosan” világít, hanem nagyon
+          gyorsan ki- és bekapcsol, de az emberi szem ezt folyamatos fényként érzékeli.
+        </p>
+        <p>
+          Ugyanígy figyelje meg, hogyan változik a hangmagasság, ha egy piezo hangszórót különböző
+          frekvenciájú jelekkel hajtunk meg. A frekvencia növelésével a hang magasabb, csökkentésével
+          mélyebb lesz.
+        </p>
+      </section>
+
+      <!-- 📌 MIT KELL MEGJEGYEZNIE? -->
+      <section class="card card-yellow">
+        <div class="card-title">
+          <span class="icon">📌</span>
+          <span class="label">MIT KELL MEGJEGYEZNIE?</span>
+        </div>
+        <p>
+          A PWM lényege: a kimeneti jel kitöltési tényezőjét (duty cycle) változtatjuk. Ha a jel
+          nagyobb részben „HIGH” (1), a LED fényesebb, ha nagyobb részben „LOW” (0), a LED halványabb.
+        </p>
+        <p>
+          A mikrokontroller digitális kimenete valójában csak két állapotot ismer (0 és 1), de a
+          gyors kapcsolgatás és az átlagolt teljesítmény miatt a LED fényereje fokozatosan szabályozhatónak tűnik.
+        </p>
+      </section>
+
+      <!-- 🎓 MIT KELL TUDNIA? -->
+      <section class="card card-green">
+        <div class="card-title">
+          <span class="icon">🎓</span>
+          <span class="label">MIT KELL TUDNIA?</span>
+        </div>
+        <ul>
+          <li>Ismernie kell a PWM alapfogalmát és a duty cycle jelentését.</li>
+          <li>Értenie kell, hogyan kapcsolódik a LED fényereje a kimeneti jel átlagos teljesítményéhez.</li>
+          <li>Tudnia kell, hogyan lehet egy piezo hangszórót meghajtani különböző frekvenciájú jelekkel.</li>
+          <li>Ismernie kell az alapvető tranzisztoros kapcsoló működését (pl. NPN tranzisztor, bázisellenállás).</li>
+        </ul>
+      </section>
+
+      <!-- 💡 GONDOLATOK -->
+      <section class="card card-purple">
+        <div class="card-title">
+          <span class="icon">💡</span>
+          <span class="label">GONDOLATOK</span>
+        </div>
+        <p>
+          Gondolja végig: mi történik, ha a PWM frekvenciája túl alacsony? A LED villogása már
+          láthatóvá válik, és a szem nem „átlagolja” a fényt. Ugyanígy, ha a hangszórót túl alacsony
+          frekvenciával hajtjuk meg, a hang inkább „kattogásnak” tűnik, mint folyamatos hangnak.
+        </p>
+        <p>
+          Gondolja át azt is, hogyan lehetne egy egyszerű 555-ös astabil multivibrátorral hasonló
+          villogó fényhatást létrehozni, mikrokontroller nélkül. Miben különbözik a két megoldás
+          rugalmasság és programozhatóság szempontjából?
+        </p>
+      </section>
+
+      <!-- ✏️ GYAKORLATI FELADATOK -->
+      <section class="card card-grey">
+        <div class="card-title">
+          <span class="icon">✏️</span>
+          <span class="label">GYAKORLATI FELADATOK</span>
+        </div>
+        <ol>
+          <li>
+            Készítsen olyan Arduino programot, amely egy LED fényerejét lassan növeli, majd csökkenti
+            (soft fade in/out) PWM segítségével.
+          </li>
+          <li>
+            Írjon MicroPython kódot, amely egy piezo hangszórón egyszerű dallamot játszik le különböző
+            frekvenciák és időtartamok kombinálásával.
+          </li>
+          <li>
+            Tervezzen tranzisztoros kapcsolót, amely egy nagyobb teljesítményű LED-szalagot vezérel
+            mikrokontroller PWM kimenetéről.
+          </li>
+        </ol>
+      </section>
+
+      <!-- C++ (Arduino) vs MicroPython kódblokkok -->
+      <h3>Példa: LED fényerő szabályzása – C++ (Arduino) és MicroPython</h3>
+
+      <div class="code-row">
+        <div class="code-block">
+          <h4>C++ (Arduino) – PWM LED Fade</h4>
+          <pre>const int ledPin = 9; // PWM kimenet
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // Fényerő növelése
+  for (int value = 0; value &lt;= 255; value++) {
+    analogWrite(ledPin, value);
+    delay(10);
+  }
+
+  // Fényerő csökkentése
+  for (int value = 255; value &gt;= 0; value--) {
+    analogWrite(ledPin, value);
+    delay(10);
+  }
+}
+          </pre>
+        </div>
+
+        <div class="code-block">
+          <h4>MicroPython – PWM LED Fade (pl. ESP32 / Pico)</h4>
+          <pre>from machine import Pin, PWM
+from time import sleep_ms
+
+led = PWM(Pin(15))      # PWM kimenet
+led.freq(1000)          # 1 kHz PWM frekvencia
+
+while True:
+    # Fényerő növelése
+    for duty in range(0, 1024):
+        led.duty(duty)
+        sleep_ms(5)
+
+    # Fényerő csökkentése
+    for duty in range(1023, -1, -1):
+        led.duty(duty)
+        sleep_ms(5)
+          </pre>
+        </div>
+      </div>
+
+      <h3>Példa: Piezo hangszóró meghajtása – C++ (Arduino) és MicroPython</h3>
+
+      <div class="code-row">
+        <div class="code-block">
+          <h4>C++ (Arduino) – Egyszerű hanggenerálás</h4>
+          <pre>const int buzzerPin = 8;
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  tone(buzzerPin, 440);   // A hang (440 Hz)
+  delay(500);
+  noTone(buzzerPin);
+  delay(200);
+
+  tone(buzzerPin, 660);   // magasabb hang
+  delay(500);
+  noTone(buzzerPin);
+  delay(500);
+}
+          </pre>
+        </div>
+
+        <div class="code-block">
+          <h4>MicroPython – Piezo hangszóró PWM-mel</h4>
+          <pre>from machine import Pin, PWM
+from time import sleep_ms
+
+buzzer = PWM(Pin(14))
+
+def play_tone(freq, duration_ms):
+    buzzer.freq(freq)
+    buzzer.duty(512)  # kb. 50% kitöltés
+    sleep_ms(duration_ms)
+    buzzer.duty(0)
+
+while True:
+    play_tone(440, 500)
+    sleep_ms(200)
+    play_tone(660, 500)
+    sleep_ms(500)
+          </pre>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>Informatika &amp; Elektronika – Mikrokontrolleres fények és hangok</span>
+      <span class="page-number">Oldal 1 / 1</span>
+    </footer>
+  </div>
+
+  <!-- MODÁLIS – 22 opciós Effekt Menü -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">✨ Csillogó / Effekt Menü – 22 Barkács &amp; Mikrokontroller Projekt</h2>
+        <button class="modal-close" id="closeModalBtn" aria-label="Bezárás">✖</button>
+      </div>
+      <div class="modal-body">
+        <p class="intro">
+          Az alábbi projektek megbízható barkács- és mikrokontroller-forrásokból merítenek ihletet
+          (Instructables, SparkFun, MakerSpaces, Science World stb.). Mindegyik röviden bemutatja
+          az áramkör vagy szoftver működési elvét.
+        </p>
+        <ul class="option-list">
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">1. 555-ös astabil multivibrátor – villogó LED</span>
+              <span class="option-item-source">Instructables / klasszikus elektronika</span>
+            </div>
+            <p class="option-item-desc">
+              Az 555-ös időzítő astabil módban folyamatosan váltogatja a kimenetet, így a LED periodikusan
+              ki- és bekapcsol. A frekvenciát az ellenállások és kondenzátor értékei határozzák meg.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">2. PWM fényerőszabályzás LED-szalagon</span>
+              <span class="option-item-source">SparkFun / mikrokontrolleres vezérlés</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller PWM kimenete tranzisztoron keresztül vezérli a LED-szalagot. A duty cycle
+              változtatásával a szalag fényereje fokozatosan állítható.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">3. RGB LED színkeverés három PWM csatornával</span>
+              <span class="option-item-source">MakerSpaces / kreatív fényprojektek</span>
+            </div>
+            <p class="option-item-desc">
+              Három külön PWM csatorna vezérli a piros, zöld és kék LED-et. A három csatorna kitöltési
+              tényezőinek kombinálásával tetszőleges szín állítható elő.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">4. Neopixel / WS2812 LED-szalag animációk</span>
+              <span class="option-item-source">Adafruit / digitális LED-ek</span>
+            </div>
+            <p class="option-item-desc">
+              Egyetlen adatvezetéken sorosan fűzött RGB LED-eket vezérelünk. A mikrokontroller időzített
+              adatkereteket küld, így komplex fényanimációk hozhatók létre.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">5. Piezo hangszóró morze-kód jelzővel</span>
+              <span class="option-item-source">Science World / oktatási projektek</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller rövid és hosszú hangjeleket generál a piezo hangszórón, ezzel morze-kódot
+              továbbít. A frekvencia és időtartam szabályozásával jól hallható jelzések készíthetők.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">6. Tranzisztoros kapcsoló nagyobb terheléshez</span>
+              <span class="option-item-source">SparkFun / alap tranzisztoros áramkörök</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller kimenete csak kis áramot tud szolgáltatni, ezért NPN tranzisztorral
+              kapcsoljuk a nagyobb terhelést (pl. LED-szalag). A bázisellenállás védi a tranzisztort.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">7. Fényérzékelő (LDR) + LED automatikus kapcsolás</span>
+              <span class="option-item-source">Instructables / fényvezérelt áramkörök</span>
+            </div>
+            <p class="option-item-desc">
+              Az LDR ellenállása a fényerőtől függ. Feszültségosztóval mérve a mikrokontroller eldönti,
+              hogy sötétben automatikusan bekapcsolja a LED-et.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">8. Hangvezérelt fény – mikrofon modul + LED</span>
+              <span class="option-item-source">MakerSpaces / interaktív installációk</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrofon modul analóg jelet ad, amelyet ADC-vel mérünk. A hang intenzitása alapján
+              a LED fényereje vagy villogási sebessége változik.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">9. 7-szegmenses kijelző számláló</span>
+              <span class="option-item-source">SparkFun / kijelzők</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller digitális kimenetei a 7-szegmenses kijelző szegmenseit vezérlik. A
+              megfelelő szegmenskombinációk bekapcsolásával számjegyek jeleníthetők meg.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">10. LED futófény (chaser) tranzisztorokkal</span>
+              <span class="option-item-source">Instructables / klasszikus futófény</span>
+            </div>
+            <p class="option-item-desc">
+              Több LED-et sorban kapcsolunk tranzisztorokkal, és a mikrokontroller időzítve kapcsolgatja
+              őket, így futófény hatás jön létre.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">11. Kapacitív érintésérzékelés + LED visszajelzés</span>
+              <span class="option-item-source">MakerSpaces / érintésérzékelő projektek</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller egy vezető felület kapacitását méri. Érintéskor a kapacitás változik,
+              és a program LED-et kapcsol vagy hangot ad.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">12. PWM motorvezérlés – ventilátor fordulatszabályzás</span>
+              <span class="option-item-source">SparkFun / motorvezérlés</span>
+            </div>
+            <p class="option-item-desc">
+              A motor tápfeszültségét tranzisztoron keresztül PWM-mel vezéreljük. A duty cycle
+              változtatásával a motor fordulatszáma szabályozható.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">13. LED mátrix animáció – sor/oszlop multiplexelés</span>
+              <span class="option-item-source">MakerSpaces / LED mátrix projektek</span>
+            </div>
+            <p class="option-item-desc">
+              A LED mátrix sorait és oszlopait gyorsan váltogatva kapcsoljuk. A multiplexelés miatt
+              kevés vezetékkel sok LED vezérelhető, és animációk jeleníthetők meg.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">14. 555-ös monostabil – gombnyomásra időzített LED</span>
+              <span class="option-item-source">Science World / időzítő áramkörök</span>
+            </div>
+            <p class="option-item-desc">
+              Monostabil módban az 555-ös időzítő egy gombnyomásra meghatározott ideig tartja
+              magas szinten a kimenetet, így a LED adott ideig világít.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">15. Piezo hangszóró riasztó – határérték érzékeléssel</span>
+              <span class="option-item-source">SparkFun / biztonsági projektek</span>
+            </div>
+            <p class="option-item-desc">
+              Szenzor (pl. hőmérséklet vagy fény) határérték túllépésekor a mikrokontroller
+              riasztó hangot generál a piezo hangszórón.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">16. Digitális zajgenerátor LED visszajelzéssel</span>
+              <span class="option-item-source">MakerSpaces / hang- és fényprojektek</span>
+            </div>
+            <p class="option-item-desc">
+              Pszeudo-véletlen bitmintát generálunk, amelyet hangszóróra és LED-re is kivezetünk.
+              A zaj spektruma és a villogás mintázata összefügg.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">17. IR távirányító + LED visszajelzés</span>
+              <span class="option-item-source">Instructables / infravörös vezérlés</span>
+            </div>
+            <p class="option-item-desc">
+              Az IR vevő modul dekódolja a távirányító jeleit. A mikrokontroller a gombnyomások
+              alapján különböző LED mintákat vagy hangokat indít.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">18. Fényorgona – hangfrekvencia alapján vezérelt LED-ek</span>
+              <span class="option-item-source">MakerSpaces / audio-vizuális projektek</span>
+            </div>
+            <p class="option-item-desc">
+              A hangjelet frekvenciasávokra bontjuk (pl. alacsony, közép, magas), és minden sávhoz
+              külön LED-csoportot vezérlünk, így a fények a zenére „táncolnak”.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">19. Kapuzott oszcillátor – LED villogás logikai kapukkal</span>
+              <span class="option-item-source">Science World / logikai áramkörök</span>
+            </div>
+            <p class="option-item-desc">
+              Logikai kapukkal (pl. NAND, NOR) épített oszcillátor periodikus jelet generál, amely
+              LED-et villogtat. A kapuk kombinációja határozza meg a frekvenciát és a jelalakot.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">20. EEPROM alapú fényminta tárolás</span>
+              <span class="option-item-source">SparkFun / memória és vezérlés</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller EEPROM-jában tároljuk a LED mintákat. Bekapcsoláskor a program
+              kiolvassa a mintát, és a LED-eket ennek megfelelően vezérli.
+            </p>
+          </li>
+
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">21. Bluetooth vezérelt fény- és hanginstalláció</span>
+              <span class="option-item-source">MakerSpaces / IoT projektek</span>
+            </div>
+            <p class="option-item-desc">
+              A mikrokontroller Bluetooth-on keresztül kap parancsokat (pl. telefonról), és ezek
+              alapján LED-eket és hangszórót vezérel, interaktív installációt hozva létre.
+            </p>
+          </li>
+
+          <!-- 22. OPCIÓ – Falstad Circuit Simulator -->
+          <li class="option-item">
+            <div class="option-item-header">
+              <span class="option-item-title">22. Falstad Áramköri Szimulátor – interaktív vizuális áramkörök</span>
+              <span class="option-item-source">Falstad Circuit Simulator (online)</span>
+            </div>
+            <p class="option-item-desc">
+              A Falstad Áramköri Szimulátor egy böngészőben futó, interaktív eszköz, amely valós időben
+              mutatja az áramkörök feszültség- és árameloszlását. Ideális 555-ös multivibrátorok, PWM
+              áramkörök, tranzisztoros kapcsolók és szűrők vizuális megértéséhez.
+            </p>
+            <p>
+              <a href="https://falstad.com/circuit/" target="_blank" rel="noopener noreferrer">
+                👉 Nyisd meg a Falstad Circuit Simulator oldalt (falstad.com/circuit)
+              </a>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById("openModalBtn");
+      const closeBtn = document.getElementById("closeModalBtn");
+      const backdrop = document.getElementById("modalBackdrop");
+
+      function openModal() {
+        backdrop.style.display = "flex";
+      }
+
+      function closeModal() {
+        backdrop.style.display = "none";
+      }
+
+      openBtn.addEventListener("click", openModal);
+      closeBtn.addEventListener("click", closeModal);
+
+      backdrop.addEventListener("click", function (e) {
+        if (e.target === backdrop) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+
+
+</body></html>

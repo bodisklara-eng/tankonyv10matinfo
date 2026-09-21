@@ -1,0 +1,404 @@
+
+<!-- saved from url=(0050)file:///D:/tankonyv/gemini-code-1789151293538.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body><button class="sparkle-popup-btn" onclick="openTheoryModal()">
+  <span class="sparkle-icon">✨</span> Szimulációk &amp; Elméleti Tananyagok
+</button>
+
+<!-- MODAL / POPUP ABLAK (VILÁGOS HÁTTÉRREL) -->
+<div id="theoryModal" class="theory-modal-overlay" style="display: flex;">
+  <div class="theory-modal-content">
+    
+    <!-- Fejléc Bezáró gombbal -->
+    <div class="theory-modal-header">
+      <h2><span class="sparkle-icon">✨</span> Áramköri Műhely</h2>
+      <span class="close-btn" onclick="closeTheoryModal()">×</span>
+    </div>
+
+    <!-- FÜLEK (TABS) A NAVIGÁCIÓHOZ -->
+    <div class="modal-tabs">
+      <button class="tab-btn active" onclick="switchTab('simulations')">🎮 Interaktív Szimulációk</button>
+      <button class="tab-btn" onclick="switchTab('theory')">📚 Elméleti Útmutatók</button>
+    </div>
+
+    <!-- 1. FÜL: SZIMULÁCIÓK (NAGYOBB ABLAKKAL) -->
+    <div id="tab-simulations" class="tab-content active">
+      <p class="modal-description">Kattints és próbáld ki, hogyan áramlik az elektronika a gyakorlatban!</p>
+
+      <!-- 1. KÁRTYA: Beágyazott áramkör (Nagy méretű) -->
+      <div class="sim-card">
+        <div class="sim-card-info">
+          <h3>⚡ Gyors Áramkör Szimulátor</h3>
+          <p>Építs áramkört! Ha elkészültél, a menüből vagy az alábbi gombokkal elmentheted az alkotásodat:</p>
+        </div>
+
+        <!-- MENTÉSI ESZKÖZTÁR -->
+        <div class="save-toolbar">
+          <span class="save-title">💾 Mentés opciók:</span>
+          <button class="save-btn" onclick="exportCircuit('svg')">🖼️ SVG képként</button>
+          <button class="save-btn" onclick="exportCircuit('link')">🔗 Megosztható Linkként</button>
+          <button class="save-btn" onclick="exportCircuit('file')">📄 Fájlként (.txt)</button>
+        </div>
+
+        <!-- Sötét hátterű, megnövelt méretű szimulátor keret -->
+        <div class="sim-embed-container">
+          <iframe id="falstad-iframe" src="./index_files/circuitjs.html" title="Áramkör Szimulátor" loading="lazy"></iframe>
+        </div>
+        <p class="sim-hint">💡 <b>PDF mentéshez:</b> Nyomd meg a szimulátorban a <i>File ➔ Print</i> opciót, majd válaszd a "Mentés PDF-ként" lehetőséget!</p>
+      </div>
+
+      <!-- 2. KÁRTYA: Tinkercad -->
+      <div class="sim-card">
+        <div class="sim-card-info">
+          <h3>🖥️ Tinkercad Circuits (Ajánlott)</h3>
+          <p>Valósághű 3D-s alkatrészek (gombelem, LED, kapcsoló). Nyomd meg a gombot a megnyitáshoz!</p>
+        </div>
+        <a href="https://www.tinkercad.com/circuits" target="_blank" class="sim-btn tinkercad-bg">
+          🚀 Indítás új ablakban
+        </a>
+      </div>
+
+    </div>
+
+    <!-- 2. FÜL: ELMÉLETI TANANYAGOK (GÖRDÜLŐMENÜ) -->
+    <div id="tab-theory" class="tab-content">
+      <p class="modal-description">Válassz egy forrást a részletes leírások és útmutatók megtekintéséhez:</p>
+
+      <div class="select-wrapper">
+        <select id="learning-select-modal" class="sparkle-select" onchange="openSelectedLink(this)">
+          <option value="" disabled="" selected="">Válassz egy forrást...</option>
+          
+          <!-- Útmutatók & Leckék -->
+          <optgroup label="Útmutatók &amp; Cikkek">
+            <option value="https://www.instructables.com/Paper-Circuit-Simon-Says/">Instructables - Paper Circuit Simon Says</option>
+            <option value="https://www.instructables.com/Paper-Circuits/">Instructables - Paper Circuits</option>
+            <option value="https://learn.adafruit.com/makey-paper-craft/circuit-diagram">Adafruit - Makey Paper Craft Diagram</option>
+            <option value="https://www.makerspaces.com/paper-circuits/">Makerspaces - Papír Áramkörök</option>
+            <option value="https://core-electronics.com.au/guides/using-copper-tape-with-paper-circuits/">Core Electronics - Rézszalag használata</option>
+            <option value="https://sciencekiddo.com/paper-circuit-cards/">Science Kiddo - Papír Áramkör Képeslapok</option>
+            <option value="https://makeymakey.com/blogs/how-to-instructions/lesson-one-simple-circuit">Makey Makey - Simple Circuit Lecke</option>
+            <option value="https://www.scienceworld.ca/resource/paper-circuits/">Science World - Paper Circuits Resource</option>
+            <option value="https://www.exploratorium.edu/tinkering/projects/paper-circuits">Exploratorium - Paper Circuits Project</option>
+            <option value="https://www.bchydro.com/powersmart/schools/activities/paper-circuit.html">BCHydro - Build a Paper Circuit</option>
+            <option value="https://learn.browndoggadgets.com/Guide/Printed+Circuit+Board/179">Brown Dog Gadgets - Printed Circuit Board Guide</option>
+            <option value="https://learn.sparkfun.com/tutorials/the-great-big-guide-to-paper-circuits/all">SparkFun - Great Big Guide to Paper Circuits</option>
+            <option value="https://www.makerspaces.com/paper-circuits/">Makerspaces - Paper Circuits Útmutató</option>
+          </optgroup>
+
+          <!-- Interaktív Szimulátorok -->
+          <optgroup label="Interaktív Szimulátorok">
+            <option value="https://www.tinkercad.com/circuits">Tinkercad Circuits Szimulátor</option>
+          </optgroup>
+
+          <!-- Közösségi Média & Videók -->
+          <optgroup label="Videók &amp; Közösségi Média">
+            <option value="https://www.tiktok.com/@moonshotkidz/video/7639722677476936973">TikTok - Moonshotkidz Videó</option>
+            <option value="https://www.instagram.com/reels/DW1Nzupjtrg/">Instagram Reel 1</option>
+            <option value="https://www.instagram.com/reels/DVlYCXVDst0/">Instagram Reel 2</option>
+            <option value="https://www.instagram.com/p/DZH3iFBCH3N/">Instagram Poszt</option>
+          </optgroup>
+
+          <!-- Készletek & Vásárlási Hivatkozások -->
+          <optgroup label="Oktatási Készletek &amp; Bolt">
+            <option value="https://stemeducationworks.com/product/paper-circuits-kit/">STEM Education Works - Paper Circuits Kit</option>
+            <option value="https://www.etsy.com/ie/listing/4397978177/computer-stem-busy-book-kids-learning">Etsy - STEM Busy Book Kids Learning</option>
+            <option value="https://www.geyerinstructional.com/origami-circuits-classroom-kit-steam-learning-for-kids/">Geyer Instructional - Origami Circuits Kit</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* Fő Gomb Stílusa */
+  .sparkle-popup-btn {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    border: 2px solid #2575fc;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sparkle-popup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 117, 252, 0.5);
+  }
+
+  /* Modal Háttér */
+  .theory-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Modal Kártya (VILÁGOS HÁTTÉR ÉS NAGYOBB MÉRET) */
+  .theory-modal-content {
+    background: #ffffff;
+    color: #333333;
+    width: 95%;
+    max-width: 950px;
+    height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .theory-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #eef0f4;
+    padding-bottom: 8px;
+  }
+
+  .theory-modal-header h2 {
+    color: #1a1a2e;
+    font-size: 1.3rem;
+    margin: 0;
+  }
+
+  .close-btn {
+    color: #888888;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .close-btn:hover { color: #e04a39; }
+
+  /* Fülek Navigációja */
+  .modal-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    background: #f4f6f8;
+    border: 1px solid #e0e0e0;
+    color: #555555;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    background: #2575fc;
+    color: #ffffff;
+    border-color: #2575fc;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; flex: 1; }
+
+  .modal-description {
+    color: #666666;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+
+  /* Szimulációs Kártyák (Világos alap) */
+  .sim-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 15px;
+  }
+
+  .sim-card-info h3 {
+    color: #1e293b;
+    font-size: 1.05rem;
+    margin: 0 0 6px 0;
+  }
+
+  .sim-card-info p {
+    color: #475569;
+    font-size: 0.85rem;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+  }
+
+  /* Mentési Eszköztár Világos stílussal */
+  .save-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    background: #edf2f7;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  .save-title {
+    color: #2d3748;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+
+  .save-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e0;
+    color: #2d3748;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .save-btn:hover {
+    background: #2575fc;
+    color: #ffffff;
+    border-color: #2575fc;
+  }
+
+  .sim-hint {
+    color: #64748b;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  .sim-btn {
+    display: inline-block;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+  }
+
+  .tinkercad-bg { background: linear-gradient(90deg, #e04a39, #ff5722); }
+
+  /* SÖTÉT HÁTTERŰ ALKOTÓFELÜLET (NAGYÍTOTT IFRAME) */
+  .sim-embed-container iframe {
+    width: 100%;
+    height: 480px; /* Megnövelt magasság az alkotáshoz */
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    background-color: #000000; /* Megőrzött sötét háttér az alkotófelületnek */
+  }
+
+  /* Gördülőmenü Világos Stílusban */
+  .select-wrapper { position: relative; }
+
+  .sparkle-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #1e293b;
+    background: #ffffff;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .sparkle-select option { background-color: #ffffff; color: #1e293b; }
+  .sparkle-select optgroup { background-color: #f1f5f9; color: #2575fc; font-weight: bold; }
+
+  .select-wrapper::after {
+    content: '▼';
+    font-size: 0.8rem;
+    color: #2575fc;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .sparkle-icon {
+    display: inline-block;
+    animation: pulse 1.5s infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.15); opacity: 1; }
+  }
+</style>
+
+<script>
+  function openTheoryModal() {
+    document.getElementById('theoryModal').style.display = 'flex';
+  }
+
+  function closeTheoryModal() {
+    document.getElementById('theoryModal').style.display = 'none';
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    if(tabName === 'simulations') {
+      document.querySelectorAll('.tab-btn')[0].classList.add('active');
+      document.getElementById('tab-simulations').classList.add('active');
+    } else {
+      document.querySelectorAll('.tab-btn')[1].classList.add('active');
+      document.getElementById('tab-theory').classList.add('active');
+    }
+  }
+
+  function exportCircuit(type) {
+    if (type === 'svg') {
+      alert("A mentéshez kattints a szimulátor belsejében (fekete terület) a 'File' ➔ 'Export as SVG...' menüpontra!");
+    } else if (type === 'link') {
+      alert("A megosztható linkhez kattints a szimulátor belsejében a 'File' ➔ 'Export as Link...' lehetőségre!");
+    } else if (type === 'file') {
+      alert("A fájl mentéséhez kattints a 'File' ➔ 'Save As...' gombra a szimulátor menüjében!");
+    }
+  }
+
+  function openSelectedLink(selectElement) {
+    if (selectElement.value) {
+      window.open(selectElement.value, '_blank');
+      selectElement.selectedIndex = 0;
+    }
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('theoryModal');
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  }
+</script></body></html>
