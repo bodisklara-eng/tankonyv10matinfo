@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)file:///D:/programe%20scolare/tankonyv/Tordeles/Probatananyag/ma/aafealadatok.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Mátrix Interaktív Könyv &amp; Macska Asszisztens</title>
+    <style>
+        :root {
+            --bg-pastel-yellow: #FEF9E7;
+            --container-bg: #FFFDF4;
+            --pastel-peach: #FFE5D9;
+            --pastel-blue: #D4E6F1;
+            --pastel-green: #D4EFDF;
+            --pastel-purple: #E8DAEF;
+            --pastel-pink: #FADBD8;
+            --text-color: #2C3E50;
+            --border-color: #F7DC6F;
+            --accent-yellow: #F4D03F;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-pastel-yellow);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #7D6608;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: #9A7D0A;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* 3D Book Container */
+        .book-perspective {
+            perspective: 1500px;
+            width: 100%;
+            max-width: 1050px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .book-container {
+            position: relative;
+            width: 100%;
+            background: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(125, 102, 8, 0.2);
+            border: 3px solid var(--border-color);
+            padding: 40px;
+            box-sizing: border-box;
+            min-height: 620px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        /* Page Flipping Animation Class */
+        .page-turn-anim {
+            animation: flipPage 0.6s ease-in-out;
+        }
+
+        @keyframes flipPage {
+            0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+            50% { transform: rotateY(90deg) scale(0.95); opacity: 0.3; }
+            100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 1.7rem;
+            color: #7D6608;
+            margin: 0;
+        }
+
+        .page-number {
+            background: var(--accent-yellow);
+            color: #7D6608;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1.1fr;
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        @media(max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Visual Canvas */
+        .visual-panel {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 2px solid var(--pastel-peach);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 280px;
+        }
+
+        canvas {
+            background: #FAFAFA;
+            border-radius: 6px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .controls-panel {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--accent-yellow);
+            border: none;
+            color: #7D6608;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        button:hover {
+            background-color: #D4AC0D;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Code & Analysis Panel */
+        .code-analysis-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .code-box {
+            background: #272822;
+            color: #F8F8F2;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            max-height: 160px;
+        }
+
+        .analysis-box {
+            background: #FFF;
+            border-radius: 8px;
+            padding: 10px;
+            border-left: 5px solid;
+            font-size: 0.85rem;
+        }
+
+        .analysis-bad { border-color: #E74C3C; background: #FDEDEC; }
+        .analysis-min { border-color: #F39C12; background: #FEF9E7; }
+        .analysis-max { border-color: #2ECC71; background: #E8F8F5; }
+
+        .analysis-box h4 { margin: 0 0 4px 0; font-size: 0.95rem; }
+        .pros-cons-list { margin: 3px 0 0 15px; padding: 0; }
+        .pros-cons-list li { margin-bottom: 3px; }
+
+        /* Level Comparison Badge */
+        .level-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .badge-bad { background: #E74C3C; }
+        .badge-min { background: #F39C12; }
+        .badge-max { background: #27AE60; }
+
+        /* Book Footer */
+        .book-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px dashed var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: #F9E79F;
+            border: 2px solid #F1C40F;
+            color: #7D6608;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover:not(:disabled) { background: #F1C40F; color: #fff; }
+        .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .page-dots { display: flex; gap: 8px; }
+        .dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #FAD7A0; cursor: pointer; transition: transform 0.2s, background 0.2s;
+        }
+        .dot.active { background: #D4AC0D; transform: scale(1.2); }
+
+        .interactive-tip { font-size: 0.75rem; color: #7E5109; text-align: center; margin-top: 4px; font-style: italic; }
+
+        /* Interactive Cat Assistant */
+        .cat-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .cat-speech {
+            background: #FFF;
+            border: 2px solid #F1C40F;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            max-width: 220px;
+            position: relative;
+            color: #7D6608;
+            font-weight: 500;
+        }
+
+        .cat-avatar {
+            width: 70px;
+            height: 70px;
+            background: #F4D03F;
+            border-radius: 50%;
+            border: 3px solid #D4AC0D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .cat-avatar:hover { transform: scale(1.1) rotate(5deg); }
+    </style>
+</head>
+<body>
+
+    <h1>C++ Mátrix Interaktív Kézikönyv &amp; Szint-Elemző</h1>
+    <p class="subtitle">Lapozz 3D-ben, hasonlítsd össze a Min / Max / Hiba szinteket, és kérdezd a macskát!</p>
+
+    <div class="book-perspective">
+        <div class="book-container page-turn-anim" id="bookContainer">
+            <div class="page-header">
+                <h2 class="page-title" id="bookPageTitle"><span class="level-badge badge-max">MAXIMUM SZINT</span><br>3. Maximum / Haladó Szint (Dinamikus Vector<vector>)</vector></h2>
+                <div class="page-number" id="bookPageIndicator">3. oldal / 3</div>
+            </div>
+
+            <div class="content-grid" id="bookPageContent">
+                <div class="visual-panel">
+                    <canvas id="simCanvas" width="280" height="210"></canvas>
+                    <div class="controls-panel">
+                        <button onclick="triggerAnimation()">▶ Animáció Újra</button>
+                    </div>
+                    <div class="interactive-tip">Kattints a cellákra a vizsgálathoz!</div>
+                </div>
+                <div class="code-analysis-panel">
+                    <div class="code-box"><pre>int n, m;
+cin &gt;&gt; n &gt;&gt; m;
+vector<vector<int>&gt; a(n, vector<int>(m, 5));
+for (int i = 0; i &lt; n; i++) {
+    for (int j = 0; j &lt; m; j++) {
+        cout &lt;&lt; a[i][j] &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+}</int></vector<int></pre></div>
+                    <div class="analysis-box analysis-max">
+                        <h4>📋 Kód Elemzés (Előnyök vs Hátrányok)</h4>
+                        <ul class="pros-cons-list">
+                            <li><strong>Előny (Max):</strong> Teljesen dinamikus méretezés futásidőben (n x m).</li><li><strong>Előny:</strong> Biztonságos STL vektorok, automatikus memóriakezelés.</li><li><strong>Hátrány:</strong> Kicsit bonyolultabb szintaxis a kezdő programozóknak.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-footer">
+                <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">← Előző oldal</button>
+                <div class="page-dots" id="pageDots">
+                    <span class="dot" onclick="goToPage(0)"></span>
+                    <span class="dot" onclick="goToPage(1)"></span>
+                    <span class="dot active" onclick="goToPage(2)"></span>
+                </div>
+                <button class="nav-btn" id="nextBtn" onclick="changePage(1)" disabled="">Következő oldal →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Cat Assistant -->
+    <div class="cat-assistant" onclick="catTalk()">
+        <div class="cat-speech" id="catSpeechBox">Miau! Kattints rám új tippért, vagy lapozz a könyvben! 🐾</div>
+        <div class="cat-avatar">🐱</div>
+    </div>
+
+    <script>
+        const pages = [
+            {
+                title: "1. Kezdő / Hibás Szint (Brute Force / Rossz indexelés)",
+                badge: "HIBÁS SZINT",
+                badgeClass: "badge-bad",
+                code: `int a[4][4] = {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+};
+for(i = 1; i <= 3; i++)
+    for(j = 1; j <= 3; j++)
+        cout << a[i][j];`,
+                analysis: {
+                    type: "analysis-bad",
+                    title: "Kód Elemzés (Előnyök vs Hátrányok)",
+                    items: [
+                        "<strong>Előny:</strong> Gyorsan leírható, egyszerű statikus deklaráció.",
+                        "<strong>Hátrány (Max):</strong> Hiányos inicializálás (4x4-es mérethez kevés adat).",
+                        "<strong>Hátrány (Kód):</strong> Eltolt indexelés (1-től 3-ig), a 0. sor/oszlop kihasználatlan."
+                    ]
+                },
+                canvasType: "badMatrix",
+                catTip: "Miau! Vigyázz a C++ tömbökkel: mindig 0-tól indexelünk, különben memóriaszivárgás vagy rossz kimenet lesz!"
+            },
+            {
+                title: "2. Minimum / Alap Szint (Fix 3x3 Mátrix)",
+                badge: "MINIMUM SZINT",
+                badgeClass: "badge-min",
+                code: `int a[3][3] = {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+};
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+        cout << a[i][j] << " ";
+    }
+    cout << endl;
+}`,
+                analysis: {
+                    type: "analysis-min",
+                    title: "Kód Elemzés (Előnyök vs Hátrányok)",
+                    items: [
+                        "<strong>Előny (Min):</strong> Helyes 0-tól induló indexelés, nincsenek indexelési hibák.",
+                        "<strong>Előny:</strong> Tiszta, átlátható kimenet.",
+                        "<strong>Hátrány (Max):</strong> Merev, fix méretű (3x3), nem rugalmas ha változó adatok jönnek."
+                    ]
+                },
+                canvasType: "minMatrix",
+                catTip: "Ez már sokkal jobb! De mi van, ha futásidőben változik a mátrix mérete? Ehhez kell a Maximum szint!"
+            },
+            {
+                title: "3. Maximum / Haladó Szint (Dinamikus Vector<Vector>)",
+                badge: "MAXIMUM SZINT",
+                badgeClass: "badge-max",
+                code: `int n, m;
+cin >> n >> m;
+vector<vector<int>> a(n, vector<int>(m, 5));
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+        cout << a[i][j] << " ";
+    }
+    cout << endl;
+}`,
+                analysis: {
+                    type: "analysis-max",
+                    title: "Kód Elemzés (Előnyök vs Hátrányok)",
+                    items: [
+                        "<strong>Előny (Max):</strong> Teljesen dinamikus méretezés futásidőben (n x m).",
+                        "<strong>Előny:</strong> Biztonságos STL vektorok, automatikus memóriakezelés.",
+                        "<strong>Hátrány:</strong> Kicsit bonyolultabb szintaxis a kezdő programozóknak."
+                    ]
+                },
+                canvasType: "maxMatrix",
+                catTip: "Briliáns! Ez a Maximum szintű profi megoldás dinamikus memóriával. 🏆 Purrfect!"
+            }
+        ];
+
+        let currentPage = 0;
+        let animationInterval = null;
+        let catTipsList = [
+            "Miau! A C++ tömbök 0-tól indulnak! 🐾",
+            "Kattints a vászonra a cellák vizsgálatához!",
+            "A Maximum szintű vektoros megoldás rugalmasabb a fix tömböknél!",
+            "Ne felejtsd el tesztelni a mátrix szélsőértékeit is!"
+        ];
+
+        function renderPage() {
+            if (animationInterval) clearInterval(animationInterval);
+            
+            const container = document.getElementById("bookContainer");
+            container.classList.remove("page-turn-anim");
+            void container.offsetWidth; // Trigger reflow for animation
+            container.classList.add("page-turn-anim");
+
+            const page = pages[currentPage];
+            document.getElementById("bookPageTitle").innerHTML = `<span class="level-badge ${page.badgeClass}">${page.badge}</span><br>${page.title}`;
+            document.getElementById("bookPageIndicator").innerText = `${currentPage + 1}. oldal / ${pages.length}`;
+            
+            document.getElementById("prevBtn").disabled = currentPage === 0;
+            document.getElementById("nextBtn").disabled = currentPage === pages.length - 1;
+
+            const dots = document.querySelectorAll(".dot");
+            dots.forEach((dot, index) => {
+                dot.classList.toggle("active", index === currentPage);
+            });
+
+            const contentGrid = document.getElementById("bookPageContent");
+            
+            contentGrid.innerHTML = `
+                <div class="visual-panel">
+                    <canvas id="simCanvas" width="280" height="210"></canvas>
+                    <div class="controls-panel">
+                        <button onclick="triggerAnimation()">▶ Animáció Újra</button>
+                    </div>
+                    <div class="interactive-tip">Kattints a cellákra a vizsgálathoz!</div>
+                </div>
+                <div class="code-analysis-panel">
+                    <div class="code-box"><pre>${page.code}</pre></div>
+                    <div class="analysis-box ${page.analysis.type}">
+                        <h4>📋 ${page.analysis.title}</h4>
+                        <ul class="pros-cons-list">
+                            ${page.analysis.items.map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            initCanvasAnimation(page.canvasType);
+            document.getElementById("catSpeechBoxinnerText") = page.catTip;
+            document.getElementById("catSpeechBox").innerText = page.catTip;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 0) currentPage = 0;
+            if (currentPage >= pages.length) currentPage = pages.length - 1;
+            renderPage();
+        }
+
+        function goToPage(index) {
+            currentPage = index;
+            renderPage();
+        }
+
+        function catTalk() {
+            const randomTip = catTipsList[Math.floor(Math.random() * catTipsList.length)];
+            document.getElementById("catSpeechBox").innerText = randomTip;
+        }
+
+        function initCanvasAnimation(type) {
+            const canvas = document.getElementById("simCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+
+            let step = 0;
+            let highlightedCell = {r: -1, c: -1};
+
+            canvas.onclick = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (type === "badMatrix") {
+                    const c = Math.floor((x - 20) / 45);
+                    const r = Math.floor((y - 15) / 40);
+                    if (r >= 0 && r < 4 && c >= 0 && c < 4) highlightedCell = {r, c};
+                } else if (type === "minMatrix") {
+                    const c = Math.floor((x - 40) / 55);
+                    const r = Math.floor((y - 25) / 45);
+                    if (r >= 0 && r < 3 && c >= 0 && c < 3) highlightedCell = {r, c};
+                } else {
+                    const c = Math.floor((x - 40) / 55);
+                    const r = Math.floor((y - 25) / 45);
+                    if (r >= 0 && r < 3 && c >= 0 && c < 3) highlightedCell = {r, c};
+                }
+            };
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (type === "badMatrix") {
+                    ctx.font = "11px sans-serif";
+                    ctx.fillStyle = "#A93226";
+                    ctx.fillText("4x4 Mátrix (Hiba: 1-től indexelt, üres 0. sor)", 15, 12);
+
+                    for (let r = 0; r < 4; r++) {
+                        for (let c = 0; c < 4; c++) {
+                            let x = 20 + c * 48;
+                            let y = 20 + r * 40;
+                            
+                            ctx.fillStyle = (r === 0 || c === 0) ? "#FADBD8" : "#D4EFDF";
+                            if (highlightedCell.r === r && highlightedCell.c === c) {
+                                ctx.strokeStyle = "#E74C3C"; ctx.lineWidth = 3;
+                            } else {
+                                ctx.strokeStyle = "#BDC3C7"; ctx.lineWidth = 1;
+                            }
+
+                            ctx.fillRect(x, y, 44, 36);
+                            ctx.strokeRect(x, y, 44, 36);
+
+                            ctx.fillStyle = "#2C3E50";
+                            ctx.font = "10px monospace";
+                            ctx.fillText((r > 0 && c > 0) ? "5" : "0*", x + 14, y + 22);
+                        }
+                    }
+                } else if (type === "minMatrix") {
+                    ctx.font = "11px sans-serif";
+                    ctx.fillStyle = "#D4AC0D";
+                    ctx.fillText("3x3 Fix Mátrix (Minimum Szint)", 35, 15);
+
+                    for (let r = 0; r < 3; r++) {
+                        for (let c = 0; c < 3; c++) {
+                            let x = 40 + c * 55;
+                            let y = 25 + r * 48;
+
+                            ctx.fillStyle = (step % 9 === r * 3 + c) ? "#F4D03F" : "#FEF9E7";
+                            if (highlightedCell.r === r && highlightedCell.c === c) {
+                                ctx.strokeStyle = "#D4AC0D"; ctx.lineWidth = 3;
+                            } else {
+                                ctx.strokeStyle = "#F7DC6F"; ctx.lineWidth = 1;
+                            }
+
+                            ctx.fillRect(x, y, 50, 42);
+                            ctx.strokeRect(x, y, 50, 42);
+
+                            ctx.fillStyle = "#7D6608";
+                            ctx.font = "bold 11px monospace";
+                            ctx.fillText(`[${r}][${c}]`, x + 5, y + 24);
+                        }
+                    }
+                } else {
+                    ctx.font = "11px sans-serif";
+                    ctx.fillStyle = "#27AE60";
+                    ctx.fillText("Dynamic Vector<Vector> (Maximum Szint)", 25, 15);
+
+                    for (let r = 0; r < 3; r++) {
+                        for (let c = 0; c < 3; c++) {
+                            let x = 40 + c * 55;
+                            let y = 25 + r * 48;
+
+                            ctx.fillStyle = (step % 9 === r * 3 + c) ? "#A9DFBF" : "#E8F8F5";
+                            if (highlightedCell.r === r && highlightedCell.c === c) {
+                                ctx.strokeStyle = "#27AE60"; ctx.lineWidth = 3;
+                            } else {
+                                ctx.strokeStyle = "#A9DFBF"; ctx.lineWidth = 1;
+                            }
+
+                            ctx.fillRect(x, y, 50, 42);
+                            ctx.strokeRect(x, y, 50, 42);
+
+                            ctx.fillStyle = "#145A32";
+                            ctx.font = "bold 11px monospace";
+                            ctx.fillText(`v[${r}][${c}]`, x + 4, y + 24);
+                        }
+                    }
+                }
+            }
+
+            animationInterval = setInterval(() => {
+                step++;
+                draw();
+            }, 700);
+            draw();
+        }
+
+        function triggerAnimation() {
+            initCanvasAnimation(pages[currentPage].canvasType);
+        }
+
+        renderPage();
+    </script>
+
+</body></html>

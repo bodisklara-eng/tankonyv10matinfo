@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)file:///D:/programe%20scolare/tankonyv/Tordeles/Probatananyag/ma/popi.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prémium 3D-s Mátrixszorzás Vizualizáció</title>
+    <style>
+        :root {
+            --bg-grad-1: #0b0f19;
+            --bg-grad-2: #111827;
+            --card-bg: rgba(31, 41, 55, 0.7);
+            --border-glow: rgba(255, 255, 255, 0.1);
+            
+            --color-a: #fbbf24;
+            --color-a-glow: rgba(251, 191, 36, 0.4);
+            --color-b: #60a5fa;
+            --color-b-glow: rgba(96, 165, 250, 0.4);
+            --color-c: #34d399;
+            --color-c-glow: rgba(52, 211, 153, 0.5);
+            
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, var(--bg-grad-2), var(--bg-grad-1));
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--color-a), var(--color-b), var(--color-c));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.2);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            background: var(--card-bg);
+            padding: 10px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        button.active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #60a5fa;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+        }
+
+        .canvas-container {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 10px;
+        }
+
+        canvas {
+            display: block;
+            border-radius: 16px;
+        }
+
+        .formula-container {
+            margin-top: 25px;
+            width: 100%;
+            max-width: 820px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .formula-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .formula-body {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge-a { color: var(--color-a); text-shadow: 0 0 10px var(--color-a-glow); }
+        .badge-b { color: var(--color-b); text-shadow: 0 0 10px var(--color-b-glow); }
+        .badge-c { color: var(--color-c); text-shadow: 0 0 10px var(--color-c-glow); font-size: 1.4rem; }
+    </style>
+</head>
+<body>
+
+    <h1>Interaktív Mátrixszorzás</h1>
+    <div class="subtitle">Dinamikus sugár- és részecske-animációkkal</div>
+
+    <div class="controls">
+        <button id="btn3" class="active" onclick="changeSize(3)">3×3 Mátrix</button>
+        <button id="btn4" onclick="changeSize(4)">4×4 Mátrix</button>
+        <button onclick="randomize()">Új értékek</button>
+        <button onclick="step(-1)">◄ Vissza</button>
+        <button id="playBtn" onclick="togglePlay()">Play / Pause</button>
+        <button onclick="step(1)">Előre ►</button>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="stage" width="820" height="360"></canvas>
+    </div>
+
+    <div class="formula-container">
+        <div class="formula-title" id="formulaTitle">C[1][1] pozíció kiszámítása</div>
+        <div class="formula-body" id="formulaBody">(<span class="badge-a">5</span> × <span class="badge-b">8</span>) + (<span class="badge-a">4</span> × <span class="badge-b">2</span>) + (<span class="badge-a">7</span> × <span class="badge-b">4</span>) = <span class="badge-c">76</span></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('stage');
+        const ctx = canvas.getContext('2d');
+
+        let size = 3;
+        let matA = [], matB = [], matC = [];
+        let curRow = 0, curCol = 0;
+        let isPlaying = false;
+        let timer = null;
+
+        let particles = [];
+        let animProgress = 0;
+
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function createMatrix(s) {
+            let m = [];
+            for (let i = 0; i < s; i++) {
+                let row = [];
+                for (let j = 0; j < s; j++) row.push(randInt(1, 9));
+                m.push(row);
+            }
+            return m;
+        }
+
+        function changeSize(s) {
+            size = s;
+            document.getElementById('btn3').classList.toggle('active', s === 3);
+            document.getElementById('btn4').classList.toggle('active', s === 4);
+            reset();
+        }
+
+        function randomize() {
+            reset();
+        }
+
+        function reset() {
+            matA = createMatrix(size);
+            matB = createMatrix(size);
+            matC = Array(size).fill(0).map(() => Array(size).fill(null));
+            curRow = 0;
+            curCol = 0;
+            particles = [];
+            animProgress = 0;
+            updateFormula();
+        }
+
+        function updateFormula() {
+            const title = document.getElementById('formulaTitle');
+            const body = document.getElementById('formulaBody');
+
+            if (curRow >= size) {
+                title.innerText = "Befejezve";
+                body.innerHTML = `<span class="badge-c">A mátrixszorzás sikeresen véget ért!</span>`;
+                return;
+            }
+
+            title.innerText = `C[${curRow + 1}][${curCol + 1}] pozíció kiszámítása`;
+
+            let parts = [];
+            let sum = 0;
+            for (let k = 0; k < size; k++) {
+                let a = matA[curRow][k];
+                let b = matB[k][curCol];
+                sum += a * b;
+                parts.push(`(<span class="badge-a">${a}</span> × <span class="badge-b">${b}</span>)`);
+            }
+
+            body.innerHTML = `${parts.join(' + ')} = <span class="badge-c">${sum}</span>`;
+        }
+
+        function getCellCoords(matIndex, r, c) {
+            const cellSize = size === 3 ? 50 : 38;
+            const gap = 8;
+            const matWidth = size * cellSize + (size - 1) * gap;
+            const startY = (canvas.height - matWidth) / 2 + 10;
+            
+            const spacing = size === 3 ? 240 : 250;
+            const startX = 60 + matIndex * spacing;
+
+            return {
+                x: startX + c * (cellSize + gap) + cellSize / 2,
+                y: startY + r * (cellSize + gap) + cellSize / 2,
+                size: cellSize
+            };
+        }
+
+        function drawMatrix(matIndex, matrix, activeR, activeC, isResult = false) {
+            const cellSize = size === 3 ? 50 : 38;
+            const gap = 8;
+            const matWidth = size * cellSize + (size - 1) * gap;
+            const startY = (canvas.height - matWidth) / 2 + 10;
+            const spacing = size === 3 ? 240 : 250;
+            const startX = 60 + matIndex * spacing;
+
+            // Keretek
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(startX - 10, startY - 5);
+            ctx.lineTo(startX - 16, startY - 5);
+            ctx.lineTo(startX - 16, startY + matWidth + 5);
+            ctx.lineTo(startX - 10, startY + matWidth + 5);
+
+            ctx.moveTo(startX + matWidth + 10, startY - 5);
+            ctx.lineTo(startX + matWidth + 16, startY - 5);
+            ctx.lineTo(startX + matWidth + 16, startY + matWidth + 5);
+            ctx.lineTo(startX + matWidth + 10, startY + matWidth + 5);
+            ctx.stroke();
+
+            // Címkék
+            const labels = ["A mátrix", "B mátrix", "C eredmény"];
+            ctx.fillStyle = "#9ca3af";
+            ctx.font = "600 13px Inter";
+            ctx.textAlign = "center";
+            ctx.fillText(labels[matIndex], startX + matWidth / 2, startY - 20);
+
+            // Cellák
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    const cx = startX + c * (cellSize + gap);
+                    const cy = startY + r * (cellSize + gap);
+
+                    let isSel = false;
+                    let fill = "rgba(255, 255, 255, 0.03)";
+                    let border = "rgba(255, 255, 255, 0.08)";
+                    let textCol = "#f9fafc";
+                    let glow = null;
+
+                    if (!isResult && matIndex === 0 && r === activeR) {
+                        fill = "rgba(251, 191, 36, 0.15)";
+                        border = "#fbbf24";
+                        textCol = "#fbbf24";
+                        glow = "rgba(251, 191, 36, 0.4)";
+                        isSel = true;
+                    } else if (!isResult && matIndex === 1 && c === activeC) {
+                        fill = "rgba(96, 165, 250, 0.15)";
+                        border = "#60a5fa";
+                        textCol = "#60a5fa";
+                        glow = "rgba(96, 165, 250, 0.4)";
+                        isSel = true;
+                    } else if (isResult && r === activeR && c === activeC) {
+                        fill = "rgba(52, 211, 153, 0.2)";
+                        border = "#34d399";
+                        textCol = "#34d399";
+                        glow = "rgba(52, 211, 153, 0.6)";
+                        isSel = true;
+                    }
+
+                    if (glow) {
+                        ctx.shadowColor = glow;
+                        ctx.shadowBlur = 12;
+                    }
+
+                    ctx.fillStyle = fill;
+                    ctx.strokeStyle = border;
+                    ctx.lineWidth = isSel ? 2 : 1;
+
+                    ctx.beginPath();
+                    ctx.roundRect(cx, cy, cellSize, cellSize, 8);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.shadowBlur = 0; // Visszaállítás
+
+                    // Érték
+                    ctx.fillStyle = textCol;
+                    ctx.font = "bold 16px Inter";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    let val = matrix[r][c];
+                    ctx.fillText(val !== null ? val : "?", cx + cellSize / 2, cy + cellSize / 2);
+                }
+            }
+        }
+
+        function createParticles() {
+            if (curRow >= size) return;
+            particles = [];
+            const target = getCellCoords(2, curRow, curCol);
+
+            for (let k = 0; k < size; k++) {
+                const srcA = getCellCoords(0, curRow, k);
+                const srcB = getCellCoords(1, k, curCol);
+
+                // A-ból részecskék
+                particles.push({
+                    sx: srcA.x, sy: srcA.y,
+                    tx: target.x, ty: target.y,
+                    color: '#fbbf24',
+                    progress: 0,
+                    speed: 0.02 + Math.random() * 0.01,
+                    size: 3 + Math.random() * 3
+                });
+
+                // B-ből részecskék
+                particles.push({
+                    sx: srcB.x, sy: srcB.y,
+                    tx: target.x, ty: target.y,
+                    color: '#60a5fa',
+                    progress: 0,
+                    speed: 0.02 + Math.random() * 0.01,
+                    size: 3 + Math.random() * 3
+                });
+            }
+        }
+
+        function drawBeziers() {
+            if (curRow >= size) return;
+            const target = getCellCoords(2, curRow, curCol);
+
+            for (let k = 0; k < size; k++) {
+                const srcA = getCellCoords(0, curRow, k);
+                const srcB = getCellCoords(1, k, curCol);
+
+                // Ívek rajzolása
+                [ {s: srcA, c: 'rgba(251, 191, 36, 0.3)'}, {s: srcB, c: 'rgba(96, 165, 250, 0.3)'} ].forEach(item => {
+                    ctx.strokeStyle = item.c;
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([4, 4]);
+
+                    const ctrlY = Math.min(item.s.y, target.y) - 40;
+                    ctx.beginPath();
+                    ctx.moveTo(item.s.x, item.s.y);
+                    ctx.quadraticCurveTo((item.s.x + target.x) / 2, ctrlY, target.x, target.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                });
+            }
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const finished = curRow >= size;
+
+            // Szorzás és Egyenlőségjelek
+            ctx.fillStyle = "#6b7280";
+            ctx.font = "bold 24px Inter";
+            ctx.textAlign = "center";
+            ctx.fillText("×", 255, canvas.height / 2);
+            ctx.fillText("=", 500, canvas.height / 2);
+
+            drawMatrix(0, matA, finished ? -1 : curRow, -1);
+            drawMatrix(1, matB, -1, finished ? -1 : curCol);
+            drawMatrix(2, matC, finished ? -1 : curRow, finished ? -1 : curCol, true);
+
+            if (!finished) {
+                drawBeziers();
+
+                // Részecskék frissítése
+                particles.forEach(p => {
+                    p.progress += p.speed;
+                    if (p.progress > 1) p.progress = 0;
+
+                    const ctrlY = Math.min(p.sy, p.ty) - 40;
+                    const t = p.progress;
+
+                    // Bézier-görbe pozíció
+                    const x = (1 - t) * (1 - t) * p.sx + 2 * (1 - t) * t * ((p.sx + p.tx) / 2) + t * t * p.tx;
+                    const y = (1 - t) * (1 - t) * p.sy + 2 * (1 - t) * t * ctrlY + t * t * p.ty;
+
+                    ctx.shadowColor = p.color;
+                    ctx.shadowBlur = 8;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(x, y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                });
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        function step(dir = 1) {
+            if (dir === 1) {
+                if (curRow >= size) return;
+
+                // Számolás
+                let sum = 0;
+                for (let k = 0; k < size; k++) sum += matA[curRow][k] * matB[k][curCol];
+                matC[curRow][curCol] = sum;
+
+                curCol++;
+                if (curCol >= size) {
+                    curCol = 0;
+                    curRow++;
+                }
+            } else {
+                if (curRow === 0 && curCol === 0) return;
+                curCol--;
+                if (curCol < 0) {
+                    curCol = size - 1;
+                    curRow--;
+                }
+                matC[curRow][curCol] = null;
+            }
+
+            createParticles();
+            updateFormula();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            document.getElementById('playBtn').classList.toggle('active', isPlaying);
+
+            if (isPlaying) {
+                timer = setInterval(() => {
+                    if (curRow >= size) {
+                        togglePlay();
+                        return;
+                    }
+                    step(1);
+                }, 1400);
+            } else {
+                clearInterval(timer);
+            }
+        }
+
+        // Indítás
+        reset();
+        createParticles();
+        render();
+    </script>
+
+</body></html>

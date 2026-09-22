@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)file:///D:/programe%20scolare/tankonyv/Tordeles/Probatananyag/ma/konyv2.html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Mátrix Varázskönyv &amp; Interaktív Szimulátor</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #13092d 0%, #070314 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Csillogó részecskék canvas háttér */
+        #sparkle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            z-index: 2;
+            animation: fadeInDown 1s ease;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            background: linear-gradient(90deg, #38bdf8, #ec4899, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+            text-shadow: 0 0 35px rgba(236, 72, 153, 0.5);
+        }
+
+        header p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        /* Vezérlőpult */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: rgba(30, 41, 59, 0.85);
+            padding: 10px 24px;
+            border-radius: 50px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.7);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #ec4899, #9333ea);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.7);
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+
+        .speed-control input {
+            accent-color: #38bdf8;
+            cursor: pointer;
+        }
+
+        /* Könyv konténer 3D lapozással */
+        .book-container {
+            perspective: 2000px;
+            width: 100%;
+            max-width: 1000px;
+            height: 640px;
+            margin-bottom: 15px;
+            z-index: 2;
+        }
+
+        .book {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 60px rgba(56, 189, 248, 0.08);
+            padding: 28px 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backface-visibility: hidden;
+            transform-origin: left center;
+            transition: transform 0.85s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.85s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+
+        .page.prev {
+            transform: rotateY(-180deg);
+            opacity: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .badge.danger { background: rgba(244, 63, 94, 0.25); color: #fb7185; border: 1px solid #f43f5e; }
+        .badge.warning { background: rgba(250, 204, 21, 0.25); color: #fde047; border: 1px solid #facc15; }
+        .badge.success { background: rgba(52, 211, 153, 0.25); color: #34d399; border: 1px solid #34d399; }
+
+        .page h2 {
+            font-size: 1.35rem;
+            color: #f8fafc;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Összehasonlító rács animált nyilakkal */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .comp-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .comp-card.layman { border-top: 4px solid #f43f5e; }
+        .comp-card.pro { border-top: 4px solid #34d399; }
+
+        .comp-card h3 {
+            font-size: 0.88rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .comp-card.layman h3 { color: #fb7185; }
+        .comp-card.pro h3 { color: #34d399; }
+
+        /* Neon villogó animált nyíl */
+        .pulsing-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #facc15;
+            animation: pulseArrow 1.5s infinite ease-in-out;
+            text-shadow: 0 0 15px #facc15;
+        }
+
+        @keyframes pulseArrow {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.25); opacity: 1; text-shadow: 0 0 25px #facc15, 0 0 10px #ec4899; }
+        }
+
+        /* Buborék kódablak */
+        .code-bubble {
+            background: #02050b;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 8px 12px;
+            position: relative;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9);
+            margin: 6px 0;
+            overflow-x: auto;
+        }
+
+        pre code {
+            font-family: 'Fira Code', Consolas, monospace;
+            font-size: 0.7rem;
+            color: #38bdf8;
+            line-height: 1.3;
+        }
+
+        .keyword { color: #f43f5e; }
+        .type { color: #e879f9; }
+        .number { color: #facc15; }
+        .comment { color: #64748b; font-style: italic; }
+
+        .desc-text {
+            font-size: 0.76rem;
+            color: #cbd5e1;
+            line-height: 1.35;
+        }
+
+        /* Interaktív szimulátor stílusok */
+        .sim-container {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            text-align: center;
+        }
+
+        .matrix-grid {
+            display: inline-grid;
+            grid-template-columns: repeat(4, 38px);
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .matrix-cell {
+            width: 38px;
+            height: 38px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .matrix-cell.visited-bad {
+            background: rgba(244, 63, 94, 0.4);
+            border-color: #f43f5e;
+            color: #fb7185;
+            box-shadow: 0 0 10px #f43f5e;
+        }
+
+        .matrix-cell.visited-good {
+            background: rgba(52, 211, 153, 0.4);
+            border-color: #34d399;
+            color: #34d399;
+            box-shadow: 0 0 10px #34d399;
+        }
+
+        /* Lapozó pöttyök */
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #ec4899;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px #ec4899;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Csillogó animált háttér canvas -->
+    <canvas id="sparkle-canvas" width="1283" height="748"></canvas>
+
+    <header>
+        <h1>✨ C++ Mátrix Varázskönyv ✨</h1>
+        <p>Interaktív animációk, csillogó nyilak és kód-összehasonlítások a doksi alapján</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="prevPage()">❮ Előző lap</button>
+        <button class="btn secondary" id="autoPlayBtn" onclick="toggleAutoPlay()" style="background: linear-gradient(135deg, rgb(244, 63, 94), rgb(190, 18, 60));">⏸ Leállítás</button>
+        <button class="btn" onclick="nextPage()">Következő lap ❯</button>
+        
+        <div class="speed-control">
+            <label for="speedRange">Sebesség:</label>
+            <input type="range" id="speedRange" min="2500" max="7000" step="500" value="4500" onchange="updateSpeed(this.value)">
+        </div>
+    </div>
+
+    <div class="book-container">
+        <div class="book" id="book">
+            
+            <!-- 1. OLDAL: INICIALIZÁLÁSI HIBA & CSILLOGÓ NYILAK -->
+            <div class="page active" id="page-0">
+                <div>
+                    <span class="badge danger">1. Fejezet – Inicializálási Hiba</span>
+                    <h2><span>⚠️</span> Laikus hibás kód vs. Elemi helyes kód</h2>
+                    <p class="desc-text">A Google Docs dokumentum alapján a 4×4-es deklaráció csak 3×3 adatot kap, ami memóriahibát vagy elcsúszást okoz.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comp-card layman">
+                        <h3>❌ Laikus Módszer (Hibás)</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="type">int</span> a[<span class="number">4</span>][<span class="number">4</span>] = {
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>},
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>},
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>}
+}; <span class="comment">// 3x3 adat 4x4 mérethez!</span></code></pre>
+                        </div>
+                        <p class="desc-text">A maradék elemek automatikusan nullázódnak, de a méretbeli ellentmondás miatt nem biztonságos.</p>
+                    </div>
+
+                    <div class="pulsing-arrow">
+                        ➔
+                    </div>
+
+                    <div class="comp-card pro">
+                        <h3>✅ Elemi Szint (Helyes)</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="type">int</span> a[<span class="number">3</span>][<span class="number">3</span>] = {
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>},
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>},
+    {<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>}
+}; <span class="comment">// Pontos 3x3 illeszkedés</span></code></pre>
+                        </div>
+                        <p class="desc-text">A méretek tökéletesen egyeznek, nincs felesleges kihasználatlan terület vagy rejtett indexhiba.</p>
+                    </div>
+                </div>
+
+                <div style="background: rgba(236, 72, 153, 0.1); border-left: 3px solid #ec4899; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem;">
+                    💡 <strong>Vizuális tipp:</strong> A villogó neon nyilak jelzik az átmenetet a hibás szemlélettől a helyes felé!
+                </div>
+            </div>
+
+            <!-- 2. OLDAL: INDEXELÉSI LOGIKA ÉS INTERAKTÍV SZIMULÁTOR -->
+            <div class="page" id="page-1">
+                <div>
+                    <span class="badge warning">2. Fejezet – Indexelési Csapda</span>
+                    <h2><span>🔍</span> 1-től induló ciklus vs. 0-tól induló ciklus</h2>
+                    <p class="desc-text">Nézd meg interaktívan, hogy melyik mezőket érik el a különböző ciklusok a 4×4-es mátrixban!</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comp-card layman">
+                        <h3>❌ 1-től induló (Hibás)</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++)
+    <span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= <span class="number">3</span>; j++)
+        cout &lt;&lt; a[i][j];</code></pre>
+                        </div>
+                        <div class="sim-container">
+                            <button class="btn secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="simulateBad()">Szimulálás</button>
+                            <div class="matrix-grid" id="grid-bad">
+                                <!-- 16 cella -->
+                                <div class="matrix-cell">0</div><div class="matrix-cell">0</div><div class="matrix-cell">0</div><div class="matrix-cell">0</div>
+                                <div class="matrix-cell">0</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div>
+                                <div class="matrix-cell">0</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div>
+                                <div class="matrix-cell">0</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div><div class="matrix-cell visited-bad">1</div>
+                            </div>
+                            <p style="font-size: 0.7rem; color: #fb7185;">Kihagyja a 0. sort és oszlopot!</p>
+                        </div>
+                    </div>
+
+                    <div class="pulsing-arrow" style="color: #34d399; text-shadow: 0 0 15px #34d399;">
+                        ➔
+                    </div>
+
+                    <div class="comp-card pro">
+                        <h3>✅ 0-tól induló (Helyes)</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)
+    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)
+        cout &lt;&lt; a[i][j];</code></pre>
+                        </div>
+                        <div class="sim-container">
+                            <button class="btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="simulateGood()">Szimulálás</button>
+                            <div class="matrix-grid" id="grid-good">
+                                <div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell">0</div>
+                                <div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell">0</div>
+                                <div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell visited-good">1</div><div class="matrix-cell">0</div>
+                                <div class="matrix-cell">0</div><div class="matrix-cell">0</div><div class="matrix-cell">0</div><div class="matrix-cell">0</div>
+                            </div>
+                            <p style="font-size: 0.7rem; color: #34d399;">Teljes 3x3 lefedettség a szabvány szerint!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. OLDAL: PROFESSZIONÁLIS DINAMIKUS SZINT -->
+            <div class="page" id="page-2">
+                <div>
+                    <span class="badge success">3. Fejezet – Professzionális Szint</span>
+                    <h2><span>🚀</span> Statikus vs. Dinamikus Mátrix (Vektorok)</h2>
+                    <p class="desc-text">A C++ programozás csúcsa, amikor a méretet nem fixen írjuk be, hanem futásidőben határozzuk meg.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comp-card layman">
+                        <h3>⚠️ Statikus Korlátok</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="type">int</span> a[<span class="number">3</span>][<span class="number">3</span>];
+<span class="comment">// Merev méret,</span>
+<span class="comment">// fordítási időben dől el.</span></code></pre>
+                        </div>
+                        <p class="desc-text">Egyszerű, de ha a felhasználó nagyobb mátrixot akar, a program összeomul vagy újra kell fordítani.</p>
+                    </div>
+
+                    <div class="pulsing-arrow" style="color: #facc15;">
+                        ➔
+                    </div>
+
+                    <div class="comp-card pro">
+                        <h3>🌟 Dinamikus Szabvány</h3>
+                        <div class="code-bubble">
+                            <pre><code><span class="type">int</span> n; cin &gt;&gt; n;
+vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; a(n, vector&lt;<span class="type">int</span>&gt;(n));
+<span class="comment">// Rugalmas STL Vektor</span></code></pre>
+                        </div>
+                        <p class="desc-text">Futásidőben bármilyen méret megadható, biztonságos memóriakezelés, nulla túlcsordulási kockázat.</p>
+                    </div>
+                </div>
+
+                <div style="background: rgba(52, 211, 153, 0.1); border-left: 3px solid #34d399; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem;">
+                    🎯 <strong>Összegzés:</strong> Ezzel a varázskönyvvel átlátod a kezdő hibákat és a mesteri megoldásokat is!
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="page-indicator" id="indicator">
+        <div class="dot active" onclick="goToPage(0)"></div>
+        <div class="dot" onclick="goToPage(1)"></div>
+        <div class="dot" onclick="goToPage(2)"></div>
+    </div>
+
+    <script>
+        /* Csillogó részecskék generálása a háttérben */
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = Array.from({ length: 60 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 2.5 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: (Math.random() - 0.5) * 0.4,
+            alpha: Math.random()
+        }));
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+
+                ctx.fillStyle = `rgba(236, 72, 153, ${Math.abs(Math.sin(Date.now() * 0.001 + p.alpha))})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* Könyv lapozás logika */
+        let currentPage = 0;
+        const totalPages = 3;
+        let autoPlayInterval = null;
+        let intervalTime = 4500;
+
+        function showPage(index) {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+
+            pages.forEach((page, i) => {
+                page.classList.remove('active', 'prev');
+                if (i === index) {
+                    page.classList.add('active');
+                } else if (i < index) {
+                    page.classList.add('prev');
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentPage = index;
+        }
+
+        function nextPage() {
+            let next = (currentPage + 1) % totalPages;
+            showPage(next);
+        }
+
+        function prevPage() {
+            let prev = (currentPage - 1 + totalPages) % totalPages;
+            showPage(prev);
+        }
+
+        function goToPage(index) {
+            showPage(index);
+            resetAutoPlay();
+        }
+
+        function toggleAutoPlay() {
+            const btn = document.getElementById('autoPlayBtn');
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                btn.textContent = '▶ Automatikus Varázslat';
+                btn.style.background = 'linear-gradient(135deg, #ec4899, #9333ea)';
+            } else {
+                autoPlayInterval = setInterval(nextPage, intervalTime);
+                btn.textContent = '⏸ Leállítás';
+                btn.style.background = 'linear-gradient(135deg, #f43f5e, #be123c)';
+            }
+        }
+
+        function updateSpeed(val) {
+            intervalTime = parseInt(val);
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = setInterval(nextPage, intervalTime);
+            }
+        }
+
+        function resetAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = setInterval(nextPage, intervalTime);
+            }
+        }
+
+        /* Interaktív szimulátor animációk */
+        function simulateBad() {
+            const cells = document.querySelectorAll('#grid-bad .matrix-cell');
+            cells.forEach((c, idx) => {
+                c.classList.remove('visited-bad');
+                // 1-tol 3-ig indexek (sor 1..3, oszlop 1..3)
+                let row = Math.floor(idx / 4);
+                let col = idx % 4;
+                if (row >= 1 && row <= 3 && col >= 1 && col <= 3) {
+                    setTimeout(() => {
+                        c.classList.add('visited-bad');
+                    }, idx * 80);
+                }
+            });
+        }
+
+        function simulateGood() {
+            const cells = document.querySelectorAll('#grid-good .matrix-cell');
+            cells.forEach((c, idx) => {
+                c.classList.remove('visited-good');
+                let row = Math.floor(idx / 4);
+                let col = idx % 4;
+                if (row >= 0 && row < 3 && col >= 0 && col < 3) {
+                    setTimeout(() => {
+                        c.classList.add('visited-good');
+                    }, idx * 80);
+                }
+            });
+        }
+    </script>
+
+</body></html>
