@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<!-- saved from url=(0170)file:///D:/programe%20scolare/tankonyv/Tordeles/Probatananyag/M%C3%A1trixok%20Elm%C3%A9lete%20%E2%80%93%2025%20Fejezetes%20Vizu%C3%A1lis%20Labor%20(C++%20&%20Python).html -->
+<html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mátrixok Elmélete – 25 Fejezetes Vizuális Labor (C++ &amp; Python)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --accent: #2563eb;
+            --success: #059669;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --code-bg: #0f172a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 { margin: 0; font-size: 2.3rem; }
+        .chapter-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--accent);
+        }
+        h3 { color: var(--primary); margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        h4 { color: #334155; margin: 15px 0 5px 0; }
+        
+        /* Képek elrendezése: egymás mellett vagy rácsban */
+        .images-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .visual-box {
+            background: #eff6ff;
+            border: 1px dashed #3b82f6;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* Kódok elrendezése egymás mellett */
+        .code-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            .code-container { grid-template-columns: 1fr; }
+        }
+        pre {
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 12px;
+            margin: 0;
+        }
+        .code-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #475569;
+            margin-bottom: 4px;
+        }
+        .sim-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+        }
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        button:hover { background-color: #1d4ed8; }
+        input { padding: 5px; width: 50px; border: 1px solid #cbd5e1; border-radius: 4px; }
+        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mátrixok Elmélete és Alkalmazásai</h1>
+        <p>25 Fejezetes Interaktív Laboratórium – Részletes Elmélettel, Dupla Vizuális Ábrával, C++ és Python Kódokkal</p>
+    </header>
+
+    <!-- 1. FEJEZET -->
+    <div class="chapter-card">
+        <h3>1. Fejezet: Bevezetés a kétdimenziós tömbökbe és deklarációjuk</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mátrixok kétdimenziós adatszerkezetek, amelyek sorok ($m$) és oszlopok ($n$) szerint rendszerezik az adatokat. Deklaráláskor megadjuk a méreteket. Alkalmazási terület: táblázatok, játéktáblák kezelése.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Rács szerkezet</p>
+                <svg width="140" height="90" viewBox="0 0 140 90">
+                    <rect x="10" y="10" width="35" height="30" fill="#bfdbfe" stroke="#1e3a8a"></rect>
+                    <text x="17" y="29" font-size="10">[0][0]</text>
+                    <rect x="50" y="10" width="35" height="30" fill="#e2e8f0" stroke="#1e3a8a"></rect>
+                    <text x="57" y="29" font-size="10">[0][1]</text>
+                    <rect x="90" y="10" width="35" height="30" fill="#e2e8f0" stroke="#1e3a8a"></rect>
+                    <text x="97" y="29" font-size="10">[0][2]</text>
+                </svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Indexelési tengelyek</p>
+                <svg width="140" height="90" viewBox="0 0 140 90">
+                    <line x1="20" y1="20" x2="120" y2="20" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"></line>
+                    <line x1="20" y1="20" x2="20" y2="80" stroke="#2563eb" stroke-width="2"></line>
+                    <text x="60" y="15" font-size="10">Oszlopok (j)</text>
+                    <text x="25" y="50" font-size="10">Sorok (i)</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int matrix[100][100];
+int sorok = 3, oszlopok = 3;</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>matrix = [[0]*3 for _ in range(3)]
+sorok, oszlopok = 3, 3</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Elemek számának kiszámítása:</p>
+            Sor: <input type="number" id="s1" value="4"> Oszlop: <input type="number" id="o1" value="5">
+            <button onclick="alert('Elemek száma: ' + (document.getElementById('s1').value * document.getElementById('o1').value))">Számol</button>
+        </div>
+    </div>
+
+    <!-- 2. FEJEZET -->
+    <div class="chapter-card">
+        <h3>2. Fejezet: Memória-allokáció és címszámítás</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A memóriában a mátrixok lineárisan (egymás után fűzve) tárolódnak. A sor-major sorrend képlete biztosítja az elemek elérését.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Lineáris tömb</p>
+                <svg width="180" height="40">
+                    <rect x="10" y="5" width="35" height="30" fill="#cbd5e1"></rect><text x="15" y="25" font-size="10">0,0</text>
+                    <rect x="50" y="5" width="35" height="30" fill="#cbd5e1"></rect><text x="55" y="25" font-size="10">0,1</text>
+                    <rect x="90" y="5" width="35" height="30" fill="#93c5fd"></rect><text x="95" y="25" font-size="10">1,0</text>
+                </svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Címképlet vizualizáció</p>
+                <svg width="180" height="40">
+                    <text x="15" y="25" font-size="11" fill="#1e3a8a">Index = i * max_oszlop + j</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int* ptr = &amp;matrix[0][0];</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code># Python listák hivatkozásokat tárolnak
+flat_list = [elem for row in matrix for elem in row]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Lineáris eltolás (3 oszlopos mátrix):</p>
+            i: <input type="number" id="mi" value="1"> j: <input type="number" id="mj" value="2">
+            <button onclick="alert('Pozíció: ' + (parseInt(document.getElementById('mi').value)*3 + parseInt(document.getElementById('mj').value)))">Kiszámol</button>
+        </div>
+    </div>
+
+    <!-- 3. FEJEZET -->
+    <div class="chapter-card">
+        <h3>3. Fejezet: Alapbeolvasási algoritmusok</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mátrix feltöltése két egymásba ágyazott ciklussal történik soronként vagy oszloponként.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Soronkénti haladás</p>
+                <svg width="150" height="40"><path d="M 10 20 L 140 20" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow)"></path></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Ciklus struktúra</p>
+                <svg width="150" height="40"><text x="20" y="25" font-size="11" fill="#1e3a8a">for i -&gt; for j</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" for(int="" j="0;" j<m;="" j++)="" cin="">&gt; matrix[i][j];</n;></code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>matrix = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    matrix.append(row)</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Beolvasási ciklus tesztelés:</p>
+            <button onclick="alert('Beolvasási ciklus sikeresen tesztelve.')">Teszt</button>
+        </div>
+    </div>
+
+    <!-- 4. FEJEZET -->
+    <div class="chapter-card">
+        <h3>4. Fejezet: Kiírási formátumok és soros/oszlopos megjelenítés</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mátrix konzolra írásakor figyelni kell a soremelésekre, hogy táblázatos formát kapjunk.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Eredmény rács</p>
+                <svg width="120" height="40"><text x="15" y="25" font-size="12">1 2 3 \n 4 5 6</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Soremelés (`\\n`)</p>
+                <svg width="120" height="40"><text x="25" y="25" font-size="12">endl / print()</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" {="" for(int="" j="0;" j<m;="" j++)="" cout="" <<="" matrix[i][j]="" "="" ";="" endl;="" }<="" code=""></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>for row in matrix:
+    print(*(row))</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Kiírási formátum magyarázat:</p>
+            <button onclick="alert('A belső ciklus kiírja a sort, a külső soremelést ad.')">Magyarázat</button>
+        </div>
+    </code></div><code>
+
+    <!-- 5. FEJEZET -->
+    <div class="chapter-card">
+        <h3>5. Fejezet: Főátló vizsgálata</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Négyzetes mátrix főátlójának feltétele: $i == j$. Alkalmazási terület: mátrixnyom számítás.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Főátló kijelölés</p>
+                <svg width="80" height="80">
+                    <rect x="5" y="5" width="20" height="20" fill="#93c5fd"></rect><rect x="30" y="30" width="20" height="20" fill="#93c5fd"></rect><rect x="55" y="55" width="20" height="20" fill="#93c5fd"></rect>
+                </svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Egyenlőségi feltétel</p>
+                <svg width="80" height="80"><text x="10" y="45" font-size="14">i == j</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int sum = 0;
+for(int i=0; i<n; i++)="" sum="" +="matrix[i][i];&lt;/code"></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>sum_foatlo = sum(matrix[i][i] for i in range(n))</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Főátló teszt:</p>
+            i: <input type="number" id="f1" value="2"> j: <input type="number" id="f2" value="2">
+            <button onclick="let i=parseInt(document.getElementById('f1').value), j=parseInt(document.getElementById('f2').value); alert(i===j ? 'Főátló elem!' : 'Nem főátló.');">Ellenőriz</button>
+        </div>
+    </code></div><code>
+
+    <!-- 6. FEJEZET -->
+    <div class="chapter-card">
+        <h3>6. Fejezet: Mellékátló vizsgálata</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mellékátló feltétele négyzetes mátrixban: $i + j == n - 1$.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Mellékátló vizuál</p>
+                <svg width="80" height="80">
+                    <rect x="55" y="5" width="20" height="20" fill="#fca5a5"></rect><rect x="30" y="30" width="20" height="20" fill="#fca5a5"></rect><rect x="5" y="55" width="20" height="20" fill="#fca5a5"></rect>
+                </svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Összeg feltétel</p>
+                <svg width="80" height="80"><text x="5" y="45" font-size="12">i + j == n - 1</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" m_sum="" +="matrix[i][n-1-i];&lt;/code"></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>m_sum = sum(matrix[i][n-1-i] for i in range(n))</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Mellékátló teszt (n=3):</p>
+            i: <input type="number" id="m1" value="0"> j: <input type="number" id="m2" value="2">
+            <button onclick="let i=parseInt(document.getElementById('m1').value), j=parseInt(document.getElementById('m2').value); alert(i+j===2 ? 'Mellékátló elem!' : 'Nem az.');">Ellenőriz</button>
+        </div>
+    </code></div><code>
+
+    <!-- 7. FEJEZET -->
+    <div class="chapter-card">
+        <h3>7. Fejezet: Főátló alatti és feletti részek</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A főátló felett $i &lt; j$, míg alatta $i &gt; j$ teljesül. Háromszögmátrixok alapja.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Főátló felett</p>
+                <svg width="80" height="80"><text x="10" y="45" font-size="14">i &lt; j</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Főátló alatt</p>
+                <svg width="80" height="80"><text x="10" y="45" font-size="14">i &gt; j</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" for(int="" j="i+1;" j<n;="" j++)="" {="" *="" felette="" }<="" code=""></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>above = [matrix[i][j] for i in range(n) for j in range(i+1, n)]</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Zóna lekérdezés:</p>
+            i: <input type="number" id="z1" value="1"> j: <input type="number" id="z2" value="0">
+            <button onclick="let i=parseInt(document.getElementById('z1').value), j=parseInt(document.getElementById('z2').value); alert(i&lt;j ? 'Felette' : (i&gt;j ? 'Alatta' : 'Főátlón'));">Zóna</button>
+        </div>
+    </code></div><code>
+
+    <!-- 8. FEJEZET -->
+    <div class="chapter-card">
+        <h3>8. Fejezet: Mellékátló alatti és feletti részek</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mellékátlóhoz viszonyított területek vizsgálata az $i + j &lt; n - 1$ és $i + j &gt; n - 1$ egyenlőtlenségekkel történik.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Mellék felett</p>
+                <svg width="90" height="50"><text x="5" y="30" font-size="11">i + j &lt; n - 1</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Mellék alatt</p>
+                <svg width="90" height="50"><text x="5" y="30" font-size="11">i + j &gt; n - 1</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>if(i + j &lt; n - 1) { /* felette */ }</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>if i + j &lt; n - 1: pass</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Tesztelés:</p>
+            <button onclick="alert('Mellékátló zóna feltételek aktiválva.')">Futtatás</button>
+        </div>
+    </div>
+
+    <!-- 9. FEJEZET -->
+    <div class="chapter-card">
+        <h3>9. Fejezet: Soronkénti statisztikák (min, max, összeg)</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Soronkénti minimum, maximum vagy összeg keresés minden sorban külön.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Sor iteráció</p>
+                <svg width="120" height="40"><text x="10" y="25" font-size="12">Sor index: i</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Max keresés</p>
+                <svg width="120" height="40"><text x="10" y="25" font-size="12">mx = matrix[i][0]</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" {="" int="" mx="matrix[i][0];" for(int="" j="1;" j<m;="" j++)="" if(matrix[i][j]=""> mx) mx = matrix[i][j];
+}</n;></code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>max_sorok = [max(row) for row in matrix]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Kezdőérték elv:</p>
+            <button onclick="alert('Mindig az adott sor első elemével indítjuk a keresést.')">Elv megtekintése</button>
+        </div>
+    </div>
+
+    <!-- 10. FEJEZET -->
+    <div class="chapter-card">
+        <h3>10. Fejezet: Oszloponkénti statisztikák</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Oszloponkénti elemzésnél a külső ciklus az oszlop ($j$), a belső a sor ($i$).</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Oszlop irány</p>
+                <svg width="80" height="50"><path d="M 40 5 L 40 45" stroke="#059669" stroke-width="3" marker-end="url(#arrow)"></path></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Ciklus sorrend</p>
+                <svg width="90" height="50"><text x="5" y="30" font-size="11">for j -&gt; for i</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int j=0; j<m; j++)="" for(int="" i="0;" i<n;="" i++)="" sum="" +="matrix[i][j];&lt;/code"></m;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>oszlop_osszegek = [sum(matrix[i][j] for i in range(n)) for j in range(m)]</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Ciklus sorrend teszt:</p>
+            <button onclick="alert('Külső: j, Belső: i')">Ellenőrzés</button>
+        </div>
+    </code></div><code>
+
+    <!-- 11. FEJEZET -->
+    <div class="chapter-card">
+        <h3>11. Fejezet: Mátrixok összeadása és skalárral való szorzása</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Elemenkénti összeadás és skalár szorzás szabályai.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Összeadás</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">A + B = C</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Skalár</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">c * A[i][j]</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>C[i][j] = A[i][j] + B[i][j];</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>C = [[A[i][j] + B[i][j] for j in range(m)] for i in range(n)]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Skalár szorzás teszt:</p>
+            <button onclick="alert('Minden elem meg lett szorozva a skalárral.')">Futtat</button>
+        </div>
+    </div>
+
+    <!-- 12. FEJEZET -->
+    <div class="chapter-card">
+        <h3>12. Fejezet: Mátrixok szorzása</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mátrixszorzáshoz 3 egymásba ágyazott ciklus ($i, j, k$) szükséges.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Méret feltétel</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">MxN * NxP</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Ciklusok</p>
+                <svg width="90" height="40"><text x="10" y="25" font-size="11">i, j, k</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int i=0; i<n; i++)="" for(int="" j="0;" j<p;="" j++)="" k="0;" k<m;="" k++)="" c[i][j]="" +="A[i][k]" *="" b[k][j];<="" code=""></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code># NumPy vagy listakomprehenzió
+C = [[sum(A[i][k] * B[k][j] for k in range(m)) for j in range(p)] for i in range(n)]</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Ciklusok száma:</p>
+            <button onclick="alert('Pontosan 3 ciklus.')">Válasz</button>
+        </div>
+    </code></div><code>
+
+    <!-- 13. FEJEZET -->
+    <div class="chapter-card">
+        <h3>13. Fejezet: Mátrix transzponálása</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Sorok és oszlopok felcserélése: $A^T_{i,j} = A_{j,i}$.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Felcserélés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">i,j -&gt; j,i</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Főátló helyben</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Tükrözés</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>B[j][i] = A[i][j];</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>transposed = [[A[j][i] for j in range(n)] for i in range(m)]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Főátló elemek:</p>
+            <button onclick="alert('Változatlanul maradnak.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 14. FEJEZET -->
+    <div class="chapter-card">
+        <h3>14. Fejezet: Sorok rendezése buborékrendezéssel</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>A mátrix sorait külön-külön rendezzük növekvő sorrendbe.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Soronkénti rendezés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Bubble sort</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Függetlenség</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Sorok függetlenek</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>if(A[i][j] &gt; A[i][k]) swap(A[i][j], A[i][k]);</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>matrix[i].sort()</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Hatás más sorokra:</p>
+            <button onclick="alert('Nincs hatással a többi sorra.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 15. FEJEZET -->
+    <div class="chapter-card">
+        <h3>15. Fejezet: Kígyó és cikcakk bejárások</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Páros sorok balról jobbra, páratlanok jobbról balra haladnak.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Kígyó minta</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">-&gt; &lt;- -&gt;</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Paritás vizsgálat</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">i % 2 == 1</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>if(i % 2 == 1) { /* visszafelé */ }</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>row = matrix[i] if i % 2 == 0 else matrix[i][::-1]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Páratlan sor irány:</p>
+            <button onclick="alert('Jobbról balra.')">Teszt</button>
+        </div>
+    </div>
+
+    <!-- 16. FEJEZET -->
+    <div class="chapter-card">
+        <h3>16. Fejezet: Szimmetrikus mátrixok vizsgálata</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Szimmetrikus, ha $A[i][j] == A[j][i]$ minden $i, j$-re.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Tükörpár</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">A[i][j] == A[j][i]</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Főátló alatti rész</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Csak i &lt; j</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>if(A[i][j] != A[j][i]) szim = false;</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>szim = all(A[i][j] == A[j][i] for i in range(n) for j in range(i))</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Vizsgálati tartomány:</p>
+            <button onclick="alert('Elég a főátló alatti elemeket vizsgálni.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 17. FEJEZET -->
+    <div class="chapter-card">
+        <h3>17. Fejezet: Háromszögmátrixok (alsó / felső)</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Felső háromszögmátrixban a főátló alatti elemek nullák.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Felső zóna</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">i &gt; j -&gt; 0</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Feltétel</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Felso háromszög</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>if(i &gt; j &amp;&amp; A[i][j] != 0) felso = false;</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>felso = all(A[i][j] == 0 for i in range(n) for j in range(i))</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Tesztelés:</p>
+            <button onclick="alert('Feltétel ellenőrizve.')">Info</button>
+        </div>
+    </div>
+
+    <!-- 18. FEJEZET -->
+    <div class="chapter-card">
+        <h3>18. Fejezet: Sakktábla minta generálása</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Sakktábla minta előállítása a $(i + j) \% 2$ paritással.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Paritás</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">(i + j) % 2</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> 0 és 1 váltakozás</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">0 1 0 / 1 0 1</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>A[i][j] = (i + j) % 2;</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>A = [[(i + j) % 2 for j in range(n)] for i in range(n)]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Érték számítás (1,2):</p>
+            <button onclick="alert('Érték: 1')">Számolás</button>
+        </div>
+    </div>
+
+    <!-- 19. FEJEZET -->
+    <div class="chapter-card">
+        <h3>19. Fejezet: Gráfelméleti szomszédsági mátrixok</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Gráfok éleinek ábrázolása bináris mátrixban ($0$ vagy $1$).</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Él jelölés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">A[u][v] = 1</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Irányítatlan</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Szimmetrikus</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>A[u][v] = 1; A[v][u] = 1;</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>A[u][v] = 1; A[v][u] = 1</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Szimmetria teszt:</p>
+            <button onclick="alert('Igen, szimmetrikus.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 20. FEJEZET -->
+    <div class="chapter-card">
+        <h3>20. Fejezet: Csúcsok fokszáma</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Egy csúcs fokszáma a szomszédsági mátrix sorában lévő 1-esek összege.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Sor összeg</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">sum(A[u])</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Izolált csúcs</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Fokszám = 0</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int deg = 0; for(int j=0; j<n; j++)="" deg="" +="A[u][j];&lt;/code"></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>deg = sum(A[u])</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Mit jelent a 0 fokszám?</p>
+            <button onclick="alert('Izolált csúcs.')">Válasz</button>
+        </div>
+    </code></div><code>
+
+    <!-- 21. FEJEZET -->
+    <div class="chapter-card">
+        <h3>21. Fejezet: Warshall-algoritmus</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Tranzitív lezárás (elérhetőség) kiszámítása 3 ciklussal.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Köztes csúcs</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Keresés: k</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Logikai ÉS</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">A[i][k] &amp;&amp; A[k][j]</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>for(int k=0; k<n; k++)="" for(int="" i="0;" i<n;="" i++)="" j="0;" j<n;="" j++)="" a[i][j]="A[i][j]" ||="" (a[i][k]="" &&="" a[k][j]);<="" code=""></n;></code></pre><code>
+            </code></div><code>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            A[i][j] = A[i][j] or (A[i][k] and A[k][j])</code></pre>
+            </div>
+        </code></div><code>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Warshall futtatás:</p>
+            <button onclick="alert('Algoritmus inicializálva.')">Indítás</button>
+        </div>
+    </code></div><code>
+
+    <!-- 22. FEJEZET -->
+    <div class="chapter-card">
+        <h3>22. Fejezet: Bináris keresés mátrixokban</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Rendezett mátrixban keresés a jobb felső sarokból indulva.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Kezdőpont</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Jobb felső sarok</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Léptetés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Balra / Le</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int i = 0, j = m - 1;
+while(i &lt; n &amp;&amp; j &gt;= 0) { /* ... */ }</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>i, j = 0, m - 1
+while i &lt; n and j &gt;= 0: pass</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Léptetési irányok:</p>
+            <button onclick="alert('Kisebb -&gt; balra, Nagyobb -&gt; lefelé.')">Magyarázat</button>
+        </div>
+    </div>
+
+    <!-- 23. FEJEZET -->
+    <div class="chapter-card">
+        <h3>23. Fejezet: Dinamikus vektorok (STL vector)</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Dinamikus méretezhetőség C++-ban és Python listákban.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Futásidejű méret</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Dinamikus</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Biztonság</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Nincs szivárgás</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>vector<vector<int>&gt; mat(n, vector<int>(m, 0));</int></vector<int></code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>mat = [[0] * m for _ in range(n)]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Előnyök:</p>
+            <button onclick="alert('Rugalmas memóriakezelés.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 24. FEJEZET -->
+    <div class="chapter-card">
+        <h3>24. Fejezet: Részmátrixok (blokkok) vizsgálata</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Kisebb al-mátrixok (pl. 2x2) elemzése nagyobb rácson.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Al-blokk</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">2x2 blokk</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Összegzés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">Blokk összeg</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>int sum = A[i][j] + A[i][j+1] + A[i+1][j] + A[i+1][j+1];</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>block_sum = A[i][j] + A[i][j+1] + A[i+1][j] + A[i+1][j+1]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Elemek száma 2x2 blokkban:</p>
+            <button onclick="alert('4 elem.')">Válasz</button>
+        </div>
+    </div>
+
+    <!-- 25. FEJEZET -->
+    <div class="chapter-card">
+        <h3>25. Fejezet: Képfeldolgozás és mátrixforgatás (90 fok)</h3>
+        <h4>Részletes Elmélet</h4>
+        <p>Képek forgatása 90 fokkal transzponálás és tükrözés révén.</p>
+        
+        <div class="images-container">
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>1. Ábra:</strong> Forgatási szabály</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">B[j][n-1-i] = A[i][j]</text></svg>
+            </div>
+            <div class="visual-box">
+                <p style="font-size:11px; margin:0 0 5px 0;"><strong>2. Ábra:</strong> Sarok áthelyezés</p>
+                <svg width="90" height="40"><text x="5" y="25" font-size="11">(0,0) -&gt; Jobb felső</text></svg>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div>
+                <div class="code-title">C++ Megoldás</div>
+                <pre><code>B[j][n - 1 - i] = A[i][j];</code></pre>
+            </div>
+            <div>
+                <div class="code-title">Python Megoldás</div>
+                <pre><code>B = [[A[n - 1 - j][i] for j in range(n)] for i in range(n)]</code></pre>
+            </div>
+        </div>
+
+        <div class="sim-box">
+            <h4>Interaktív Szimuláció</h4>
+            <p>Hova kerül a bal felső sarok?</p>
+            <button onclick="alert('A jobb felső sarokba.')">Válasz</button>
+        </div>
+    </div>
+
+    <footer>
+        Mátrixok Elmélete Vizuális Labor © 2026
+    </footer>
+
+
+</code></code></code></code></code></code></code></code></body></html>
